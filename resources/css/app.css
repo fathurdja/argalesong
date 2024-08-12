@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Transition for sidebar */
+
+
+.sidebar {
+    width: 4rem;
+    transition: width 0.3s;
+}
+
+.sidebar:hover {
+    width: 15rem;
+}
+
+.sidebar-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-submenu {
+    display: none;
+    position: relative;
+    align-items: center;
+}
+
+.sidebar-item .text {
+    opacity: 0;
+    white-space: nowrap;
+    transition: opacity 0.3s;
+    margin-left: 0.5rem;
+}
+
+.sidebar:hover .sidebar-item .text {
+    opacity: 1;
+    margin-left: 1rem;
+}
+
+.sidebar .sidebar-submenu.active {
+    display: block;
+}
+
+.sidebar-submenu-item {
+    padding-left: 3rem;
+}
+
+.arrow {
+    margin-left: auto;
+    cursor: pointer;
+}
