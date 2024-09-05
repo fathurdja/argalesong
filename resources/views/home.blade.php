@@ -8,10 +8,10 @@
         <!-- Bagian Kiri: Informasi Perusahaan dan Pengguna -->
         <div class="text-center">
             <h1 class="text-xl font-bold">PT SINAR GALESONG PRATAMA</h1>
-            <p class="italic text-gray-500">Departemen <span class="not-italic font-bold">Accounting</span></p>
+            <p class="italic text-gray-500">Departemen <span class="not-italic font-bold">{{ $user->departemen }}</span></p>
             <!-- Gambar Profil -->
             <div class="mt-4">
-                <img src="https://engineering.unl.edu/images/staff/Kayla-Person.jpg" alt="Profile Picture"
+                <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile Picture"
                     class="w-32 h-32 rounded-full mx-auto">
             </div>
             <p class="mt-4">Hai, <span class="text-blue-500">{{ $user->name }}</span>!</p>

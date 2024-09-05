@@ -20,6 +20,7 @@
             @yield('content')
         </div>
     </div>
+    @stack('script')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const arrows = document.querySelectorAll('.arrow');

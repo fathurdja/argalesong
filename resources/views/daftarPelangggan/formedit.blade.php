@@ -4,46 +4,64 @@
     <div class="bg-gray-100 p-6 mt-7">
         <!-- Bagian Pencarian dan Tombol Baru -->
         <div class="flex justify-between items-center mb-4">
-            <input type="text" placeholder="cari kode / nama" class="border border-gray-400 p-2 rounded-md w-full max-w-md">
-            <button class="ml-4 bg-green-500 text-white font-bold py-2 px-4 rounded-md">Baru</button>
+            <form action="{{ route('customer.index') }}" method="GET" class="w-full max-w-md flex">
+                <input type="text" name="search" placeholder="cari kode / nama"
+                    class="border border-gray-400 p-2 rounded-md flex-grow" value="{{ request('search') }}">
+                <button type="submit" class="ml-4 bg-green-500 text-white font-bold py-2 px-4 rounded-md">
+                    Cari
+                </button>
+            </form>
+            <a href="{{ route('customer.create') }}">
+                <button class="ml-4 bg-green-500 text-white font-bold py-2 px-4 rounded-md">Baru</button>
+            </a>
         </div>
 
-        <!-- Informasi Pelanggan -->
-        <div class="bg-white border border-gray-400 p-4 rounded-md">
-            <!-- Bagian Atas: Kode dan Nama Perusahaan -->
-            <div class="flex justify-between items-center border-b border-gray-400 pb-2 mb-2">
-                <h2 class="text-xl font-bold">PRS348</h2>
-                <h2 class="text-xl font-bold">PT Fast Food Indonesia</h2>
-                <div class="flex space-x-2">
-                    <button class="bg-gray-200 text-black font-bold py-1 px-3 rounded-md">Edit Data</button>
-                    <button class="bg-red-200 text-black font-bold py-1 px-3 rounded-md">Hapus</button>
+        @if (isset($customer))
+            <!-- Informasi Pelanggan -->
+            <div class="bg-white border border-gray-400 p-4 rounded-md">
+                <!-- Bagian Atas: Kode dan Nama Perusahaan -->
+                <div class="flex justify-between items-center border-b border-gray-400 pb-2 mb-2">
+                    <h2 class="text-xl font-bold">{{ $customer->id_Pelanggan }}</h2>
+                    <h2 class="text-xl font-bold">{{ $customer->name }}</h2>
+                    <div class="flex space-x-2">
+                        <a href="{{ route('customer.edit', $customer->id) }}"><button
+                                class="bg-green-700 text-black font-bold py-1 px-3 rounded-md">Edit Data</button></a>
+                        <button class="bg-red-600 text-black font-bold py-1 px-3 rounded-md">Hapus</button>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Detail Pelanggan -->
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <p><strong>Tipe Pelanggan :</strong> Perusahaan</p>
-                    <p><strong>Tipe Piutang :</strong> Sewa-menyewa</p>
-                    <p><strong>NPWP :</strong> 01.234.567.8-123.000</p>
-                    <p><strong>Alamat :</strong> Jl. Ahmad Yani No.23-25 Blok B5-B6, Pattunuang, Kec. Wajo</p>
-                    <p><strong>E-mail :</strong> kfcahmadyani@gmail.com</p>
-                    <p><strong>Whatsapp :</strong> 08512345678</p>
-                    <p><strong>Telepon :</strong> -</p>
-                    <p><strong>Fax :</strong> -</p>
+                <!-- Detail Pelanggan -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p><strong>Tipe Pelanggan :</strong> {{ $tipePelangganName }}</p>
+                        <p><strong>Tipe Piutang :</strong> {{ $tipePiutangName }}</p>
+                        <p><strong>NPWP :</strong> {{ $customer->npwp }}</p>
+                        <p><strong>Alamat :</strong> {{ $customer->alamat }}</p>
+                        <p><strong>E-mail :</strong> {{ $customer->email }}</p>
+                        <p><strong>Whatsapp :</strong> {{ $customer->whatsapp }}</p>
+                        <p><strong>Telepon :</strong> {{ $customer->telepon }}</p>
+                        <p><strong>Fax :</strong> {{ $customer->fax }}</p>
+                    </div>
+                    <div>
+                        <p><strong>% Sharing :</strong> {{ $customer->sharing }}%</p>
+                        <p><strong>Kota :</strong> {{ $customer->kota }}</p>
+                        <p><strong>Kode Pos :</strong> {{ $customer->kode_pos }}</p>
+                    </div>
                 </div>
-                <div>
-                    <p><strong>% Sharing :</strong> 7%</p>
-                    <p><strong>Kota :</strong> Makassar</p>
-                    <p><strong>Kode Pos :</strong> 90171</p>
-                </div>
-            </div>
 
-            <!-- Bagian Bawah: Informasi Tambahan -->
-            <div class="border-t border-gray-400 pt-2 mt-2 text-sm">
-                <p><strong>Diinput oleh :</strong> Username pada 02/10/2008 14:34 WITA</p>
-                <p><strong>Terakhir diedit :</strong> Username pada 02/10/2008 14:34 WITA</p>
+                <!-- Bagian Bawah: Informasi Tambahan -->
+                <div class="border-t border-gray-400 pt-2 mt-2 text-sm flex justify-between">
+                    <p><strong>Di input oleh :</strong> {{ Auth::user()->name }} pada
+                        {{ $customer->created_at->format('d/m/Y') }}</p>
+                    <p><strong>Terakhir diedit :</strong> {{ Auth::user()->name }} pada
+                        {{ $customer->updated_at->format('d/m/Y') }}</p>
+                </div>
             </div>
-        </div>
+        @else
+            <!-- Informasi Tidak Ditemukan -->
+            <div class="bg-white border border-gray-400 p-4 rounded-md text-center">
+                <p class="text-xl font-bold">Data tidak ditemukan.</p>
+            </div>
+        @endif
     </div>
 @endsection

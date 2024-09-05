@@ -1,12 +1,15 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\formBaruDaftarController;
 use App\Http\Controllers\formeditDaftarController;
 use App\Http\Controllers\JatuhTempoController;
 use App\Http\Controllers\kp_bukanPelangganController;
 use App\Http\Controllers\kp_PelangganController;
+use App\Http\Controllers\masterdatacontroller;
 use App\Http\Controllers\pbAfiliasiController;
 use App\Http\Controllers\pbSewaMenyewaController;
 use App\Http\Controllers\pp_baruController;
@@ -14,6 +17,7 @@ use App\Http\Controllers\pp_pengajuan;
 use App\Http\Controllers\Sp_bulananController;
 use App\Http\Controllers\Sp_HarianController;
 use App\Http\Controllers\tagihanController;
+use App\Http\Controllers\TipePelangganController;
 use App\Http\Controllers\UmurPiutangController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,8 +29,20 @@ Route::get('/login', function () {
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/register', [RegisterController::class, 'Register'])->name('register');
+Route::post('/register', [RegisterController::class, 'MakeAccount'])->name('makeAccount');
 
+
+Route::resource('customer', CustomerController::class)->middleware('auth');
+Route::get('/customer/search', [CustomerController::class, 'index'])->name('customer.search');
+
+
+// Route::post('/tipe-pelanggan', [TipePelangganController::class, 'store'])->name('tambah-tipePelanggan')->middleware('auth');
 Route::get('/form-tambah-tagihan', [tagihanController::class, 'create'])->name('tambahForm')->middleware('auth');
+Route::get('/master-data-piutang', [masterdatacontroller::class, 'index'])->name('master_data_piutang')->middleware('auth');
+Route::get('/master-data-piutang-create', [masterdatacontroller::class, 'create'])->name('master_data_piutang_create')->middleware('auth');
+Route::post('/storeTipePelanggan', [masterdatacontroller::class, 'storeTipePelanggan'])->name('storeTipePelanggan')->middleware('auth');
+Route::post('/storeTipePiutang', [masterdatacontroller::class, 'storeTipePiutang'])->name('storeTipePiutang')->middleware('auth');
 Route::get('/form-edit-daftar-pelanggan', [formeditDaftarController::class, 'index'])->name('daftarpelanggan')->middleware('auth');
 Route::get('/form-baru-daftar-pelanggan', [formBaruDaftarController::class, 'index'])->name('daftarpelangganBaru')->middleware('auth');
 Route::get('/form-pb-afiliasi', [pbAfiliasiController::class, 'index'])->name('afiliasi')->middleware('auth');

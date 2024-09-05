@@ -51,9 +51,15 @@
                 </div>
                 <div class="mt-5 bg-gray-800">
                     <button type="submit"
-                        class="border-2   text-white py-1 w-full rounded-md  hover:text-indigo-700 font-semibold">
-                        <i class="fa-solid fa-right-to-bracket"></i>&nbsp;&nbsp;Login
+                        class="border-2   text-white py-1 w-full  hover:text-indigo-700 font-semibold">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        &nbsp;&nbsp;Login
                     </button>
+                </div>
+                <div class="text-center mt-3 bg-gray-800 p-1 border-2 ">
+                    <a href="{{ route('register') }}"
+                        class="text-white hover:text-blue-900 hover:underline  w-full  font-semibold">Daftar
+                        Akun</a>
                 </div>
                 @if ($errors->has('email'))
                     <div class="mt-3 text-red-600 text-sm">
@@ -61,6 +67,8 @@
                     </div>
                 @endif
             </form>
+
+
         </div>
     </div>
 
