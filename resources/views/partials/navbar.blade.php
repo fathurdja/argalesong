@@ -1,5 +1,5 @@
 <header>
-    <nav class="bg-white border-gray-200 px-4 py-2 dark:bg-gray-800 w-full">
+    <nav class="bg-gray-300 border-gray-200 px-4 py-2 dark:bg-gray-800 w-full">
         <div class="flex justify-between items-center ml-60 max-w-screen-xl">
             <div class="flex items-center space-x-3">
                 <a href="" class="flex items-center">

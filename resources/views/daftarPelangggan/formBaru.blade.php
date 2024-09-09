@@ -3,6 +3,9 @@
 @section('content')
     <div class="bg-gray-100 p-6">
         <!-- DATA PELANGGAN -->
+
+        <h1 class="text-3xl py-2 font-semibold">PELANGGAN BARU</h1>
+
         <form action="{{ route('customer.store') }}" method="POST">
             @csrf
             <div class="bg-white border border-gray-400 p-4 rounded-md mb-6">

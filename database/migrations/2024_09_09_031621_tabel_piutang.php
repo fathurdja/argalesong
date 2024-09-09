@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tipePiutang', function (Blueprint $table) {
+        Schema::create('masterDataPajak', function (Blueprint $table) {
             $table->id();
-            $table->char('kodePiutang')->unique()->index();
             $table->string('name');
+            $table->decimal('nilai', 5, 2);
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tipePiutang');
+        Schema::dropIfExists('piutang');
     }
 };

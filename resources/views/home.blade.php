@@ -4,7 +4,7 @@
 
 
 @section('content')
-    <div class="flex justify-evenly items-start p-24 bg-white shadow rounded-lg mt-24">
+    <div class="flex justify-evenly items-start p-24 bg-gray-300 shadow rounded-lg mt-24">
         <!-- Bagian Kiri: Informasi Perusahaan dan Pengguna -->
         <div class="text-center">
             <h1 class="text-xl font-bold">PT SINAR GALESONG PRATAMA</h1>
@@ -25,12 +25,12 @@
             <!-- Tabel Umur Piutang -->
             <div class="mt-6">
                 <h2 class="text-lg font-bold mb-2">Umur Piutang</h2>
-                <table class="min-w-full bg-white border border-gray-200">
-                    <thead class="bg-gray-100">
+                <table class="min-w-full bg-gray-500 border border-gray-200">
+                    <thead class="bg-slate-900">
                         <tr>
-                            <th class="border border-gray-200 px-4 py-2">No</th>
-                            <th class="border border-gray-200 px-4 py-2">Aging</th>
-                            <th class="border border-gray-200 px-4 py-2">Total</th>
+                            <th class="border border-gray-200 px-4 py-2 text-white">No</th>
+                            <th class="border border-gray-200 px-4 py-2 text-white">Aging</th>
+                            <th class="border border-gray-200 px-4 py-2 text-white">Total</th>
                         </tr>
                     </thead>
                     <tbody>

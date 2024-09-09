@@ -2,8 +2,16 @@
 
 @section('content')
     <div class="bg-gray-100 p-6 mt-7">
+
+
         <!-- Bagian Pencarian dan Tombol Baru -->
         <div class="flex justify-between items-center mb-4">
+            @if (session('success'))
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-3"
+                    role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
             <form action="{{ route('customer.index') }}" method="GET" class="w-full max-w-md flex">
                 <input type="text" name="search" placeholder="cari kode / nama"
                     class="border border-gray-400 p-2 rounded-md flex-grow" value="{{ request('search') }}">
@@ -15,7 +23,9 @@
                 <button class="ml-4 bg-green-500 text-white font-bold py-2 px-4 rounded-md">Baru</button>
             </a>
         </div>
-
+        <div>
+            <h1 class="text-3xl py-3 font-semibold">DAFTAR PELANGGAN</h1>
+        </div>
         @if (isset($customer))
             <!-- Informasi Pelanggan -->
             <div class="bg-white border border-gray-400 p-4 rounded-md">
@@ -51,10 +61,10 @@
 
                 <!-- Bagian Bawah: Informasi Tambahan -->
                 <div class="border-t border-gray-400 pt-2 mt-2 text-sm flex justify-between">
-                    <p><strong>Di input oleh :</strong> {{ Auth::user()->name }} pada
-                        {{ $customer->created_at->format('d/m/Y') }}</p>
-                    <p><strong>Terakhir diedit :</strong> {{ Auth::user()->name }} pada
-                        {{ $customer->updated_at->format('d/m/Y') }}</p>
+                    <p><strong>Di input oleh :</strong> {{ Auth::user()->name }} on
+                        {{ $customer->created_at->format('l d/m/Y') }}</p>
+                    <p><strong>Terakhir diedit :</strong> {{ Auth::user()->name }} on
+                        {{ $customer->updated_at->format('l d/m/Y') }}</p>
                 </div>
             </div>
         @else

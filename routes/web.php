@@ -10,6 +10,7 @@ use App\Http\Controllers\JatuhTempoController;
 use App\Http\Controllers\kp_bukanPelangganController;
 use App\Http\Controllers\kp_PelangganController;
 use App\Http\Controllers\masterdatacontroller;
+use App\Http\Controllers\MasterDataPajakController;
 use App\Http\Controllers\pbAfiliasiController;
 use App\Http\Controllers\pbSewaMenyewaController;
 use App\Http\Controllers\pp_baruController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Sp_HarianController;
 use App\Http\Controllers\tagihanController;
 use App\Http\Controllers\TipePelangganController;
 use App\Http\Controllers\UmurPiutangController;
+use App\Models\masterDataPajak;
 use Illuminate\Support\Facades\Route;
 
 
@@ -34,6 +36,8 @@ Route::post('/register', [RegisterController::class, 'MakeAccount'])->name('make
 
 
 Route::resource('customer', CustomerController::class)->middleware('auth');
+Route::resource('masterDataPajak', MasterDataPajakController::class)->middleware('auth');
+
 Route::get('/customer/search', [CustomerController::class, 'index'])->name('customer.search');
 
 

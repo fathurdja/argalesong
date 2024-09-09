@@ -109,7 +109,7 @@ class CustomerController extends Controller
         $customer->save();
 
         // Redirect back or to another page
-        return redirect()->route('customer.index')->with('success', 'Customer has been added successfully');
+        return redirect()->route('customer.index')->with('success', 'Customer baru Telah Di Tambahkan');
     }
 
     /**
@@ -191,7 +191,7 @@ class CustomerController extends Controller
         $customer->save();
 
         // Redirect back to the customer list with a success message
-        return redirect()->route('customer.index')->with('success', 'Customer updated successfully!');
+        return redirect()->route('customer.index')->with('success', 'Data Customer Telah Di update');
     }
 
 
