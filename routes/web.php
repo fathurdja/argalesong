@@ -13,6 +13,7 @@ use App\Http\Controllers\masterdatacontroller;
 use App\Http\Controllers\MasterDataPajakController;
 use App\Http\Controllers\pbAfiliasiController;
 use App\Http\Controllers\pbSewaMenyewaController;
+use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\pp_baruController;
 use App\Http\Controllers\pp_pengajuan;
 use App\Http\Controllers\Sp_bulananController;
@@ -37,6 +38,9 @@ Route::post('/register', [RegisterController::class, 'MakeAccount'])->name('make
 
 Route::resource('customer', CustomerController::class)->middleware('auth');
 Route::resource('masterDataPajak', MasterDataPajakController::class)->middleware('auth');
+Route::resource('piutang-types', PiutangController::class)->middleware('auth');
+
+Route::get('/get-monthly-report', [Sp_bulananController::class, 'getMonthlyReport'])->middleware('auth');
 
 Route::get('/customer/search', [CustomerController::class, 'index'])->name('customer.search');
 
@@ -47,10 +51,6 @@ Route::get('/master-data-piutang', [masterdatacontroller::class, 'index'])->name
 Route::get('/master-data-piutang-create', [masterdatacontroller::class, 'create'])->name('master_data_piutang_create')->middleware('auth');
 Route::post('/storeTipePelanggan', [masterdatacontroller::class, 'storeTipePelanggan'])->name('storeTipePelanggan')->middleware('auth');
 Route::post('/storeTipePiutang', [masterdatacontroller::class, 'storeTipePiutang'])->name('storeTipePiutang')->middleware('auth');
-Route::get('/form-edit-daftar-pelanggan', [formeditDaftarController::class, 'index'])->name('daftarpelanggan')->middleware('auth');
-Route::get('/form-baru-daftar-pelanggan', [formBaruDaftarController::class, 'index'])->name('daftarpelangganBaru')->middleware('auth');
-Route::get('/form-pb-afiliasi', [pbAfiliasiController::class, 'index'])->name('afiliasi')->middleware('auth');
-Route::get('/form-pb-sewa-menyewa', [pbSewaMenyewaController::class, 'index'])->name('sewa-menyewa')->middleware('auth');
 Route::get('/kp-Pelanggan', [kp_PelangganController::class, 'index'])->name('kp-pelanggan')->middleware('auth');
 Route::get('/kp-bukan-Pelanggan', [kp_bukanPelangganController::class, 'index'])->name('kp-bukanpelanggan')->middleware('auth');
 Route::get('/umur-piutang', [UmurPiutangController::class, 'index'])->name('umur-piutang')->middleware('auth');

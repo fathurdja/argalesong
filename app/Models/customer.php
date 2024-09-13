@@ -27,7 +27,6 @@ class customer extends Model
         'provinsi',
         'notes',
         'idtypepelanggan',
-        'idtypepiutang',
         'fax',
         'sharing',
     ];
@@ -40,5 +39,10 @@ class customer extends Model
     public function tipePiutang()
     {
         return $this->belongsTo(TipePiutang::class, 'idtypepiutang', 'kodePiutang');
+    }
+
+    public function piutang()
+    {
+        return $this->hasMany(Piutang::class, 'idpelanggan', 'id_Pelanggan');
     }
 }

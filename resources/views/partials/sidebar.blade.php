@@ -65,30 +65,9 @@
                             <path
                                 d="M512 789.333333c-23.466667 0-42.666667-19.2-42.666667-42.666666V533.333333c0-23.466667 19.2-42.666667 42.666667-42.666666s42.666667 19.2 42.666667 42.666666v213.333334c0 23.466667-19.2 42.666667-42.666667 42.666666z" />
                         </svg>
-                        <span class="flex-1 ml-3 text-left whitespace-nowrap text text-white">Piutang Baru</span>
-                        <svg aria-hidden="true" class="arrow w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 011.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
-                                clip-rule="evenodd"></path>
-                        </svg>
+                        <a href="{{ route('piutang-types.create') }}"><span
+                                class="flex-1 ml-3 text-left whitespace-nowrap text text-white">Piutang Baru</span></a>
                     </div>
-                    <ul class="py-2 text sidebar-submenu">
-                        <li class="sidebar-submenu-item">
-                            <a href="{{ route('afiliasi') }}"
-                                class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Afiliasi</a>
-                        </li>
-                        <li class="sidebar-submenu-item">
-                            <a href="{{ route('sewa-menyewa') }}"
-                                class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Sewa
-                                Menyewa</a>
-                        </li>
-                        <li class="sidebar-submenu-item">
-                            <a href="#"
-                                class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Sharing
-                                Revenue</a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
             <ul class="space-y-2">
@@ -313,7 +292,7 @@
     <form method="POST" action="{{ route('logout') }}" class="w-full">
         @csrf
         <button type="submit"
-            class="sidebar-item  pt-4 flex items-center p-4 w-full text-base font-normal text-white rounded-lg dark:text-white dark:bg-gray-800">
+            class="sidebar-item  pt-4 flex items-center p-4 w-full text-base font-normal text-white rounded-lg hover:bg-blue-700 dark:text-white dark:bg-gray-800">
             <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 32 32"
                 class="w-6 h-6 flex-shrink-0 " fill="#ffffff">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

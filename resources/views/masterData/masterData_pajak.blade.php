@@ -20,9 +20,9 @@
                     @csrf
                     <div id="taxEntries">
                         @foreach ($data as $item)
-                            <div class="grid grid-cols-4 gap-1 mb-4">
+                            <div class="grid grid-cols-6 gap-2  mb-4">
                                 <p class="text-xl font-bold text-center">{{ $item->name }}</p>
-                                <input type="text" name="tax_value[]" class="border bg-slate-400 text-center w-20 p-2"
+                                <input type="text" name="tax_value[]" class="border bg-slate-400 text-center w-28 p-2"
                                     value="{{ intval($item->nilai) }}%" readonly>
                                 <p class="text-lg font-bold text-center">Berlaku Sejak</p>
                                 <p>{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }}</p>

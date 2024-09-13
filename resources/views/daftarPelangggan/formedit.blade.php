@@ -6,12 +6,7 @@
 
         <!-- Bagian Pencarian dan Tombol Baru -->
         <div class="flex justify-between items-center mb-4">
-            @if (session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-3"
-                    role="alert">
-                    {{ session('success') }}
-                </div>
-            @endif
+        
             <form action="{{ route('customer.index') }}" method="GET" class="w-full max-w-md flex">
                 <input type="text" name="search" placeholder="cari kode / nama"
                     class="border border-gray-400 p-2 rounded-md flex-grow" value="{{ request('search') }}">
@@ -44,7 +39,7 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <p><strong>Tipe Pelanggan :</strong> {{ $tipePelangganName }}</p>
-                        <p><strong>Tipe Piutang :</strong> {{ $tipePiutangName }}</p>
+
                         <p><strong>NPWP :</strong> {{ $customer->npwp }}</p>
                         <p><strong>Alamat :</strong> {{ $customer->alamat }}</p>
                         <p><strong>E-mail :</strong> {{ $customer->email }}</p>

@@ -10,13 +10,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class=" bg-gray-100 dark:bg-gray-900 w-full h-full">
+<body class=" bg-gray-200 w-full h-full">
     @include('partials.navbar')
     <div class="flex h-screen bg-gray-200">
 
         @include('partials.sidebar')
 
-        <div class="flex-1 px-20">
+        <div class="flex-1 px-20 ">
             @yield('content')
         </div>
     </div>
@@ -42,6 +42,7 @@
             });
         });
     </script>
+    @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
 </body>
 
 </html>

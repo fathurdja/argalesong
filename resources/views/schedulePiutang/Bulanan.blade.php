@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto mt-10">
+    <div class="container mx-9 mt-10">
         <!-- Year Selection -->
         <div class="flex items-center mb-4">
             <label for="year" class="mr-2 font-semibold text-gray-700">Tahun</label>
@@ -52,8 +52,23 @@
             <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md shadow-sm hover:bg-gray-300">Cetak</button>
         </div>
     </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            function formatRupiah(angka) {
+                let number_string = angka.toString(),
+                    sisa = number_string.length % 3,
+                    rupiah = number_string.substr(0, sisa),
+                    ribuan = number_string.substr(sisa).match(/\d{3}/g);
+
+                if (ribuan) {
+                    let separator = sisa ? '.' : '';
+                    rupiah += separator + ribuan.join('.');
+                }
+
+                return 'Rp ' + rupiah;
+            }
+
             // Function to fetch data based on selected month and year
             function fetchData(month, year) {
                 fetch(`/get-monthly-report?month=${month}&year=${year}`)
@@ -62,26 +77,45 @@
                         const tbody = document.getElementById('report-body');
                         tbody.innerHTML = ''; // Clear current data
 
+                        let totalSaldoPiutang = 0; // Variabel untuk menghitung total saldo piutang
+
                         if (data.length === 0) {
-                            // If no data found
                             tbody.innerHTML =
                                 `<tr><td colspan="7" class="text-center py-4 text-gray-500">Data tidak ditemukan</td></tr>`;
                         } else {
-                            // Populate data
                             data.forEach((item, index) => {
+                                let saldoPiutang = parseInt(item.nominal); // Pastikan ini angka
+                                if (isNaN(saldoPiutang)) saldoPiutang =
+                                    0; // Handle jika saldoPiutang bukan angka
+                                totalSaldoPiutang += saldoPiutang; // Tambahkan ke total
+
                                 tbody.innerHTML += `
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">${index + 1}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">${item.kode}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">${item.nama_pelanggan}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">${item.jatuh_tempo}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-right">${item.total_piutang}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-right">${item.pembayaran}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-right">${item.saldo_piutang}</td>
-                                </tr>
-                            `;
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">${index + 1}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">${item.idtra}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">${item.pelanggan ? item.pelanggan.name : 'Tidak ada data pelanggan'}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">${item.tgl_jatuh_tempo}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right">${formatRupiah(item.nominal)}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right"></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right">${formatRupiah(saldoPiutang)}</td>
+                            </tr>
+                        `;
                             });
+
+                            // Tambahkan baris terakhir untuk total saldo piutang
+                            tbody.innerHTML += `
+                        <tr>
+                            <td colspan="6" class="px-6 py-4 whitespace-nowrap text-right font-bold">Total Saldo Piutang</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right font-bold">${formatRupiah(totalSaldoPiutang)}</td>
+                        </tr>
+                    `;
                         }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                        const tbody = document.getElementById('report-body');
+                        tbody.innerHTML =
+                            `<tr><td colspan="7" class="text-center py-4 text-red-500">Terjadi kesalahan dalam mengambil data</td></tr>`;
                     });
             }
 
@@ -102,7 +136,7 @@
             });
 
             // Initial fetch for default month and year (e.g., April 2023)
-            fetchData(4, document.getElementById('year').value);
+            fetchData(4, document.getElementById('year').value); // Example for September
         });
     </script>
 @endsection

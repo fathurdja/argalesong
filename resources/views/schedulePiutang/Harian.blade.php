@@ -24,10 +24,12 @@
         <!-- Days of the Month -->
         <div class="flex justify-start items-center mb-2 space-x-1 text-sm">
             @for ($i = 1; $i <= 31; $i++)
-                <div
-                    class="text-center px-1 py-1  border-gray-300 @if ($i == 17) bg-blue-100 border-2 @endif">
-                    {{ $i }}
-                </div>
+                <a href="">
+                    <div
+                        class="text-center px-1 py-1  border-gray-300 @if ($i == 17) bg-blue-100 border-2 @endif">
+                        {{ $i }}
+                    </div>
+                </a>
             @endfor
         </div>
 

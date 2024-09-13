@@ -34,17 +34,7 @@
                             </select>
                         </p>
 
-                        <p class="mt-2"><strong>Tipe Piutang :</strong>
-                            <select class="border border-gray-300 p-2 rounded-md w-full" id="tipePiutang"
-                                name="tipe_piutang" required>
-                                @foreach ($tipePiutangOptions as $option)
-                                    <option value="{{ $option->kodePiutang }}"
-                                        {{ $option->kodePiutang == $customer->idtypepiutang ? 'selected' : '' }}>
-                                        {{ $option->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </p>
+
                         <p class="mt-2"><strong>Nama Pelanggan :</strong>
                             <input type="text" id="namaPelanggan" class="border border-gray-300 p-2 rounded-md w-full"
                                 name="name" value="{{ $customer->name }}" required>

@@ -1,119 +1,197 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto mt-10">
-    <div class="bg-white shadow-md rounded-lg p-6">
-        <h2 class="text-lg font-bold mb-4">PIUTANG BARU: AFILIASI</h2>
-
-        <form action="" method="POST">
-            @csrf
-
-            <div class="grid grid-cols-2 gap-4 mb-4">
-                <div>
-                    <label for="tanggal_transaksi" class="block text-sm font-medium text-gray-700">Tanggal Transaksi</label>
-                    <input type="date" name="tanggal_transaksi" id="tanggal_transaksi" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
-
-                <div>
-                    <label for="jatuh_tempo" class="block text-sm font-medium text-gray-700">Jatuh Tempo</label>
-                    <input type="date" name="jatuh_tempo" id="jatuh_tempo" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
+    <div class="container mx-auto mt-10">
+        @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
+        @endif
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-lg font-bold mb-4">Pilih Jenis Piutang :</h2>
 
-            <div class="mb-4">
-                <label for="denda" class="block text-sm font-medium text-gray-700">Jika Jatuh Tempo</label>
-                <select id="denda" name="denda" class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    <option>Denda</option>
-                    <option>Lainnya</option>
-                </select>
-            </div>
+            <form action="{{ route('piutang-types.create') }}" method="GET">
+                @csrf
+                <div class="mb-4">
+                    <label for="jenis_form" class="block text-sm font-medium text-gray-700">Jenis Piutang</label>
+                    <select id="jenis_form" name="jenis_form"
+                        class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        onchange="this.form.submit()">
+                        <option value="">-- Pilih Jenis Piutang --</option>
+                        @foreach ($piutangTypes as $type)
+                            <option value="{{ $type->id }}"
+                                {{ $selectedType && $selectedType->id == $type->id ? 'selected' : '' }}>
 
-            <div class="mb-4">
-                <label for="nama_pelanggan" class="block text-sm font-medium text-gray-700">Nama Pelanggan</label>
-                <input type="text" name="nama_pelanggan" id="nama_pelanggan" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            </div>
-
-            <div class="mb-4">
-                <label for="tagihan" class="block text-sm font-medium text-gray-700">Tagihan</label>
-                <select id="tagihan" name="tagihan" class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    <option>Tetap</option>
-                    <option>Berulang</option>
-                </select>
-            </div>
-
-            <div class="mb-4">
-                <label for="pajak" class="block text-sm font-medium text-gray-700">Pajak</label>
-                <div class="flex items-center">
-                    <input id="ppn" name="pajak[]" value="PPN" type="checkbox" class="h-4 w-4 text-indigo-600 border-gray-300 rounded">
-                    <label for="ppn" class="ml-2 block text-sm text-gray-900">PPN</label>
+                                {{ $type->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="flex items-center">
-                    <input id="pph23" name="pajak[]" value="PPh 23" type="checkbox" class="h-4 w-4 text-indigo-600 border-gray-300 rounded">
-                    <label for="pph23" class="ml-2 block text-sm text-gray-900">PPh 23</label>
-                </div>
-                <div class="flex items-center">
-                    <input id="pph42" name="pajak[]" value="PPh 4(2)" type="checkbox" class="h-4 w-4 text-indigo-600 border-gray-300 rounded">
-                    <label for="pph42" class="ml-2 block text-sm text-gray-900">PPh 4(2)</label>
-                </div>
-            </div>
+            </form>
 
-            <div class="grid grid-cols-2 gap-4 mb-4">
-                <div>
-                    <label for="dpp" class="block text-sm font-medium text-gray-700">DPP</label>
-                    <input type="number" name="dpp" id="dpp" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
+            @if ($selectedType)
+                <h2 class="text-lg font-bold mb-4">PIUTANG BARU {{ $selectedType->name }}: </h2>
 
-                <div>
-                    <label for="ppn_value" class="block text-sm font-medium text-gray-700">PPN</label>
-                    <input type="number" name="ppn_value" id="ppn_value" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
+                <form action="{{ route('piutang-types.store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="jenis_form" value="{{ $selectedType->kodePiutang }}">
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label for="tanggal_transaksi" class="block text-sm font-medium text-gray-700">Tanggal
+                                Transaksi</label>
+                            <input type="date" name="tanggal_transaksi" id="tanggal_transaksi"
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
 
-                <div>
-                    <label for="total_piutang" class="block text-sm font-medium text-gray-700">Total Piutang</label>
-                    <input type="number" name="total_piutang" id="total_piutang" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
-            </div>
+                        <div>
+                            <label for="jatuh_tempo" class="block text-sm font-medium text-gray-700">Jatuh Tempo</label>
+                            <input type="date" name="jatuh_tempo" id="jatuh_tempo"
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                    </div>
+                    <label for="jarak_hari" class="block text-sm font-medium text-gray-700 w-1/3">Jatuh Tempo</label>
+                    <div class="mb-4 flex items-center gap-2">
 
-            <div class="mb-4">
-                <label for="keterangan" class="block text-sm font-medium text-gray-700">Keterangan</label>
-                <textarea name="keterangan" id="keterangan" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
-            </div>
+                        <input type="text" id="jarak_hari" name="jarak_hari"
+                            class="mt-1 block w-20 border-gray-300 font-bold shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            readonly>
+                        <p class="mt-1 font-bold ">Hari</p>
+                    </div>
 
-            <div class="flex justify-end">
-                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Posting</button>
-                <button type="reset" class="ml-4 bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Batal</button>
-            </div>
-        </form>
+
+                    <div class="mb-4">
+                        <label for="nama_pelanggan" class="block text-sm font-medium text-gray-700">Nama Pelanggan</label>
+                        <select id="nama_pelanggan" name="nama_pelanggan"
+                            class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="">-- Pilih Pelanggan --</option>
+                            @foreach ($customer as $type)
+                                <option value="{{ $type->id_Pelanggan }}">
+                                    {{ $type->id_Pelanggan }} {{ $type->name }}
+                                </option>
+            
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="pajak" class="block text-sm font-medium text-gray-700">Pajak</label>
+                        <select id="pajak" name="ppn_value"
+                            class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            onchange="calculateTotal()">
+                            <option value="">-- Pilih Pajak --</option>
+                            @foreach ($pajakType as $type)
+                                <option value="{{ $type->nilai }}">
+                                    {{ $type->name }} ({{ $type->nilai }}%)
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-4 items-start">
+                        <div>
+                            <label for="dpp" class="block text-sm font-medium text-gray-700">DPP</label>
+                            <input type="text" name="dpp" id="dpp"
+                                class="mt-1 block w-full text-right p-3 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                oninput="calculateTotal()" value="0,00">
+                        </div>
+
+                        <div>
+                            <label for="ppn_value" class="block text-sm font-medium text-gray-700">PPN</label>
+                            <input type="text" name="ppn_value" id="ppn_value"
+                                class="mt-1 block w-full text-right border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                readonly>
+                        </div>
+
+                        <div>
+                            <label for="total_piutang" class="block text-sm font-medium text-gray-700">Total Piutang</label>
+                            <input type="text" name="total_piutang" id="total_piutang"
+                                class="mt-1 block w-full text-right border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                readonly>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="submit"
+                            class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Posting</button>
+                        <button type="reset"
+                            class="ml-4 bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Batal</button>
+                    </div>
+                </form>
+            @endif
+        </div>
     </div>
-
-    <div class="mt-10 bg-white shadow-md rounded-lg p-6">
-        <h3 class="text-lg font-bold mb-4">Jurnal yg Terbentuk</h3>
-        <table class="min-w-full table-auto">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Akun</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Piutang Sewa</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp ...</td>
-                </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Piutang PPh 4 Ayat 2 yg akan diterima</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp ...</td>
-                </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Pendapatan Sewa</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp ...</td>
-                </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Hutang PPN Keluaran</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp ...</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
 @endsection
+
+@push('script')
+    <script>
+        document.getElementById('tanggal_transaksi').addEventListener('change', calculateDays);
+        document.getElementById('jatuh_tempo').addEventListener('change', calculateDays);
+
+        function calculateDays() {
+            var tanggalTransaksi = document.getElementById('tanggal_transaksi').value;
+            var jatuhTempo = document.getElementById('jatuh_tempo').value;
+
+            if (tanggalTransaksi && jatuhTempo) {
+                var startDate = new Date(tanggalTransaksi);
+                var endDate = new Date(jatuhTempo);
+                var timeDiff = endDate - startDate;
+                var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                document.getElementById('jarak_hari').value = daysDiff;
+            } else {
+                document.getElementById('jarak_hari').value = ''; // clear field if dates are not set
+            }
+        }
+
+        function formatRupiah(amount) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 2,
+            }).format(amount);
+        }
+
+        function unformatRupiah(value) {
+            // Remove any non-numeric characters except for commas
+            return parseFloat(value.replace(/[^0-9,-]+/g, '').replace(',', '.'));
+        }
+
+        function formatInput(element) {
+            var value = element.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+            if (value) {
+                element.value = formatRupiah(parseFloat(value));
+            }
+        }
+
+        function unformatInput(element) {
+            // When focusing on the input, unformat it so user can type raw numbers
+            var value = element.value.replace(/[^0-9]/g, '');
+            if (value) {
+                element.value = parseFloat(value); // Convert back to number for easy input
+            }
+        }
+
+        function calculateTotal() {
+            var dpp = unformatRupiah(document.getElementById('dpp').value || '0');
+            var pajakPercentage = parseFloat(document.getElementById('pajak').value || 0);
+
+            var ppnValue = (dpp * pajakPercentage) / 100;
+            var totalPiutang = dpp + ppnValue;
+
+            // Update the fields
+            document.getElementById('ppn_value').value = formatRupiah(ppnValue);
+            document.getElementById('total_piutang').value = formatRupiah(totalPiutang);
+        }
+
+        document.getElementById('dpp').addEventListener('focus', function() {
+            unformatInput(this);
+        });
+
+        document.getElementById('dpp').addEventListener('blur', function() {
+            formatInput(this);
+        });
+    </script>
+@endpush

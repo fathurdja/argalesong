@@ -1,8 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="bg-gray-100 p-6">
-        <!-- DATA PELANGGAN -->
+        @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif <!-- DATA PELANGGAN -->
 
         <h1 class="text-3xl py-2 font-semibold">PELANGGAN BARU</h1>
 
@@ -24,20 +33,6 @@
                                 @endforeach
                             </select>
                             @error('tipe_pelanggan')
-                                <span class="text-red-600 text-sm">{{ $message }}</span>
-                            @enderror
-                        </p>
-                        <p class="mt-2"><strong>Tipe Piutang :</strong>
-                            <select class="border border-gray-300 p-2 rounded-md w-full" id="tipePiutang"
-                                name="tipe_piutang" required>
-                                @foreach ($debtType as $debt)
-                                    <option value="{{ $debt->kodePiutang }}"
-                                        {{ old('tipe_piutang') == $debt->kodePiutang ? 'selected' : '' }}>
-                                        {{ $debt->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('tipe_piutang')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
                         </p>
@@ -86,17 +81,17 @@
 
                         </p>
                     </div>
-
                     <div>
                         <p><strong>Kode Pelanggan :</strong>
                             <input type="text" id="kode_pelanggan" class="border border-gray-300 p-2 rounded-md w-full"
-                                name="kode_pelanggan">
+                                name="kode_pelanggan" required>
                             @error('kodePelanggan')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
                         </p>
                         <p class="mt-2"><strong>% Sharing :</strong>
-                            <input type="text" class="border border-gray-300 p-2 rounded-md w-full" name="sharing">
+                            <input type="text" class="border border-gray-300 p-2 rounded-md w-full" name="sharing"
+                                required>
                             @error('sharing')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
@@ -127,15 +122,24 @@
                         </p>
                         <p class="mt-2"><strong>Whatsapp :</strong>
                             <input type="text" id="whatsapp" class="border border-gray-300 p-2 rounded-md w-full"
-                                placeholder="wajib diisi" name="whatsapp">
+                                placeholder="wajib diisi" name="whatsapp" required>
+                            @error('whatsapp')
+                                <span class="text-red-600 text-sm">{{ $message }}</span>
+                            @enderror
                         </p>
                         <p class="mt-2"><strong>Telepon :</strong>
                             <input type="text" id="telepon" class="border border-gray-300 p-2 rounded-md w-full"
                                 placeholder="opsional" name="telepon">
+                            @error('telepon')
+                                <span class="text-red-600 text-sm">{{ $message }}</span>
+                            @enderror
                         </p>
                         <p class="mt-2"><strong>Fax :</strong>
                             <input type="text" id="fax" class="border border-gray-300 p-2 rounded-md w-full"
                                 placeholder="opsional" name="fax">
+                            @error('fax')
+                                <span class="text-red-600 text-sm">{{ $message }}</span>
+                            @enderror
                         </p>
                     </div>
 
