@@ -13,6 +13,7 @@ use App\Http\Controllers\masterdatacontroller;
 use App\Http\Controllers\MasterDataPajakController;
 use App\Http\Controllers\pbAfiliasiController;
 use App\Http\Controllers\pbSewaMenyewaController;
+use App\Http\Controllers\pembayaranPiutang;
 use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\pp_baruController;
 use App\Http\Controllers\pp_pengajuan;
@@ -60,3 +61,4 @@ Route::get('/jatuh-tempo', [JatuhTempoController::class, 'index'])->name('jatuh-
 Route::get('/pp-pengajuan', [pp_pengajuan::class, 'index'])->name('pp-pengajuan')->middleware('auth');
 Route::get('/pp-baru', [pp_baruController::class, 'index'])->name('pp-baru')->middleware('auth');
 Route::post('/tagihan/get-data', [tagihanController::class, 'getData'])->middleware('auth');
+Route::get('/pembayarann-piutang', [pembayaranPiutang::class, 'index'])->middleware('auth')->name('pembayaran-piutang');

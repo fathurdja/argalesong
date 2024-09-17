@@ -48,8 +48,8 @@
         </div>
 
         <!-- Print Button -->
-        <div class="flex justify-end mt-6">
-            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md shadow-sm hover:bg-gray-300">Cetak</button>
+        <div class="flex justify-end my-5">
+            <button class="px-4 py-2 bg-green-600 text-white rounded-md shadow-sm hover:bg-gray-300">Cetak</button>
         </div>
     </div>
 

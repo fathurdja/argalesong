@@ -71,6 +71,41 @@
                 </li>
             </ul>
             <ul class="space-y-2">
+                <a href="{{ route('pembayaran-piutang') }}">
+                    <li
+                        class="sidebar-item p-2 text-white rounded-md dark:text-white hover:bg-blue-700 dark:hover:bg-gray-700">
+                        <svg class="w-6 h-6 flex-shrink-0 fill-white"viewBox="0 0 32 32"
+                            enable-background="new 0 0 32 32" id="Stock_cut" version="1.1" xml:space="preserve"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            fill="#ffffff">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+
+                            <g id="SVGRepo_iconCarrier">
+                                <desc />
+                                <g>
+                                    <path
+                                        d="M17,5H5 C3.895,5,3,5.895,3,7v22c0,1.105,0.895,2,2,2h18c1.105,0,2-0.895,2-2V18"
+                                        fill="none" stroke="#ffffff" stroke-linejoin="round" stroke-miterlimit="10"
+                                        stroke-width="2" />
+                                    <path d="M9,14H3v8h6 c2.209,0,4-1.791,4-4v0C13,15.791,11.209,14,9,14z"
+                                        fill="none" stroke="#ffffff" stroke-linejoin="round" stroke-miterlimit="10"
+                                        stroke-width="2" />
+                                    <circle cx="9" cy="18" r="1" />
+                                    <line fill="none" stroke="#ffffff" stroke-linejoin="round" stroke-miterlimit="10"
+                                        stroke-width="2" x1="25" x2="25" y1="16" y2="1" />
+                                    <polyline fill="none" points="31,7 25,1 19,7 " stroke="#ffffff"
+                                        stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" />
+                                </g>
+                            </g>
+
+                        </svg>
+                        <span class="text">Pembayaran Piutang</span>
+                    </li>
+                </a>
+            </ul>
+            <ul class="space-y-2">
                 <li>
                     <div
                         class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">

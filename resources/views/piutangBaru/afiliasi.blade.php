@@ -72,7 +72,6 @@
                                 <option value="{{ $type->id_Pelanggan }}">
                                     {{ $type->id_Pelanggan }} {{ $type->name }}
                                 </option>
-            
                             @endforeach
                         </select>
                     </div>
@@ -128,6 +127,12 @@
 
 @push('script')
     <script>
+        document.getElementById('dpp').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // Mencegah pengiriman form saat Enter
+                calculateTotal(); // Jalankan perhitungan
+            }
+        });
         document.getElementById('tanggal_transaksi').addEventListener('change', calculateDays);
         document.getElementById('jatuh_tempo').addEventListener('change', calculateDays);
 
@@ -173,6 +178,7 @@
                 element.value = parseFloat(value); // Convert back to number for easy input
             }
         }
+
 
         function calculateTotal() {
             var dpp = unformatRupiah(document.getElementById('dpp').value || '0');
