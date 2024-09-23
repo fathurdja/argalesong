@@ -43,4 +43,6 @@ class piutang extends Model
     {
         return $this->belongsTo(TipePiutang::class, 'kodepiutang', 'kodePiutang');  // assuming 'id' is the primary key in 'piutang'
     }
+
+   
 }

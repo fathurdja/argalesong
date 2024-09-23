@@ -71,7 +71,7 @@
                 </li>
             </ul>
             <ul class="space-y-2">
-                <a href="{{ route('pembayaran-piutang') }}">
+                <a href="{{ route('pembayaran-piutang.index') }}">
                     <li
                         class="sidebar-item p-2 text-white rounded-md dark:text-white hover:bg-blue-700 dark:hover:bg-gray-700">
                         <svg class="w-6 h-6 flex-shrink-0 fill-white"viewBox="0 0 32 32"

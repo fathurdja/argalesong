@@ -2,6 +2,10 @@
 
 @section('content')
     <div class="container mx-auto mt-10">
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-bold">PIUTANG BARU</h1>
+        </div>
+
         @if ($errors->any())
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                 <ul>
@@ -12,6 +16,7 @@
             </div>
         @endif
         <div class="bg-white shadow-md rounded-lg p-6">
+
             <h2 class="text-lg font-bold mb-4">Pilih Jenis Piutang :</h2>
 
             <form action="{{ route('piutang-types.create') }}" method="GET">
