@@ -137,7 +137,7 @@
                 </li>
             </ul>
             <ul class="space-y-2">
-                <a href="{{ route('umur-piutang') }}">
+                <a href="{{ route('detailpiutang.index') }}">
                     <li
                         class="sidebar-item p-2 text-white rounded-md dark:text-white hover:bg-blue-700 dark:hover:bg-gray-700">
                         <svg class="fill-white flex-shrink-0 w-6 h-6 text-white transition duration-75 group-hover:text-white dark:text-white dark:group-hover:text-white"

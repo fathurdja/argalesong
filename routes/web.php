@@ -45,8 +45,8 @@ Route::resource('pembayaran-piutang', PembayaranPiutangController::class)->middl
 
 Route::get('/get-monthly-report', [Sp_bulananController::class, 'getMonthlyReport'])->middleware('auth');
 
-Route::get('/customer/search', [CustomerController::class, 'index'])->name('customer.search');
-
+Route::get('/customer/search', [CustomerController::class, 'index'])->name('customer.search')->middleware('auth');
+Route::get('/piutang/group', [UmurPiutangController::class, 'index'])->name('detailpiutang.index')->middleware('auth');
 
 // Route::post('/tipe-pelanggan', [TipePelangganController::class, 'store'])->name('tambah-tipePelanggan')->middleware('auth');
 Route::get('/form-tambah-tagihan', [tagihanController::class, 'create'])->name('tambahForm')->middleware('auth');
