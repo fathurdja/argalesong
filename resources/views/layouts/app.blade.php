@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'My Application')</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <!-- Tambahkan CSS Anda di sini -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+
+    @vite(['resources/css/app.css', 'resources/css/custom.css', 'resources/js/app.js'])
 </head>
 
 <body class=" bg-gray-200 w-full h-full">
@@ -22,27 +22,8 @@
     </div>
 
     @stack('script')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const arrows = document.querySelectorAll('.arrow');
-            const sidebar = document.querySelector('.sidebar');
 
-            arrows.forEach(arrow => {
-                arrow.addEventListener('click', function(e) {
-                    e.stopPropagation(); // Prevent click event from propagating to parent elements
-                    const submenu = this.closest('li').querySelector('.sidebar-submenu');
-                    submenu.classList.toggle('active');
-                });
-            });
-
-            sidebar.addEventListener('mouseleave', function() {
-                document.querySelectorAll('.sidebar-submenu').forEach(submenu => {
-                    submenu.classList.remove('active');
-                });
-            });
-        });
-    </script>
-    @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+    @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
 </body>
 
 </html>

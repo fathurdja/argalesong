@@ -53,7 +53,7 @@
         </div>
     </div>
     @push('script')
-        <script>
+        {{-- <script>
             document.addEventListener('DOMContentLoaded', function() {
                 function formatRupiah(angka) {
                     let number_string = angka.toString(),
@@ -138,6 +138,8 @@
                 // Initial fetch for default month and year (e.g., April 2023)
                 fetchData(4, document.getElementById('year').value); // Example for September
             });
-        </script>
+        </script> --}}
     @endpush
+
+    
 @endsection

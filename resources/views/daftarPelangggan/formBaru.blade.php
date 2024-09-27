@@ -170,7 +170,7 @@
             </div>
             <!-- Tombol Simpan dan Batal -->
             <div class="mt-6">
-                <button class="bg-green-500 text-white font-bold py-2 px-4 rounded-md mr-2" type="submit">Simpan</button>
+                <button class="bg-red-400 text-white font-bold py-2 px-4 rounded-md mr-2" type="submit">Simpan</button>
                 <button class="bg-white border border-gray-400 text-black font-bold py-2 px-4 rounded-md">Batal</button>
             </div>
         </form>

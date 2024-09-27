@@ -33,7 +33,7 @@ class customer extends Model
 
     public function tipePelanggan()
     {
-        return $this->belongsTo(TipePelanggan::class, 'idtypepelanggan', 'kodeType');
+        return $this->belongsTo(tipePelanggan::class, 'idtypepelanggan', 'kodeType');
     }
 
     public function tipePiutang()

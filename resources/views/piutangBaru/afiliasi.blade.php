@@ -24,7 +24,7 @@
                 <div class="mb-4">
                     <label for="jenis_form" class="block text-sm font-medium text-gray-700">Jenis Piutang</label>
                     <select id="jenis_form" name="jenis_form"
-                        class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2"
                         onchange="this.form.submit()">
                         <option value="">-- Pilih Jenis Piutang --</option>
                         @foreach ($piutangTypes as $type)
@@ -71,7 +71,7 @@
                     <div class="mb-4">
                         <label for="nama_pelanggan" class="block text-sm font-medium text-gray-700">Nama Pelanggan</label>
                         <select id="nama_pelanggan" name="nama_pelanggan"
-                            class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             <option value="">-- Pilih Pelanggan --</option>
                             @foreach ($customer as $type)
                                 <option value="{{ $type->id_Pelanggan }}">
@@ -84,7 +84,7 @@
                     <div class="mb-4">
                         <label for="pajak" class="block text-sm font-medium text-gray-700">Pajak</label>
                         <select id="pajak" name="ppn_value"
-                            class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             onchange="calculateTotal()">
                             <option value="">-- Pilih Pajak --</option>
                             @foreach ($pajakType as $type)
@@ -120,9 +120,9 @@
 
                     <div class="flex justify-end">
                         <button type="submit"
-                            class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Posting</button>
+                            class="bg-green-700 text-black px-4 py-2 rounded-md hover:bg-green-600">Posting</button>
                         <button type="reset"
-                            class="ml-4 bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Batal</button>
+                            class="ml-4 bg-gray-500 text-black px-4 py-2 rounded-md hover:bg-gray-600">Batal</button>
                     </div>
                 </form>
             @endif
@@ -131,78 +131,4 @@
 @endsection
 
 @push('script')
-    <script>
-        document.getElementById('dpp').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault(); // Mencegah pengiriman form saat Enter
-                calculateTotal(); // Jalankan perhitungan
-            }
-        });
-        document.getElementById('tanggal_transaksi').addEventListener('change', calculateDays);
-        document.getElementById('jatuh_tempo').addEventListener('change', calculateDays);
-
-        function calculateDays() {
-            var tanggalTransaksi = document.getElementById('tanggal_transaksi').value;
-            var jatuhTempo = document.getElementById('jatuh_tempo').value;
-
-            if (tanggalTransaksi && jatuhTempo) {
-                var startDate = new Date(tanggalTransaksi);
-                var endDate = new Date(jatuhTempo);
-                var timeDiff = endDate - startDate;
-                var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-                document.getElementById('jarak_hari').value = daysDiff;
-            } else {
-                document.getElementById('jarak_hari').value = ''; // clear field if dates are not set
-            }
-        }
-
-        function formatRupiah(amount) {
-            return new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 2,
-            }).format(amount);
-        }
-
-        function unformatRupiah(value) {
-            // Remove any non-numeric characters except for commas
-            return parseFloat(value.replace(/[^0-9,-]+/g, '').replace(',', '.'));
-        }
-
-        function formatInput(element) {
-            var value = element.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
-            if (value) {
-                element.value = formatRupiah(parseFloat(value));
-            }
-        }
-
-        function unformatInput(element) {
-            // When focusing on the input, unformat it so user can type raw numbers
-            var value = element.value.replace(/[^0-9]/g, '');
-            if (value) {
-                element.value = parseFloat(value); // Convert back to number for easy input
-            }
-        }
-
-
-        function calculateTotal() {
-            var dpp = unformatRupiah(document.getElementById('dpp').value || '0');
-            var pajakPercentage = parseFloat(document.getElementById('pajak').value || 0);
-
-            var ppnValue = (dpp * pajakPercentage) / 100;
-            var totalPiutang = dpp + ppnValue;
-
-            // Update the fields
-            document.getElementById('ppn_value').value = formatRupiah(ppnValue);
-            document.getElementById('total_piutang').value = formatRupiah(totalPiutang);
-        }
-
-        document.getElementById('dpp').addEventListener('focus', function() {
-            unformatInput(this);
-        });
-
-        document.getElementById('dpp').addEventListener('blur', function() {
-            formatInput(this);
-        });
-    </script>
 @endpush
