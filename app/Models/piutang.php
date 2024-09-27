@@ -18,7 +18,8 @@ class piutang extends Model
         'ppn',
         'pajak',
         'diskon',
-        'kodepiutang'
+        'kodepiutang',
+        'no_invoice',
 
     ];
     public function pelanggan()
@@ -43,6 +44,4 @@ class piutang extends Model
     {
         return $this->belongsTo(TipePiutang::class, 'kodepiutang', 'kodePiutang');  // assuming 'id' is the primary key in 'piutang'
     }
-
-   
 }

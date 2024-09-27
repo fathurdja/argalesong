@@ -17,7 +17,7 @@ class PembayaranPiutangController extends Controller
             $invoice = $request->input('nomor_invoice');
 
             // Fetch the detail piutang record based on the invoice number (idtrx)
-            $detailPiutang = Piutang::where('idtra', $invoice)->first();
+            $detailPiutang = Piutang::where('no_invoice', $invoice)->first();
 
             if ($detailPiutang) {
                 // Fetch related customer and tipe pelanggan data
@@ -52,8 +52,35 @@ class PembayaranPiutangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the request
+        $request->validate([
+            'idpelanggan'   => 'required|string|max:15',
+            'idtrx'         => 'required|string|max:15',
+            'tglbayar'      => 'required|date',
+            'tagihan'       => 'required|numeric',
+            'modebayar'     => 'required|in:KAS,BANK',  // Enforces 'KAS' or 'BANK'
+            'diskon'        => 'nullable|numeric',
+            'nominalbayar'  => 'required|numeric',
+            'keterangan'    => 'nullable|string',
+        ]);
+
+        // Create a new payment record
+        piutang::create([
+            'idpelanggan'   => $request->input('idpelanggan'),
+            'idtrx'         => $request->input('idtrx'),
+            'tglbayar'      => $request->input('tglbayar'),
+            'tagihan'       => $request->input('tagihan'),
+            'modebayar'     => $request->input('modebayar'),
+            'diskon'        => $request->input('diskon', 0), // Default to 0 if not provided
+            'nominalbayar'  => $request->input('nominalbayar'),
+            'keterangan'    => $request->input('keterangan'),
+        ]);
+
+        // Redirect or return a response
+        return redirect()->route('pembayaran-piutang.index')
+            ->with('success', 'Pembayaran piutang berhasil disimpan.');
     }
+
 
     /**
      * Display the specified resource.

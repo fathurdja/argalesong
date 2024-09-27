@@ -71,7 +71,7 @@ class PiutangController extends Controller
 
         // Isi data yang tervalidasi
         $piutang->idpelanggan = $validatedData['nama_pelanggan'];
-        $piutang->idtra = $transactionID; // Relasi ke pelanggan
+        $piutang->no_invoice = $transactionID; // Relasi ke pelanggan
         $piutang->tgltra = $validatedData['tanggal_transaksi'];
         $piutang->tgl_jatuh_tempo = $validatedData['jatuh_tempo'];
         $piutang->jhari = $validatedData['jarak_hari'];
@@ -101,7 +101,7 @@ class PiutangController extends Controller
             $newNumber = 1;
         } else {
             // Jika ada transaksi, ambil angka terakhir dari ID Transaksi
-            $lastID = $lastTransaction->idtra; // Ambil ID transaksi terakhir
+            $lastID = $lastTransaction->no_invoice; // Ambil ID transaksi terakhir
             $lastNumber = intval(str_replace('INVC-', '', $lastID)); // Buang bagian 'INVC-' dan ambil angkanya
 
             // Tambahkan 1 ke angka terakhir

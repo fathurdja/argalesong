@@ -2,9 +2,7 @@
 
 @section('content')
     <div class="container mx-auto mt-5">
-        <div class="text-center mb-6">
-            <h1 class="text-2xl font-bold">PEMBAYARAN PIUTANG</h1>
-        </div>
+
 
         @if ($errors->any())
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
@@ -15,9 +13,13 @@
 
         <!-- Form untuk Input Nomor Invoice -->
         <div class="bg-white p-6 rounded-lg shadow-md">
+
             <form method="GET"
                 action="{{ isset($pelanggan) ? route('pembayaran-piutang.index') : route('pembayaran-piutang.index') }}">
                 @csrf
+                <div class="text-center mb-2">
+                    <h1 class="text-2xl font-bold">PEMBAYARAN PIUTANG</h1>
+                </div>
                 <!-- Nomor Invoice -->
                 <div class="mb-4 ">
                     <label for="nomor_invoice" class="block text-sm font-medium text-gray-700">Nomor Invoice</label>
@@ -29,6 +31,9 @@
                 <!-- Nama Pelanggan, Tipe Pelanggan, Tipe Piutang, dll. (Auto-fill dari server) -->
                 @if (isset($pelanggan))
                     <div class="space-y-2">
+                        <div class="text-center mb-2">
+                            <h1 class="text-2xl font-bold">PEMBAYARAN PIUTANG</h1>
+                        </div>
                         <!-- Nama Pelanggan -->
                         <div class="flex justify-start items-center">
                             <span class="font-semibold w-40">Nama Pelanggan:</span>
@@ -67,8 +72,7 @@
                         </div>
                         <div class="flex justify-start items-center font-bold">
                             <span class="w-40">Total Bayar:</span>
-                            <input type="text" id="totalbayar" name="total bayar" placeholder="Rp. 00"
-                                class="rounded-md">
+                            <input type="text" id="totalbayar" name="totalbayar" placeholder="Rp. 00" class="rounded-md">
                         </div>
                         <!-- Total Piutang -->
                         <div class="flex justify-start items-center font-bold">
