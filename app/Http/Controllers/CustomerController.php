@@ -72,7 +72,7 @@ class CustomerController extends Controller
             'ktp' => 'nullable|string|size:16|unique:customer,ktp', // KTP harus unik
             'npwp_option' => 'required',
             'npwp' => 'nullable|string|size:15|unique:customer,npwp', // NPWP harus unik
-            'kode_pelanggan' => 'nullable|string|unique:customer,id_Pelanggan', // id_Pelanggan harus unik
+            'kode_pelanggan' => 'nullable|string|size:15|unique:customer,id_Pelanggan', // id_Pelanggan harus unik
             'sharing' => 'nullable|numeric',
             'alamat' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:customer,email', // Email harus unik

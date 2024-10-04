@@ -13,7 +13,7 @@
                 </ul>
             </div>
         @endif
-        <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="bg-white shadow-md rounded-lg p-6 ml-28">
             <div class="text-center mb-6">
                 <h1 class="text-2xl font-bold">PIUTANG BARU</h1>
             </div>

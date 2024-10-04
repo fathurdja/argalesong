@@ -84,7 +84,7 @@
                     <div>
                         <p><strong>Kode Pelanggan :</strong>
                             <input type="text" id="kode_pelanggan" class="border border-gray-300 p-2 rounded-md w-full"
-                                name="kode_pelanggan" required>
+                                name="kode_pelanggan" maxlength="15" required>
                             @error('kodePelanggan')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror

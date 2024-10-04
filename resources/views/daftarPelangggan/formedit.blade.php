@@ -6,7 +6,7 @@
 
         <!-- Bagian Pencarian dan Tombol Baru -->
         <div class="flex justify-between items-center mb-4">
-        
+
             <form action="{{ route('customer.index') }}" method="GET" class="w-full max-w-md flex">
                 <input type="text" name="search" placeholder="cari kode / nama"
                     class="border border-gray-400 p-2 rounded-md flex-grow" value="{{ request('search') }}">
@@ -65,7 +65,22 @@
         @else
             <!-- Informasi Tidak Ditemukan -->
             <div class="bg-white border border-gray-400 p-4 rounded-md text-center">
-                <p class="text-xl font-bold">Data tidak ditemukan.</p>
+                <table class="min-w-full table-auto">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kode
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama
+                                Pelanggan</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="" class="bg-white divide-y divide-gray-200 text-sm">
+
+                    </tbody>
+                </table>
             </div>
         @endif
     </div>

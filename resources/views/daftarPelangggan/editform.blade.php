@@ -52,7 +52,7 @@
                     <div>
                         <p><strong>Kode Pelanggan :</strong>
                             <input type="text" id="kodePelanggan" class="border border-gray-300 p-2 rounded-md w-full"
-                                name="kode_pelanggan" value="{{ $customer->id_Pelanggan }}" disabled>
+                                name="kode_pelanggan" value="{{ $customer->id_Pelanggan }}" required maxlength="15">
                         </p>
                         <p class="mt-2"><strong>% Sharing :</strong>
                             <input type="text" class="border border-gray-300 p-2 rounded-md w-full" name="sharing"
