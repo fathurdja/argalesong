@@ -44,7 +44,7 @@
                             @enderror
                         </p>
 
-                        <p><strong>KTP :</strong></p>
+                        <p><strong>KTP :</strong> <span class="text-red-600">*</span></p>
                         <div class="flex">
                             <select class="border border-gray-300 p-2 rounded-md w-32" name="ktp_option" id="ktp_option"
                                 required onchange="toggleInput('ktp_option', 'ktp_input')">
@@ -62,7 +62,7 @@
                             </div>
                         </div>
 
-                        <p class="mt-2"><strong>NPWP : <span class="text-red-600">*</span></strong>
+                        <p class="mt-2"><strong>NPWP :</strong>
                         <div class="flex">
                             <select class="border border-gray-300 p-2 rounded-md w-32" name="npwp_option" id="npwp_option"
                                 required onchange="toggleInput('npwp_option', 'npwp_input')">
