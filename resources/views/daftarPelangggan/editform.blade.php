@@ -45,7 +45,7 @@
                         </p>
                         <p class="mt-2"><strong>NPWP :</strong>
                             <input type="text" id="npwp" class="border border-gray-300 p-2 rounded-md w-full"
-                                name="npwp" value="{{ $customer->npwp }}" maxlength="15" required>
+                                name="npwp" value="{{ old('npwp', $customer->npwp ?? '' )  }}" maxlength="15">
                         </p>
                     </div>
 
