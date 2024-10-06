@@ -84,53 +84,52 @@
             </form>
         </div>
     </div>
-    
+
     <!-- JavaScript for dynamic functionality -->
 @endsection
 @push('script')
-    
-            // Function to add a new invoice row
-            function addInvoiceRow() {
-                let container = document.getElementById('invoice-container');
-                let newRow = container.querySelector('.invoice-row').cloneNode(true);
+    // Function to add a new invoice row
+    function addInvoiceRow() {
+    let container = document.getElementById('invoice-container');
+    let newRow = container.querySelector('.invoice-row').cloneNode(true);
 
-                // Clear the values for the new row
-                newRow.querySelectorAll('input').forEach(input => input.value = '');
-                container.appendChild(newRow);
-            }
+    // Clear the values for the new row
+    newRow.querySelectorAll('input').forEach(input => input.value = '');
+    container.appendChild(newRow);
+    }
 
-            // Function to remove an invoice row
-            function removeRow(button) {
-                let row = button.closest('.invoice-row');
-                if (document.querySelectorAll('.invoice-row').length > 1) {
-                    row.remove();
-                }
-            }
+    // Function to remove an invoice row
+    function removeRow(button) {
+    let row = button.closest('.invoice-row');
+    if (document.querySelectorAll('.invoice-row').length > 1) {
+    row.remove();
+    }
+    }
 
-            // Function to fetch invoice details based on entered invoice number
-            function fetchInvoice(input) {
+    // Function to fetch invoice details based on entered invoice number
+    function fetchInvoice(input) {
     let invoiceNumber = input.value;
     let row = input.closest('.invoice-row');
 
     if (invoiceNumber) {
-        fetch(`/pembayaran-piutang/fetch-invoice-details?nomor_invoice=${invoiceNumber}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json(); // Ambil sebagai JSON
-            })
-            .then(data => {
-                if (data.error) {
-                    alert(data.error);
-                } else {
-                    // Set values from data
-                    row.querySelector('input[name="nama_pelanggan[]"]').value = data.nama_pelanggan || '';
-                    row.querySelector('input[name="jatuh_tempo[]"]').value = data.jatuh_tempo || '';
-                    row.querySelector('input[name="piutang_belum_dibayar[]"]').value = data.piutang_belum_dibayar || 0;
-                }
-            })
-            .catch(error => console.error('Error fetching invoice details:', error));
+    fetch(`/pembayaran-piutang/fetch-invoice-details?nomor_invoice=${invoiceNumber}`)
+    .then(response => {
+    if (!response.ok) {
+    throw new Error('Network response was not ok');
     }
-}
-    @endpush
+    return response.json(); // Ambil sebagai JSON
+    })
+    .then(data => {
+    if (data.error) {
+    alert(data.error);
+    } else {
+    // Set values from data
+    row.querySelector('input[name="nama_pelanggan[]"]').value = data.nama_pelanggan || '';
+    row.querySelector('input[name="jatuh_tempo[]"]').value = data.jatuh_tempo || '';
+    row.querySelector('input[name="piutang_belum_dibayar[]"]').value = data.piutang_belum_dibayar || 0;
+    }
+    })
+    .catch(error => console.error('Error fetching invoice details:', error));
+    }
+    }
+@endpush
