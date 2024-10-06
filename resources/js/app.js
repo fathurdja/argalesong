@@ -120,3 +120,33 @@ pajakInput.addEventListener('change', calculateTotal);
 // Event listener untuk perubahan tanggal transaksi dan jatuh tempo
 document.getElementById('tanggal_transaksi').addEventListener('change', calculateDays);
 document.getElementById('jatuh_tempo').addEventListener('change', calculateDays);
+
+
+// nomor invoice
+let nomorInvoice = 1; // Mulai dengan nomor invoice 1
+
+function tambahBaris() {
+    nomorInvoice++; // Setiap klik tambah, nomor invoice bertambah
+
+    const container = document.getElementById('invoice-form');
+    const barisBaru = document.createElement('div');
+    barisBaru.className = 'flex space-x-4 mb-2';
+    
+    barisBaru.innerHTML = `
+        <button onclick="hapusBaris(this)" class="bg-red-500 text-white px-4 py-2 rounded-full">-</button>
+        <input type="text" id="nomor_invoice_${nomorInvoice}" name="nomor_invoice[]" value="INV-${nomorInvoice}" class="border border-gray-300 rounded px-4 py-2" placeholder="Masukkan Nomor Invoice">
+        <input type="text" name="nama_pelanggan[]" placeholder="Nama Pelanggan" class="border border-gray-300 rounded px-4 py-2">
+        <input type="date" name="jatuh_tempo[]" placeholder="Jatuh Tempo" class="border border-gray-300 rounded px-4 py-2">
+        <input type="number" name="piutang_belum_dibayar[]" placeholder="Piutang Belum Dibayar" class="border border-gray-300 rounded px-4 py-2">
+        <input type="number" name="denda[]" placeholder="Denda" class="border border-gray-300 rounded px-4 py-2">
+        <input type="number" name="diskon[]" placeholder="Diskon" class="border border-gray-300 rounded px-4 py-2">
+    `;
+    
+    container.appendChild(barisBaru);
+}
+
+function hapusBaris(button) {
+    const baris = button.parentElement;
+    baris.remove();
+}
+
