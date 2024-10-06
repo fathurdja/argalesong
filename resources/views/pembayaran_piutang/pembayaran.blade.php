@@ -12,7 +12,7 @@
         @endif
 
         <!-- Form untuk Input Nomor Invoice -->
-        <div class="bg-white p-6 rounded-lg shadow-md">
+        <div class="bg-white p-16 rounded-lg shadow-md ">
 
             <form method="GET"
                 action="{{ isset($pelanggan) ? route('pembayaran-piutang.index') : route('pembayaran-piutang.index') }}">
@@ -20,13 +20,52 @@
                 <div class="text-center mb-2">
                     <h1 class="text-2xl font-bold">PEMBAYARAN PIUTANG</h1>
                 </div>
-                <!-- Nomor Invoice -->
-                <div class="mb-4 ">
-                    <label for="nomor_invoice" class="block text-sm font-medium text-gray-700">Nomor Invoice</label>
-                    <input type="text" id="nomor_invoice" name="nomor_invoice"
-                        class="mt-1 p-2 block w-52 border-gray-300 rounded-md shadow-sm font-bold"
-                        placeholder="Masukkan Nomor Invoice" value="{{ old('nomor_invoice', request('nomor_invoice')) }}">
+
+            <div class="">
+                <!-- tgl transaksi-->
+                <div class="mb-4">
+                    <label for="tanggal_transaksi" class="block text-sm font-medium text-gray-700">Tanggal
+                        Transaksi</label>
+                    <input type="date" name="tanggal_transaksi" id="tanggal_transaksi"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
+
+                <!-- nomor invoice form -->
+                <div id="invoice-form">
+                    <div class="flex space-x-2 mb-1">
+                        <button onclick="tambahBaris()" class="bg-blue-500 text-white text-sm px-2 py-1 rounded-full">+</button>
+                        <input type="text" name="nomor_invoice[]"  class="border border-gray-300 rounded px-2 py-1 text-sm" placeholder="Nomor Invoice">
+                        <input type="text" name="nama_pelanggan[]" placeholder="Nama Pelanggan" class="border border-gray-300 rounded px-2 py-1 text-sm">
+                        <input type="date" name="jatuh_tempo[]" placeholder="Jatuh Tempo" class="border border-gray-300 rounded px-2 py-1 text-sm">
+                        <input type="number" name="piutang_belum_dibayar[]" placeholder="Piutang Belum Dibayar" class="border border-gray-300 rounded px-2 py-1 text-sm">
+                        <input type="number" name="denda[]" placeholder="Denda" class="border border-gray-300 rounded px-2 py-1 text-sm">
+                        <input type="number" name="diskon[]" placeholder="Diskon" class="border border-gray-300 rounded px-2 py-1 text-sm">
+                    </div>
+                </div>
+
+            </div>
+                <!-- Invoice Form -->
+            <div class="flex flex-col mb-5">
+            <label for="nomor_invoice" class="block text-sm font-medium text-gray-700">Total Semua Piutang</label>
+                <input 
+                    type="number" 
+                    class="border border-gray-300 p-2 rounded-lg" 
+                    placeholder="Total Piutang" 
+                    v-model="invoiceData.paymentAmount"
+                />
+            </div>
+
+            <div class="flex flex-col">
+            <label for="nomor_invoice" class="block text-sm font-medium text-gray-700">Nominal yang di bayar</label>
+                <input 
+                    type="number" 
+                    class="border border-gray-300 p-2 rounded-lg" 
+                    placeholder="Nominal yang Dibayar" 
+                    v-model="invoiceData.paymentAmount"
+                />
+            </div>
+        </div>
+
 
                 <!-- Nama Pelanggan, Tipe Pelanggan, Tipe Piutang, dll. (Auto-fill dari server) -->
                 @if (isset($pelanggan))
@@ -34,6 +73,7 @@
                         <div class="text-center mb-2">
                             <h1 class="text-2xl font-bold">PEMBAYARAN PIUTANG</h1>
                         </div>
+                        
                         <!-- Nama Pelanggan -->
                         <div class="flex justify-start items-center">
                             <span class="font-semibold w-40">Nama Pelanggan:</span>
