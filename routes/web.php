@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\fetchdata;
 use App\Http\Controllers\formBaruDaftarController;
 use App\Http\Controllers\formeditDaftarController;
 use App\Http\Controllers\JatuhTempoController;
@@ -49,6 +50,9 @@ Route::get('/customer/search', [CustomerController::class, 'index'])->name('cust
 Route::get('/piutang/group', [UmurPiutangController::class, 'index'])->name('detailpiutang.index')->middleware('auth');
 
 // Route::post('/tipe-pelanggan', [TipePelangganController::class, 'store'])->name('tambah-tipePelanggan')->middleware('auth');
+// Route for fetching invoice details
+Route::get('/pembayaran-piutang/fetch-invoice-details', [fetchdata::class, 'fetchInvoiceDetails'])->name('pembayaran-piutang.fetch-invoice-details')->middleware('auth');
+
 Route::get('/form-tambah-tagihan', [tagihanController::class, 'create'])->name('tambahForm')->middleware('auth');
 Route::get('/master-data-piutang', [masterdatacontroller::class, 'index'])->name('master_data_piutang')->middleware('auth');
 Route::get('/master-data-piutang-create', [masterdatacontroller::class, 'create'])->name('master_data_piutang_create')->middleware('auth');

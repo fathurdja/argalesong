@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto mt-5">
-
-
+    <div class="container mt-5 mx-auto">
         @if ($errors->any())
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
                 <strong class="font-bold">Error!</strong>
@@ -11,136 +9,128 @@
             </div>
         @endif
 
-        <!-- Form untuk Input Nomor Invoice -->
-        <div class="bg-white p-16 rounded-lg shadow-md ">
-
-            <form method="GET"
-                action="{{ isset($pelanggan) ? route('pembayaran-piutang.index') : route('pembayaran-piutang.index') }}">
+        <!-- Form for Payment Input -->
+        <div class="bg-white p-6 mx-2 rounded-lg shadow-md max-w-6xl ml-9">
+            <h1 class="text-2xl font-bold mb-4">PEMBAYARAN PIUTANG</h1>
+            <form method="POST" action="{{ route('pembayaran-piutang.store') }}">
                 @csrf
-                <div class="text-center mb-2">
-                    <h1 class="text-2xl font-bold">PEMBAYARAN PIUTANG</h1>
-                </div>
 
-            <div class="">
-                <!-- tgl transaksi-->
+                <!-- Nomor Invoice Input Section -->
                 <div class="mb-4">
-                    <label for="tanggal_transaksi" class="block text-sm font-medium text-gray-700">Tanggal
-                        Transaksi</label>
-                    <input type="date" name="tanggal_transaksi" id="tanggal_transaksi"
-                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+
+                    <!-- Container for Invoice Rows -->
+                    <div id="invoice-container">
+
+                        <div class="mb-4">
+                            <!-- Tanggal Transaksi -->
+                            <label for="tanggal_transaksi" class="block text-sm font-medium text-gray-700">Tanggal
+                                Transaksi</label>
+                            <input type="date" name="tanggal_transaksi" id="tanggal_transaksi"
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+
+                        <!-- Template for dynamic rows -->
+                        <div class="flex space-x-2 mb-2 invoice-row">
+                            <button type="button" class="bg-blue-500 text-white text-sm px-2 py-1 rounded-full mt-2"
+                                onclick="addInvoiceRow()">+</button>
+                            <input type="text" name="nomor_invoice"
+                                class="border border-gray-300 rounded px-2 py-1 text-sm w-1/4" placeholder="Nomor Invoice"
+                                onkeydown="if(event.key === 'Enter'){ fetchInvoice(this); return false; }">
+
+                            <input type="text" name="nama_pelanggan[]"
+                                class="border border-gray-300 rounded px-2 py-1 text-sm w-1/4" placeholder="Nama Pelanggan"
+                                readonly>
+
+                            <input type="date" name="jatuh_tempo[]"
+                                class="border border-gray-300 rounded px-2 py-1 text-sm w-1/4" placeholder="Jatuh Tempo"
+                                readonly>
+
+                            <input type="number" name="piutang_belum_dibayar[]"
+                                class="border border-gray-300 rounded px-2 py-1 text-sm w-1/4"
+                                placeholder="Piutang Belum Dibayar" readonly>
+
+                            <input type="number" name="denda[]"
+                                class="border border-gray-300 rounded px-2 py-1 text-sm w-1/4" placeholder="Denda">
+
+                            <input type="number" name="diskon[]"
+                                class="border border-gray-300 rounded px-2 py-1 text-sm w-1/4" placeholder="Diskon">
+
+                            <button type="button" class="bg-red-500 text-white text-sm px-2 py-1 rounded-full"
+                                onclick="removeRow(this)">x</button>
+                        </div>
+                    </div>
+
                 </div>
 
-                <!-- nomor invoice form -->
-                <div id="invoice-form">
-                    <div class="flex space-x-2 mb-1">
-                        <button onclick="tambahBaris()" class="bg-blue-500 text-white text-sm px-2 py-1 rounded-full">+</button>
-                        <input type="text" name="nomor_invoice[]"  class="border border-gray-300 rounded px-2 py-1 text-sm" placeholder="Nomor Invoice">
-                        <input type="text" name="nama_pelanggan[]" placeholder="Nama Pelanggan" class="border border-gray-300 rounded px-2 py-1 text-sm">
-                        <input type="date" name="jatuh_tempo[]" placeholder="Jatuh Tempo" class="border border-gray-300 rounded px-2 py-1 text-sm">
-                        <input type="number" name="piutang_belum_dibayar[]" placeholder="Piutang Belum Dibayar" class="border border-gray-300 rounded px-2 py-1 text-sm">
-                        <input type="number" name="denda[]" placeholder="Denda" class="border border-gray-300 rounded px-2 py-1 text-sm">
-                        <input type="number" name="diskon[]" placeholder="Diskon" class="border border-gray-300 rounded px-2 py-1 text-sm">
-                    </div>
+                <!-- Total Semua Piutang -->
+                <div class="mt-5">
+                    <label for="total_piutang" class="block text-sm font-medium text-gray-700">Total Semua Piutang</label>
+                    <input type="number" name="total_piutang" id="total_piutang"
+                        class="border border-gray-300 p-2 rounded-lg" placeholder="Total Piutang" readonly>
                 </div>
 
-            </div>
-                <!-- Invoice Form -->
-            <div class="flex flex-col mb-5">
-            <label for="nomor_invoice" class="block text-sm font-medium text-gray-700">Total Semua Piutang</label>
-                <input 
-                    type="number" 
-                    class="border border-gray-300 p-2 rounded-lg" 
-                    placeholder="Total Piutang" 
-                    v-model="invoiceData.paymentAmount"
-                />
-            </div>
+                <!-- Nominal yang Dibayar -->
+                <div class="mt-5">
+                    <label for="nominal_dibayar" class="block text-sm font-medium text-gray-700">Nominal yang
+                        Dibayar</label>
+                    <input type="number" name="nominal_dibayar" class="border border-gray-300 p-2 rounded-lg"
+                        placeholder="Nominal yang Dibayar">
+                </div>
 
-            <div class="flex flex-col">
-            <label for="nomor_invoice" class="block text-sm font-medium text-gray-700">Nominal yang di bayar</label>
-                <input 
-                    type="number" 
-                    class="border border-gray-300 p-2 rounded-lg" 
-                    placeholder="Nominal yang Dibayar" 
-                    v-model="invoiceData.paymentAmount"
-                />
-            </div>
-        </div>
-
-
-                <!-- Nama Pelanggan, Tipe Pelanggan, Tipe Piutang, dll. (Auto-fill dari server) -->
-                @if (isset($pelanggan))
-                    <div class="space-y-2">
-                        <div class="text-center mb-2">
-                            <h1 class="text-2xl font-bold">PEMBAYARAN PIUTANG</h1>
-                        </div>
-                        
-                        <!-- Nama Pelanggan -->
-                        <div class="flex justify-start items-center">
-                            <span class="font-semibold w-40">Nama Pelanggan:</span>
-                            <span>{{ $pelanggan->name }}</span>
-                        </div>
-
-                        <!-- Tipe Pelanggan -->
-                        <div class="flex justify-start items-center">
-                            <span class="font-semibold w-40">Tipe Pelanggan:</span>
-                            <span>{{ $tipePelanggan->name }}</span>
-                        </div>
-
-                        <!-- Tipe Piutang -->
-                        <div class="flex justify-start items-center">
-                            <span class="font-semibold w-40">Tipe Piutang:</span>
-                            <span>{{ $jenisPiutang->name }}</span>
-                        </div>
-
-                        <!-- Kas / Bank -->
-                        <div class="flex justify-start items-center">
-                            <label for="modebayar" class="block  font-semibold  w-40">Mode Bayar</label>
-                            <select id="modebayar" name="modebayar"
-                                class="mt-1 block w-52 p-2 border-gray-300 rounded-md shadow-sm">
-                                <option value="KAS" {{ old('modebayar') == 'KAS' ? 'selected' : '' }}>KAS</option>
-                                <option value="BANK" {{ old('modebayar') == 'BANK' ? 'selected' : '' }}>BANK</option>
-                            </select>
-                        </div>
-
-                        <!-- Diskon -->
-                        <div class="flex justify-start items-center">
-                            <label for="diskon" class="font-semibold  w-40 ">Diskon:</label>
-                            <input type="text" id="diskon" name="diskon"
-                                class="p-1 border-gray-300 rounded-md shadow-sm w-20" placeholder="Diskon %"
-                                value="{{ old('diskon') }}">
-                            <span class="ml-3">Rp. {{ $pelanggan->diskon }}</span>
-                        </div>
-                        <div class="flex justify-start items-center font-bold">
-                            <span class="w-40">Total Bayar:</span>
-                            <input type="text" id="totalbayar" name="totalbayar" placeholder="Rp. 00" class="rounded-md">
-                        </div>
-                        <!-- Total Piutang -->
-                        <div class="flex justify-start items-center font-bold">
-                            <span class="w-40">Total Piutang:</span>
-                            <span>Rp. {{ $detailPiutang->nominal }}</span>
-                        </div>
-                    </div>
-
-                    <!-- Keterangan (multi-line input) -->
-                    <div class="mb-4 mt-4">
-                        <label for="keterangan" class="block text-sm font-medium text-gray-700">Keterangan</label>
-                        <textarea id="keterangan" name="keterangan" class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm"
-                            rows="4" placeholder="Masukkan keterangan">{{ old('keterangan') }}</textarea>
-                    </div>
-                @else
-                    <p class="text-gray-500 italic">Masukkan nomor invoice untuk melihat informasi pembayaran piutang.</p>
-                @endif
-
-                <!-- Submit Button -->
+                <!-- Submit Payment Button -->
                 <div class="mt-6 px-4">
-                    @if (isset($pelanggan))
-                        <button type="submit" class="w-24 bg-blue-500 text-white p-2 rounded-md">Bayar</button>
-                    @else
-                        <button type="submit" class="w-24 bg-green-500 text-white p-2 rounded-md">Cari</button>
-                    @endif
-                    <button class="w-24 bg-gray-500 text-white p-2 rounded-md" type="reset">Batal</button>
+                    <button type="submit" class="w-24 bg-blue-500 text-white p-2 rounded-md">Bayar</button>
                 </div>
             </form>
         </div>
     </div>
+    
+    <!-- JavaScript for dynamic functionality -->
 @endsection
+@push('script')
+    
+            // Function to add a new invoice row
+            function addInvoiceRow() {
+                let container = document.getElementById('invoice-container');
+                let newRow = container.querySelector('.invoice-row').cloneNode(true);
+
+                // Clear the values for the new row
+                newRow.querySelectorAll('input').forEach(input => input.value = '');
+                container.appendChild(newRow);
+            }
+
+            // Function to remove an invoice row
+            function removeRow(button) {
+                let row = button.closest('.invoice-row');
+                if (document.querySelectorAll('.invoice-row').length > 1) {
+                    row.remove();
+                }
+            }
+
+            // Function to fetch invoice details based on entered invoice number
+            function fetchInvoice(input) {
+    let invoiceNumber = input.value;
+    let row = input.closest('.invoice-row');
+
+    if (invoiceNumber) {
+        fetch(`/pembayaran-piutang/fetch-invoice-details?nomor_invoice=${invoiceNumber}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Ambil sebagai JSON
+            })
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    // Set values from data
+                    row.querySelector('input[name="nama_pelanggan[]"]').value = data.nama_pelanggan || '';
+                    row.querySelector('input[name="jatuh_tempo[]"]').value = data.jatuh_tempo || '';
+                    row.querySelector('input[name="piutang_belum_dibayar[]"]').value = data.piutang_belum_dibayar || 0;
+                }
+            })
+            .catch(error => console.error('Error fetching invoice details:', error));
+    }
+}
+    @endpush

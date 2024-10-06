@@ -44,4 +44,13 @@ class piutang extends Model
     {
         return $this->belongsTo(TipePiutang::class, 'kodepiutang', 'kodePiutang');  // assuming 'id' is the primary key in 'piutang'
     }
+
+    public static function getDetailPiutang($nomor_invoice)
+    {
+        Log::info("Querying detail piutang for invoice number: " . $nomor_invoice);
+        return self::with(['pelanggan', 'pajak', 'jenisPiutang'])
+            ->where('no_invoice', $nomor_invoice)
+            ->first();
+    }
+    
 }
