@@ -42,16 +42,18 @@ Route::post('/register', [RegisterController::class, 'MakeAccount'])->name('make
 Route::resource('customer', CustomerController::class)->middleware('auth');
 Route::resource('masterDataPajak', MasterDataPajakController::class)->middleware('auth');
 Route::resource('piutang-types', PiutangController::class)->middleware('auth');
-Route::resource('pembayaran-piutang', PembayaranPiutangController::class)->middleware('auth');
+
 
 Route::get('/get-monthly-report', [Sp_bulananController::class, 'getMonthlyReport'])->middleware('auth');
 
 Route::get('/customer/search', [CustomerController::class, 'index'])->name('customer.search')->middleware('auth');
 Route::get('/piutang/group', [UmurPiutangController::class, 'index'])->name('detailpiutang.index')->middleware('auth');
+Route::get('/pembayaran-piutang', [pembayaranPiutang::class, 'showForm'])->name('pembayaran-piutang.show')->middleware('auth');
+Route::post('/pembayaran-piutang/proses', [pembayaranPiutang::class, 'proses'])->name('pembayaran-piutang.proses')->middleware('auth');
 
 // Route::post('/tipe-pelanggan', [TipePelangganController::class, 'store'])->name('tambah-tipePelanggan')->middleware('auth');
 // Route for fetching invoice details
-Route::get('/pembayaran-piutang/fetch-invoice-details', [fetchdata::class, 'fetchInvoiceDetails'])->name('pembayaran-piutang.fetch-invoice-details')->middleware('auth');
+
 
 Route::get('/form-tambah-tagihan', [tagihanController::class, 'create'])->name('tambahForm')->middleware('auth');
 Route::get('/master-data-piutang', [masterdatacontroller::class, 'index'])->name('master_data_piutang')->middleware('auth');

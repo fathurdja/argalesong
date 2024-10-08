@@ -67,7 +67,27 @@
                         <p class="mt-1 font-bold ">Hari</p>
                     </div>
 
+                    <div class="mb-4">
+                        <label for="jenis_tagihan" class="block text-sm font-medium text-gray-700">Jenis Tagihan</label>
+                        <select id="jenis_tagihan" name="jenis_tagihan"
+                            class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
+                            <option value="">-- Pilih Jenis Tagihan --</option>
+                            <option value="tetap" {{ old('jenis_tagihan') == 'tetap' ? 'selected' : '' }}>Tetap
+                            </option>
 
+                            <option value="berulang" {{ old('jenis_tagihan') == 'berulang' ? 'selected' : '' }}>Berulang
+                            </option>
+                        </select>
+                    </div>
+                    @if (old('jenis_tagihan') == 'berulang')
+                        <div class="mb-4">
+                            <label for="jumlah_kali" class="block text-sm font-medium text-gray-700" style="none">Berapa Kali
+                                Tagihan</label>
+                            <input type="number" id="jumlah_kali" name="jumlah_kali" min="1"
+                                class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2"
+                                required>
+                        </div>
+                    @endif
                     <div class="mb-4">
                         <label for="nama_pelanggan" class="block text-sm font-medium text-gray-700">Nama Pelanggan</label>
                         <select id="nama_pelanggan" name="nama_pelanggan"
@@ -131,4 +151,17 @@
 @endsection
 
 @push('script')
+    <script>
+        document.getElementById('jenis_tagihan').addEventListener('change', function() {
+            var jenisTagihan = this.value;
+            var jumlahKaliContainer = document.getElementById('jumlah_kali');
+
+            // Tampilkan input berapa kali tagihan hanya jika "Berulang" dipilih
+            if (jenisTagihan === 'berulang') {
+                jumlahKaliContainer.style.display = 'block';
+            } else {
+                jumlahKaliContainer.style.display = 'none';
+            }
+        });
+    </script>
 @endpush

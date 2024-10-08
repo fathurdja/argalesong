@@ -25,12 +25,23 @@ class PiutangController extends Controller
         $pajakType = masterDataPajak::all();
         $customer = customer::all();
         $selectedType = null;
+        $selectedTagihan = null;
+        $jumlahKali = null;
         // Ambil kode jenis piutang yang dipilih dari request
         if ($request->has('jenis_form')) {
             $selectedType = TipePiutang::find($request->jenis_form); // Mengambil data berdasarkan ID
         }
 
-        return view('piutangBaru.afiliasi', compact('piutangTypes', 'selectedType', 'customer', 'pajakType'));
+        if ($request->has('jenis_tagihan')) {
+            $selectedTagihan = $request->jenis_tagihan; // Ambil jenis tagihan yang dipilih
+
+            // Jika jenis tagihan adalah "Berulang", ambil jumlah kali dari input
+            if ($selectedTagihan == 'berulang' && $request->has('jumlah_kali')) {
+                $jumlahKali = $request->jumlah_kali; // Ambil jumlah kali tagihan
+            }
+        }
+
+        return view('piutangBaru.afiliasi', compact('piutangTypes', 'selectedType', 'customer', 'pajakType', 'selectedTagihan', 'jumlahKali'));
     }
 
 
