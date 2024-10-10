@@ -66,28 +66,6 @@
                             class="mt-1 block w-20 border-gray-300 font-bold shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <p class="mt-1 font-bold ">Hari</p>
                     </div>
-
-                    <div class="mb-4">
-                        <label for="jenis_tagihan" class="block text-sm font-medium text-gray-700">Jenis Tagihan</label>
-                        <select id="jenis_tagihan" name="jenis_tagihan"
-                            class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
-                            <option value="">-- Pilih Jenis Tagihan --</option>
-                            <option value="tetap" {{ old('jenis_tagihan') == 'tetap' ? 'selected' : '' }}>Tetap
-                            </option>
-
-                            <option value="berulang" {{ old('jenis_tagihan') == 'berulang' ? 'selected' : '' }}>Berulang
-                            </option>
-                        </select>
-                    </div>
-                    @if (old('jenis_tagihan') == 'berulang')
-                        <div class="mb-4">
-                            <label for="jumlah_kali" class="block text-sm font-medium text-gray-700" style="none">Berapa Kali
-                                Tagihan</label>
-                            <input type="number" id="jumlah_kali" name="jumlah_kali" min="1"
-                                class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2"
-                                required>
-                        </div>
-                    @endif
                     <div class="mb-4">
                         <label for="nama_pelanggan" class="block text-sm font-medium text-gray-700">Nama Pelanggan</label>
                         <select id="nama_pelanggan" name="nama_pelanggan"
@@ -100,27 +78,55 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="flex">
+                        <div class="mb-4">
+                            <label for="jenis_tagihan" class="block text-sm font-medium text-gray-700">Jenis Tagihan</label>
+                            <select id="jenis_tagihan" name="jenis_tagihan"
+                                class="mt-1 block w-52 bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
+                                <option value="">-- Pilih Jenis Tagihan --</option>
+                                <option value="tetap" {{ old('jenis_tagihan') == 'tetap' ? 'selected' : '' }}>Tetap
+                                </option>
+                                <option value="berulang" {{ old('jenis_tagihan') == 'berulang' ? 'selected' : '' }}>
+                                    Berulang
+                                </option>
+                            </select>
+                        </div>
+                        <div id="jumlah_kali_container" class="mb-4" style="display: none;">
+                            <label for="jumlah_kali" class="block ml-4 text-sm font-medium text-gray-700">Berapa Kali
+                                Tagihan</label>
+                            <input type="number" id="jumlah_kali" name="jumlah_kali" min="1"
+                                class="mt-1 block w-32 ml-4 bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2"
+                                value="{{ old('jumlah_kali') }}">
+                        </div>
+                    </div>
 
                     <div class="mb-4">
-                        <label for="pajak" class="block text-sm font-medium text-gray-700">Pajak</label>
-                        <select id="pajak" name="ppn_value"
-                            class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            onchange="calculateTotal()">
-                            <option value="">-- Pilih Pajak --</option>
+                        <label class="block text-sm font-medium text-gray-700">Pajak</label>
+                        <div class="mt-2 space-y-2">
                             @foreach ($pajakType as $type)
-                                <option value="{{ $type->nilai }}">
-                                    {{ $type->name }} ({{ $type->nilai }}%)
-                                </option>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="pajak_{{ $type->id }}" name="pajak[]"
+                                        value="{{ $type->nilai }}" data-nama="{{ $type->name }}"
+                                        data-nilai="{{ $type->nilai }}"
+                                        data-jenis="{{ $type->kode_pajak === 'PJK1' ? 'tambah' : 'kurang' }}"
+                                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                                        onchange="updateTaxCalculation()">
+                                    <label for="pajak_{{ $type->id }}" class="ml-2 block text-sm text-gray-900">
+                                        {{ $type->name }} ({{ $type->nilai }}%)
+                                    </label>
+                                </div>
                             @endforeach
-                        </select>
+                        </div>
                     </div>
+
+
 
                     <div class="grid grid-cols-2 gap-4 mb-4 items-start">
                         <div>
                             <label for="dpp" class="block text-sm font-medium text-gray-700">DPP</label>
                             <input type="text" name="dpp" id="dpp"
                                 class="mt-1 block w-full text-right p-3 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                oninput="calculateTotal()" value="0,00">
+                                oninput="formatDPP(this)" value="0">
                         </div>
 
                         <div>
@@ -131,7 +137,8 @@
                         </div>
 
                         <div>
-                            <label for="total_piutang" class="block text-sm font-medium text-gray-700">Total Piutang</label>
+                            <label for="total_piutang" class="block text-sm font-medium text-gray-700">Total
+                                Piutang</label>
                             <input type="text" name="total_piutang" id="total_piutang"
                                 class="mt-1 block w-full text-right border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 readonly>
@@ -148,20 +155,42 @@
             @endif
         </div>
     </div>
+
 @endsection
 
 @push('script')
     <script>
-        document.getElementById('jenis_tagihan').addEventListener('change', function() {
-            var jenisTagihan = this.value;
-            var jumlahKaliContainer = document.getElementById('jumlah_kali');
+        document.addEventListener('DOMContentLoaded', function() {
+            const tanggalTransaksiInput = document.getElementById('tanggal_transaksi');
+            const jatuhTempoInput = document.getElementById('jatuh_tempo');
+            const jarakHariInput = document.getElementById('jarak_hari');
 
-            // Tampilkan input berapa kali tagihan hanya jika "Berulang" dipilih
-            if (jenisTagihan === 'berulang') {
-                jumlahKaliContainer.style.display = 'block';
-            } else {
-                jumlahKaliContainer.style.display = 'none';
+            function updateJarakHari() {
+                const tanggalTransaksi = new Date(tanggalTransaksiInput.value);
+                const jatuhTempo = new Date(jatuhTempoInput.value);
+
+                if (tanggalTransaksi && jatuhTempo) {
+                    const diffTime = Math.abs(jatuhTempo - tanggalTransaksi);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    jarakHariInput.value = diffDays;
+                }
             }
+
+            function updateJatuhTempo() {
+                const tanggalTransaksi = new Date(tanggalTransaksiInput.value);
+                const jarakHari = parseInt(jarakHariInput.value, 10);
+
+                if (tanggalTransaksi && !isNaN(jarakHari)) {
+                    const jatuhTempo = new Date(tanggalTransaksi);
+                    jatuhTempo.setDate(jatuhTempo.getDate() + jarakHari);
+                    jatuhTempoInput.value = jatuhTempo.toISOString().split('T')[0];
+                }
+            }
+
+            tanggalTransaksiInput.addEventListener('change', updateJarakHari);
+            jatuhTempoInput.addEventListener('change', updateJarakHari);
+            jarakHariInput.addEventListener('input', updateJatuhTempo);
+
         });
     </script>
 @endpush

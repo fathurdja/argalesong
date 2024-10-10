@@ -6,6 +6,7 @@ use App\Models\customer;
 use App\Models\masterDataPajak;
 use App\Models\piutang;
 use App\Models\TipePiutang;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -50,57 +51,86 @@ class PiutangController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi input yang diterima
         $validatedData = $request->validate([
-            'nama_pelanggan' => 'required|exists:customer,id_Pelanggan', // Pelanggan harus ada
+            'nama_pelanggan' => 'required|exists:customer,id_Pelanggan',
             'tanggal_transaksi' => 'required|date',
             'jatuh_tempo' => 'required|date',
             'jarak_hari' => 'required|integer',
             'total_piutang' => 'required|string|min:0',
-            'ppn_value' => 'required|string|min:0', // Pajak harus ada dalam masterpajak
+            'ppn_value' => 'required|string|min:0',
             'diskon' => 'nullable|string|min:0',
-            'jenis_form' => 'required|exists:tipepiutang,kodePiutang', // Kode piutang harus ada
+            'jenis_form' => 'required|exists:tipepiutang,kodePiutang',
+            'jenis_tagihan' => 'required|in:tetap,berulang',
+            'jumlah_kali' => 'required_if:jenis_tagihan,berulang|nullable|integer|min:1',
         ]);
 
-        $kodePiutang = $request->input('jenis_form'); // Kode piutang dari jenis_form
-        $pajakValue = $request->input('ppn_value'); // Nilai pajak yang dipilih
+        // ... (logic untuk mengolah data yang sudah ada)
 
-        // Mengubah total_piutang dan ppn_value menjadi desimal
-        $totalPiutang = str_replace(',', '.', preg_replace('/[^\d,]/', '', $validatedData['total_piutang']));
-        $ppnValue = str_replace(',', '.', preg_replace('/[^\d,]/', '', $validatedData['ppn_value']));
-
-        // Konversi ke format decimal (float) setelah pemisah desimal diperbaiki
-        $totalPiutang = number_format((float) $totalPiutang, 2, '.', '');
-        $ppnValue = number_format((float) $ppnValue, 2, '.', '');
-
-        // Dapatkan nama pajak berdasarkan nilai pajak dari tabel pajak
-        $pajak = masterDataPajak::where('nilai', $pajakValue)->first(); // Ambil detail pajak dari tabel Pajak
-        $namaPajak = $pajak ? $pajak->name : null;
         $transactionID = $this->generateTransactionID();
-        // Buat objek piutang baru
-        $piutang = new piutang();
 
-        // Isi data yang tervalidasi
-        $piutang->idpelanggan = $validatedData['nama_pelanggan'];
-        $piutang->no_invoice = $transactionID; // Relasi ke pelanggan
-        $piutang->tgltra = $validatedData['tanggal_transaksi'];
-        $piutang->tgl_jatuh_tempo = $validatedData['jatuh_tempo'];
-        $piutang->jhari = $validatedData['jarak_hari'];
-        $piutang->nominal = $totalPiutang; // Menggunakan nilai yang sudah diubah ke decimal
-        $piutang->ppn = $ppnValue; // Menggunakan nilai yang sudah diubah ke decimal
-        $piutang->pajak = $namaPajak; // Relasi ke masterpajak
-        $piutang->diskon = $validatedData['diskon'] ?? 0; // Diskon bersifat opsional
-        $piutang->kodepiutang = $kodePiutang; // Relasi ke jenis piutang
+        if ($validatedData['jenis_tagihan'] === 'tetap') {
+            $this->createSingleInvoice($validatedData, $transactionID);
+        } else {
+            $this->createRecurringInvoices($validatedData, $transactionID);
+        }
 
-        // Simpan data piutang ke database
-        $piutang->save();
-
-        // Tampilkan alert sukses setelah data berhasil disimpan
         Alert::success('Berhasil!', 'Data piutang berhasil disimpan.');
-
-        // Redirect ke halaman list piutang dengan pesan sukses
         return redirect()->route('piutang-types.create')->with('success', 'Data Piutang berhasil disimpan.');
     }
+
+    private function createSingleInvoice($data, $transactionID)
+    {
+        Piutang::create([
+            'idpelanggan' => $data['nama_pelanggan'],
+            'no_invoice' => $transactionID,
+            'tgltra' => $data['tanggal_transaksi'],
+            'tgl_jatuh_tempo' => $data['jatuh_tempo'],
+            'jhari' => $data['jarak_hari'],
+            'nominal' => $this->convertToDecimal($data['total_piutang']),
+            'ppn' => $this->convertToDecimal($data['ppn_value']),
+            'pajak' => $this->getPajakName($data['ppn_value']),
+            'diskon' => $data['diskon'] ?? 0,
+            'kodepiutang' => $data['jenis_form'],
+            'jenisTagihan' => 'tetap',
+            'jumlahTagihan' => 1,
+            'urutanTagihan' => 1,
+        ]);
+    }
+    private function convertToDecimal($value)
+    {
+        $value = str_replace(',', '.', preg_replace('/[^\d,]/', '', $value));
+        return number_format((float) $value, 2, '.', '');
+    }
+    private function getPajakName($pajakValue)
+    {
+        $pajak = MasterDataPajak::where('nilai', $pajakValue)->first();
+        return $pajak ? $pajak->name : null;
+    }
+    private function createRecurringInvoices($data, $transactionID)
+    {
+        $dueDate = Carbon::parse($data['jatuh_tempo']);
+
+        for ($i = 0; $i < $data['jumlah_kali']; $i++) {
+            Piutang::create([
+                'idpelanggan' => $data['nama_pelanggan'],
+                'no_invoice' => $transactionID,
+                'tgltra' => $data['tanggal_transaksi'],
+                'tgl_jatuh_tempo' => $dueDate->copy(),
+                'jhari' => $data['jarak_hari'],
+                'nominal' => $this->convertToDecimal($data['total_piutang']),
+                'ppn' => $this->convertToDecimal($data['ppn_value']),
+                'pajak' => $this->getPajakName($data['ppn_value']),
+                'diskon' => $data['diskon'] ?? 0,
+                'kodepiutang' => $data['jenis_form'],
+                'jenisTagihan' => 'berulang',
+                'jumlahTagihan' => $data['jumlah_kali'],
+                'urutanTagihan' => $i + 1,
+            ]);
+
+            $dueDate->addMonth();
+        }
+    }
+
     function generateTransactionID()
     {
         // Ambil transaksi terakhir berdasarkan ID

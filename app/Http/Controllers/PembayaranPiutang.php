@@ -10,7 +10,7 @@ class PembayaranPiutang extends Controller
 {
     public function showForm()
     {
-        return view('Pembayaran_piutang.pembayaran');
+        return view('pembayaran_piutang.pembayaran');
     }
 
 

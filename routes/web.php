@@ -14,7 +14,7 @@ use App\Http\Controllers\masterdatacontroller;
 use App\Http\Controllers\MasterDataPajakController;
 use App\Http\Controllers\pbAfiliasiController;
 use App\Http\Controllers\pbSewaMenyewaController;
-use App\Http\Controllers\pembayaranPiutang;
+use App\Http\Controllers\PembayaranPiutang;
 use App\Http\Controllers\PembayaranPiutangController;
 use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\pp_baruController;
@@ -48,8 +48,8 @@ Route::get('/get-monthly-report', [Sp_bulananController::class, 'getMonthlyRepor
 
 Route::get('/customer/search', [CustomerController::class, 'index'])->name('customer.search')->middleware('auth');
 Route::get('/piutang/group', [UmurPiutangController::class, 'index'])->name('detailpiutang.index')->middleware('auth');
-Route::get('/pembayaran-piutang', [pembayaranPiutang::class, 'showForm'])->name('pembayaran-piutang.show')->middleware('auth');
-Route::post('/pembayaran-piutang/proses', [pembayaranPiutang::class, 'proses'])->name('pembayaran-piutang.proses')->middleware('auth');
+Route::get('/pembayaran-piutang', [PembayaranPiutang::class, 'showForm'])->name('pembayaran-piutang.show')->middleware('auth');
+Route::post('/pembayaran-piutang/proses', [PembayaranPiutang::class, 'proses'])->name('pembayaran-piutang.proses')->middleware('auth');
 
 // Route::post('/tipe-pelanggan', [TipePelangganController::class, 'store'])->name('tambah-tipePelanggan')->middleware('auth');
 // Route for fetching invoice details

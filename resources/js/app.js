@@ -18,6 +18,116 @@ document.addEventListener('DOMContentLoaded', function() {
             submenu.classList.remove('active');
         });
     });
+    const dppInput = document.getElementById('dpp');
+            const ppnValueInput = document.getElementById('ppn_value');
+            const totalPiutangInput = document.getElementById('total_piutang');
+            const taxCheckboxes = document.querySelectorAll('input[name="pajak[]"]');
+            const tanggalTransaksiInput = document.getElementById('tanggal_transaksi');
+            const jatuhTempoInput = document.getElementById('jatuh_tempo');
+            const jarakHariInput = document.getElementById('jarak_hari');
+            function updateJarakHari() {
+                const tanggalTransaksi = new Date(tanggalTransaksiInput.value);
+                const jatuhTempo = new Date(jatuhTempoInput.value);
+
+                if (tanggalTransaksi && jatuhTempo) {
+                    const diffTime = Math.abs(jatuhTempo - tanggalTransaksi);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    jarakHariInput.value = diffDays;
+                }
+            }
+
+            function updateJatuhTempo() {
+                const tanggalTransaksi = new Date(tanggalTransaksiInput.value);
+                const jarakHari = parseInt(jarakHariInput.value, 10);
+
+                if (tanggalTransaksi && !isNaN(jarakHari)) {
+                    const jatuhTempo = new Date(tanggalTransaksi);
+                    jatuhTempo.setDate(jatuhTempo.getDate() + jarakHari);
+                    jatuhTempoInput.value = jatuhTempo.toISOString().split('T')[0];
+                }
+            }
+
+            tanggalTransaksiInput.addEventListener('change', updateJarakHari);
+            jatuhTempoInput.addEventListener('change', updateJarakHari);
+            jarakHariInput.addEventListener('input', updateJatuhTempo);
+            // Format number to Indonesian currency format
+            function formatNumber(number) {
+                return new Intl.NumberFormat('id-ID').format(number);
+            }
+
+            // Parse number from formatted input
+            function parseNumber(string) {
+                return parseFloat(string.replace(/\./g, '').replace(',', '.')) || 0;
+            }
+
+            // Function to update the tax calculation
+            function updateTaxCalculation() {
+                let dpp = parseNumber(dppInput.value); // Get the DPP value
+                let totalTax = 0; // Initialize total tax
+                let ppnTotal = 0; // Initialize total PPN
+                let pphTotal = 0; // Initialize total PPh
+
+                // Loop through all checked tax checkboxes
+                taxCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        const taxValue = parseFloat(checkbox.dataset
+                            .nilai); // Get the tax value from dataset
+                        const taxType = checkbox.dataset.jenis; // Get the tax type ('tambah' or 'kurang')
+
+                        // If it's a 'tambah' tax (e.g., PPN), add to total PPN
+                        if (taxType === 'tambah') {
+                            ppnTotal += (dpp * taxValue / 100);
+                        }
+                        // If it's a 'kurang' tax (e.g., PPH), add to total PPh
+                        else if (taxType === 'kurang') {
+                            pphTotal += (dpp * taxValue / 100);
+                        }
+                    }
+                });
+
+                // Calculate the total tax (PPN ditambah dan PPH dikurang)
+                totalTax = ppnTotal - pphTotal;
+
+                // Update the PPN/PPH field (this will show the result of total tax)
+                ppnValueInput.value = formatNumber((ppnTotal - pphTotal).toFixed(2));
+
+                // Calculate total piutang (DPP + Total Tax)
+                let totalPiutang = dpp + ppnTotal - pphTotal;
+                totalPiutangInput.value = formatNumber(totalPiutang.toFixed(2));
+            }
+
+            // Handle DPP input format and calculation on input
+            function handleDPPInput(e) {
+                let value = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+                let formattedValue = value === '' ? '0' : formatNumber(parseInt(value, 10)); // Format the value
+                e.target.value = formattedValue; // Update the input value
+                updateTaxCalculation(); // Update tax calculation
+            }
+
+            // Add event listeners to DPP input and tax checkboxes
+            dppInput.addEventListener('input', handleDPPInput);
+            taxCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateTaxCalculation);
+            });
+
+            // Initial calculation to handle any preselected taxes
+            updateTaxCalculation();
+
+            var jenisTagihanSelect = document.getElementById('jenis_tagihan');
+            var jumlahKaliContainer = document.getElementById('jumlah_kali_container');
+
+            function toggleJumlahKali() {
+                if (jenisTagihanSelect.value === 'berulang') {
+                    jumlahKaliContainer.style.display = 'block';
+                } else {
+                    jumlahKaliContainer.style.display = 'none';
+                }
+            }
+
+            jenisTagihanSelect.addEventListener('change', toggleJumlahKali);
+
+            // Call the function on page load to set the initial state
+            toggleJumlahKali();
 });
 
 // Mengambil elemen DPP dan Pajak
@@ -41,20 +151,7 @@ function calculateDays() {
 }
 
 // Function untuk menghitung tanggal jatuh tempo berdasarkan input manual jumlah hari
-document.getElementById('jarak_hari').addEventListener('input', function() {
-    const jarakHari = parseInt(this.value); // Ambil nilai input jumlah hari
-    const tanggalTransaksi = document.getElementById('tanggal_transaksi').value;
 
-    if (jarakHari && tanggalTransaksi) {
-        const startDate = new Date(tanggalTransaksi);
-        startDate.setDate(startDate.getDate() + jarakHari); // Tambahkan jumlah hari ke tanggal transaksi
-
-        const jatuhTempo = startDate.toISOString().split('T')[0]; // Format menjadi YYYY-MM-DD
-        document.getElementById('jatuh_tempo').value = jatuhTempo; // Set tanggal jatuh tempo
-    } else {
-        document.getElementById('jatuh_tempo').value = ''; // Kosongkan jika tidak ada input
-    }
-});
 
 // Function untuk memformat angka menjadi format Rupiah
 function formatRupiah(angka) {
@@ -77,16 +174,7 @@ function unformatRupiah(rupiahString) {
 }
 
 // Function untuk menghitung total berdasarkan DPP dan pajak
-function calculateTotal() {
-    const dpp = unformatRupiah(dppInput.value);
-    const pajakPercentage = parseFloat(pajakInput.value) || 0;
 
-    const ppnValue = (dpp * pajakPercentage) / 100;
-    const totalPiutang = dpp + ppnValue;
-
-    document.getElementById('ppn_value').value = formatRupiah(ppnValue.toFixed(2));
-    document.getElementById('total_piutang').value = formatRupiah(totalPiutang.toFixed(2));
-}
 
 // Event listener untuk input DPP
 dppInput.addEventListener('focus', function() {
@@ -118,8 +206,7 @@ dppInput.addEventListener('input', function() {
 pajakInput.addEventListener('change', calculateTotal);
 
 // Event listener untuk perubahan tanggal transaksi dan jatuh tempo
-document.getElementById('tanggal_transaksi').addEventListener('change', calculateDays);
-document.getElementById('jatuh_tempo').addEventListener('change', calculateDays);
+
 
 
 // nomor invoice

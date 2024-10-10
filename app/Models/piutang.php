@@ -21,6 +21,10 @@ class piutang extends Model
         'diskon',
         'kodepiutang',
         'no_invoice',
+        'jenisTagihan',
+        'jumlahTagihan',
+        'urutanTagihan',
+        'statusPembayaran'
 
     ];
     public function pelanggan()
@@ -53,5 +57,9 @@ class piutang extends Model
             ->where('no_invoice', $nomor_invoice)
             ->first();
     }
-    
+    public function piutangBerulang()
+    {
+        return $this->hasMany(Piutang::class, 'no_invoice', 'no_invoice')
+            ->where('id', '!=', $this->id);
+    }
 }
