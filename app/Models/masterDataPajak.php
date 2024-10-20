@@ -11,6 +11,7 @@ class masterDataPajak extends Model
     protected $table = 'masterdatapajak';
     protected $fillable = [
         'name',
+        'kode_pajak',
         'nilai',
         'created_at'
     ];

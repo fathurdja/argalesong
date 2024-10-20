@@ -5,7 +5,7 @@
 
 
         @if ($errors->any())
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 ml-9">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -102,22 +102,33 @@
 
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Pajak</label>
-                        <div class="mt-2 space-y-2">
-                            @foreach ($pajakType as $type)
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="pajak_{{ $type->id }}" name="pajak[]"
-                                        value="{{ $type->nilai }}" data-nama="{{ $type->name }}"
-                                        data-nilai="{{ $type->nilai }}"
-                                        data-jenis="{{ $type->kode_pajak === 'PJK1' ? 'tambah' : 'kurang' }}"
-                                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                                        onchange="updateTaxCalculation()">
-                                    <label for="pajak_{{ $type->id }}" class="ml-2 block text-sm text-gray-900">
-                                        {{ $type->name }} ({{ $type->nilai }}%)
-                                    </label>
-                                </div>
-                            @endforeach
+                        <div class="mt-2 flex items-center gap-4">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="ppn_checkbox" name="ppn_checkbox"
+                                    class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                <label for="ppn_checkbox" class="ml-2">PPN</label>
+                            </div>
+                            <div class="flex items-center ml-4 ">
+                                <label for="pajak_type" class="mr-2">PPh:</label>
+                                <select name="pajak_type" id="pajak_type" onchange="fetchPajakRates(this.value)"
+                                    class="mt-1 block w-52 bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
+                                    <option value="Tidak Ada">Tidak Ada</option>
+                                    @foreach ($pajakTypes as $pajakType)
+                                        <option value="{{ $pajakType }}">{{ $pajakType }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="flex items-center ml-4">
+                                <label for="tarif" class="mr-2">tarif:</label>
+                                <select name="tarif" id="tarif"
+                                    class="bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
+                                    <option value="">-- Pilih Tarif --</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
+
 
 
 
@@ -158,39 +169,33 @@
 
 @endsection
 
-@push('script')
+{{-- @push('script')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tanggalTransaksiInput = document.getElementById('tanggal_transaksi');
-            const jatuhTempoInput = document.getElementById('jatuh_tempo');
-            const jarakHariInput = document.getElementById('jarak_hari');
+        function fetchPajakRates(pajakType) {
+            const tarifSelect = document.getElementById('tarif');
+            tarifSelect.innerHTML = '<option value="">-- Pilih Tarif --</option>';
 
-            function updateJarakHari() {
-                const tanggalTransaksi = new Date(tanggalTransaksiInput.value);
-                const jatuhTempo = new Date(jatuhTempoInput.value);
-
-                if (tanggalTransaksi && jatuhTempo) {
-                    const diffTime = Math.abs(jatuhTempo - tanggalTransaksi);
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    jarakHariInput.value = diffDays;
-                }
+            if (pajakType === 'Tidak Ada') {
+                return;
             }
 
-            function updateJatuhTempo() {
-                const tanggalTransaksi = new Date(tanggalTransaksiInput.value);
-                const jarakHari = parseInt(jarakHariInput.value, 10);
+            fetch(`/api/pajak/${pajakType}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success' && data.rates) {
+                        data.rates.forEach(rate => {
+                            const option = document.createElement('option');
+                            option.value = rate.nilai;
+                            option.textContent = `${rate.nilai}%`;
+                            tarifSelect.appendChild(option);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching tax rates:', error);
+                });
+        }
 
-                if (tanggalTransaksi && !isNaN(jarakHari)) {
-                    const jatuhTempo = new Date(tanggalTransaksi);
-                    jatuhTempo.setDate(jatuhTempo.getDate() + jarakHari);
-                    jatuhTempoInput.value = jatuhTempo.toISOString().split('T')[0];
-                }
-            }
-
-            tanggalTransaksiInput.addEventListener('change', updateJarakHari);
-            jatuhTempoInput.addEventListener('change', updateJarakHari);
-            jarakHariInput.addEventListener('input', updateJatuhTempo);
-
-        });
+        // ... (rest of your JavaScript remains unchanged)
     </script>
-@endpush
+@endpush --}}

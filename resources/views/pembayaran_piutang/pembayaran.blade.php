@@ -1,154 +1,170 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container mt-5 mx-auto">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden ml-9">
         @if ($errors->any())
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                <strong class="font-bold">Error!</strong>
-                <span class="block sm:inline">{{ $errors->first() }}</span>
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
+                <p class="font-bold">Error!</p>
+                <p>{{ $errors->first() }}</p>
             </div>
         @endif
 
-        <!-- Form for Payment Input -->
-        <div class="bg-white p-6 mx-2 rounded-lg shadow-md  max-w-5xl ml-9">
-            <h1 class="text-2xl font-bold mb-4">PEMBAYARAN PIUTANG</h1>
-            <form method="POST" action="{{ route('pembayaran-piutang.proses') }}">
+        <div class="p-6 ml-4">
+            <h1 class="text-2xl font-bold mb-6 ">PEMBAYARAN PIUTANG</h1>
+            <form method="POST" action="{{ route('pembayaran-piutang.proses') }}" id="paymentForm"
+                data-proses-url="{{ route('pembayaran-piutang.proses') }}"
+                data-store-url="{{ route('pembayaran-piutang.store') }}">
                 @csrf
+                <input type="hidden" name="_method" value="POST">
 
-                <!-- Transaction Date -->
-                <div class="mb-4">
-                    <label for="tanggal_transaksi" class="block text-sm font-medium text-gray-700">Tanggal Transaksi</label>
-                    <input type="date" name="tanggal_transaksi" id="tanggal_transaksi"
-                        value="{{ old('tanggal_transaksi', now()->format('Y-m-d')) }}"
-                        class="mt-1 block w-64 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm h-10"
-                        required>
-                </div>
-
-                <!-- Dynamic Invoice Rows -->
-                <div class="mb-4 overflow-x-auto" id="invoice-container">
-                    <div class="grid grid-cols-9 gap-10 mb-2 min-w-max">
-                        <label class="text-sm font-medium text-gray-700 w-40">Nomor Invoice</label>
-                        <label class="text-sm font-medium text-gray-700 w-50">Nama Pelanggan</label>
-                        <label class="text-sm font-medium text-gray-700 w-50">Tanggal Jatuh Tempo</label>
-                        <label class="text-sm font-medium text-gray-700 w-48">Piutang</label>
-                        <label class="text-sm font-medium text-gray-700 w-48">Diskon</label>
-                        <label class="text-sm font-medium text-gray-700 w-48">Denda</label>
-                        <label class="text-sm font-medium text-gray-700 w-48">Total Piutang</label>
-
+                <div class="flex items-end gap-3 mb-4">
+                    <div class="">
+                        <label for="tanggal_transaksi" class="block text-sm font-medium text-gray-700 mb-1">Tanggal
+                            Transaksi</label>
+                        <input type="date" name="tanggal_transaksi" id="tanggal_transaksi"
+                            value="{{ old('tanggal_transaksi', now()->format('Y-m-d')) }}"
+                            class="w-64 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            required>
                     </div>
-                    @foreach (old('invoices', [0]) as $index => $invoice)
-                        <div class="grid grid-cols-8 gap-4 mb-2 invoice-row min-w-max">
-
-                            <input type="text" name="invoices[{{ $index }}][nomor_invoice]"
-                                class="border border-gray-300 rounded px-2 py-1 text-sm" placeholder="Nomor Invoice"
-                                value="{{ old("invoices.$index.nomor_invoice") }}" required>
-                            <input type="text" name="invoices[{{ $index }}][nama_pelanggan]"
-                                class="border border-gray-300 rounded px-2 py-1 text-sm " placeholder="Nama Pelanggan"
-                                value="{{ old("invoices.$index.nama_pelanggan") }}" readonly>
-                            <input type="date" name="invoices[{{ $index }}][jatuh_tempo]"
-                                class="border border-gray-300 rounded px-2 py-1 text-sm " placeholder="Jatuh Tempo"
-                                value="{{ old("invoices.$index.jatuh_tempo") }}" readonly>
-                            <input type="text" name="invoices[{{ $index }}][piutang_belum_dibayar]"
-                                class="border border-gray-300 rounded px-4 py-1 text-sm "
-                                placeholder="Piutang Belum Dibayar"
-                                value="Rp {{ number_format(old("invoices.$index.piutang_belum_dibayar", 0), 0, ',', '.') }}"
-                                readonly>
-                            <input type="text" name="invoices[{{ $index }}][diskon]"
-                                class="border border-gray-300 rounded px-4 py-1 text-sm " placeholder="Diskon"
-                                value="Rp {{ number_format(old("invoices.$index.diskon", 0), 0, ',', '.') }}" readonly>
-
-                            <input type="text" name="invoices[{{ $index }}][denda]"
-                                class="border border-gray-300 rounded px-4 py-1 text-sm " placeholder="Denda"
-                                value=" Rp {{ number_format(old("invoices.$index.denda", 0), 0, ',', '.') }}" readonly>
-
-                            <input type="text" name="invoices[{{ $index }}][amount_to_pay]"
-                                class="border border-gray-300 px-4 py-1 rounded-lg "
-                                value="Rp {{ number_format(old("invoices.$index.amount_to_pay", 0), 0, ',', '.') }}"
-                                readonly>
-                            <button type="button" class="text-red-700" onclick="removeInvoiceRow(this)">
-                                <svg class="h-5 w-5 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                    fill="currentColor">
-                                    <path
-                                        d="M20 7V20C20 21.1046 19.1046 22 18 22H6C4.89543 22 4 21.1046 4 20V7H2V5H22V7H20ZM6 7V20H18V7H6ZM11 9H13V11H11V9ZM11 12H13V14H11V12ZM11 15H13V17H11V15ZM7 2H17V4H7V2Z">
-                                    </path>
-                                </svg>
-                            </button>
-                        </div>
-                    @endforeach
+                    <div class= "mb-1">
+                        <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                            id="add-invoice-btn" onclick="addInvoiceRow()">
+                            Tambah Invoice
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Button to add a new invoice row -->
-                <div class="mt-2">
-                    <button type="button" class="bg-blue-500 text-white p-2 rounded-md" id="add-invoice-btn"
-                        onclick="addInvoiceRow()">
-                        Tambah Invoice
-                    </button>
+                <div class="overflow-x-auto mb-4">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Nomor Invoice</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Nama Pelanggan</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Jatuh Tempo</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Piutang</th>
+                                <th
+                                    class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">
+                                    Diskon</th>
+                                <th
+                                    class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">
+                                    Denda</th>
+                                <th
+                                    class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-40">
+                                    Total Piutang</th>
+                                <th class="px-3 py-2"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="invoice-container">
+                            @foreach (old('invoices', [0]) as $index => $invoice)
+                                <tr class="invoice-row">
+                                    <td class="px-3 py-2">
+                                        <input type="text" name="invoices[{{ $index }}][nomor_invoice]"
+                                            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+                                            placeholder="Nomor Invoice" value="{{ old("invoices.$index.nomor_invoice") }}"
+                                            onkeydown="handleEnter(event, 'proses')" required>
+                                    </td>
+                                    <td class="px-3 py-2">
+                                        <input type="text" name="invoices[{{ $index }}][nama_pelanggan]"
+                                            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+                                            placeholder="Nama Pelanggan" value="{{ old("invoices.$index.nama_pelanggan") }}"
+                                            readonly>
+                                        <input type="hidden" name="invoices[{{ $index }}][idpelanggan]"
+                                            value="{{ old("invoices.$index.idpelanggan") }}">
+                                    </td>
+                                    <td class="px-3 py-2">
+                                        <input type="date" name="invoices[{{ $index }}][jatuh_tempo]"
+                                            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+                                            value="{{ old("invoices.$index.jatuh_tempo") }}" readonly>
+                                    </td>
+                                    <td class="px-4 py-2">
+                                        <input type="text" name="invoices[{{ $index }}][piutang_belum_dibayar]"
+                                            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+                                            value="Rp {{ number_format((float) old("invoices.$index.piutang_belum_dibayar", 0), 0, ',', '.') }}"
+                                            readonly>
+                                    </td>
+                                    <td class="px-4 py-2">
+                                        <input type="text"
+                                            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full text-base font-medium"
+                                            value="Rp {{ number_format((float) old("invoices.$index.diskon", 0), 0, ',', '.') }}"
+                                            readonly>
+                                        <input type="hidden" name="invoices[{{ $index }}][diskon]"
+                                            value="{{ old("invoices.$index.diskon", 0) }}">
+                                    </td>
+                                    <td class="px-4 py-2">
+                                        <input type="text"
+                                            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full text-base font-medium"
+                                            value="Rp {{ number_format((float) old("invoices.$index.denda", 0), 0, ',', '.') }}"
+                                            readonly>
+                                        <input type="hidden" name="invoices[{{ $index }}][denda]"
+                                            value="{{ old("invoices.$index.denda", 0) }}">
+                                    </td>
+                                    <td class="px-3 py-2">
+                                        <input type="text" name="invoices[{{ $index }}][amount_to_pay]"
+                                            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full text-base font-medium"
+                                            value="Rp {{ number_format((float) old("invoices.$index.amount_to_pay", 0), 0, ',', '.') }}"
+                                            readonly>
+                                    </td>
+                                    <td class="px-3 py-2">
+                                        <button type="button" class="text-red-600 hover:text-red-800"
+                                            onclick="removeInvoiceRow(this)">
+                                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
 
-                <!-- Total Debt Field -->
-                <div class="mt-5 grid grid-cols-2 gap-4">
-                    <label for="total_piutang" class="text-sm font-medium text-gray-700">Total Semua Piutang</label>
-                    <input type="text" name="total_piutang" id="total_piutang"
-                        class="border border-gray-300 p-2 rounded-lg w-64 h-10" placeholder="Total Piutang"
-                        value="Rp {{ number_format(old('totalKeseluruhan', 0), 0, ',', '.') }}" readonly>
+                <div class="mb-4">
+
                 </div>
 
-                <div class="mt-5 grid grid-cols-2 gap-4">
-                    <label for="nominal_dibayar" class="text-sm font-medium text-gray-700">Nominal yang Dibayar</label>
-                    <input type="text" name="nominal_dibayar" id="nominal_dibayar"
-                        class="border border-gray-300 p-2 rounded-lg w-64 h-10" placeholder="Nominal yang Dibayar"
-                        value="{{ old('nominal_dibayar') }}" oninput="formatCurrency(this)">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="mode_bayar" class="block text-sm font-medium text-gray-700 mb-1">Mode Bayar</label>
+                        <select id="mode_bayar" name="mode_bayar"
+                            class="w-full p-2 bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="">Pilih Metode Pembayaran</option>
+                            <option value="KAS">KAS</option>
+                            <option value="BANK">BANK</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="total_piutang" class="block text-sm font-medium text-gray-700 mb-1">Total Semua
+                            Piutang</label>
+                        <input type="text" name="total_piutang" id="total_piutang"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-lg font-bold"
+                            placeholder="Total Piutang"
+                            value="Rp {{ number_format(old('totalKeseluruhan', 0), 0, ',', '.') }}" readonly>
+                    </div>
                 </div>
-                <!-- Submit Payment Button -->
-                <div class="mt-6">
-                    <button type="submit" class="w-24 bg-blue-500 text-white p-2 rounded-md">Bayar</button>
+
+                <div class="mb-6">
+                    <label for="nominal_dibayar" class="block text-sm font-medium text-gray-700 mb-1">Nominal yang
+                        Dibayar</label>
+                    <input type="text" id="nominalDibayarDisplay"
+                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-lg font-bold"
+                        placeholder="Nominal yang Dibayar">
+                    <input type="number" name="nominal_dibayar" id="nominalDibayar" class="hidden"
+                        value="{{ old('nominal_dibayar') }}">
+                </div>
+
+                <div class="flex justify-end space-x-2">
+                    <button type="button" onclick="submitForm('proses')"
+                        class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 hidden">Proses</button>
+                    <button type="button" onclick="submitForm('store')"
+                        class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Bayar</button>
                 </div>
             </form>
         </div>
     </div>
-
-    <script>
-        function addInvoiceRow() {
-            const container = document.getElementById('invoice-container');
-            const index = container.querySelectorAll('.invoice-row').length;
-            const newRow = `
-        <div class="grid grid-cols-8 gap-4 mb-2 invoice-row min-w-max">
-            <input type="text" name="invoices[${index}][nomor_invoice]"
-                class="border border-gray-300 rounded px-2 py-1 text-sm  h-10" placeholder="Nomor Invoice" required>
-            <input type="text" name="invoices[${index}][nama_pelanggan]"
-                class="border border-gray-300 rounded px-2 py-1 text-sm  h-10" placeholder="Nama Pelanggan" readonly>
-            <input type="date" name="invoices[${index}][jatuh_tempo]"
-                class="border border-gray-300 rounded px-2 py-1 text-sm  h-10" placeholder="Jatuh Tempo" readonly>
-            <input type="text" name="invoices[${index}][piutang_belum_dibayar]"
-                class="border border-gray-300 rounded px-4 py-1 text-sm w-48 h-10" placeholder="Piutang Belum Dibayar" readonly>
-            <input type="text" name="invoices[${index}][diskon]"
-                class="border border-gray-300 rounded px-4 py-1 text-sm w-48 h-10" placeholder="Diskon" readonly>
-            <input type="text" name="invoices[${index}][denda]"
-                class="border border-gray-300 rounded px-4 py-1 text-sm w-48 h-10" placeholder="Denda" readonly>
-            <input type="text" name="invoices[${index}][amount_to_pay]"
-                class="border border-gray-300 px-4 py-1 text-sm w-48 h-10 rounded-lg" placeholder="Total Piutang" readonly>
-            <button type="button" class="text-red-700 w-16 h-10" onclick="removeInvoiceRow(this)">
-                <svg class="h-5 w-5 mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20 7V20C20 21.1046 19.1046 22 18 22H6C4.89543 22 4 21.1046 4 20V7H2V5H22V7H20ZM6 7V20H18V7H6ZM11 9H13V11H11V9ZM11 12H13V14H11V12ZM11 15H13V17H11V15ZM7 2H17V4H7V2Z"></path>
-                </svg>
-            </button>
-        </div>
-    `;
-            container.insertAdjacentHTML('beforeend', newRow);
-        }
-
-        function removeInvoiceRow(button) {
-            const row = button.closest('.invoice-row');
-            row.remove();
-        }
-
-
-
-        document.querySelectorAll(
-            'input[name$="[piutang_belum_dibayar]"], input[name$="[diskon]"], input[name$="[denda]"], input[name$="[amount_to_pay]"], input[name="nominal_dibayar"]'
-        ).forEach(input => {
-            input.addEventListener('input', function() {
-                formatCurrency(this);
-            });
-        });
-    </script>
 @endsection

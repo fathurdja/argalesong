@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="bg-gray-100 p-6 mt-7">
+    <div class="bg-gray-100 p-6 mt-7 ml-9">
         <!-- Form Edit Pelanggan -->
         <form action="{{ route('customer.update', $customer->id) }}" method="POST">
             @csrf
@@ -45,7 +45,7 @@
                         </p>
                         <p class="mt-2"><strong>NPWP :</strong>
                             <input type="text" id="npwp" class="border border-gray-300 p-2 rounded-md w-full"
-                                name="npwp" value="{{ old('npwp', $customer->npwp ?? '' )  }}" maxlength="15">
+                                name="npwp" value="{{ old('npwp', $customer->npwp ?? '') }}" maxlength="15">
                         </p>
                     </div>
 

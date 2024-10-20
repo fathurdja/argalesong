@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="bg-gray-100 p-6">
+    <div class="bg-gray-100 p-6 ml-10">
         <!-- Form Search dan Informasi Pelanggan -->
         <div class="mb-4">
             <input type="text" placeholder="cari kode / nama" class="border border-gray-400 p-2 w-full rounded-md mb-4">

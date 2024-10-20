@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto mt-10">
+    <div class="container mx-auto mt-10 ml-9">
         <!-- Search Bar -->
         <div class="mb-6">
             <form action="{{ route('detailpiutang.index') }}" method="GET">
@@ -10,8 +10,10 @@
             </form>
         </div>
 
+
         <!-- Customer Aging Report Table -->
         <div class="bg-white shadow-md rounded-lg p-6">
+            <h1 class="text-2xl font-bold mb-6 ">UMUR PIUTANG</h1>
             @if (empty($grouped_data))
                 <p class="text-gray-500">Silakan masukkan kode atau nama pelanggan untuk mencari data.</p>
             @elseif(empty(array_filter($grouped_data)))
@@ -56,7 +58,7 @@
                                     @foreach ($item_list as $item)
                                         <tr class="bg-gray-50 text-sm">
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $item->idtra }}</td>
+                                                {{ $item->no_invoice }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {{ $item->nama_customer }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-gray-900">

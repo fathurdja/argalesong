@@ -6,6 +6,7 @@ use App\Models\customer;
 use App\Models\tipePelanggan;
 use App\Models\TipePiutang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class CustomerController extends Controller
@@ -20,6 +21,7 @@ class CustomerController extends Controller
 
         // Initialize $customer to null
         $customer = null;
+
 
         // If search is provided, search by id_Pelanggan or name
         if ($search) {
@@ -43,8 +45,10 @@ class CustomerController extends Controller
             }
         }
 
+        $daftarPelanggan = customer::with('tipePelanggan')->paginate(2);
+
         // Return the view with the customer, tipePelangganName, and tipePiutangName
-        return view('daftarPelangggan.formedit', compact('customer', 'tipePelangganName',));
+        return view('daftarPelangggan.formedit', compact('customer', 'tipePelangganName', 'daftarPelanggan'));
     }
 
 
@@ -68,7 +72,6 @@ class CustomerController extends Controller
         $validated = $request->validate([
             'tipe_pelanggan' => 'required',
             'name' => 'required|string|max:255',
-            'ktp_option' => 'required',
             'ktp' => 'required|string|size:16|unique:customer,ktp', // KTP harus unik
             'npwp_option' => 'nullable',
             'npwp' => 'nullable|string|size:15|unique:customer,npwp', // NPWP harus unik
@@ -88,7 +91,7 @@ class CustomerController extends Controller
         $customer = new Customer();
         $customer->idtypepelanggan = $validated['tipe_pelanggan'];
         $customer->name = $validated['name'];
-        $customer->ktp = $validated['ktp_option'] === 'ada' ? $validated['ktp'] : null;
+        $customer->ktp =  $validated['ktp'];
         $customer->npwp = $validated['npwp_option'] === 'ada' ? $validated['npwp'] : null;
         $customer->id_Pelanggan = $validated['kode_pelanggan'];
         $customer->sharing = $validated['sharing'];

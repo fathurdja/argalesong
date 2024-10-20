@@ -107,21 +107,23 @@
             </ul>
             <ul class="space-y-2">
                 <li>
-                    <div
-                        class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
-                        <svg class="fill-white flex-shrink-0 w-6 h-6 text-white transition duration-75 group-hover:text-white dark:text-white dark:group-hover:text-white"
-                            viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M735.500307 715.181539l81.273025 0c11.211343 0 20.317745-9.087982 20.317745-20.317745l0-81.273025c0-11.211343-9.106402-20.317745-20.317745-20.317745l-81.273025 0c-11.211343 0-20.317745 9.106402-20.317745 20.317745l0 81.273025C715.181539 706.093557 724.288964 715.181539 735.500307 715.181539M207.226668 633.909537l365.727589 0c11.211343 0 20.317745-9.087982 20.317745-20.317745 0-11.211343-9.106402-20.317745-20.317745-20.317745L207.226668 593.274048c-11.211343 0-20.317745 9.106402-20.317745 20.317745C186.908924 624.820532 196.015326 633.909537 207.226668 633.909537M207.226668 715.181539l284.454564 0c11.211343 0 20.317745-9.087982 20.317745-20.317745 0-11.211343-9.106402-20.317745-20.317745-20.317745L207.226668 674.54605c-11.211343 0-20.317745 9.106402-20.317745 20.317745C186.908924 706.093557 196.015326 715.181539 207.226668 715.181539M918.364101 186.908924 105.635899 186.908924c-22.430872 0-40.636512 18.195408-40.636512 40.636512l0 568.909128c0 22.421662 18.204617 40.636512 40.636512 40.636512l812.728202 0c22.430872 0 40.636512-18.21485 40.636512-40.636512L959.000614 227.545436C959.000614 205.104331 940.794973 186.908924 918.364101 186.908924M918.364101 796.454564 105.635899 796.454564 105.635899 471.363488l812.728202 0L918.364101 796.454564zM918.364101 308.818461 105.635899 308.818461 105.635899 227.545436l812.728202 0L918.364101 308.818461z" />
-                        </svg>
-                        <span class="flex-1 ml-3 text-left whitespace-nowrap text">Kartu Piutang</span>
-                        <svg aria-hidden="true" class="arrow w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 011.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
+                    <a class="arrow">
+                        <div
+                            class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                            <svg class="fill-white flex-shrink-0 w-6 h-6 text-white transition duration-75 group-hover:text-white dark:text-white dark:group-hover:text-white"
+                                viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M735.500307 715.181539l81.273025 0c11.211343 0 20.317745-9.087982 20.317745-20.317745l0-81.273025c0-11.211343-9.106402-20.317745-20.317745-20.317745l-81.273025 0c-11.211343 0-20.317745 9.106402-20.317745 20.317745l0 81.273025C715.181539 706.093557 724.288964 715.181539 735.500307 715.181539M207.226668 633.909537l365.727589 0c11.211343 0 20.317745-9.087982 20.317745-20.317745 0-11.211343-9.106402-20.317745-20.317745-20.317745L207.226668 593.274048c-11.211343 0-20.317745 9.106402-20.317745 20.317745C186.908924 624.820532 196.015326 633.909537 207.226668 633.909537M207.226668 715.181539l284.454564 0c11.211343 0 20.317745-9.087982 20.317745-20.317745 0-11.211343-9.106402-20.317745-20.317745-20.317745L207.226668 674.54605c-11.211343 0-20.317745 9.106402-20.317745 20.317745C186.908924 706.093557 196.015326 715.181539 207.226668 715.181539M918.364101 186.908924 105.635899 186.908924c-22.430872 0-40.636512 18.195408-40.636512 40.636512l0 568.909128c0 22.421662 18.204617 40.636512 40.636512 40.636512l812.728202 0c22.430872 0 40.636512-18.21485 40.636512-40.636512L959.000614 227.545436C959.000614 205.104331 940.794973 186.908924 918.364101 186.908924M918.364101 796.454564 105.635899 796.454564 105.635899 471.363488l812.728202 0L918.364101 796.454564zM918.364101 308.818461 105.635899 308.818461 105.635899 227.545436l812.728202 0L918.364101 308.818461z" />
+                            </svg>
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap text">Kartu Piutang</span>
+                            <svg aria-hidden="true" class="arrow w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 011.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </a>
                     <ul class="py-2 text sidebar-submenu">
                         <li class="sidebar-submenu-item">
                             <a href="{{ route('kp-pelanggan') }}"
@@ -153,59 +155,61 @@
             </ul>
             <ul class="space-y-2">
                 <li>
-                    <div
-                        class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
-                        <svg class="fill-white flex-shrink-0 w-6 h-6 text-white transition duration-75 group-hover:text-white dark:text-white dark:group-hover:text-white"
-                            xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 32 32"
-                            data-name="Layer 13" id="Layer_13">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                    <a class="arrow">
+                        <div
+                            class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                            <svg class="fill-white flex-shrink-0 w-6 h-6 text-white transition duration-75 group-hover:text-white dark:text-white dark:group-hover:text-white"
+                                xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 32 32"
+                                data-name="Layer 13" id="Layer_13">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0" />
 
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
 
-                            <g id="SVGRepo_iconCarrier">
+                                <g id="SVGRepo_iconCarrier">
 
-                                <title />
+                                    <title />
 
-                                <path
-                                    d="M28.55,6.57H26.42V4.93a0.5,0.5,0,1,0-1,0V6.57H19.81V5.06a0.5,0.5,0,0,0-1,0V6.57H13.19V5.06a0.5,0.5,0,0,0-1,0V6.57H6.58V5.06a0.5,0.5,0,1,0-1,0V6.57H3.45A2,2,0,0,0,1.5,8.52v17.1a2,2,0,0,0,1.95,2h25.1a2,2,0,0,0,1.95-2V8.52A2,2,0,0,0,28.55,6.57Zm-25.1,1H5.58V9.08a0.5,0.5,0,0,0,1,0V7.57h5.61V9.08a0.5,0.5,0,0,0,1,0V7.57h5.61V9.08a0.5,0.5,0,0,0,1,0V7.57h5.61V8.94a0.5,0.5,0,1,0,1,0V7.57h2.13a1,1,0,0,1,.95.95v2.94H2.5V8.52A1,1,0,0,1,3.45,7.57Zm25.1,19H3.45a1,1,0,0,1-.95-1V12.46h27V25.62A1,1,0,0,1,28.55,26.57Z" />
+                                    <path
+                                        d="M28.55,6.57H26.42V4.93a0.5,0.5,0,1,0-1,0V6.57H19.81V5.06a0.5,0.5,0,0,0-1,0V6.57H13.19V5.06a0.5,0.5,0,0,0-1,0V6.57H6.58V5.06a0.5,0.5,0,1,0-1,0V6.57H3.45A2,2,0,0,0,1.5,8.52v17.1a2,2,0,0,0,1.95,2h25.1a2,2,0,0,0,1.95-2V8.52A2,2,0,0,0,28.55,6.57Zm-25.1,1H5.58V9.08a0.5,0.5,0,0,0,1,0V7.57h5.61V9.08a0.5,0.5,0,0,0,1,0V7.57h5.61V9.08a0.5,0.5,0,0,0,1,0V7.57h5.61V8.94a0.5,0.5,0,1,0,1,0V7.57h2.13a1,1,0,0,1,.95.95v2.94H2.5V8.52A1,1,0,0,1,3.45,7.57Zm25.1,19H3.45a1,1,0,0,1-.95-1V12.46h27V25.62A1,1,0,0,1,28.55,26.57Z" />
 
-                                <rect height="2.13" width="2.13" x="9.99" y="14.39" />
+                                    <rect height="2.13" width="2.13" x="9.99" y="14.39" />
 
-                                <rect height="2.13" width="2.13" x="14.98" y="14.39" />
+                                    <rect height="2.13" width="2.13" x="14.98" y="14.39" />
 
-                                <rect height="2.13" width="2.13" x="19.98" y="14.37" />
+                                    <rect height="2.13" width="2.13" x="19.98" y="14.37" />
 
-                                <rect height="2.13" width="2.13" x="5" y="18.45" />
+                                    <rect height="2.13" width="2.13" x="5" y="18.45" />
 
-                                <rect height="2.13" width="2.13" x="9.99" y="18.45" />
+                                    <rect height="2.13" width="2.13" x="9.99" y="18.45" />
 
-                                <rect height="2.13" width="2.13" x="14.98" y="18.45" />
+                                    <rect height="2.13" width="2.13" x="14.98" y="18.45" />
 
-                                <rect height="2.13" width="2.13" x="5" y="22.56" />
+                                    <rect height="2.13" width="2.13" x="5" y="22.56" />
 
-                                <rect height="2.13" width="2.13" x="9.99" y="22.56" />
+                                    <rect height="2.13" width="2.13" x="9.99" y="22.56" />
 
-                                <rect height="2.13" width="2.13" x="14.98" y="22.55" />
+                                    <rect height="2.13" width="2.13" x="14.98" y="22.55" />
 
-                                <rect height="2.13" width="2.13" x="19.98" y="22.55" />
+                                    <rect height="2.13" width="2.13" x="19.98" y="22.55" />
 
-                                <rect height="2.13" width="2.13" x="19.98" y="18.44" />
+                                    <rect height="2.13" width="2.13" x="19.98" y="18.44" />
 
-                                <rect height="2.13" width="2.13" x="24.87" y="14.36" />
+                                    <rect height="2.13" width="2.13" x="24.87" y="14.36" />
 
-                                <rect height="2.13" width="2.13" x="24.87" y="18.42" />
+                                    <rect height="2.13" width="2.13" x="24.87" y="18.42" />
 
-                            </g>
+                                </g>
 
-                        </svg>
-                        <span class="flex-1 ml-3 text-left whitespace-nowrap text">Schedule Piutang</span>
-                        <svg aria-hidden="true" class="arrow w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 011.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
+                            </svg>
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap text">Schedule Piutang</span>
+                            <svg aria-hidden="true" class="arrow w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 011.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </a>
                     <ul class="py-2 text sidebar-submenu">
                         <li class="sidebar-submenu-item">
                             <a href="{{ route('sp-bulanan') }}"
@@ -237,24 +241,26 @@
             </ul>
             <ul class="space-y-2">
                 <li>
-                    <div
-                        class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
-                        <svg class="fill-white flex-shrink-0 w-6 h-6 text-white transition duration-75 group-hover:text-white dark:text-white dark:group-hover:text-white"
-                            viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M736.2 590.9H274.5c-16.6 0-30 13.4-30 30s13.4 30 30 30h461.8c16.6 0 30-13.4 30-30s-13.5-30-30.1-30z" />
-                            <path d="M312.8 432.8m-61 0a61 61 0 1 0 122 0 61 61 0 1 0-122 0Z" />
-                            <path
-                                d="M815.3 155.3H206.6c-78 0-141.4 63.4-141.4 141.4v440.1c0 78 63.4 141.4 141.4 141.4h608.7c78 0 141.4-63.4 141.4-141.4V296.7c0.1-78-63.4-141.4-141.4-141.4z m81.9 581.5c0 45.2-36.7 81.9-81.9 81.9H206.6c-45.2 0-81.9-36.7-81.9-81.9V296.7c0-45.2 36.7-81.9 81.9-81.9h608.7c45.2 0 81.9 36.7 81.9 81.9v440.1z" />
-                        </svg>
-                        <span class="flex-1 ml-3 text-left whitespace-nowrap text">Pemutihan Piutang</span>
-                        <svg aria-hidden="true" class="arrow w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 011.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
+                    <a class="arrow">
+                        <div
+                            class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                            <svg class="fill-white flex-shrink-0 w-6 h-6 text-white transition duration-75 group-hover:text-white dark:text-white dark:group-hover:text-white"
+                                viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M736.2 590.9H274.5c-16.6 0-30 13.4-30 30s13.4 30 30 30h461.8c16.6 0 30-13.4 30-30s-13.5-30-30.1-30z" />
+                                <path d="M312.8 432.8m-61 0a61 61 0 1 0 122 0 61 61 0 1 0-122 0Z" />
+                                <path
+                                    d="M815.3 155.3H206.6c-78 0-141.4 63.4-141.4 141.4v440.1c0 78 63.4 141.4 141.4 141.4h608.7c78 0 141.4-63.4 141.4-141.4V296.7c0.1-78-63.4-141.4-141.4-141.4z m81.9 581.5c0 45.2-36.7 81.9-81.9 81.9H206.6c-45.2 0-81.9-36.7-81.9-81.9V296.7c0-45.2 36.7-81.9 81.9-81.9h608.7c45.2 0 81.9 36.7 81.9 81.9v440.1z" />
+                            </svg>
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap text">Pemutihan Piutang</span>
+                            <svg aria-hidden="true" class=" w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 011.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </a>
                     <ul class="py-2 text sidebar-submenu">
                         <li class="sidebar-submenu-item">
                             <a href="{{ route('pp-pengajuan') }}"

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="bg-white p-4 rounded-lg shadow-lg mt-4">
+    <div class="bg-white p-4 rounded-lg shadow-lg mt-4 ml-9">
 
         <!-- Year and Month Selection -->
         <div class="flex justify-start items-center mb-2">
@@ -22,7 +22,7 @@
         </div>
 
         <!-- Days of the Month -->
-        <div class="flex justify-start items-center mb-2 space-x-1 text-sm">
+        <div class="flex justify-start items-center mb-2 space-x-1 text-sm ml-14">
             @for ($i = 1; $i <= 31; $i++)
                 <a href="">
                     <div

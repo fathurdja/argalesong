@@ -23,11 +23,14 @@ class PiutangController extends Controller
     public function create(Request $request)
     {
         $piutangTypes = TipePiutang::all();
-        $pajakType = masterDataPajak::all();
+        $pajakTypes = masterDataPajak::whereNotIn('name', ['PPN'])->distinct()->pluck('name');
         $customer = customer::all();
         $selectedType = null;
         $selectedTagihan = null;
         $jumlahKali = null;
+        $selectedPajak = null;
+        $filteredRates = [];
+
         // Ambil kode jenis piutang yang dipilih dari request
         if ($request->has('jenis_form')) {
             $selectedType = TipePiutang::find($request->jenis_form); // Mengambil data berdasarkan ID
@@ -42,9 +45,26 @@ class PiutangController extends Controller
             }
         }
 
-        return view('piutangBaru.afiliasi', compact('piutangTypes', 'selectedType', 'customer', 'pajakType', 'selectedTagihan', 'jumlahKali'));
+
+        return view('piutangBaru.afiliasi', compact('piutangTypes', 'selectedType', 'customer', 'pajakTypes', 'filteredRates', 'selectedPajak', 'selectedTagihan', 'jumlahKali',));
     }
 
+    public function getPajakRate($type)
+    {
+        $pajak = masterDataPajak::where('name', $type)->get(['kode_pajak', 'nilai']);
+
+        if ($pajak->isNotEmpty()) {
+            return response()->json([
+                'status' => 'success',
+                'rates' => $pajak,
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Tax rates not found',
+        ], 404);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -110,6 +130,9 @@ class PiutangController extends Controller
     {
         $dueDate = Carbon::parse($data['jatuh_tempo']);
 
+        // Nominal total dibagi dengan jumlah kali tagihan untuk jenis berulang
+        $nominalPerInvoice = $this->convertToDecimal($data['total_piutang']) / $data['jumlah_kali'];
+
         for ($i = 0; $i < $data['jumlah_kali']; $i++) {
             Piutang::create([
                 'idpelanggan' => $data['nama_pelanggan'],
@@ -117,7 +140,7 @@ class PiutangController extends Controller
                 'tgltra' => $data['tanggal_transaksi'],
                 'tgl_jatuh_tempo' => $dueDate->copy(),
                 'jhari' => $data['jarak_hari'],
-                'nominal' => $this->convertToDecimal($data['total_piutang']),
+                'nominal' => number_format($nominalPerInvoice, 2, '.', ''), // Nominal per tagihan
                 'ppn' => $this->convertToDecimal($data['ppn_value']),
                 'pajak' => $this->getPajakName($data['ppn_value']),
                 'diskon' => $data['diskon'] ?? 0,
@@ -127,9 +150,11 @@ class PiutangController extends Controller
                 'urutanTagihan' => $i + 1,
             ]);
 
+            // Tambahkan 1 bulan untuk tagihan berikutnya
             $dueDate->addMonth();
         }
     }
+
 
     function generateTransactionID()
     {

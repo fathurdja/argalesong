@@ -49,8 +49,9 @@ Route::get('/get-monthly-report', [Sp_bulananController::class, 'getMonthlyRepor
 Route::get('/customer/search', [CustomerController::class, 'index'])->name('customer.search')->middleware('auth');
 Route::get('/piutang/group', [UmurPiutangController::class, 'index'])->name('detailpiutang.index')->middleware('auth');
 Route::get('/pembayaran-piutang', [PembayaranPiutang::class, 'showForm'])->name('pembayaran-piutang.show')->middleware('auth');
-Route::post('/pembayaran-piutang/proses', [PembayaranPiutang::class, 'proses'])->name('pembayaran-piutang.proses')->middleware('auth');
-
+Route::get('/pembayaran-piutang/proses', [PembayaranPiutang::class, 'proses'])->name('pembayaran-piutang.proses')->middleware('auth');
+Route::post('/pembayaran-piutang/bayar', [PembayaranPiutang::class, 'store'])->name('pembayaran-piutang.store')->middleware('auth');
+Route::get('/api/pajak/{type}', [PiutangController::class, 'getPajakRate'])->name('getpajakRate')->middleware('auth');
 // Route::post('/tipe-pelanggan', [TipePelangganController::class, 'store'])->name('tambah-tipePelanggan')->middleware('auth');
 // Route for fetching invoice details
 

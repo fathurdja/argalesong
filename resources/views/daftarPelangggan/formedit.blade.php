@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="bg-gray-100 p-6 mt-7">
+    <div class="bg-gray-100 p-6 mt-7 ml-9">
 
 
         <!-- Bagian Pencarian dan Tombol Baru -->
@@ -63,25 +63,49 @@
                 </div>
             </div>
         @else
+            @foreach ($daftarPelanggan as $pelanggan)
+                <div class="bg-white border border-gray-400 p-4 rounded-md mb-5">
+                    <!-- Bagian Atas: Kode dan Nama Perusahaan -->
+                    <div class="flex justify-between items-center border-b border-gray-400 pb-2 mb-2">
+                        <h2 class="text-xl font-bold">{{ $pelanggan->id_Pelanggan }}</h2>
+                        <h2 class="text-xl font-bold">{{ $pelanggan->name }}</h2>
+                        <div class="flex space-x-2">
+                            <a href="{{ route('customer.edit', $pelanggan->id) }}"><button
+                                    class="bg-green-700 text-black font-bold py-1 px-3 rounded-md">Edit Data</button></a>
+                            <button class="bg-red-600 text-black font-bold py-1 px-3 rounded-md">Hapus</button>
+                        </div>
+                    </div>
+
+                    <!-- Detail Pelanggan -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p><strong>Tipe Pelanggan :</strong> {{ $pelanggan->tipePelanggan->name }}</p>
+
+                            <p><strong>NPWP :</strong> {{ $pelanggan->npwp }}</p>
+                            <p><strong>Alamat :</strong> {{ $pelanggan->alamat }}</p>
+                            <p><strong>E-mail :</strong> {{ $pelanggan->email }}</p>
+                            <p><strong>Whatsapp :</strong> {{ $pelanggan->whatsapp }}</p>
+                            <p><strong>Telepon :</strong> {{ $pelanggan->telepon }}</p>
+                            <p><strong>Fax :</strong> {{ $pelanggan->fax }}</p>
+                        </div>
+                        <div>
+                            <p><strong>% Sharing :</strong> {{ $pelanggan->sharing }}%</p>
+                            <p><strong>Kota :</strong> {{ $pelanggan->kota }}</p>
+                            <p><strong>Kode Pos :</strong> {{ $pelanggan->kode_pos }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Bagian Bawah: Informasi Tambahan -->
+                    <div class="border-t border-gray-400 pt-2 mt-2 text-sm flex justify-between">
+                        <p><strong>Di input oleh :</strong> {{ Auth::user()->name }} on
+                            {{ $pelanggan->created_at->format('l d/m/Y') }}</p>
+                        <p><strong>Terakhir diedit :</strong> {{ Auth::user()->name }} on
+                            {{ $pelanggan->updated_at->format('l d/m/Y') }}</p>
+                    </div>
+                </div>
+            @endforeach
+            <div>{{ $daftarPelanggan->links() }}</div>
             <!-- Informasi Tidak Ditemukan -->
-            <div class="bg-white border border-gray-400 p-4 rounded-md text-center">
-                <table class="min-w-full table-auto">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No
-                            </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kode
-                            </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama
-                                Pelanggan</th>
-
-                        </tr>
-                    </thead>
-                    <tbody id="" class="bg-white divide-y divide-gray-200 text-sm">
-
-                    </tbody>
-                </table>
-            </div>
         @endif
     </div>
 @endsection

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="bg-gray-100 p-6">
+    <div class="bg-gray-100 p-6 ml-9">
         @if ($errors->any())
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                 <ul>
@@ -44,18 +44,14 @@
                             @enderror
                         </p>
 
-                        <p><strong>KTP :</strong> <span class="text-red-600">*</span></p>
+                        <p><strong>KTP :</strong> <span class="text-red-600 font-bold text-lg">*</span></p>
                         <div class="flex">
-                            <select class="border border-gray-300 p-2 rounded-md w-32" name="ktp_option" id="ktp_option"
-                                required onchange="toggleInput('ktp_option', 'ktp_input')">
-                                <option value="tidak_ada">Tidak Ada</option>
-                                <option value="ada">Ada</option>
-                            </select>
+
 
                             <!-- Input untuk KTP, akan muncul jika 'Ada' dipilih -->
-                            <div id="ktp_input" style="display: none;" class="mt-2">
+                            <div id="ktp_input" class="mt-2">
                                 <input type="text" id="ktp" class="border border-gray-300 p-2 rounded-md w-64 ml-4"
-                                    placeholder="Masukkan KTP" name="ktp" maxlength="16">
+                                    placeholder="Masukkan KTP (Wajib Di isi)" name="ktp" maxlength="16">
                                 @error('ktp')
                                     <span class="text-red-600 text-sm">{{ $message }}</span>
                                 @enderror
@@ -170,7 +166,7 @@
             </div>
             <!-- Tombol Simpan dan Batal -->
             <div class="mt-6">
-                <button class="bg-red-400 text-white font-bold py-2 px-4 rounded-md mr-2" type="submit">Simpan</button>
+                <button class="bg-green-700 text-white font-bold py-2 px-4 rounded-md mr-2" type="submit">Simpan</button>
                 <button class="bg-white border border-gray-400 text-black font-bold py-2 px-4 rounded-md">Batal</button>
             </div>
         </form>
@@ -213,7 +209,7 @@
 
         // On page load, check initial value of dropdowns
         document.addEventListener('DOMContentLoaded', function() {
-            toggleInput('ktp_option', 'ktp_input');
+
             toggleInput('npwp_option', 'npwp_input');
         });
 

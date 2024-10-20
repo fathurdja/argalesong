@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="p-4 bg-white rounded-lg shadow-md mt-5">
+    <div class="p-4 bg-white rounded-lg shadow-md mt-5 ml-9">
         <!-- Header Section -->
         <div class="border-b border-gray-200 pb-4">
             <h1 class="text-lg font-bold text-center">PEMUTIHAN PIUTANG: BARU</h1>

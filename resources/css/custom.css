@@ -3,6 +3,8 @@
 .sidebar {
     width: 4rem;
     transition: width 0.3s;
+    position: fixed; /* Pastikan sidebar tidak mengganggu layout lainnya */
+    z-index: 1000;
 }
 
 .sidebar:hover {
