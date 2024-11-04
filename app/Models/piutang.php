@@ -17,6 +17,7 @@ class piutang extends Model
         'jhari',
         'nominal',
         'ppn',
+        'pph',
         'pajak',
         'diskon',
         'kodepiutang',

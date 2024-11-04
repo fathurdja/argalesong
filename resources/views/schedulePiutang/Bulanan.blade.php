@@ -1,14 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-9 mt-10">
+    <div class="container mx-9 mt-4 p-4 rounded-lg bg-white ">
+        <h1 class="text-2xl font-bold mb-4 ">SCHEDULE PIUTANG</h1>
         <!-- Year Selection -->
         <div class="flex items-center mb-4">
             <label for="year" class="mr-2 font-semibold text-gray-700">Tahun</label>
             <select id="year"
                 class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <option value="2023">2018</option>
+                <option value="2023">2019</option>
+                <option value="2023">2020</option>
+                <option value="2023">2021</option>
+                <option value="2023">2022</option>
                 <option value="2023">2023</option>
                 <option value="2024">2024</option>
+                <option value="2024">2025</option>
+                <option value="2024">2026</option>
+                <option value="2024">2027</option>
+                <option value="2024">2028</option>
+                <option value="2024">2029</option>
+                <option value="2024">2030</option>
+                <option value="2024">2031</option>
+                <option value="2024">2032</option>
                 <!-- Add more years as needed -->
             </select>
         </div>
@@ -121,6 +135,26 @@
             }
 
             // Event listeners for month selection
+            const today = new Date();
+            const currentMonth = today.getMonth() + 1; // bulan dalam JavaScript 0-indexed, jadi tambahkan 1
+            const currentYear = today.getFullYear();
+
+            // Setel tahun sekarang di dropdown
+            document.getElementById('year').value = currentYear;
+
+            // Highlight bulan saat ini dan fetch data
+            function highlightCurrentMonth(month) {
+                document.querySelectorAll('[id^="month-"]').forEach(el => el.classList.remove(
+                    'border-b-4', 'border-indigo-600', 'font-bold'));
+                document.getElementById(`month-${month}`).classList.add('border-b-4', 'border-indigo-600',
+                    'font-bold');
+            }
+
+            // Fetch data berdasarkan bulan dan tahun saat ini
+            fetchData(currentMonth, currentYear);
+            highlightCurrentMonth(currentMonth);
+
+            // Event listeners for month selection
             document.querySelectorAll('[id^="month-"]').forEach(element => {
                 element.addEventListener('click', function() {
                     const month = this.id.split('-')[1];
@@ -130,14 +164,9 @@
                     fetchData(month, year);
 
                     // Highlight the selected month
-                    document.querySelectorAll('[id^="month-"]').forEach(el => el.classList.remove(
-                        'border-b-4', 'border-indigo-600', 'font-bold'));
-                    this.classList.add('border-b-4', 'border-indigo-600', 'font-bold');
+                    highlightCurrentMonth(month);
                 });
             });
-
-            // Initial fetch for default month and year (e.g., April 2023)
-            fetchData(4, document.getElementById('year').value); // Example for September
         });
     </script>
 @endpush

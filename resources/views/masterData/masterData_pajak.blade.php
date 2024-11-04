@@ -2,6 +2,15 @@
 @extends('layouts.app')
 
 @section('content')
+    @if ($errors->any())
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 ml-9">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="container mx-auto mt-5 ml-9">
         <div class="bg-white p-6 rounded-lg shadow-md">
             <div class="flex justify-between items-center">
@@ -15,28 +24,39 @@
                 </div>
             @endif
 
+            <!-- Existing Tax Entries Display -->
             <div class="mt-4">
+                <div id="taxEntries">
+                    @foreach ($data as $item)
+                        <div class="grid grid-cols-6 gap-2 mb-4">
+                            <p class="text-xl font-bold text-center">{{ $item->name }}</p>
+                            <input type="text" class="border bg-slate-400 text-center w-28 p-2"
+                                value="{{ intval($item->nilai) }}%" readonly>
+                            <p class="text-lg font-bold text-center">Berlaku Sejak</p>
+                            <p>{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }}</p>
+                            <div>
+                                <form action="{{ route('masterDataPajak.destroy', $item->id) }}" method="POST"
+                                    class="inline"
+                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit">
+                                        <svg class="h-5 w-5 fill-red-600" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <!-- Add New Tax Entry Form -->
                 <form action="{{ route('masterDataPajak.store') }}" method="POST">
                     @csrf
-                    <div id="taxEntries">
-                        @foreach ($data as $item)
-                            <div class="grid grid-cols-6 gap-2  mb-4">
-                                <p class="text-xl font-bold text-center">{{ $item->name }}</p>
-                                <input type="text" name="tax_value[]" class="border bg-slate-400 text-center w-28 p-2"
-                                    value="{{ intval($item->nilai) }}%" readonly>
-                                <p class="text-lg font-bold text-center">Berlaku Sejak</p>
-                                <p>{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }}</p>
-                                <a href=""> <svg class="h-5 w-5 fill-red-600" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                            clip-rule="evenodd" />
-                                    </svg></a>
-                            </div>
-                        @endforeach
-                    </div>
-
-                    <!-- Add new tax entry -->
                     <div class="grid grid-cols-4 gap-4 mb-4">
                         <input type="text" name="new_tax_name" class="border rounded p-2" placeholder="tambahkan baru"
                             required>

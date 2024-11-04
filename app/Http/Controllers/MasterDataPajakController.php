@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\masterDataPajak;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class MasterDataPajakController extends Controller
 {
@@ -56,7 +57,7 @@ class MasterDataPajakController extends Controller
             'nilai' => $validatedData['new_tax_value'],
             'created_at' => $validatedData['new_tax_date'],
         ]);
-
+  
         // Redirect kembali ke halaman index dengan pesan sukses
         return redirect()->route('masterDataPajak.index')->with('success', 'Data pajak baru berhasil ditambahkan.');
     }

@@ -24,6 +24,9 @@ class PiutangController extends Controller
     {
         $piutangTypes = TipePiutang::all();
         $pajakTypes = masterDataPajak::whereNotIn('name', ['PPN'])->distinct()->pluck('name');
+        $ppnTypes = masterDataPajak::where('name', 'PPN')
+        ->select('nilai', 'id','name')
+        ->get();
         $customer = customer::all();
         $selectedType = null;
         $selectedTagihan = null;
@@ -46,7 +49,7 @@ class PiutangController extends Controller
         }
 
 
-        return view('piutangBaru.afiliasi', compact('piutangTypes', 'selectedType', 'customer', 'pajakTypes', 'filteredRates', 'selectedPajak', 'selectedTagihan', 'jumlahKali',));
+        return view('piutangBaru.afiliasi', compact('piutangTypes','ppnTypes', 'selectedType', 'customer', 'pajakTypes', 'filteredRates', 'selectedPajak', 'selectedTagihan', 'jumlahKali',));
     }
 
     public function getPajakRate($type)
@@ -78,6 +81,7 @@ class PiutangController extends Controller
             'jarak_hari' => 'required|integer',
             'total_piutang' => 'required|string|min:0',
             'ppn_value' => 'required|string|min:0',
+            'pph_value' =>'required|string|min:0',
             'diskon' => 'nullable|string|min:0',
             'jenis_form' => 'required|exists:tipepiutang,kodePiutang',
             'jenis_tagihan' => 'required|in:tetap,berulang',
@@ -108,6 +112,7 @@ class PiutangController extends Controller
             'jhari' => $data['jarak_hari'],
             'nominal' => $this->convertToDecimal($data['total_piutang']),
             'ppn' => $this->convertToDecimal($data['ppn_value']),
+            'pph' => $this->convertToDecimal($data['pph_value']),
             'pajak' => $this->getPajakName($data['ppn_value']),
             'diskon' => $data['diskon'] ?? 0,
             'kodepiutang' => $data['jenis_form'],
@@ -131,7 +136,7 @@ class PiutangController extends Controller
         $dueDate = Carbon::parse($data['jatuh_tempo']);
 
         // Nominal total dibagi dengan jumlah kali tagihan untuk jenis berulang
-        $nominalPerInvoice = $this->convertToDecimal($data['total_piutang']) / $data['jumlah_kali'];
+        $nominal = $this->convertToDecimal($data['total_piutang']);
 
         for ($i = 0; $i < $data['jumlah_kali']; $i++) {
             Piutang::create([
@@ -140,8 +145,9 @@ class PiutangController extends Controller
                 'tgltra' => $data['tanggal_transaksi'],
                 'tgl_jatuh_tempo' => $dueDate->copy(),
                 'jhari' => $data['jarak_hari'],
-                'nominal' => number_format($nominalPerInvoice, 2, '.', ''), // Nominal per tagihan
+                'nominal' => number_format($nominal, 2, '.', ''), // Nominal per tagihan
                 'ppn' => $this->convertToDecimal($data['ppn_value']),
+                'pph' => $this->convertToDecimal($data['pph_value']),
                 'pajak' => $this->getPajakName($data['ppn_value']),
                 'diskon' => $data['diskon'] ?? 0,
                 'kodepiutang' => $data['jenis_form'],

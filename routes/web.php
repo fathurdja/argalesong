@@ -54,7 +54,8 @@ Route::post('/pembayaran-piutang/bayar', [PembayaranPiutang::class, 'store'])->n
 Route::get('/api/pajak/{type}', [PiutangController::class, 'getPajakRate'])->name('getpajakRate')->middleware('auth');
 // Route::post('/tipe-pelanggan', [TipePelangganController::class, 'store'])->name('tambah-tipePelanggan')->middleware('auth');
 // Route for fetching invoice details
-
+Route::get('/pembayaran-piutang/form', [PembayaranPiutang::class, 'showForm'])->name('pembayaran-piutang.form')->middleware('auth');
+Route::get('/api/invoices-by-customer/{customerId}', [PembayaranPiutang::class, 'getInvoicesByCustomer'])->name('invoices.by-customer');
 
 Route::get('/form-tambah-tagihan', [tagihanController::class, 'create'])->name('tambahForm')->middleware('auth');
 Route::get('/master-data-piutang', [masterdatacontroller::class, 'index'])->name('master_data_piutang')->middleware('auth');
