@@ -185,50 +185,73 @@
 @push('script')
     <script>
         function formatRupiah(value) {
-            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            // Handle NaN, undefined, or invalid values
+            if (isNaN(value) || value === null || value === undefined) {
+                return "0";
+            }
+            // Format number to fixed 0 decimal places
+            const cleanValue = parseFloat(value).toFixed(0);
+            return cleanValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function unformatRupiah(value) {
+            const numericValue = parseFloat(value.replace(/\./g, ''));
+            return isNaN(numericValue) ? 0 : numericValue;
         }
 
         function formatDPP() {
             const dppInput = document.getElementById('dpp');
-            let dppValue = dppInput.value.replace(/\./g, ''); // Remove existing dots for reformatting
-            if (!isNaN(dppValue) && dppValue !== "") {
-                dppInput.value = formatRupiah(dppValue); // Apply Rupiah format
-            } else {
-                dppInput.value = ""; // Clear if not a valid number
+            let dppValue = dppInput.value.replace(/\./g, ''); // Remove existing dots
+
+            // Set to 0 if empty or invalid
+            if (!dppValue || isNaN(dppValue)) {
+                dppValue = "0";
             }
-            calculatePiutang(); // Recalculate totals
+
+            dppInput.value = formatRupiah(dppValue);
+            calculatePiutang();
         }
 
         function calculatePiutang() {
+            // Get all required elements
             const dppInput = document.getElementById('dpp');
             const ppnInput = document.getElementById('ppn_value');
             const pphInput = document.getElementById('pph_value');
             const totalPiutangInput = document.getElementById('total_piutang');
-            const ppnCheckbox = document.getElementById('ppn_checkbox');
-            const pphRateSelect = document.getElementById('tarif');
+            const ppnTypeSelect = document.getElementById('ppn_type');
+            const tarifSelect = document.getElementById('tarif');
 
-            const ppnRate = 11; // Set PPN rate in percent
+            // Get values and convert to numbers, defaulting to 0 if invalid
+            const dpp = unformatRupiah(dppInput.value || "0");
+            const ppnRate = ppnTypeSelect.value === "Tidak Ada" ? 0 : parseFloat(ppnTypeSelect.value || "0");
+            const pphRate = tarifSelect.value === "Tidak Ada" ? 0 : parseFloat(tarifSelect.value || "0");
 
-            // Parse DPP without thousand separators
-            const dpp = parseFloat(dppInput.value.replace(/\./g, '')) || 0;
+            // Calculate PPN and PPh
+            const ppn = (ppnRate * dpp) / 100;
+            const pph = (pphRate * dpp) / 100;
 
-            // Calculate PPN if checked
-            let ppn = 0;
-            if (ppnCheckbox.checked) {
-                ppn = (ppnRate / 100) * dpp;
-                ppnInput.value = formatRupiah(ppn.toFixed(2)); // Display formatted PPN
-            } else {
-                ppnInput.value = ""; // Clear PPN if unchecked
-            }
+            // Format and display values, showing 0 for invalid results
+            ppnInput.value = formatRupiah(ppn);
+            pphInput.value = formatRupiah(pph);
 
-            // Get PPh rate and calculate if selected
-            const pphRate = parseFloat(pphRateSelect.value) || 0;
-            const pph = (pphRate / 100) * dpp;
-            pphInput.value = formatRupiah(pph.toFixed(2)); // Display formatted PPh
-
-            // Calculate and display total
+            // Calculate and display total piutang (DPP + PPN - PPh)
             const totalPiutang = dpp + ppn - pph;
-            totalPiutangInput.value = formatRupiah(totalPiutang.toFixed(2)); // Display formatted total
+            totalPiutangInput.value = formatRupiah(totalPiutang);
         }
+
+        // Add event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            const dppInput = document.getElementById('dpp');
+            const ppnTypeSelect = document.getElementById('ppn_type');
+            const tarifSelect = document.getElementById('tarif');
+
+            dppInput.addEventListener('input', formatDPP);
+            ppnTypeSelect.addEventListener('change', calculatePiutang);
+            tarifSelect.addEventListener('change', calculatePiutang);
+
+            // Initialize with zero values
+            dppInput.value = "0";
+            formatDPP();
+        });
     </script>
 @endpush

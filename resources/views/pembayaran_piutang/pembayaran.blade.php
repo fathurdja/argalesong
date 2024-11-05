@@ -33,7 +33,9 @@
                             onchange="loadInvoicesByCustomer(this.value)">
                             <option value="">-- Pilih Pelanggan --</option>
                             @foreach ($customers as $customer)
-                                <option value="{{ $customer->id_Pelanggan }}">{{ $customer->name }}</option>
+                                <option value="{{ $customer->id_Pelanggan }}"
+                                    {{ $selectedCustomerId == $customer->id_Pelanggan ? 'selected' : '' }}>
+                                    {{ $customer->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -139,38 +141,33 @@
                     </td>
                     <td class="px-3 py-2">
                         <input type="text"
-                            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-                            value="Rp ${parseFloat(invoice.nominal).toLocaleString()}" readonly>
-                        <input type="hidden" name="invoices[${index}][piutang_belum_dibayar]" value="${invoice.nominal}">
+                            class="piutang-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+                            value="Rp ${parseFloat(invoice.nominal).toLocaleString()}"
+                            onchange="updateRowTotal(this)">
+                        <input type="hidden" name="invoices[${index}][piutang_belum_dibayar]" class="piutang-value" value="${invoice.nominal}">
+                        <input type="hidden" name="invoices[${index}][original_piutang]" value="${invoice.nominal}">
                     </td>
                     <td class="px-3 py-2">
                         <input type="text"
-                            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-                            value="Rp ${parseFloat(invoice.diskon).toLocaleString()}" readonly>
-                        <input type="hidden" name="invoices[${index}][diskon]" value="${invoice.diskon}">
+                            class="diskon-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+                            value="Rp ${parseFloat(invoice.diskon).toLocaleString()}" 
+                            onchange="updateRowTotal(this)">
+                        <input type="hidden" name="invoices[${index}][diskon]" class="diskon-value" value="${invoice.diskon}">
                     </td>
-                    <input type="number" name="invoices[${index}][diskon]" min="0" step="0.01"
-                        class="hidden"
-                         value="${invoice.diskon}" readonly>
                     <td class="px-3 py-2">
                         <input type="text"
-                            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-                            value="Rp ${parseFloat(invoice.denda).toLocaleString()}" readonly>
-                        <input type="hidden" name="invoices[${index}][denda]" value="${invoice.denda}">
+                            class="denda-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+                            value="Rp ${parseFloat(invoice.denda).toLocaleString()}"
+                            onchange="updateRowTotal(this)">
+                        <input type="hidden" name="invoices[${index}][denda]" class="denda-value" value="${invoice.denda}">
+                        <input type="hidden" name="invoices[${index}][original_denda]" value="${invoice.denda}">
                     </td>
-                    <input type="number" name="invoices[${index}][denda]" min="0" step="0.01"
-                                class="hidden"
-                                value="${invoice.denda}" readonly>
-
                     <td class="px-3 py-2">
                         <input type="text"
-                            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+                            class="total-display border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
                             value="Rp ${parseFloat(invoice.total).toLocaleString()}" readonly>
-                        <input type="hidden" name="invoices[${index}][total]" value="${invoice.total}">
+                        <input type="hidden" name="invoices[${index}][total]" class="total-value" value="${invoice.total}">
                     </td>
-                    <input type="number" name="invoices[${index}][total]" min="0" step="0.01"
-                                    class="hidden"
-                                    value="${invoice.total}" readonly>
                     <td class="px-3 py-2">
                         <button type="button" class="delete-btn" data-total="${invoice.total}">
                             <svg class="h-5 w-5 fill-red-600" xmlns="http://www.w3.org/2000/svg"
@@ -186,53 +183,96 @@
                         invoiceContainer.insertAdjacentHTML('beforeend', row);
                     });
 
-                    updateTotalPiutang(totalPiutang);
+                    // Add event listeners for input formatting
+                    document.querySelectorAll('.piutang-input, .denda-input, .diskon-input').forEach(input => {
+                        input.addEventListener('focus', function() {
+                            // Remove formatting when focused
+                            this.value = this.value.replace(/[^0-9.-]+/g, "");
+                        });
+
+                        input.addEventListener('blur', function() {
+                            // Format number when leaving the input
+                            const value = parseFloat(this.value) || 0;
+                            this.value = `Rp ${value.toLocaleString()}`;
+
+                            // Update the hidden value
+                            const hiddenInput = this.nextElementSibling;
+                            hiddenInput.value = value;
+
+                            updateRowTotal(this);
+                        });
+
+                        // Add keyup event for real-time updates while typing
+                        input.addEventListener('keyup', function(e) {
+                            // Only allow numbers and decimal point
+                            if (!/^\d*\.?\d*$/.test(this.value)) {
+                                this.value = this.value.replace(/[^\d.]/g, '');
+                            }
+                        });
+                    });
+
+                    updateTotalPiutang();
 
                     // Event listener untuk tombol delete
                     document.querySelectorAll('.delete-btn').forEach(button => {
                         button.addEventListener('click', function() {
                             const row = this.closest('tr');
-                            const rowTotal = parseFloat(this.getAttribute('data-total'));
-
                             row.remove();
-                            reindexInvoiceInputs(); // Panggil reindex setelah menghapus
-
-                            // Update total
-                            const currentTotal =
-                                getCurrentTotal(); // Implementasikan fungsi ini sesuai kebutuhan
-                            updateTotalPiutang(currentTotal - rowTotal);
+                            reindexInvoiceInputs();
+                            updateTotalPiutang();
                         });
                     });
                 });
         }
 
-        // Fungsi untuk mengindeks ulang input setelah penghapusan
+        function formatRupiah(number) {
+            return `Rp ${parseFloat(number).toLocaleString()}`;
+        }
+
+        function unformatRupiah(rupiahString) {
+            return parseFloat(rupiahString.replace(/[^0-9.-]+/g, "")) || 0;
+        }
+
+        function updateRowTotal(input) {
+            const row = input.closest('tr');
+            const piutangValue = parseFloat(row.querySelector('.piutang-value').value) || 0;
+            const diskonValue = parseFloat(row.querySelector('.diskon-value').value) || 0;
+            const dendaValue = parseFloat(row.querySelector('.denda-value').value) || 0;
+
+            // Calculate new total
+            const newTotal = piutangValue - diskonValue + dendaValue;
+
+            // Update total display and value
+            const totalDisplay = row.querySelector('.total-display');
+            const totalValue = row.querySelector('.total-value');
+
+            totalDisplay.value = formatRupiah(newTotal);
+            totalValue.value = newTotal;
+
+            // Update grand total
+            updateTotalPiutang();
+        }
+
+        function updateTotalPiutang() {
+            let total = 0;
+            document.querySelectorAll('.total-value').forEach(input => {
+                total += parseFloat(input.value) || 0;
+            });
+
+            document.getElementById('total-piutang').value = formatRupiah(total);
+        }
+
         function reindexInvoiceInputs() {
             const rows = document.querySelectorAll('.invoice-row');
-            const invoices = [];
-
             rows.forEach((row, index) => {
-                const invoiceInputs = row.querySelectorAll('input[name^="invoices["]');
-                invoiceInputs.forEach(input => {
+                const inputs = row.querySelectorAll('input[name^="invoices["]');
+                inputs.forEach(input => {
                     const oldName = input.name;
                     const fieldName = oldName.match(/\[([^\]]+)\]$/)[1];
                     input.name = `invoices[${index}][${fieldName}]`;
                 });
             });
         }
-
-        // Fungsi untuk memperbarui total piutang
-        function updateTotalPiutang(totalPiutang) {
-            document.getElementById('total-piutang').value = `Rp ${totalPiutang.toLocaleString()}`;
-        }
-
-        function getCurrentTotal() {
-            const totalInput = document.getElementById('total-piutang');
-            const totalValue = totalInput.value.replace(/[^0-9.-]+/g, "");
-            return parseFloat(totalValue) || 0;
-        }
-
-
 
         function submitForm(action) {
             const form = document.getElementById('paymentForm');

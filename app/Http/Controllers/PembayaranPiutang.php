@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\customer;
+use App\Models\denda;
 use App\Models\piutang;
 use Carbon\Carbon;
 
@@ -13,198 +14,226 @@ use RealRashid\SweetAlert\Facades\Alert;
 class PembayaranPiutang extends Controller
 {
     public function showForm(Request $request)
-    {
-        // Mendapatkan pelanggan yang terpilih (jika ada)
-        $selectedCustomerId = $request->input('nama_pelanggan');
+{
+    // Mendapatkan pelanggan yang terpilih (jika ada)
+    $selectedCustomerId = $request->input('nama_pelanggan');
 
-        // Mengambil semua pelanggan untuk ditampilkan di select option
-        $customers = Customer::all();
+    // Mengambil semua pelanggan untuk ditampilkan di select option
+    $customers = Customer::all();
 
-        // Jika pelanggan dipilih, ambil piutang yang terkait
-        $invoices = collect();  // inisialisasi collection kosong
-        if ($selectedCustomerId) {
-            $invoices = Piutang::where('idpelanggan', $selectedCustomerId)
-                ->where('statusPembayaran', '!=', 'LUNAS')
-                ->get();
-        }
-
-        // Menggunakan method sum() pada collection untuk menjumlahkan field nominal
-        $totalKeseluruhan = $invoices->sum('nominal');  // Piutang keseluruhan
-
-        return view('pembayaran_piutang.pembayaran', compact('customers', 'invoices', 'totalKeseluruhan', 'selectedCustomerId'));
+    // Debug: Cek status pembayaran yang ada
+    if ($selectedCustomerId) {
+        // Cek dulu status yang ada di database
+        $statusCek = Piutang::where('idpelanggan', $selectedCustomerId)
+            ->select('statusPembayaran')
+            ->distinct()
+            ->get();
+        
+        \Log::info('Status pembayaran yang ada:', $statusCek->toArray());
+        
+        // Query yang diperbaiki
+        $invoices = Piutang::where('idpelanggan', $selectedCustomerId)
+            ->where(function($query) {
+                $query->where('statusPembayaran', '=', 'BELUM LUNAS')
+                      ->orWhere('statusPembayaran', '=', 'BELUMLUNAS')
+                      ->orWhere('statusPembayaran', '=', 'SEBAGIAN');
+            })
+            ->get();
+    } else {
+        $invoices = collect();
     }
+
+    // Menggunakan method sum() pada collection untuk menjumlahkan field nominal
+    $totalKeseluruhan = $invoices->sum('nominal');  // Piutang keseluruhan
+
+    return view('pembayaran_piutang.pembayaran', compact('customers', 'invoices', 'totalKeseluruhan', 'selectedCustomerId'));
+}
 
 
     public function proses(Request $request)
     {
-        // Validasi inputan nama pelanggan harus ada di database
+        // Validate that the customer name exists in the database
         $validatedData = $request->validate([
             'invoices.*.nama_pelanggan' => 'required|exists:pelanggan,name',
         ]);
 
-        $invoices = $request->input('invoices', []); // Ambil data invoice dari request
-        $tanggalTransaksi = $request->input('tanggal_transaksi'); // Ambil tanggal transaksi
-        $totalKeseluruhan = 0; // Inisialisasi total keseluruhan yang harus dibayar
+        $invoices = $request->input('invoices', []); // Retrieve invoice data from request
+        $tanggalTransaksi = $request->input('tanggal_transaksi'); // Retrieve transaction date
+        $totalKeseluruhan = 0; // Initialize the total amount to be paid
 
         foreach ($invoices as $index => $invoice) {
-            // Ambil detail piutang dari database berdasarkan nama pelanggan
-            $detailPiutang = piutang::with(['pelanggan', 'pajak', 'jenisPiutang'])
-                ->whereHas('pelanggan', function ($query) use ($invoice) {
-                    $query->where('name', $invoice['nama_pelanggan']);
-                })
-                ->first();
+            // Fetch unpaid invoices (BELUM LUNAS) for the specified customer
+            $detailPiutangCollection = piutang::with(['pelanggan', 'pajak', 'jenisPiutang'])
+            ->where(function($query) {
+                $query->where('statusPembayaran', '=', 'BELUM LUNAS')
+                      ->orWhere('statusPembayaran', '=', 'BELUMLUNAS')
+                      ->orWhere('statusPembayaran', '=', 'SEBAGIAN');
+            })
+            ->whereHas('pelanggan', function ($query) use ($invoice) {
+                $query->where('name', $invoice['nama_pelanggan']);
+            })
+            ->get();
+            // Only process if there are unpaid invoices
+            if ($detailPiutangCollection->isNotEmpty()) {
+                foreach ($detailPiutangCollection as $detailPiutang) {
+                    $nominal = (float) $detailPiutang->nominal;
 
-            if ($detailPiutang) {
-                $nominal = (float) $detailPiutang->nominal;
-                // Set data pelanggan, jatuh tempo, dan piutang belum dibayar
-                $invoices[$index]['nama_pelanggan'] = $detailPiutang->pelanggan->name ?? '';
-                $invoices[$index]['idpelanggan'] = $detailPiutang->idpelanggan ?? '';
-                $invoices[$index]['jatuh_tempo'] = $detailPiutang->tgl_jatuh_tempo;
-                $invoices[$index]['piutang_belum_dibayar'] = $nominal;
+                    // Set customer data, due date, and unpaid amount
+                    $invoices[$index]['nama_pelanggan'] = $detailPiutang->pelanggan->name ?? '';
+                    $invoices[$index]['idpelanggan'] = $detailPiutang->idpelanggan ?? '';
+                    $invoices[$index]['jatuh_tempo'] = $detailPiutang->tgl_jatuh_tempo;
+                    $invoices[$index]['piutang_belum_dibayar'] = $nominal;
 
-                // Hitung selisih hari antara tanggal transaksi dan jatuh tempo
-                $jatuhTempo = Carbon::parse($detailPiutang->tgl_jatuh_tempo);
-                $tanggalTransaksiCarbon = Carbon::parse($tanggalTransaksi);
-                $selisihHari = $jatuhTempo->diffInDays($tanggalTransaksiCarbon, false); // Nilai negatif jika jatuh tempo belum tercapai
+                    // Calculate the difference in days between transaction date and due date
+                    $jatuhTempo = Carbon::parse($detailPiutang->tgl_jatuh_tempo);
+                    $tanggalTransaksiCarbon = Carbon::parse($tanggalTransaksi);
+                    $selisihHari = $jatuhTempo->diffInDays($tanggalTransaksiCarbon, false);
 
-                // Hitung denda dan diskon
-                $denda = 0;
-                $diskon = 0;
-                if ($selisihHari > 0) {
-                    // Jika pembayaran melewati jatuh tempo
-                    $denda = 0.01 * $selisihHari * $detailPiutang->nominal; // Misal 1% denda per hari
-                    $invoices[$index]['denda'] = $denda;
-                    $invoices[$index]['diskon'] = 0; // Tidak ada diskon
-                } else {
-                    // Jika pembayaran sebelum atau tepat jatuh tempo
-                    $diskon = 0.01 * abs($selisihHari) * $detailPiutang->nominal; // Misal 1% diskon per hari
-                    $invoices[$index]['diskon'] = $diskon;
-                    $invoices[$index]['denda'] = 0; // Tidak ada denda
+                    // Calculate penalty and discount
+                    $denda = 0;
+                    $diskon = 0;
+                    if ($selisihHari > 0) {
+                        // If payment is late
+                        $denda = 0.01 * $selisihHari * $nominal; // 1% penalty per day
+                        $invoices[$index]['denda'] = $denda;
+                        $invoices[$index]['diskon'] = 0;
+                    } else {
+                        // If payment is on time or early
+                        $diskon = 0.01 * abs($selisihHari) * $nominal; // 1% discount per day
+                        $invoices[$index]['diskon'] = $diskon;
+                        $invoices[$index]['denda'] = 0;
+                    }
+
+                    // Calculate the total amount for this invoice
+                    $amountToPay = $nominal - $diskon + $denda;
+                    $invoices[$index]['amount_to_pay'] = $amountToPay;
+
+                    // Add to the overall total
+                    $totalKeseluruhan += $amountToPay;
                 }
-
-                // Hitung total pembayaran untuk invoice ini
-                $amountToPay = $detailPiutang->nominal - $diskon + $denda;
-                $invoices[$index]['amount_to_pay'] = $amountToPay;
-
-                // Tambahkan ke total keseluruhan
-                $totalKeseluruhan += $amountToPay;
             }
         }
 
-        // Kembalikan data invoices dan total keseluruhan ke view
+        // Return invoice data and total amount to the view
         return back()->withInput(compact('invoices', 'totalKeseluruhan'));
     }
 
 
+
     public function store(Request $request)
-{
-    // Reindex array invoices sebelum validasi
-    if ($request->has('invoices')) {
-        $invoices = array_values($request->invoices);
-        $request->merge(['invoices' => $invoices]);
-    }
+    {
+        // Reindex array invoices sebelum validasi
+        if ($request->has('invoices')) {
+            $invoices = array_values($request->invoices);
+            $request->merge(['invoices' => $invoices]);
+        }
 
-    // Validasi dasar tanpa validasi array
-    $request->validate([
-        'tanggal_transaksi' => 'required|date',
-        'nominal_dibayar' => 'required|numeric|min:0',
-        'customer' => 'required|string',
-        'mode_bayar' => 'required|in:KAS,BANK',
-        'keterangan' => 'nullable|string',
-    ]);
+        // Validasi dasar tanpa validasi array
+        $request->validate([
+            'tanggal_transaksi' => 'required|date',
+            'nominal_dibayar' => 'required|numeric|min:0',
+            'customer' => 'required|string',
+            'mode_bayar' => 'required|in:KAS,BANK',
+            'keterangan' => 'nullable|string',
+        ]);
 
-    // Validasi custom untuk invoices
-    if (!$request->has('invoices') || empty($request->invoices)) {
-        return back()->withErrors(['error' => 'Minimal satu invoice harus dipilih.']);
-    }
+        // Validasi custom untuk invoices
+        if (!$request->has('invoices') || empty($request->invoices)) {
+            return back()->withErrors(['error' => 'Minimal satu invoice harus dipilih.']);
+        }
 
-    DB::beginTransaction();
-    try {
-        $totalNominalDibayar = floatval($request->nominal_dibayar);
-        $idTransaksi = $this->generateTransactionId();
+        DB::beginTransaction();
+        try {
+            $totalNominalDibayar = floatval($request->nominal_dibayar);
+            $idTransaksi = $this->generateTransactionId();
 
-        foreach ($request->invoices as $pembayaran) {
-            // Validasi setiap invoice
-            if (empty($pembayaran['nomor_invoice'])) {
-                continue; // Skip jika nomor invoice kosong
-            }
-
-            $diskon = floatval($pembayaran['diskon'] ?? 0);
-            $denda = floatval($pembayaran['denda'] ?? 0);
-            
-            $detailPiutangs = DB::select(
-                'SELECT *, idpelanggan, nominal FROM detailpiutang 
-                WHERE no_invoice = ? ORDER BY urutanTagihan',
-                [$pembayaran['nomor_invoice']]
-            );
-
-            if (empty($detailPiutangs)) {
-                throw new \Exception("Invoice {$pembayaran['nomor_invoice']} tidak ditemukan.");
-            }
-
-            foreach ($detailPiutangs as $detailPiutang) {
-                if ($totalNominalDibayar <= 0) break;
-
-                $pembayaranSebelumnya = DB::scalar(
-                    'SELECT COALESCE(SUM(nominalbayar), 0) 
-                    FROM pembayaranpiutang 
-                    WHERE no_invoice = ?',
-                    [$detailPiutang->no_invoice]
-                );
-
-                $piutangAwal = $detailPiutang->nominal - $pembayaranSebelumnya;
-                
-                if ($totalNominalDibayar >= $piutangAwal) {
-                    $pembayaranNow = $piutangAwal;
-                    $status = 'LUNAS';
-                } else {
-                    $pembayaranNow = $totalNominalDibayar;
-                    $status = 'SEBAGIAN';
+            foreach ($request->invoices as $pembayaran) {
+                // Validasi setiap invoice
+                if (empty($pembayaran['nomor_invoice'])) {
+                    continue; // Skip jika nomor invoice kosong
                 }
 
-                $sisa = $piutangAwal - $pembayaranNow;
-                $sisaPiutang = floatval($sisa);
-                $tagihan = $detailPiutang->nominal;
+                $diskon = floatval($pembayaran['diskon'] ?? 0);
+                $denda = floatval($pembayaran['denda'] ?? 0);
 
-                DB::insert(
-                    'INSERT INTO pembayaranpiutang 
+                $detailPiutangs = DB::select(
+                    'SELECT *, idpelanggan, nominal FROM detailpiutang 
+                WHERE no_invoice = ? ORDER BY urutanTagihan',
+                    [$pembayaran['nomor_invoice']]
+                );
+
+                if (empty($detailPiutangs)) {
+                    throw new \Exception("Invoice {$pembayaran['nomor_invoice']} tidak ditemukan.");
+                }
+
+                foreach ($detailPiutangs as $detailPiutang) {
+                    if ($totalNominalDibayar <= 0) break;
+
+                    $pembayaranSebelumnya = DB::scalar(
+                        'SELECT COALESCE(SUM(nominalbayar), 0) 
+                    FROM pembayaranpiutang 
+                    WHERE no_invoice = ?',
+                        [$detailPiutang->no_invoice]
+                    );
+
+                    $piutangAwal = $detailPiutang->nominal - $pembayaranSebelumnya;
+
+                    if ($totalNominalDibayar >= $piutangAwal) {
+                        $pembayaranNow = $piutangAwal;
+                        $status = 'LUNAS';
+                    } else {
+                        $pembayaranNow = $totalNominalDibayar;
+                        $status = 'SEBAGIAN';
+                    }
+
+                    $sisa = $piutangAwal - $pembayaranNow;
+                    $sisaPiutang = floatval($sisa);
+                    $tagihan = $detailPiutang->nominal;
+
+                    DB::insert(
+                        'INSERT INTO pembayaranpiutang 
                     (idpelanggan, idtrx, tglbayar, no_invoice, nominalbayar, 
                     tagihan, sisaPiutang, diskon, denda, modebayar) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                    [
-                        $detailPiutang->idpelanggan,
-                        $idTransaksi,
-                        $request->tanggal_transaksi,
-                        $detailPiutang->no_invoice,
-                        $tagihan,
-                        $pembayaranNow,
-                        $sisaPiutang,
-                        $diskon,
-                        $denda,
-                        $request->mode_bayar
-                    ]
-                );
+                        [
+                            $detailPiutang->idpelanggan,
+                            $idTransaksi,
+                            $request->tanggal_transaksi,
+                            $detailPiutang->no_invoice,
+                            $tagihan,
+                            $pembayaranNow,
+                            $sisaPiutang,
+                            $diskon,
+                            $denda,
+                            $request->mode_bayar
+                        ]
+                    );
 
-                DB::update(
-                    'UPDATE detailpiutang 
+                    DB::update(
+                        'UPDATE detailpiutang 
                     SET statusPembayaran = ? 
                     WHERE no_invoice = ?',
-                    [$status, $detailPiutang->no_invoice]
-                );
+                        [$status, $detailPiutang->no_invoice]
+                    );
 
-                $totalNominalDibayar -= $pembayaranNow;
+                    $totalNominalDibayar -= $pembayaranNow;
+
+                    $originalDenda = new denda();
+                    $originalDenda->idpelanggan =  $detailPiutang->idpelanggan;
+                    $originalDenda->nominal = $denda;
+                    $originalDenda->piutang = $totalNominalDibayar;
+                    $originalDenda->save();
+                }
             }
+
+            DB::commit();
+            Alert::success('Berhasil!', 'Piutang Berhasil di Bayar');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
-
-        DB::commit();
-        Alert::success('Berhasil!', 'Piutang Berhasil di Bayar');
-        return redirect()->back();
-
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
     }
-}
     private function generateTransactionId()
     {
         $lastId = DB::table('pembayaranpiutang')
