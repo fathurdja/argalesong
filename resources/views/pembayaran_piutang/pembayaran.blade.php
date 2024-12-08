@@ -33,9 +33,9 @@
                             onchange="loadInvoicesByCustomer(this.value)">
                             <option value="">-- Pilih Pelanggan --</option>
                             @foreach ($customers as $customer)
-                                <option value="{{ $customer->id_Pelanggan }}"
-                                    {{ $selectedCustomerId == $customer->id_Pelanggan ? 'selected' : '' }}>
-                                    {{ $customer->name }}</option>
+                                <option value="{{ $customer->idpelanggan }}"
+                                    {{ $selectedCustomerId == $customer->idpelanggan ? 'selected' : '' }}>
+                                    {{ $customer->customer_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -101,8 +101,7 @@
                 </div>
 
                 <div class="flex justify-end space-x-2">
-                    <button type="button" onclick="submitForm('proses')"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 hidden">Proses</button>
+
                     <button type="button" onclick="submitForm('store')"
                         class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Bayar</button>
                 </div>
@@ -112,7 +111,6 @@
 @endsection
 @push('script')
     <script>
-        // Pertama, ubah fungsi loadInvoicesByCustomer untuk memperbaiki indeks setelah penghapusan
         function loadInvoicesByCustomer(customerId) {
             const invoiceContainer = document.getElementById('invoice-container');
             invoiceContainer.innerHTML = '';
@@ -128,129 +126,134 @@
                         totalPiutang += parseFloat(invoice.total);
 
                         const row = `
-                <tr class="invoice-row" data-total="${invoice.total}">
-                    <td class="px-3 py-2">
-                        <input type="text" name="invoices[${index}][nomor_invoice]"
-                            class="invoice-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-                            value="${invoice.no_invoice}" readonly>
-                    </td>
-                    <td class="px-3 py-2">
-                        <input type="date" name="invoices[${index}][jatuh_tempo]"
-                            class="invoice-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-                            value="${invoice.tgl_jatuh_tempo}" readonly>
-                    </td>
-                    <td class="px-3 py-2">
-                        <input type="text"
-                            class="piutang-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-                            value="Rp ${parseFloat(invoice.nominal).toLocaleString()}"
-                            onchange="updateRowTotal(this)">
-                        <input type="hidden" name="invoices[${index}][piutang_belum_dibayar]" class="piutang-value" value="${invoice.nominal}">
-                        <input type="hidden" name="invoices[${index}][original_piutang]" value="${invoice.nominal}">
-                    </td>
-                    <td class="px-3 py-2">
-                        <input type="text"
-                            class="diskon-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-                            value="Rp ${parseFloat(invoice.diskon).toLocaleString()}" 
-                            onchange="updateRowTotal(this)">
-                        <input type="hidden" name="invoices[${index}][diskon]" class="diskon-value" value="${invoice.diskon}">
-                    </td>
-                    <td class="px-3 py-2">
-                        <input type="text"
-                            class="denda-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-                            value="Rp ${parseFloat(invoice.denda).toLocaleString()}"
-                            onchange="updateRowTotal(this)">
-                        <input type="hidden" name="invoices[${index}][denda]" class="denda-value" value="${invoice.denda}">
-                        <input type="hidden" name="invoices[${index}][original_denda]" value="${invoice.denda}">
-                    </td>
-                    <td class="px-3 py-2">
-                        <input type="text"
-                            class="total-display border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-                            value="Rp ${parseFloat(invoice.total).toLocaleString()}" readonly>
-                        <input type="hidden" name="invoices[${index}][total]" class="total-value" value="${invoice.total}">
-                    </td>
-                    <td class="px-3 py-2">
-                        <button type="button" class="delete-btn" data-total="${invoice.total}">
-                            <svg class="h-5 w-5 fill-red-600" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd"
-                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                    </td>
-                </tr>`;
+<tr class="invoice-row" data-total="${invoice.total}">
+    <td class="px-3 py-2">
+        <input type="text" name="invoices[${index}][nomor_invoice]"
+            class="invoice-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+            value="${invoice.no_invoice}" readonly>
+    </td>
+    <td class="px-3 py-2">
+        <input type="date" name="invoices[${index}][jatuh_tempo]"
+            class="invoice-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+            value="${invoice.tgl_jatuh_tempo}" readonly>
+    </td>
+    <td class="px-3 py-2">
+        <input type="text"
+            class="piutang-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+            value="${formatRupiah(Math.floor(invoice.tagihan))}"
+            onchange="updatePenaltyAndDiscount(this, ${index})"
+            onfocus="removeFormatting(this)"
+            onblur="applyFormatting(this)">
+        <input type="hidden" name="invoices[${index}][piutang_belum_dibayar]" class="piutang-value" value="${Math.floor(invoice.tagihan)}">
+    </td>
+    <td class="px-3 py-2">
+        <input type="text"
+            class="diskon-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+            value="${formatRupiah(Math.floor(invoice.diskon))}"
+            onchange="updateRowTotal(this)">
+        <input type="hidden" name="invoices[${index}][diskon]" class="diskon-value" value="${Math.floor(invoice.diskon)}">
+    </td>
+    <td class="px-3 py-2">
+        <input type="text"
+            class="denda-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+            value="${formatRupiah(Math.floor(invoice.denda))}"
+            onchange="updateRowTotal(this)">
+        <input type="hidden" name="invoices[${index}][denda]" class="denda-value" value="${Math.floor(invoice.denda)}">
+    </td>
+    <td class="px-3 py-2">
+        <input type="text"
+            class="total-display border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+            value="${formatRupiah(Math.floor(invoice.total))}" readonly>
+        <input type="hidden" name="invoices[${index}][total]" class="total-value" value="${Math.floor(invoice.total)}">
+    </td>
+    <td class="px-3 py-2">
+        <button type="button" class="delete-btn" data-total="${Math.floor(invoice.total)}">
+            <svg class="h-5 w-5 fill-red-600" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                    clip-rule="evenodd" />
+            </svg>
+        </button>
+    </td>
+</tr>`;
 
                         invoiceContainer.insertAdjacentHTML('beforeend', row);
-                    });
 
-                    // Add event listeners for input formatting
-                    document.querySelectorAll('.piutang-input, .denda-input, .diskon-input').forEach(input => {
-                        input.addEventListener('focus', function() {
-                            // Remove formatting when focused
-                            this.value = this.value.replace(/[^0-9.-]+/g, "");
-                        });
-
-                        input.addEventListener('blur', function() {
-                            // Format number when leaving the input
-                            const value = parseFloat(this.value) || 0;
-                            this.value = `Rp ${value.toLocaleString()}`;
-
-                            // Update the hidden value
-                            const hiddenInput = this.nextElementSibling;
-                            hiddenInput.value = value;
-
-                            updateRowTotal(this);
-                        });
-
-                        // Add keyup event for real-time updates while typing
-                        input.addEventListener('keyup', function(e) {
-                            // Only allow numbers and decimal point
-                            if (!/^\d*\.?\d*$/.test(this.value)) {
-                                this.value = this.value.replace(/[^\d.]/g, '');
-                            }
-                        });
-                    });
-
-                    updateTotalPiutang();
-
-                    // Event listener untuk tombol delete
-                    document.querySelectorAll('.delete-btn').forEach(button => {
-                        button.addEventListener('click', function() {
+                        const deleteButton = invoiceContainer.lastElementChild.querySelector('.delete-btn');
+                        deleteButton.addEventListener('click', function() {
                             const row = this.closest('tr');
                             row.remove();
                             reindexInvoiceInputs();
                             updateTotalPiutang();
                         });
                     });
+
+                    updateTotalPiutang();
+
                 });
+
+
         }
 
-        function formatRupiah(number) {
-            return `Rp ${parseFloat(number).toLocaleString()}`;
+        function removeFormatting(input) {
+            input.value = unformatRupiah(input.value);
         }
 
-        function unformatRupiah(rupiahString) {
-            return parseFloat(rupiahString.replace(/[^0-9.-]+/g, "")) || 0;
+        function applyFormatting(input) {
+            const value = parseInt(input.value) || 0;
+            input.value = formatRupiah(value);
+            const row = input.closest('tr');
+            row.querySelector('.piutang-value').value = value;
+            updatePenaltyAndDiscount(input, input.closest('tr').rowIndex);
         }
 
         function updateRowTotal(input) {
             const row = input.closest('tr');
-            const piutangValue = parseFloat(row.querySelector('.piutang-value').value) || 0;
-            const diskonValue = parseFloat(row.querySelector('.diskon-value').value) || 0;
-            const dendaValue = parseFloat(row.querySelector('.denda-value').value) || 0;
+            const piutangValue = parseInt(unformatRupiah(row.querySelector('.piutang-input').value)) || 0;
+            const diskonValue = parseInt(row.querySelector('.diskon-value').value) || 0;
+            const dendaValue = parseInt(row.querySelector('.denda-value').value) || 0;
 
-            // Calculate new total
+            // Update hidden piutang value
+            row.querySelector('.piutang-value').value = piutangValue;
+
             const newTotal = piutangValue - diskonValue + dendaValue;
 
-            // Update total display and value
-            const totalDisplay = row.querySelector('.total-display');
-            const totalValue = row.querySelector('.total-value');
+            row.querySelector('.total-display').value = formatRupiah(newTotal);
+            row.querySelector('.total-value').value = newTotal;
 
-            totalDisplay.value = formatRupiah(newTotal);
-            totalValue.value = newTotal;
-
-            // Update grand total
             updateTotalPiutang();
+        }
+
+        function updatePenaltyAndDiscount(piutangInput, index) {
+            const row = piutangInput.closest('tr');
+            const jatuhTempo = new Date(row.querySelector(`[name="invoices[${index}][jatuh_tempo]"]`).value);
+            const tanggalPembayaran = new Date(document.getElementById('tanggal_transaksi').value);
+            const piutangValue = parseInt(unformatRupiah(piutangInput.value)) || 0;
+
+            const selisihHari = Math.floor((tanggalPembayaran - jatuhTempo) / (1000 * 60 * 60 * 24));
+
+            const tarifDendaPerHari = 20 / 365;
+            const tarifDiskonPerHari = 6 / 365;
+
+            let denda = 0;
+            let diskon = 0;
+
+            if (selisihHari > 0) {
+                denda = Math.floor((piutangValue * tarifDendaPerHari * selisihHari) / 100);
+                diskon = 0;
+            } else if (selisihHari < 0) {
+                denda = 0;
+                diskon = Math.floor((piutangValue * tarifDiskonPerHari * Math.abs(selisihHari)) / 100);
+            }
+
+            row.querySelector('.denda-input').value = formatRupiah(denda);
+            row.querySelector('.denda-value').value = denda;
+
+            row.querySelector('.diskon-input').value = formatRupiah(diskon);
+            row.querySelector('.diskon-value').value = diskon;
+
+            updateRowTotal(piutangInput);
         }
 
         function updateTotalPiutang() {
@@ -258,8 +261,16 @@
             document.querySelectorAll('.total-value').forEach(input => {
                 total += parseFloat(input.value) || 0;
             });
-
             document.getElementById('total-piutang').value = formatRupiah(total);
+        }
+
+        function formatRupiah(number) {
+            const roundedNumber = Math.floor(number);
+            return `Rp ${roundedNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+        }
+
+        function unformatRupiah(rupiahString) {
+            return parseInt(rupiahString.replace(/[^0-9]/g, ""), 10) || 0;
         }
 
         function reindexInvoiceInputs() {

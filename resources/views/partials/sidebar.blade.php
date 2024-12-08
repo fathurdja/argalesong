@@ -126,7 +126,7 @@
                     </a>
                     <ul class="py-2 text sidebar-submenu">
                         <li class="sidebar-submenu-item">
-                            <a href="{{ route('kp-pelanggan') }}"
+                            <a href="{{ route('kp_pelanggan') }}"
                                 class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Pelanggan</a>
                         </li>
                         <li class="sidebar-submenu-item">

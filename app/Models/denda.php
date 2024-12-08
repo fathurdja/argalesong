@@ -11,6 +11,7 @@ class denda extends Model
     protected $table = 'denda';
     protected $fillable = [
         'idpelanggan',
+        'no_invoice',
         'nominal',
         'piutang'
     ];

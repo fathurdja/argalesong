@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\customer;
 use App\Models\masterDataPajak;
 use App\Models\piutang;
+use App\Models\tipePelanggan;
 use App\Models\TipePiutang;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -23,22 +24,28 @@ class PiutangController extends Controller
     public function create(Request $request)
     {
         $piutangTypes = TipePiutang::all();
+        $tipePelanggan = tipePelanggan::all();
         $pajakTypes = masterDataPajak::whereNotIn('name', ['PPN'])->distinct()->pluck('name');
         $ppnTypes = masterDataPajak::where('name', 'PPN')
-        ->select('nilai', 'id','name')
-        ->get();
-        $customer = customer::all();
+            ->select('nilai', 'id', 'name')
+            ->get();
+
         $selectedType = null;
         $selectedTagihan = null;
         $jumlahKali = null;
         $selectedPajak = null;
         $filteredRates = [];
+        $selectedTipePelanggan = $request->tipePelanggan;
 
         // Ambil kode jenis piutang yang dipilih dari request
         if ($request->has('jenis_form')) {
-            $selectedType = TipePiutang::find($request->jenis_form); // Mengambil data berdasarkan ID
+            $selectedType = TipePiutang::find($request->jenis_form);
+            // Mengambil data berdasarkan ID
         }
 
+        if ($request->has('tipePelanggan')) {
+            $selectedTipePelanggan = $request->tipePelanggan;
+        }
         if ($request->has('jenis_tagihan')) {
             $selectedTagihan = $request->jenis_tagihan; // Ambil jenis tagihan yang dipilih
 
@@ -47,9 +54,9 @@ class PiutangController extends Controller
                 $jumlahKali = $request->jumlah_kali; // Ambil jumlah kali tagihan
             }
         }
+        $customers = customer::all();
 
-
-        return view('piutangBaru.afiliasi', compact('piutangTypes','ppnTypes', 'selectedType', 'customer', 'pajakTypes', 'filteredRates', 'selectedPajak', 'selectedTagihan', 'jumlahKali',));
+        return view('piutangBaru.afiliasi', compact('piutangTypes', 'ppnTypes', 'selectedType', 'customers', 'pajakTypes', 'filteredRates', 'selectedPajak', 'selectedTagihan', 'jumlahKali', 'tipePelanggan', 'selectedTipePelanggan'));
     }
 
     public function getPajakRate($type)
@@ -81,7 +88,7 @@ class PiutangController extends Controller
             'jarak_hari' => 'required|integer',
             'total_piutang' => 'required|string|min:0',
             'ppn_value' => 'required|string|min:0',
-            'pph_value' =>'required|string|min:0',
+            'pph_value' => 'required|string|min:0',
             'diskon' => 'nullable|string|min:0',
             'jenis_form' => 'required|exists:tipepiutang,kodePiutang',
             'jenis_tagihan' => 'required|in:tetap,berulang',
@@ -119,6 +126,7 @@ class PiutangController extends Controller
             'jenisTagihan' => 'tetap',
             'jumlahTagihan' => 1,
             'urutanTagihan' => 1,
+            'statusPembayaran' => 'BELUM LUNAS'
         ]);
     }
     private function convertToDecimal($value)
@@ -154,6 +162,7 @@ class PiutangController extends Controller
                 'jenisTagihan' => 'berulang',
                 'jumlahTagihan' => $data['jumlah_kali'],
                 'urutanTagihan' => $i + 1,
+                'statusPembayaran' => 'BELUM LUNAS'
             ]);
 
             // Tambahkan 1 bulan untuk tagihan berikutnya

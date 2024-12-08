@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\piutang;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,69 +12,115 @@ class UmurPiutangController extends Controller
     {
         $search = $request->input('search');
 
-        if ($search) {
-            // Fetch data with search filter
-            $data = DB::table('detailpiutang')
-                ->join('customer', 'detailpiutang.idpelanggan', '=', 'customer.id_Pelanggan')
-                ->join('pelanggan', 'customer.idtypepelanggan', '=', 'pelanggan.idtypepelanggan')
-                ->select('detailpiutang.*', 'customer.name as nama_customer', 'pelanggan.namatipepelanggan as tipe_pelanggan')
-                ->where('customer.name', 'LIKE', "%{$search}%")
-                ->orWhere('detailpiutang.idpelanggan', 'LIKE', "%{$search}%")
-                ->get();
+        // Setting SQL mode untuk menghindari masalah mode ONLY_FULL_GROUP_BY
+        DB::statement("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''))");
 
-            // Group the data
-            $grouped_data = $this->groupData($data);
-        } else {
-            // Fetch all data if no search query
-            $data = DB::table('detailpiutang')
-                ->join('customer', 'detailpiutang.idpelanggan', '=', 'customer.id_Pelanggan')
-                ->join('tipepelanggan', 'customer.idtypepelanggan', '=', 'tipepelanggan.kodetype')
-                ->select('detailpiutang.*', 'customer.name as nama_customer', 'tipepelanggan.name as tipe_pelanggan')
-                ->get();
+        // Query untuk mendapatkan data dari tabel `detailpiutang` dengan `leftJoin` ke `vtbpiutang`
+        $query = DB::table('detailpiutang as x')
+            ->leftJoin('vtbpiutang as y', 'x.no_invoice', '=', 'y.idpiutang')
+            ->leftJoin('customer', 'x.idpelanggan', '=', 'customer.id_Pelanggan') // Join dengan tabel customer untuk nama pelanggan
+            ->select(
+                'x.id',
+                'x.idpelanggan',
+                'customer.name as customer_name', // Nama pelanggan
+                'x.tgltra',
+                'x.no_invoice',
+                'x.tgl_jatuh_tempo',
+                'y.xpiutang as tagihan' // Menggunakan kolom tagihan sebagai basis perhitungan
+            );
 
-            // Group the data
-            $grouped_data = $this->groupData($data);
+        // Filter data berdasarkan pencarian (ID atau Nama Perusahaan) jika ada input pencarian
+        if (!empty($search)) {
+            $query->where(function ($query) use ($search) {
+                $query->where('customer.name', 'LIKE', "%{$search}%")  // Filter berdasarkan nama perusahaan
+                    ->orWhere('customer.id_Pelanggan', 'LIKE', "%{$search}%"); // Filter berdasarkan ID pelanggan
+            });
         }
 
-        return view('umurPiutang.umurPiutang', compact('grouped_data', 'search'));
+        $data = $query->get();
+        // dd($data);
+        // Mengelompokkan data berdasarkan nama pelanggan dan kategori umur piutang
+        $grouped_data = $this->groupDataByAging($data);
+        // dd($grouped_data);
+        // Menghitung ringkasan total berdasarkan kategori umur piutang
+        $totalsByCategory = $this->calculateSummaryTotals($grouped_data);
+        // dd($totalsByCategory);
+        // Kirim data ke view
+        return view('umurPiutang.umurPiutang', compact('grouped_data', 'totalsByCategory', 'search'));
+    }
+
+    /**
+     * Mengelompokkan data berdasarkan kategori umur piutang.
+     */
+    private function groupDataByAging($data)
+    {
+        $result = [];
+        $today = Carbon::now();
+
+        foreach ($data as $item) {
+            $customerName = $item->customer_name;
+            $customerId = $item->idpelanggan; // Tambahkan ID pelanggan
+            $dueDate = Carbon::parse($item->tgl_jatuh_tempo);
+            $daysPastDue = $today->diffInDays($dueDate, false); // false agar negatif jika lewat jatuh tempo
+
+            // Tentukan kategori umur piutang
+            if ($daysPastDue <= 30) {
+                $category = '< 30 days';
+            } elseif ($daysPastDue > 30 && $daysPastDue <= 60) {
+                $category = '> 30 days';
+            } elseif ($daysPastDue > 60 && $daysPastDue <= 90) {
+                $category = '> 60 days';
+            } elseif ($daysPastDue > 90 && $daysPastDue <= 120) {
+                $category = '> 90 days';
+            } else {
+                $category = '> 120 days';
+            }
+
+            // Jika pelanggan belum ada di hasil, tambahkan array baru untuknya
+            if (!isset($result[$customerId])) {
+                $result[$customerId] = [
+                    'customer_name' => $customerName,
+                    '< 30 days' => 0,
+                    '> 30 days' => 0,
+                    '> 60 days' => 0,
+                    '> 90 days' => 0,
+                    '> 120 days' => 0,
+                    'total' => 0,
+                ];
+            }
+
+            // Tambahkan nilai tagihan ke kategori yang sesuai
+            $result[$customerId][$category] += $item->tagihan;
+            $result[$customerId]['total'] += $item->tagihan;
+        }
+
+        return $result;
     }
 
 
     /**
-     * Groups the data by tipe_pelanggan and jhari ranges.
-     *
-     * @param  \Illuminate\Support\Collection  $data
-     * @return array
+     * Menghitung total piutang berdasarkan kategori umur.
      */
-    private function groupData($data)
+    private function calculateSummaryTotals($grouped_data)
     {
-        $grouped_data = [];
-        foreach ($data as $item) {
-            $group_name = $item->tipe_pelanggan;
+        $totals = [
+            '< 30 days' => 0,
+            '> 30 days' => 0,
+            '> 60 days' => 0,
+            '> 90 days' => 0,
+            '> 120 days' => 0,
+            'total' => 0,
+        ];
 
-            if (!isset($grouped_data[$group_name])) {
-                $grouped_data[$group_name] = [
-                    'kurang_30' => [],
-                    '30_60' => [],
-                    '60_90' => [],
-                    '90_120' => [],
-                    'lebih_120' => [],
-                ];
-            }
-
-            if ($item->jhari <= 30) {
-                $grouped_data[$group_name]['kurang_30'][] = $item;
-            } elseif ($item->jhari <= 60) {
-                $grouped_data[$group_name]['30_60'][] = $item;
-            } elseif ($item->jhari <= 90) {
-                $grouped_data[$group_name]['60_90'][] = $item;
-            } elseif ($item->jhari <= 120) {
-                $grouped_data[$group_name]['90_120'][] = $item;
-            } else {
-                $grouped_data[$group_name]['lebih_120'][] = $item;
-            }
+        foreach ($grouped_data as $customerData) {
+            $totals['< 30 days'] += $customerData['< 30 days'];
+            $totals['> 30 days'] += $customerData['> 30 days'];
+            $totals['> 60 days'] += $customerData['> 60 days'];
+            $totals['> 90 days'] += $customerData['> 90 days'];
+            $totals['> 120 days'] += $customerData['> 120 days'];
+            $totals['total'] += $customerData['total'];
         }
 
-        return $grouped_data;
+        return $totals;
     }
 }

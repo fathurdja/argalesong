@@ -9,7 +9,7 @@ use App\Http\Controllers\formBaruDaftarController;
 use App\Http\Controllers\formeditDaftarController;
 use App\Http\Controllers\JatuhTempoController;
 use App\Http\Controllers\kp_bukanPelangganController;
-use App\Http\Controllers\kp_PelangganController;
+use App\Http\Controllers\kp_pelangganController;
 use App\Http\Controllers\masterdatacontroller;
 use App\Http\Controllers\MasterDataPajakController;
 use App\Http\Controllers\pbAfiliasiController;
@@ -24,11 +24,12 @@ use App\Http\Controllers\Sp_HarianController;
 use App\Http\Controllers\tagihanController;
 use App\Http\Controllers\TipePelangganController;
 use App\Http\Controllers\UmurPiutangController;
-use App\Models\masterDataPajak;
 use Illuminate\Support\Facades\Route;
 
+// Route untuk Dashboard
+Route::get('/', [dashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/', [dashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+// Route untuk Login dan Register
 Route::get('/login', function () {
     return view('loginform');
 })->name('login');
@@ -38,36 +39,55 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [RegisterController::class, 'Register'])->name('register');
 Route::post('/register', [RegisterController::class, 'MakeAccount'])->name('makeAccount');
 
+// Resource Controllers
+Route::resource('customer', CustomerController::class);
+Route::resource('masterDataPajak', MasterDataPajakController::class);
+Route::resource('piutang-types', PiutangController::class);
 
-Route::resource('customer', CustomerController::class)->middleware('auth');
-Route::resource('masterDataPajak', MasterDataPajakController::class)->middleware('auth');
-Route::resource('piutang-types', PiutangController::class)->middleware('auth');
+// Route untuk Laporan Bulanan
+Route::get('/get-monthly-report', [Sp_bulananController::class, 'getMonthlyReport']);
 
+// Route untuk Pencarian Customer dan Piutang
+Route::get('/customer/search', [CustomerController::class, 'index'])->name('customer.search');
+Route::get('/piutang/group', [UmurPiutangController::class, 'index'])->name('detailpiutang.index');
 
-Route::get('/get-monthly-report', [Sp_bulananController::class, 'getMonthlyReport'])->middleware('auth');
-
-Route::get('/customer/search', [CustomerController::class, 'index'])->name('customer.search')->middleware('auth');
-Route::get('/piutang/group', [UmurPiutangController::class, 'index'])->name('detailpiutang.index')->middleware('auth');
-Route::get('/pembayaran-piutang', [PembayaranPiutang::class, 'showForm'])->name('pembayaran-piutang.show')->middleware('auth');
-Route::get('/pembayaran-piutang/proses', [PembayaranPiutang::class, 'proses'])->name('pembayaran-piutang.proses')->middleware('auth');
-Route::post('/pembayaran-piutang/bayar', [PembayaranPiutang::class, 'store'])->name('pembayaran-piutang.store')->middleware('auth');
-Route::get('/api/pajak/{type}', [PiutangController::class, 'getPajakRate'])->name('getpajakRate')->middleware('auth');
-// Route::post('/tipe-pelanggan', [TipePelangganController::class, 'store'])->name('tambah-tipePelanggan')->middleware('auth');
-// Route for fetching invoice details
-Route::get('/pembayaran-piutang/form', [PembayaranPiutang::class, 'showForm'])->name('pembayaran-piutang.form')->middleware('auth');
+// Route untuk Pembayaran Piutang
+Route::get('/pembayaran-piutang', [PembayaranPiutang::class, 'showForm'])->name('pembayaran-piutang.show');
+Route::get('/pembayaran-piutang/proses', [PembayaranPiutang::class, 'proses'])->name('pembayaran-piutang.proses');
+Route::post('/pembayaran-piutang/bayar', [PembayaranPiutang::class, 'store'])->name('pembayaran-piutang.store');
 Route::get('/api/invoices-by-customer/{customerId}', [PembayaranPiutang::class, 'getInvoicesByCustomer'])->name('invoices.by-customer');
 
-Route::get('/form-tambah-tagihan', [tagihanController::class, 'create'])->name('tambahForm')->middleware('auth');
-Route::get('/master-data-piutang', [masterdatacontroller::class, 'index'])->name('master_data_piutang')->middleware('auth');
-Route::get('/master-data-piutang-create', [masterdatacontroller::class, 'create'])->name('master_data_piutang_create')->middleware('auth');
-Route::post('/storeTipePelanggan', [masterdatacontroller::class, 'storeTipePelanggan'])->name('storeTipePelanggan')->middleware('auth');
-Route::post('/storeTipePiutang', [masterdatacontroller::class, 'storeTipePiutang'])->name('storeTipePiutang')->middleware('auth');
-Route::get('/kp-Pelanggan', [kp_PelangganController::class, 'index'])->name('kp-pelanggan')->middleware('auth');
-Route::get('/kp-bukan-Pelanggan', [kp_bukanPelangganController::class, 'index'])->name('kp-bukanpelanggan')->middleware('auth');
-Route::get('/umur-piutang', [UmurPiutangController::class, 'index'])->name('umur-piutang')->middleware('auth');
-Route::get('/sp-bulanan', [Sp_bulananController::class, 'index'])->name('sp-bulanan')->middleware('auth');
-Route::get('/sp-harian', [Sp_HarianController::class, 'index'])->name('sp-harian')->middleware('auth');
-Route::get('/jatuh-tempo', [JatuhTempoController::class, 'index'])->name('jatuh-tempo')->middleware('auth');
-Route::get('/pp-pengajuan', [pp_pengajuan::class, 'index'])->name('pp-pengajuan')->middleware('auth');
-Route::get('/pp-baru', [pp_baruController::class, 'index'])->name('pp-baru')->middleware('auth');
-Route::post('/tagihan/get-data', [tagihanController::class, 'getData'])->middleware('auth');
+// Route untuk Pengaturan Pajak berdasarkan tipe Piutang
+Route::get('/api/pajak/{type}', [PiutangController::class, 'getPajakRate'])->name('getpajakRate');
+
+// Route untuk Master Data Piutang dan Tagihan
+Route::get('/form-tambah-tagihan', [tagihanController::class, 'create'])->name('tambahForm');
+Route::get('/master-data-piutang', [masterdatacontroller::class, 'index'])->name('master_data_piutang');
+Route::get('/master-data-piutang-create', [masterdatacontroller::class, 'create'])->name('master_data_piutang_create');
+Route::post('/storeTipePelanggan', [masterdatacontroller::class, 'storeTipePelanggan'])->name('storeTipePelanggan');
+Route::post('/storeTipePiutang', [masterdatacontroller::class, 'storeTipePiutang'])->name('storeTipePiutang');
+
+Route::get('/kartu-pelanggan', [kp_pelangganController::class, 'index'])->name('kp_pelanggan');
+
+// Route to fetch and display the data after form submission (POST request)
+Route::post('/kartu-pelanggan-fetchData', [kp_pelangganController::class, 'fetchData'])->name('kartu-pelanggan-fetchData');
+// Route untuk Data Pelanggan Khusus (KP Pelanggan dan Bukan Pelanggan)
+
+Route::get('/kp-bukan-Pelanggan', [kp_bukanPelangganController::class, 'index'])->name('kp-bukanpelanggan');
+
+// Route untuk Pengajuan dan Pengajuan Baru
+Route::get('/pp-pengajuan', [pp_pengajuan::class, 'index'])->name('pp-pengajuan');
+Route::get('/pp-baru', [pp_baruController::class, 'index'])->name('pp-baru');
+
+// Route untuk Laporan SP Bulanan dan Harian
+Route::get('/sp-bulanan', [Sp_bulananController::class, 'index'])->name('sp-bulanan');
+Route::get('/sp-harian', [Sp_HarianController::class, 'index'])->name('sp-harian');
+
+// Route untuk Jatuh Tempo
+Route::get('/jatuh-tempo', [JatuhTempoController::class, 'index'])->name('jatuh-tempo');
+
+// Route untuk mendapatkan data Tagihan
+Route::post('/tagihan/get-data', [tagihanController::class, 'getData']);
+
+// Route tambahan untuk Umur Piutang
+Route::get('/umur-piutang', [UmurPiutangController::class, 'index'])->name('umur-piutang');

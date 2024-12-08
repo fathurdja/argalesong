@@ -1,117 +1,172 @@
 @extends('layouts.app')
+
 @section('content')
-    <div class="bg-gray-100 p-6 ml-10">
-        <!-- Form Search dan Informasi Pelanggan -->
-        <div class="mb-4">
-            <input type="text" placeholder="cari kode / nama" class="border border-gray-400 p-2 w-full rounded-md mb-4">
-            <div class="flex items-center justify-between bg-white p-4 rounded-md border border-gray-400">
-                <div class="text-lg font-bold">PRS348</div>
-                <div class="text-lg font-bold">PT Fast Food Indonesia</div>
-                <input type="text" class="border border-gray-400 p-2 rounded-md">
+    <div class="container mx-auto px-4 py-8 ml-12">
+        <!-- Form Pencarian -->
+        <div class="bg-gray-100 p-6 rounded-lg shadow-md mb-6">
+            <form method="POST" action="{{ route('kartu-pelanggan-fetchData') }}">
+                @csrf
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div>
+                        <label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Awal</label>
+                        <input type="date" name="start_date" id="start_date"
+                            value="{{ old('start_date', now()->format('Y-m-d')) }}"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            required>
+                    </div>
+                    <div>
+                        <label for="end_date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Akhir</label>
+                        <input type="date" name="end_date" id="end_date"
+                            value="{{ old('end_date', now()->format('Y-m-d')) }}"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            required>
+                    </div>
+                    <div>
+                        <label for="tipePelanggan" class="block text-sm font-medium text-gray-700 mb-2">Tipe
+                            Pelanggan</label>
+                        <select id="tipePelanggan" name="tipePelanggan"
+                            class="block w-full border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="">-- Pilih Tipe Pelanggan --</option>
+                            @foreach ($tipePelanggan as $type)
+                                <option value="{{ $type->kodeType }}"
+                                    {{ $selectedTipePelanggan == $type->kodeType ? 'selected' : '' }}>
+                                    {{ $type->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <label for="nama_pelanggan" class="block text-sm font-medium text-gray-700 mb-2">Pilih Pelanggan</label>
+                    <select name="nama_pelanggan" id="nama_pelanggan"
+                        class="border border-gray-300 rounded-md shadow-sm w-full p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        required>
+                        <option value="">-- Pilih Pelanggan --</option>
+                        @foreach ($customers as $customer)
+                            <option value="{{ $customer->id_Pelanggan }}">{{ $customer->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mt-4 text-right">
+                    <button type="submit"
+                        class="px-6 py-2 bg-blue-500 text-white font-medium rounded-md shadow-sm hover:bg-blue-600 focus:ring focus:ring-blue-300">
+                        Cari
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Data Piutang, Pembayaran, dan Denda -->
+        <div class="bg-green-100 border border-green-500 rounded-lg shadow-md p-8">
+            <h2 class="bg-green-500 text-white text-center font-semibold py-3 rounded-t-lg">
+                Data Piutang dan Pembayaran
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="w-full table-auto border-collapse border border-gray-200 text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-3 border text-gray-700 text-center">Tanggal Piutang</th>
+                            <th class="px-6 py-3 border text-gray-700 text-center">No Invoice</th>
+                            <th class="px-6 py-3 border text-gray-700 text-center">No Bukti Jurnal</th>
+                            <th class="px-6 py-3 border text-gray-700 text-center">Keterangan Piutang</th>
+                            <th class="px-6 py-3 border text-gray-700 text-right">Nominal</th>
+                            <th class="px-6 py-3 border text-gray-700 text-center">Tanggal Jatuh Tempo</th>
+                            <th class="px-6 py-3 border text-gray-700 text-center">Tanggal Bayar</th>
+                            <th class="px-6 py-3 border text-gray-700 text-center">No Jurnal Bayar</th>
+                            <th class="px-6 py-3 border text-gray-700 text-center">No Bukti Bayar</th>
+                            <th class="px-6 py-3 border text-gray-700 text-center">Keterangan Bayar</th>
+                            <th class="px-6 py-3 border text-gray-700 text-right">Nominal Bayar</th>
+                            <th class="px-6 py-3 border text-gray-700 text-right">Saldo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($data as $item)
+                            <tr>
+                                <td class="px-6 py-3 border text-gray-700 text-center">{{ $item['tglpiutang'] ?? '-' }}</td>
+                                <td class="px-6 py-3 border text-gray-700 text-center">{{ $item['noinvoice'] ?? '-' }}</td>
+                                <td class="px-6 py-3 border text-gray-700 text-center">{{ $item['nobuktijurnal'] ?? '-' }}
+                                </td>
+                                <td class="px-6 py-3 border text-gray-700">{{ $item['keterangan'] ?? '-' }}</td>
+                                <td class="px-6 py-3 border text-gray-700 text-right">
+                                    {{ number_format($item['nominal'] ?? 0, 2, ',', '.') }}
+                                </td>
+                                <td class="px-6 py-3 border text-gray-700 text-center">{{ $item['tgljtempo'] ?? '-' }}</td>
+                                <td class="px-6 py-3 border text-gray-700 text-center">{{ $item['tglbayar'] ?? '-' }}</td>
+                                <td class="px-6 py-3 border text-gray-700 text-center">{{ $item['nojrbayar'] ?? '-' }}</td>
+                                <td class="px-6 py-3 border text-gray-700 text-center">{{ $item['nobuktibayar'] ?? '-' }}
+                                </td>
+                                <td class="px-6 py-3 border text-gray-700">{{ $item['ketbayar'] ?? '-' }}</td>
+                                <td class="px-6 py-3 border text-gray-700 text-right">
+                                    {{ number_format($item['nbayar'] ?? 0, 2, ',', '.') }}
+                                </td>
+                                <td class="px-6 py-3 border text-gray-700 text-right">
+                                    {{ number_format(($item['saldo'] ?? 0) < 10 ? 0 : $item['saldo'], 2, ',', '.') }}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="12" class="px-6 py-3 text-center text-gray-500">Tidak ada data ditemukan.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
-
-        <!-- Tabel Piutang -->
-        <div class="overflow-x-auto mb-6">
-            <table class="min-w-full bg-white border border-gray-400">
-                <thead>
-                    <tr class="bg-green-500 text-white text-left">
-                        <th colspan="8" class="p-2">PIUTANG</th>
-                        <th colspan="8" class="text-right p-2">Periode: 01/07/2024 s/d 12/08/2024</th>
-                    </tr>
-                    <tr class="bg-green-300 text-black">
-                        <th class="p-2 border">Tgl Terbit</th>
-                        <th class="p-2 border">No Invoice</th>
-                        <th class="p-2 border">No Bukti Jurnal</th>
-                        <th class="p-2 border">Keterangan</th>
-                        <th class="p-2 border">Nominal</th>
-                        <th class="p-2 border">Tgl Jatuh Tempo</th>
-                        <th class="p-2 border">Tgl Bayar</th>
-                        <th class="p-2 border">No Bukti Jurnal</th>
-                        <th class="p-2 border">Keterangan</th>
-                        <th class="p-2 border">Nominal</th>
-                        <th class="p-2 border">Saldo</th>
-                        <th class="p-2 border">Umur Piutang</th>
-                        <th class="p-2 border">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Repeat Rows -->
-                    <tr>
-                        <td class="p-2 border">29/05/2024</td>
-                        <td class="p-2 border">INV024087</td>
-                        <td class="p-2 border">FN024052001</td>
-                        <td class="p-2 border">Sewa KFC Petarani Mei 2024</td>
-                        <td class="p-2 border">23,456,000</td>
-                        <td class="p-2 border">28/06/2024</td>
-                        <td class="p-2 border">05/08/2024</td>
-                        <td class="p-2 border">BD0240685002</td>
-                        <td class="p-2 border">Pembayaran 1</td>
-                        <td class="p-2 border">15,000,000</td>
-                        <td class="p-2 border">0</td>
-                        <td class="p-2 border">7</td>
-                        <td class="p-2 border flex justify-center items-center space-x-2">
-                            <button class="text-blue-500 hover:text-blue-700">
-                                <!-- Ikon edit -->
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M16.862 2.488l4.65 4.65a1.5 1.5 0 010 2.121l-9.193 9.193a1.5 1.5 0 01-.736.405l-5.914 1.314a1.5 1.5 0 01-1.83-1.829l1.314-5.914a1.5 1.5 0 01.405-.736l9.193-9.193a1.5 1.5 0 012.121 0zM12.75 6.75L17.25 11.25" />
-                                </svg>
-                            </button>
-                            <button class="text-red-500 hover:text-red-700">
-                                <!-- Ikon hapus -->
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M19.5 9.75h-15M12 4.5v15m0 0L7.5 15M12 19.5l4.5-4.5m0 0l4.5-4.5m-9 9l-4.5-4.5m0 0L4.5 12m15 0l4.5-4.5M4.5 12L12 4.5" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Repeat Rows End -->
-                    <tr class="bg-green-300 font-bold text-black">
-                        <td colspan="11" class="p-2 text-right">Total</td>
-                        <td class="p-2 border" colspan="2">75,440,000</td>
-
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Tabel Denda -->
-        <div class="overflow-x-auto">
-            <table class="min-w-full bg-white border border-gray-400">
-                <thead>
-                    <tr class="bg-red-500 text-white text-left">
-                        <th colspan="6" class="p-2">DENDA</th>
-                    </tr>
-                    <tr class="bg-red-300 text-black">
-                        <th class="p-2 border">Nominal Denda</th>
-                        <th class="p-2 border">Tgl Bayar</th>
-                        <th class="p-2 border">No Bukti Jurnal</th>
-                        <th class="p-2 border">Keterangan</th>
-                        <th class="p-2 border">Nominal</th>
-                        <th class="p-2 border">Saldo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Repeat Rows -->
-                    <tr>
-                        <td class="p-2 border">-</td>
-                        <td class="p-2 border">-</td>
-                        <td class="p-2 border">-</td>
-                        <td class="p-2 border">-</td>
-                        <td class="p-2 border">0</td>
-                        <td class="p-2 border">0</td>
-                    </tr>
-                    <!-- Repeat Rows End -->
-                    <tr class="bg-red-300 font-bold text-black">
-                        <td colspan="5" class="p-2 text-right">Total</td>
-                        <td class="p-2 border">0</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="bg-red-100 border border-red-500 rounded-lg shadow-md">
+            <h2 class="bg-red-500 text-white text-center font-semibold py-2">DENDA</h2>
+            <div class="overflow-x-auto p-6">
+                <table class="w-full table-auto border-collapse border border-gray-200">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-2 border text-sm font-medium text-gray-700" rowspan="2">Nomor Invoice
+                            </th>
+                            <th class="px-4 py-2 border text-sm font-medium text-gray-700" rowspan="2">Nominal Denda
+                            </th>
+                            <th class="px-4 py-2 border text-sm font-medium text-gray-700" colspan="4">Pembayaran
+                                Denda</th>
+                            <th class="px-4 py-2 border text-sm font-medium text-gray-700" colspan="4">Penghapusan
+                                Denda</th>
+                            <th class="px-4 py-2 border text-sm font-medium text-gray-700" rowspan="2">Saldo</th>
+                        </tr>
+                        <tr>
+                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">Tgl Bayar</th>
+                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">No Bukti Jurnal</th>
+                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">Keterangan</th>
+                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">Nominal</th>
+                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">Tgl Hapus</th>
+                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">Memo</th>
+                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">Keterangan</th>
+                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">Nominal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($secondResult as $denda)
+                            <tr>
+                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">
+                                    {{ $denda['noinvoice'] }}
+                                </td>
+                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">
+                                    {{ number_format($denda['nominal'] ?? 0, 2, ',', '.') }}
+                                </td>
+                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
+                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
+                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
+                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
+                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
+                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
+                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
+                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="12" class="px-6 py-3 text-center text-gray-500">Tidak ada data ditemukan.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection

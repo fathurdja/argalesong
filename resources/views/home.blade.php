@@ -8,13 +8,13 @@
         <!-- Bagian Kiri: Informasi Perusahaan dan Pengguna -->
         <div class="text-center">
             <h1 class="text-xl font-bold">PT SINAR GALESONG PRATAMA</h1>
-            <p class="italic text-gray-500">Departemen <span class="not-italic font-bold">{{ $user->departemen }}</span></p>
+            {{-- <p class="italic text-gray-500">Departemen <span class="not-italic font-bold">{{ $user->departemen }}</span></p>
             <!-- Gambar Profil -->
             <div class="mt-4">
                 <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile Picture"
                     class="w-32 h-32 rounded-full mx-auto">
             </div>
-            <p class="mt-4">Hai, <span class="text-blue-500">{{ $user->name }}</span>!</p>
+            <p class="mt-4">Hai, <span class="text-blue-500">{{ $user->name }}</span>!</p> --}}
         </div>
 
         <!-- Bagian Kanan: Tanggal dan Tabel Umur Piutang -->
@@ -34,21 +34,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="border border-gray-200 px-4 py-2 text-center">1</td>
-                            <td class="border border-gray-200 px-4 py-2">> 30 hari</td>
-                            <td class="border border-gray-200 px-4 py-2">Rp100,000,000</td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-200 px-4 py-2 text-center">2</td>
-                            <td class="border border-gray-200 px-4 py-2">> 60 hari</td>
-                            <td class="border border-gray-200 px-4 py-2">Rp2,500,000</td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-200 px-4 py-2 text-center">3</td>
-                            <td class="border border-gray-200 px-4 py-2">> 90 hari</td>
-                            <td class="border border-gray-200 px-4 py-2">Rp139,850</td>
-                        </tr>
+                        @foreach ($summaryData as $row)
+                            <tr>
+                                <td class="border border-gray-200 px-4 py-2 text-center">{{ $row['no'] }}</td>
+                                <td class="border border-gray-200 px-4 py-2 text-center">{{ $row['aging'] }}</td>
+                                <td class="border border-gray-200 px-4 py-2 text-center">
+                                    {{ 'Rp' . number_format($row['total'], 0, ',', '.') }}</td>
+                            </tr>
+                        @endforeach
+
                     </tbody>
                 </table>
                 <button class="bg-red-600 rounded-md shadow mt-5 px-7">

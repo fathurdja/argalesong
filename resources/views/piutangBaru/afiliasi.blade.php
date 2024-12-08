@@ -56,7 +56,8 @@
                         <div>
                             <label for="jatuh_tempo" class="block text-sm font-medium text-gray-700">Jatuh Tempo</label>
                             <input type="date" name="jatuh_tempo" id="jatuh_tempo"
-                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                , onchange="formatDate(this)">
                         </div>
                     </div>
                     <label for="jarak_hari" class="block text-sm font-medium text-gray-700 w-1/3">Jatuh Tempo</label>
@@ -67,17 +68,41 @@
                         <p class="mt-1 font-bold ">Hari</p>
                     </div>
                     <div class="mb-4">
-                        <label for="nama_pelanggan" class="block text-sm font-medium text-gray-700">Nama Pelanggan</label>
+                        <label for="denda" class="block text-sm font-medium text-gray-700">Denda</label>
+                        <select id="denda" name="denda"
+                            class="mt-1 block m-full bg-white border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="">Denda</option>
+                            <option value="">Tidak Denda</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="tipePelanggan" class="block text-sm font-medium text-gray-700">Tipe Pelanggan</label>
+                        <select id="tipePelanggan" name="tipePelanggan" onchange="updateCustomerDropdown()"
+                            class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="">-- Pilih Pelanggan --</option>
+                            @foreach ($tipePelanggan as $type)
+                                <option value="{{ $type->kodeType }}">
+                                    {{ $selectedTipePelanggan == $type->kodeType ? 'selected' : '' }}
+                                    {{ $type->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div id="customerDropdownContainer" class="mb-4">
+                        <label for="nama_pelanggan" class="block text-sm font-medium text-gray-700">Nama
+                            Pelanggan</label>
                         <select id="nama_pelanggan" name="nama_pelanggan"
                             class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             <option value="">-- Pilih Pelanggan --</option>
-                            @foreach ($customer as $type)
+                            @foreach ($customers as $type)
                                 <option value="{{ $type->id_Pelanggan }}">
                                     {{ $type->id_Pelanggan }} {{ $type->name }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
+
+
                     <div class="flex">
                         <div class="mb-4">
                             <label for="jenis_tagihan" class="block text-sm font-medium text-gray-700">Jenis Tagihan</label>
@@ -184,74 +209,69 @@
 
 @push('script')
     <script>
+        var customers = @json($customers);
+
+        function updateCustomerDropdown() {
+            var tipePelanggan = document.getElementById('tipePelanggan').value;
+            var customerSelect = document.getElementById('nama_pelanggan');
+
+            // Reset dropdown
+            customerSelect.innerHTML = '<option value="">-- Pilih Pelanggan --</option>';
+
+            // Filter pelanggan berdasarkan tipe pelanggan
+            var filteredCustomers = customers.filter(function(customer) {
+                return customer.idtypepelanggan === tipePelanggan;
+            });
+
+            // Update dropdown dengan pelanggan yang sesuai
+            filteredCustomers.forEach(function(customer) {
+                var option = document.createElement('option');
+                option.value = customer.id_Pelanggan;
+                option.textContent = customer.id_Pelanggan + ' - ' + customer.name;
+                customerSelect.appendChild(option);
+            });
+        }
+
         function formatRupiah(value) {
-            // Handle NaN, undefined, or invalid values
-            if (isNaN(value) || value === null || value === undefined) {
-                return "0";
-            }
-            // Format number to fixed 0 decimal places
-            const cleanValue = parseFloat(value).toFixed(0);
-            return cleanValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
 
-        function unformatRupiah(value) {
-            const numericValue = parseFloat(value.replace(/\./g, ''));
-            return isNaN(numericValue) ? 0 : numericValue;
-        }
-
-        function formatDPP() {
-            const dppInput = document.getElementById('dpp');
-            let dppValue = dppInput.value.replace(/\./g, ''); // Remove existing dots
-
-            // Set to 0 if empty or invalid
-            if (!dppValue || isNaN(dppValue)) {
-                dppValue = "0";
+        function formatDPP(input) {
+            let value = input.value.replace(/\./g, ''); // Remove existing dots for reformatting
+            if (!isNaN(value) && value !== "") {
+                input.value = formatRupiah(value); // Apply Rupiah format
+            } else {
+                input.value = ""; // Clear if not a valid number
             }
-
-            dppInput.value = formatRupiah(dppValue);
-            calculatePiutang();
+            calculatePiutang(); // Recalculate totals
         }
 
         function calculatePiutang() {
-            // Get all required elements
-            const dppInput = document.getElementById('dpp');
-            const ppnInput = document.getElementById('ppn_value');
-            const pphInput = document.getElementById('pph_value');
-            const totalPiutangInput = document.getElementById('total_piutang');
-            const ppnTypeSelect = document.getElementById('ppn_type');
-            const tarifSelect = document.getElementById('tarif');
+            const dppInput = parseFloat(document.getElementById('dpp').value.replace(/\./g, '')) || 0;
+            const ppnRate = parseFloat(document.getElementById('ppn_type').value) || 0; // Get PPN rate percentage
+            const pphRate = parseFloat(document.getElementById('tarif').value) || 0; // Get PPh rate percentage
 
-            // Get values and convert to numbers, defaulting to 0 if invalid
-            const dpp = unformatRupiah(dppInput.value || "0");
-            const ppnRate = ppnTypeSelect.value === "Tidak Ada" ? 0 : parseFloat(ppnTypeSelect.value || "0");
-            const pphRate = tarifSelect.value === "Tidak Ada" ? 0 : parseFloat(tarifSelect.value || "0");
+            // Calculate PPN and PPh values
+            const ppnValue = (dppInput * ppnRate) / 100;
+            const pphValue = (dppInput * pphRate) / 100;
 
-            // Calculate PPN and PPh
-            const ppn = (ppnRate * dpp) / 100;
-            const pph = (pphRate * dpp) / 100;
+            // Set formatted values for PPN and PPh
+            document.getElementById('ppn_value').value = formatRupiah(ppnValue.toFixed(0));
+            document.getElementById('pph_value').value = formatRupiah(pphValue.toFixed(0));
 
-            // Format and display values, showing 0 for invalid results
-            ppnInput.value = formatRupiah(ppn);
-            pphInput.value = formatRupiah(pph);
-
-            // Calculate and display total piutang (DPP + PPN - PPh)
-            const totalPiutang = dpp + ppn - pph;
-            totalPiutangInput.value = formatRupiah(totalPiutang);
+            // Calculate total piutang
+            const totalPiutang = dppInput + ppnValue - pphValue;
+            document.getElementById('total_piutang').value = formatRupiah(totalPiutang.toFixed(0));
         }
 
-        // Add event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            const dppInput = document.getElementById('dpp');
-            const ppnTypeSelect = document.getElementById('ppn_type');
-            const tarifSelect = document.getElementById('tarif');
 
-            dppInput.addEventListener('input', formatDPP);
-            ppnTypeSelect.addEventListener('change', calculatePiutang);
-            tarifSelect.addEventListener('change', calculatePiutang);
-
-            // Initialize with zero values
-            dppInput.value = "0";
-            formatDPP();
+        // Event listeners to trigger calculation when PPN or PPh types change
+        document.getElementById('ppn_type').addEventListener('change', calculatePiutang);
+        document.getElementById('tarif').addEventListener('change', calculatePiutang);
+        // Show or hide 'jumlah_kali' input based on 'jenis_tagihan' selection
+        document.getElementById('jenis_tagihan').addEventListener('change', function() {
+            const jumlahKaliContainer = document.getElementById('jumlah_kali_container');
+            jumlahKaliContainer.style.display = this.value === 'berulang' ? 'block' : 'none';
         });
     </script>
 @endpush

@@ -13,7 +13,8 @@
                 <a href="" class="flex items-center ">
                     <div class="flex flex-col ml-6">
                         <span class="self-center text-l font-semibold text-blue-700 hover:underline">
-                            Departemen {{ Auth::user()->departemen }}
+                            Departemen
+                             {{-- {{ Auth::user()->departemen }} --}}
                         </span>
                         <p class="text-center"> @php
                             echo date('l , d-m-Y ');
@@ -23,10 +24,13 @@
             </div>
             <div class="flex items-center space-x-8">
                 <span class="text-sm ">AREA KERJA</span>
-                <span class="text-sm underline font-medium text-center">{{ Auth::user()->name }}</span>
+                <span class="text-sm underline font-medium text-center">
+                    {{-- {{ Auth::user()->name }} --}}
+                    name
+                </span>
 
-                <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile Picture"
-                    class="w-12 h-12 rounded-full mx-auto">
+                {{-- <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile Picture"
+                    class="w-12 h-12 rounded-full mx-auto"> --}}
             </div>
         </div>
     </nav>
