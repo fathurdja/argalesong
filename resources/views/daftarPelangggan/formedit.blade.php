@@ -58,13 +58,13 @@
                 <div class="border-t border-gray-400 pt-2 mt-2 text-sm flex justify-between">
                     <p>
                         <strong>Di input oleh :</strong>
-                        {{ Auth::user()->name }} on
-                        {{ $customer->created_at ? $pelanggan->created_at->format('l d/m/Y') : '' }}
+                        {{-- {{ Auth::user()->name }} on
+                        {{ $customer->created_at ? $pelanggan->created_at->format('l d/m/Y') : '' }} --}}
                     </p>
                     <p>
                         <strong>Terakhir diedit :</strong>
-                        {{ Auth::user()->name }} on
-                        {{ $customer->updated_at ? $pelanggan->updated_at->format('l d/m/Y') : '' }}
+                        {{-- {{ Auth::user()->name }} on
+                        {{ $customer->updated_at ? $pelanggan->updated_at->format('l d/m/Y') : '' }} --}}
                     </p>
                 </div>
             </div>
@@ -103,7 +103,7 @@
 
                     <!-- Bagian Bawah: Informasi Tambahan -->
                     <div class="border-t border-gray-400 pt-2 mt-2 text-sm flex justify-between">
-                        <p>
+                        {{-- <p>
                             <strong>Di input oleh :</strong>
                             {{ Auth::user()->name }} on
                             {{ $pelanggan->created_at ? $pelanggan->created_at->format('l d/m/Y') : '' }}
@@ -112,7 +112,7 @@
                             <strong>Terakhir diedit :</strong>
                             {{ Auth::user()->name }} on
                             {{ $pelanggan->updated_at ? $pelanggan->updated_at->format('l d/m/Y') : '' }}
-                        </p>
+                        </p> --}}
                     </div>
                 </div>
             @endforeach

@@ -23,11 +23,11 @@
             <form action="{{ route('login') }}" method="POST">
                 @csrf
                 <div class="mt-3">
-                    <label for="username" class="block text-base mb-2">Username</label>
-                    <input type="text" id="username" name="username" value=""
+                    <label for="user" class="block text-base mb-2">email</label>
+                    <input type="text" id="user" name="email" value=""
                         class="border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 "
-                        placeholder="Enter username" />
-                    @error('username')
+                        placeholder="Enter email" />
+                    @error('email')
                         <span class="text-red-600 text-sm">{{ $message }}</span>
                     @enderror
                 </div>

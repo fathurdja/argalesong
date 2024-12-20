@@ -24,17 +24,18 @@ use App\Http\Controllers\Sp_HarianController;
 use App\Http\Controllers\tagihanController;
 use App\Http\Controllers\TipePelangganController;
 use App\Http\Controllers\UmurPiutangController;
+use App\Http\Middleware\CheckExternalApiToken;
 use Illuminate\Support\Facades\Route;
 
 // Route untuk Dashboard
-Route::get('/', [dashboardController::class, 'index'])->name('dashboard');
+Route::get('/', [dashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
 // Route untuk Login dan Register
 Route::get('/login', function () {
     return view('loginform');
 })->name('login');
 
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [RegisterController::class, 'Register'])->name('register');
 Route::post('/register', [RegisterController::class, 'MakeAccount'])->name('makeAccount');

@@ -13,8 +13,8 @@
                 <a href="" class="flex items-center ">
                     <div class="flex flex-col ml-6">
                         <span class="self-center text-l font-semibold text-blue-700 hover:underline">
-                            Departemen
-                             {{-- {{ Auth::user()->departemen }} --}}
+                            {{-- Departemen
+                            {{ Auth::user()->departemen }} --}}
                         </span>
                         <p class="text-center"> @php
                             echo date('l , d-m-Y ');

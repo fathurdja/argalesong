@@ -174,7 +174,7 @@ class PiutangController extends Controller
     function generateTransactionID()
     {
         // Ambil transaksi terakhir berdasarkan ID
-        $lastTransaction = piutang::orderBy('id', 'desc')->first();
+        $lastTransaction = piutang::orderBy('no_invoice', 'desc')->first();
 
         // Cek apakah ada transaksi sebelumnya
         if (!$lastTransaction) {

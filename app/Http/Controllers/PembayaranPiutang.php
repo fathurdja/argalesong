@@ -43,6 +43,7 @@ class PembayaranPiutang extends Controller
             )
 
             ->where('y.xpiutang', '>', 0)
+            ->groupBy('x.idpelanggan', 'c.name')
             ->get();
 
         // Debug: Cek status pembayaran yang ada
@@ -149,9 +150,18 @@ class PembayaranPiutang extends Controller
             'mode_bayar' => 'required|in:KAS,BANK',
             'keterangan' => 'nullable|string',
             'original_denda' => 'nullable|numeric|min:0',
-            ''
+            'total_piutang' => 'nullable|numeric|min:0',
+
+
         ]);
 
+        $totalpiutang = floatval($request->total_piutang);
+        $nominaldibayar = floatval($request->nominal_dibayar);
+
+        if ($nominaldibayar > $totalpiutang) {
+            Alert::error('Error ', 'Nominal dibayar tidak boleh lebih besar dari total piutang');
+            return back();
+        }
         // Validasi custom untuk invoices
         if (!$request->has('invoices') || empty($request->invoices)) {
             return back()->withErrors(['error' => 'Minimal satu invoice harus dipilih.']);

@@ -84,9 +84,10 @@
                     <div>
                         <label for="total_piutang" class="block text-sm font-medium text-gray-700 mb-1">Total Semua
                             Piutang</label>
-                        <input type="text" name="total_piutang" id="total-piutang"
+                        <input type="text" id="total-piutang"
                             class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-lg font-bold"
                             placeholder="Total Piutang" readonly>
+                        <input type="number" name="total_piutang" class="hidden" value="{{ old('total_piutang') }}">
                     </div>
                 </div>
 
@@ -140,34 +141,34 @@
     <td class="px-3 py-2">
         <input type="text"
             class="piutang-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-            value="${formatRupiah(Math.floor(invoice.tagihan))}"
+            value="${formatRupiah(parseFloat(invoice.tagihan))}"
             onchange="updatePenaltyAndDiscount(this, ${index})"
             onfocus="removeFormatting(this)"
             onblur="applyFormatting(this)">
-        <input type="hidden" name="invoices[${index}][piutang_belum_dibayar]" class="piutang-value" value="${Math.floor(invoice.tagihan)}">
+        <input type="hidden" name="invoices[${index}][piutang_belum_dibayar]" class="piutang-value" value="${parseFloat(invoice.tagihan)}">
     </td>
     <td class="px-3 py-2">
         <input type="text"
             class="diskon-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-            value="${formatRupiah(Math.floor(invoice.diskon))}"
+            value="${formatRupiah(parseFloat(invoice.diskon))}"
             onchange="updateRowTotal(this)">
-        <input type="hidden" name="invoices[${index}][diskon]" class="diskon-value" value="${Math.floor(invoice.diskon)}">
+        <input type="hidden" name="invoices[${index}][diskon]" class="diskon-value" value="${parseFloat(invoice.diskon)}">
     </td>
     <td class="px-3 py-2">
         <input type="text"
             class="denda-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-            value="${formatRupiah(Math.floor(invoice.denda))}"
+            value="${formatRupiah(parseFloat(invoice.denda))}"
             onchange="updateRowTotal(this)">
-        <input type="hidden" name="invoices[${index}][denda]" class="denda-value" value="${Math.floor(invoice.denda)}">
+        <input type="hidden" name="invoices[${index}][denda]" class="denda-value" value="${parseFloat(invoice.denda)}">
     </td>
     <td class="px-3 py-2">
         <input type="text"
             class="total-display border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-            value="${formatRupiah(Math.floor(invoice.total))}" readonly>
-        <input type="hidden" name="invoices[${index}][total]" class="total-value" value="${Math.floor(invoice.total)}">
+            value="${formatRupiah(parseFloat(invoice.total))}" readonly>
+        <input type="hidden" name="invoices[${index}][total]" class="total-value" value="${parseFloat(invoice.total)}">
     </td>
     <td class="px-3 py-2">
-        <button type="button" class="delete-btn" data-total="${Math.floor(invoice.total)}">
+        <button type="button" class="delete-btn" data-total="${parseFloat(invoice.total)}">
             <svg class="h-5 w-5 fill-red-600" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
@@ -220,7 +221,7 @@
             const newTotal = piutangValue - diskonValue + dendaValue;
 
             row.querySelector('.total-display').value = formatRupiah(newTotal);
-            row.querySelector('.total-value').value = newTotal;
+            row.querySelector('.total-value').value = formatRupiah(newTotal);
 
             updateTotalPiutang();
         }
@@ -229,32 +230,40 @@
             const row = piutangInput.closest('tr');
             const jatuhTempo = new Date(row.querySelector(`[name="invoices[${index}][jatuh_tempo]"]`).value);
             const tanggalPembayaran = new Date(document.getElementById('tanggal_transaksi').value);
-            const piutangValue = parseInt(unformatRupiah(piutangInput.value)) || 0;
+            const piutangValue = unformatRupiah(piutangInput.value) || 0;
 
+            // Hitung selisih hari antara tanggal pembayaran dan jatuh tempo
             const selisihHari = Math.floor((tanggalPembayaran - jatuhTempo) / (1000 * 60 * 60 * 24));
-
+            console.log("Selisih Hari:", selisihHari);
+            // Tarif denda dan diskon per hari
             const tarifDendaPerHari = 20 / 365;
             const tarifDiskonPerHari = 6 / 365;
 
             let denda = 0;
             let diskon = 0;
 
+            // Jika selisih hari lebih besar dari 0, artinya pembayaran terlambat
             if (selisihHari > 0) {
                 denda = Math.floor((piutangValue * tarifDendaPerHari * selisihHari) / 100);
                 diskon = 0;
-            } else if (selisihHari < 0) {
+            }
+            // Jika selisih hari lebih kecil dari 0, artinya pembayaran lebih cepat dari jatuh tempo
+            else if (selisihHari < 0) {
                 denda = 0;
                 diskon = Math.floor((piutangValue * tarifDiskonPerHari * Math.abs(selisihHari)) / 100);
             }
 
+            // Update input denda dan diskon di baris
             row.querySelector('.denda-input').value = formatRupiah(denda);
             row.querySelector('.denda-value').value = denda;
 
             row.querySelector('.diskon-input').value = formatRupiah(diskon);
             row.querySelector('.diskon-value').value = diskon;
 
+            // Update total piutang
             updateRowTotal(piutangInput);
         }
+
 
         function updateTotalPiutang() {
             let total = 0;
