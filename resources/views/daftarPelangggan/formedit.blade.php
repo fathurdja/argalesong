@@ -85,8 +85,8 @@
                     <!-- Detail Pelanggan -->
                     <div class="grid grid-cols-2 gap-4">
                         <div>
+                            <p><strong>Perusahaan</strong> {{ $pelanggan->company->name }}</p>
                             <p><strong>Tipe Pelanggan :</strong> {{ $pelanggan->tipePelanggan->name }}</p>
-
                             <p><strong>NPWP :</strong> {{ $pelanggan->npwp }}</p>
                             <p><strong>Alamat :</strong> {{ $pelanggan->alamat }}</p>
                             <p><strong>E-mail :</strong> {{ $pelanggan->email }}</p>

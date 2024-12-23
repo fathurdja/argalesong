@@ -15,6 +15,7 @@ class piutang extends Model
         'tgltra',
         'tgl_jatuh_tempo',
         'jhari',
+        'dpp',
         'nominal',
         'ppn',
         'pph',

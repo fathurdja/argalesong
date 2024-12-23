@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\customer;
+use App\Models\masterCompany;
 use App\Models\masterDataPajak;
 use App\Models\piutang;
 use App\Models\tipePelanggan;
@@ -36,6 +37,7 @@ class PiutangController extends Controller
         $selectedPajak = null;
         $filteredRates = [];
         $selectedTipePelanggan = $request->tipePelanggan;
+        $selectedPerusahaan = null;
 
         // Ambil kode jenis piutang yang dipilih dari request
         if ($request->has('jenis_form')) {
@@ -46,6 +48,9 @@ class PiutangController extends Controller
         if ($request->has('tipePelanggan')) {
             $selectedTipePelanggan = $request->tipePelanggan;
         }
+        if ($request->has('perusahaan')) {
+            $selectedPerusahaan = $request->perusahaan;
+        }
         if ($request->has('jenis_tagihan')) {
             $selectedTagihan = $request->jenis_tagihan; // Ambil jenis tagihan yang dipilih
 
@@ -55,8 +60,8 @@ class PiutangController extends Controller
             }
         }
         $customers = customer::all();
-
-        return view('piutangBaru.afiliasi', compact('piutangTypes', 'ppnTypes', 'selectedType', 'customers', 'pajakTypes', 'filteredRates', 'selectedPajak', 'selectedTagihan', 'jumlahKali', 'tipePelanggan', 'selectedTipePelanggan'));
+        $masterPerusahaan = masterCompany::all();
+        return view('piutangBaru.afiliasi', compact('piutangTypes', 'ppnTypes', 'selectedType', 'customers', 'pajakTypes', 'filteredRates', 'selectedPajak', 'selectedTagihan', 'jumlahKali', 'tipePelanggan', 'selectedTipePelanggan', 'masterPerusahaan', 'selectedPerusahaan'));
     }
 
     public function getPajakRate($type)
@@ -86,12 +91,13 @@ class PiutangController extends Controller
             'tanggal_transaksi' => 'required|date',
             'jatuh_tempo' => 'required|date',
             'jarak_hari' => 'required|integer',
+            'dpp' => 'required|string|min:0',
             'total_piutang' => 'required|string|min:0',
             'ppn_value' => 'required|string|min:0',
             'pph_value' => 'required|string|min:0',
-            'diskon' => 'nullable|string|min:0',
             'jenis_form' => 'required|exists:tipepiutang,kodePiutang',
             'jenis_tagihan' => 'required|in:tetap,berulang',
+            'perusahaan' => 'required|exists:masterCompany,company_id',
             'jumlah_kali' => 'required_if:jenis_tagihan,berulang|nullable|integer|min:1',
         ]);
 
@@ -106,7 +112,7 @@ class PiutangController extends Controller
         }
 
         Alert::success('Berhasil!', 'Data piutang berhasil disimpan.');
-        return redirect()->route('piutang-types.create')->with('success', 'Data Piutang berhasil disimpan.');
+        return redirect()->route('riwayatPiutang');
     }
 
     private function createSingleInvoice($data, $transactionID)
@@ -117,15 +123,16 @@ class PiutangController extends Controller
             'tgltra' => $data['tanggal_transaksi'],
             'tgl_jatuh_tempo' => $data['jatuh_tempo'],
             'jhari' => $data['jarak_hari'],
+            'dpp' => $this->convertToDecimal($data['dpp']),
             'nominal' => $this->convertToDecimal($data['total_piutang']),
             'ppn' => $this->convertToDecimal($data['ppn_value']),
             'pph' => $this->convertToDecimal($data['pph_value']),
             'pajak' => $this->getPajakName($data['ppn_value']),
-            'diskon' => $data['diskon'] ?? 0,
             'kodepiutang' => $data['jenis_form'],
             'jenisTagihan' => 'tetap',
             'jumlahTagihan' => 1,
             'urutanTagihan' => 1,
+            'idcompany' => $data['perusahaan'],
             'statusPembayaran' => 'BELUM LUNAS'
         ]);
     }
@@ -147,21 +154,23 @@ class PiutangController extends Controller
         $nominal = $this->convertToDecimal($data['total_piutang']);
 
         for ($i = 0; $i < $data['jumlah_kali']; $i++) {
+            $transactionID = $this->generateTransactionID();
             Piutang::create([
                 'idpelanggan' => $data['nama_pelanggan'],
                 'no_invoice' => $transactionID,
                 'tgltra' => $data['tanggal_transaksi'],
                 'tgl_jatuh_tempo' => $dueDate->copy(),
                 'jhari' => $data['jarak_hari'],
+                'dpp' => $this->convertToDecimal($data['dpp']),
                 'nominal' => number_format($nominal, 2, '.', ''), // Nominal per tagihan
                 'ppn' => $this->convertToDecimal($data['ppn_value']),
                 'pph' => $this->convertToDecimal($data['pph_value']),
                 'pajak' => $this->getPajakName($data['ppn_value']),
-                'diskon' => $data['diskon'] ?? 0,
                 'kodepiutang' => $data['jenis_form'],
                 'jenisTagihan' => 'berulang',
                 'jumlahTagihan' => $data['jumlah_kali'],
                 'urutanTagihan' => $i + 1,
+                'idcompany' => $data['perusahaan'],
                 'statusPembayaran' => 'BELUM LUNAS'
             ]);
 

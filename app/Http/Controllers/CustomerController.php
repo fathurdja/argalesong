@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\customer;
+use App\Models\masterCompany;
 use App\Models\tipePelanggan;
 use App\Models\TipePiutang;
 use Illuminate\Http\Request;
@@ -45,7 +46,7 @@ class CustomerController extends Controller
             }
         }
 
-        $daftarPelanggan = customer::with('tipePelanggan')->paginate(2);
+        $daftarPelanggan = customer::with(['tipePelanggan', 'company'])->paginate(2);
 
         // Return the view with the customer, tipePelangganName, and tipePiutangName
         return view('daftarPelangggan.formedit', compact('customer', 'tipePelangganName', 'daftarPelanggan'));
@@ -60,7 +61,8 @@ class CustomerController extends Controller
     {
         $customerType = tipePelanggan::all();
         $debtType = TipePiutang::all();
-        return view('daftarPelangggan.formBaru', compact('customerType', 'debtType'));
+        $masterPerusahaan = masterCompany::all();
+        return view('daftarPelangggan.formBaru', compact('customerType', 'debtType', 'masterPerusahaan'));
     }
 
     /**
@@ -71,11 +73,12 @@ class CustomerController extends Controller
         // Validate the request data
         $validated = $request->validate([
             'tipe_pelanggan' => 'required',
+            'perusahaan' => 'required',
             'name' => 'required|string|max:255',
             'ktp' => 'required|string|size:16|unique:customer,ktp', // KTP harus unik
             'npwp_option' => 'nullable',
             'npwp' => 'nullable|string|size:15|unique:customer,npwp', // NPWP harus unik
-            'kode_pelanggan' => 'nullable|string|size:15|unique:customer,id_Pelanggan', // id_Pelanggan harus unik
+            'kode_pelanggan' => 'nullable|string|size:8|unique:customer,id_Pelanggan', // id_Pelanggan harus unik
             'sharing' => 'nullable|numeric',
             'alamat' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:customer,email', // Email harus unik
@@ -103,7 +106,7 @@ class CustomerController extends Controller
         $customer->kota = $validated['kota'];
         $customer->kode_pos = $validated['kode_pos'];
         $customer->notes = $validated['catatan'];
-
+        $customer->idcompany = $validated['perusahaan'];
         // Save the customer to the database
         $customer->save();
         Alert::success('Berhasil', 'Customer baru Telah Di Tambahkan');
@@ -137,8 +140,8 @@ class CustomerController extends Controller
 
         // Retrieve all tipePelanggan and tipePiutang options for the select dropdowns
         $tipePelangganOptions = TipePelanggan::all();
-
-        return view('daftarPelangggan.editform', compact('customer', 'tipePelangganName',  'tipePelangganOptions',));
+        $masterPerusahaan = masterCompany::all();
+        return view('daftarPelangggan.editform', compact('customer', 'tipePelangganName',  'tipePelangganOptions', 'masterPerusahaan'));
     }
 
 
@@ -165,6 +168,7 @@ class CustomerController extends Controller
             'kota' => 'required|string|max:255',
             'kode_pos' => 'required|string|max:5',
             'catatan' => 'nullable|string|max:255',
+            'perusahaan' => 'required|string|max:5',
         ]);
 
         // Update data customer

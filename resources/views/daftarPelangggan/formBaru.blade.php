@@ -36,6 +36,20 @@
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
                         </p>
+                        <p><strong>perusahaan :</strong>
+                            <select class="border border-gray-300 p-2 rounded-md w-full" id="perusahaan"
+                                name="perusahaan" required>
+                                @foreach ($masterPerusahaan as $type)
+                                    <option value="{{ $type->company_id }}"
+                                        {{ old('perusahaan') == $type->company_id ? 'selected' : '' }}>
+                                        {{ $type->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('perusahaan')
+                                <span class="text-red-600 text-sm">{{ $message }}</span>
+                            @enderror
+                        </p>
                         <p class="mt-2"><strong>Nama Pelanggan :</strong>
                             <input type="text" id="namaPelanggan" class="border border-gray-300 p-2 rounded-md w-full"
                                 placeholder="wajib diisi" name="name" required>

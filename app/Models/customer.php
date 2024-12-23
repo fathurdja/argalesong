@@ -29,6 +29,7 @@ class customer extends Model
         'idtypepelanggan',
         'fax',
         'sharing',
+        'id_company'
     ];
 
     public function tipePelanggan()
@@ -44,5 +45,9 @@ class customer extends Model
     public function piutang()
     {
         return $this->hasMany(Piutang::class, 'idpelanggan', 'id_Pelanggan');
+    }
+    public function company()
+    {
+        return $this->belongsTo(masterCompany::class, 'idcompany', 'company_id');
     }
 }

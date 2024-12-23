@@ -54,56 +54,104 @@
             </ul>
             <ul class="space-y-2">
                 <li>
-                    <div
-                        class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
-                        <svg class="fill-white flex-shrink-0 w-6 h-6 text-white transition duration-75 group-hover:text-white dark:text-white dark:group-hover:text-white"
-                            viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M755.2 938.666667H290.133333C224 938.666667 170.666667 885.333333 170.666667 819.2V204.8C170.666667 138.666667 224 85.333333 290.133333 85.333333h270.933334c10.666667 0 21.333333 4.266667 29.866666 12.8l270.933334 268.8c8.533333 8.533333 12.8 19.2 12.8 29.866667v422.4c0 66.133333-53.333333 119.466667-119.466667 119.466667zM290.133333 170.666667c-19.2 0-34.133333 14.933333-34.133333 34.133333v614.4c0 19.2 14.933333 34.133333 34.133333 34.133333h465.066667c19.2 0 34.133333-14.933333 34.133333-34.133333v-405.333333L544 170.666667H290.133333z" />
-                            <path
-                                d="M810.666667 448H554.666667c-23.466667 0-42.666667-19.2-42.666667-42.666667V149.333333c0-23.466667 19.2-42.666667 42.666667-42.666666s42.666667 19.2 42.666666 42.666666v213.333334h213.333334c23.466667 0 42.666667 19.2 42.666666 42.666666s-19.2 42.666667-42.666666 42.666667zM618.666667 682.666667H405.333333c-23.466667 0-42.666667-19.2-42.666666-42.666667s19.2-42.666667 42.666666-42.666667h213.333334c23.466667 0 42.666667 19.2 42.666666 42.666667s-19.2 42.666667-42.666666 42.666667z" />
-                            <path
-                                d="M512 789.333333c-23.466667 0-42.666667-19.2-42.666667-42.666666V533.333333c0-23.466667 19.2-42.666667 42.666667-42.666666s42.666667 19.2 42.666667 42.666666v213.333334c0 23.466667-19.2 42.666667-42.666667 42.666666z" />
-                        </svg>
-                        <a href="{{ route('piutang-types.create') }}"><span
-                                class="flex-1 ml-3 text-left whitespace-nowrap text text-white">Piutang Baru</span></a>
-                    </div>
+                    <a class="arrow">
+                        <div
+                            class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                            <svg class="fill-white flex-shrink-0 w-6 h-6 text-white transition duration-75 group-hover:text-white dark:text-white dark:group-hover:text-white"
+                                viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M755.2 938.666667H290.133333C224 938.666667 170.666667 885.333333 170.666667 819.2V204.8C170.666667 138.666667 224 85.333333 290.133333 85.333333h270.933334c10.666667 0 21.333333 4.266667 29.866666 12.8l270.933334 268.8c8.533333 8.533333 12.8 19.2 12.8 29.866667v422.4c0 66.133333-53.333333 119.466667-119.466667 119.466667zM290.133333 170.666667c-19.2 0-34.133333 14.933333-34.133333 34.133333v614.4c0 19.2 14.933333 34.133333 34.133333 34.133333h465.066667c19.2 0 34.133333-14.933333 34.133333-34.133333v-405.333333L544 170.666667H290.133333z" />
+                                <path
+                                    d="M810.666667 448H554.666667c-23.466667 0-42.666667-19.2-42.666667-42.666667V149.333333c0-23.466667 19.2-42.666667 42.666667-42.666666s42.666667 19.2 42.666666 42.666666v213.333334h213.333334c23.466667 0 42.666667 19.2 42.666666 42.666666s-19.2 42.666667-42.666666 42.666667zM618.666667 682.666667H405.333333c-23.466667 0-42.666667-19.2-42.666666-42.666667s19.2-42.666667 42.666666-42.666667h213.333334c23.466667 0 42.666667 19.2 42.666666 42.666667s-19.2 42.666667-42.666666 42.666667z" />
+                                <path
+                                    d="M512 789.333333c-23.466667 0-42.666667-19.2-42.666667-42.666666V533.333333c0-23.466667 19.2-42.666667 42.666667-42.666666s42.666667 19.2 42.666667 42.666666v213.333334c0 23.466667-19.2 42.666667-42.666667 42.666666z" />
+                            </svg>
+
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap text">Piutang</span>
+                            <svg aria-hidden="true" class="arrow w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 011.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+
+                        </div>
+                    </a>
+                    <ul class="py-2 text sidebar-submenu">
+                        <li class="sidebar-submenu-item">
+                            <a href="{{ route('piutang-types.create') }}"
+                                class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Piutang
+                                Baru</a>
+                        </li>
+                        <li class="sidebar-submenu-item">
+                            <a href="{{ route('riwayatPiutang') }}"
+                                class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Riwayat
+                                Piutang</a>
+                        </li>
+
+                    </ul>
+
                 </li>
             </ul>
             <ul class="space-y-2">
-                <a href="{{ route('pembayaran-piutang.show') }}">
-                    <li
-                        class="sidebar-item p-2 text-white rounded-md dark:text-white hover:bg-blue-700 dark:hover:bg-gray-700">
-                        <svg class="w-6 h-6 flex-shrink-0 fill-white"viewBox="0 0 32 32"
-                            enable-background="new 0 0 32 32" id="Stock_cut" version="1.1" xml:space="preserve"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                            fill="#ffffff">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                <li>
+                    <a class="arrow">
+                        <div
+                            class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                            <svg class="w-6 h-6 flex-shrink-0 fill-white"viewBox="0 0 32 32"
+                                enable-background="new 0 0 32 32" id="Stock_cut" version="1.1" xml:space="preserve"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                fill="#ffffff">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0" />
 
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
 
-                            <g id="SVGRepo_iconCarrier">
-                                <desc />
-                                <g>
-                                    <path
-                                        d="M17,5H5 C3.895,5,3,5.895,3,7v22c0,1.105,0.895,2,2,2h18c1.105,0,2-0.895,2-2V18"
-                                        fill="none" stroke="#ffffff" stroke-linejoin="round" stroke-miterlimit="10"
-                                        stroke-width="2" />
-                                    <path d="M9,14H3v8h6 c2.209,0,4-1.791,4-4v0C13,15.791,11.209,14,9,14z"
-                                        fill="none" stroke="#ffffff" stroke-linejoin="round" stroke-miterlimit="10"
-                                        stroke-width="2" />
-                                    <circle cx="9" cy="18" r="1" />
-                                    <line fill="none" stroke="#ffffff" stroke-linejoin="round" stroke-miterlimit="10"
-                                        stroke-width="2" x1="25" x2="25" y1="16" y2="1" />
-                                    <polyline fill="none" points="31,7 25,1 19,7 " stroke="#ffffff"
-                                        stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" />
+                                <g id="SVGRepo_iconCarrier">
+                                    <desc />
+                                    <g>
+                                        <path
+                                            d="M17,5H5 C3.895,5,3,5.895,3,7v22c0,1.105,0.895,2,2,2h18c1.105,0,2-0.895,2-2V18"
+                                            fill="none" stroke="#ffffff" stroke-linejoin="round"
+                                            stroke-miterlimit="10" stroke-width="2" />
+                                        <path d="M9,14H3v8h6 c2.209,0,4-1.791,4-4v0C13,15.791,11.209,14,9,14z"
+                                            fill="none" stroke="#ffffff" stroke-linejoin="round"
+                                            stroke-miterlimit="10" stroke-width="2" />
+                                        <circle cx="9" cy="18" r="1" />
+                                        <line fill="none" stroke="#ffffff" stroke-linejoin="round"
+                                            stroke-miterlimit="10" stroke-width="2" x1="25" x2="25"
+                                            y1="16" y2="1" />
+                                        <polyline fill="none" points="31,7 25,1 19,7 " stroke="#ffffff"
+                                            stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" />
+                                    </g>
                                 </g>
-                            </g>
 
-                        </svg>
-                        <span class="text">Pembayaran Piutang</span>
-                    </li>
-                </a>
+                            </svg>
+
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap text">Pembayaran</span>
+                            <svg aria-hidden="true" class="arrow w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 011.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+
+                        </div>
+                    </a>
+                    <ul class="py-2 text sidebar-submenu">
+                        <li class="sidebar-submenu-item">
+                            <a href="{{ route('pembayaran-piutang.show') }}"
+                                class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Pembayaran
+                                Piutang</a>
+                        </li>
+                        <li class="sidebar-submenu-item">
+                            <a href="{{ route('riwayatPembayaran') }}"
+                                class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Riwayat
+                                Pembayaran</a>
+                        </li>
+
+                    </ul>
+
+                </li>
             </ul>
             <ul class="space-y-2">
                 <li>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\customer;
 use App\Models\denda;
+use App\Models\masterCompany;
 use App\Models\piutang;
 use Carbon\Carbon;
 
@@ -35,13 +36,11 @@ class PembayaranPiutang extends Controller
                 'x.urutantagihan',
                 'x.statusPembayaran',
                 'x.jumlahTagihan',
-                'x.diskon',
                 'x.kodepiutang',
                 'x.nominal',
                 'y.xpiutang as tagihan',
                 'c.name as customer_name',  // Add the customer name or any other columns from customer table// Example: adding customer address
             )
-
             ->where('y.xpiutang', '>', 0)
             ->groupBy('x.idpelanggan', 'c.name')
             ->get();
@@ -59,8 +58,8 @@ class PembayaranPiutang extends Controller
 
         // Menggunakan method sum() pada collection untuk menjumlahkan field nominal
         $totalKeseluruhan = $invoices->sum('nominal');  // Piutang keseluruhan
-
-        return view('pembayaran_piutang.pembayaran', compact('customers', 'invoices', 'totalKeseluruhan', 'selectedCustomerId'));
+        $company = masterCompany::all();
+        return view('pembayaran_piutang.pembayaran', compact('customers', 'invoices', 'totalKeseluruhan', 'selectedCustomerId', 'company'));
     }
 
 
@@ -131,9 +130,6 @@ class PembayaranPiutang extends Controller
         // Return invoice data and total amount to the view
         return back()->withInput(compact('invoices', 'totalKeseluruhan'));
     }
-
-
-
     public function store(Request $request)
     {
         // Reindex array invoices sebelum validasi
@@ -151,25 +147,26 @@ class PembayaranPiutang extends Controller
             'keterangan' => 'nullable|string',
             'original_denda' => 'nullable|numeric|min:0',
             'total_piutang' => 'nullable|numeric|min:0',
-
-
         ]);
 
         $totalpiutang = floatval($request->total_piutang);
         $nominaldibayar = floatval($request->nominal_dibayar);
 
+        // Validasi tambahan: Nominal dibayar tidak boleh lebih besar dari total piutang
         if ($nominaldibayar > $totalpiutang) {
             Alert::error('Error ', 'Nominal dibayar tidak boleh lebih besar dari total piutang');
-            return back();
+            return redirect()->back();
         }
+
         // Validasi custom untuk invoices
         if (!$request->has('invoices') || empty($request->invoices)) {
-            return back()->withErrors(['error' => 'Minimal satu invoice harus dipilih.']);
+            Alert::error('Error ', 'Minimal satu invoice harus dipilih.');
+            return redirect()->back();
         }
 
         DB::beginTransaction();
         try {
-            $totalNominalDibayar = floatval($request->nominal_dibayar);
+            $totalNominalDibayar = $nominaldibayar;
             $idTransaksi = $this->generateTransactionId();
 
             foreach ($request->invoices as $pembayaran) {
@@ -179,11 +176,17 @@ class PembayaranPiutang extends Controller
                 }
 
                 $diskon = floatval($pembayaran['diskon'] ?? 0);
-                $denda = floatval($pembayaran['original_denda'] ?? 0);
+                $denda = floatval($pembayaran['denda'] ?? 0);
 
+                DB::statement("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''))");
                 $detailPiutangs = DB::select(
-                    'SELECT *, idpelanggan, nominal FROM detailpiutang 
-                WHERE no_invoice = ? ORDER BY urutanTagihan',
+                    'SELECT x.id, x.idpelanggan, x.tgltra, x.no_invoice, x.tgl_jatuh_tempo, 
+                            x.jhari, x.jenistagihan, x.ppn, x.pajak, x.urutantagihan, 
+                            x.jumlahTagihan, x.kodepiutang, x.nominal, y.xpiutang as tagihan
+                     FROM detailpiutang x
+                     LEFT JOIN vtbpiutang y ON (x.no_invoice = y.idpiutang)
+                     WHERE x.no_invoice = ?
+                     ORDER BY x.urutantagihan',
                     [$pembayaran['nomor_invoice']]
                 );
 
@@ -194,57 +197,55 @@ class PembayaranPiutang extends Controller
                 foreach ($detailPiutangs as $detailPiutang) {
                     if ($totalNominalDibayar <= 0) break;
 
-                    $pembayaranSebelumnya = DB::scalar(
-                        'SELECT COALESCE(SUM(nominalbayar), 0) 
-                    FROM pembayaranpiutang 
-                    WHERE no_invoice = ?',
-                        [$detailPiutang->no_invoice]
-                    );
+                    $tagihan = floatval($detailPiutang->tagihan);
 
-                    $piutangAwal = $detailPiutang->nominal - $pembayaranSebelumnya;
+                    // **Cek Status Pembayaran Sebelum Memproses**
+                    $status = $tagihan > 0 ? 'SEBAGIAN' : 'LUNAS';
 
-                    if ($totalNominalDibayar >= $piutangAwal) {
-                        $pembayaranNow = $piutangAwal;
-                        $status = 'LUNAS';
+                    // Hitung pembayaran yang akan diproses
+                    if ($totalNominalDibayar >= $tagihan) {
+                        $pembayaranNow = $tagihan;
+                        $status = 'LUNAS'; // Jika lunas
                     } else {
                         $pembayaranNow = $totalNominalDibayar;
-                        $status = 'SEBAGIAN';
+                        $status = 'SEBAGIAN'; // Jika masih tersisa
                     }
 
-                    $sisa = $piutangAwal - $pembayaranNow;
-                    $sisaPiutang = floatval($sisa);
-                    $tagihan = $detailPiutang->nominal;
+                    $sisa = $tagihan - $pembayaranNow;
 
+                    // Simpan pembayaran ke tabel pembayaranpiutang
                     DB::insert(
                         'INSERT INTO pembayaranpiutang 
-                    (idpelanggan, idtrx, tglbayar, no_invoice, nominalbayar, 
-                    tagihan, sisaPiutang, diskon, denda, modebayar) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                        (idpelanggan, idtrx, tglbayar, no_invoice, nominalbayar, 
+                        tagihan, sisaPiutang, diskon, denda, modebayar) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                         [
                             $detailPiutang->idpelanggan,
                             $idTransaksi,
                             $request->tanggal_transaksi,
                             $detailPiutang->no_invoice,
-                            $pembayaranNow + $diskon,
+                            $pembayaranNow,
                             $tagihan,
-                            $sisaPiutang,
+                            $sisa,
                             $diskon,
                             $denda,
                             $request->mode_bayar
                         ]
                     );
 
+                    // **Update Status di DetailPiutang**
                     DB::update(
                         'UPDATE detailpiutang 
-                    SET statusPembayaran = ? , diskon = ?
-                    WHERE no_invoice = ?',
-                        [$status, $diskon, $detailPiutang->no_invoice]
+                         SET statusPembayaran = ?
+                         WHERE no_invoice = ?',
+                        [$status, $detailPiutang->no_invoice]
                     );
 
                     $totalNominalDibayar -= $pembayaranNow;
 
+                    // Simpan denda
                     $originalDenda = new denda();
-                    $originalDenda->idpelanggan =  $detailPiutang->idpelanggan;
+                    $originalDenda->idpelanggan = $detailPiutang->idpelanggan;
                     $originalDenda->no_invoice = $detailPiutang->no_invoice;
                     $originalDenda->nominal = $denda;
                     $originalDenda->piutang = $totalNominalDibayar;
@@ -252,14 +253,20 @@ class PembayaranPiutang extends Controller
                 }
             }
 
+            // Final validasi apakah semua piutang terbayar
+            if ($totalNominalDibayar > 0) {
+                throw new \Exception("Nominal dibayar tidak boleh lebih besar dari total piutang yang tersisa.");
+            }
+
             DB::commit();
             Alert::success('Berhasil!', 'Piutang Berhasil di Bayar');
-            return redirect()->back();
+            return redirect()->route('riwayatPiutang');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
+
     private function generateTransactionId()
     {
         $lastId = DB::table('pembayaranpiutang')
@@ -296,52 +303,46 @@ class PembayaranPiutang extends Controller
                 'x.urutantagihan',
                 'x.statusPembayaran',
                 'x.jumlahTagihan',
-                'x.diskon',
                 'x.kodepiutang',
                 'x.nominal',
                 'y.xpiutang as tagihan'
             )
             ->where('x.idpelanggan', $customerId)
             ->where('y.xpiutang', '>', 0)
-            ->where('y.xpiutang', '>', 10)
             ->get();
 
         // Menghitung denda, diskon, dan total per invoice
         $invoices->transform(function ($invoice) {
-            $jatuhTempo = Carbon::parse($invoice->tgl_jatuh_tempo);
-            $tanggalPembayaran = Carbon::now(); // Misalnya sekarang sebagai tanggal pembayaran
-            $selisihHari = $tanggalPembayaran->diffInDays($jatuhTempo, false); // False agar negatif jika sebelum jatuh tempo
-
-            // Tarif denda dan diskon per hari
-            $tarifDendaPerHari = 20 / 365;
-            $tarifDiskonPerHari = 6 / 365;
-
-            // Inisialisasi denda dan diskon
             $denda = 0;
             $diskon = 0;
-
-            if ($selisihHari < 0) {
-                // Jika terlambat bayar (tanggal sekarang melewati jatuh tempo), hitung denda
-                $dendaPerHari = ($invoice->tagihan * $tarifDendaPerHari) / 100;
-                $denda = $dendaPerHari * $selisihHari;
-            } elseif ($selisihHari > 0) {
-                // Jika bayar lebih awal (tanggal sekarang sebelum jatuh tempo), hitung diskon
-                $selisihHari = abs($selisihHari);
-                $diskonPerHari = ($invoice->tagihan * $tarifDiskonPerHari) / 100;
-                $diskon = $diskonPerHari * $selisihHari;
-            }
-
             // Hitung total invoice
             $total = $invoice->tagihan + $denda - $diskon;
-
             // Tambahkan data denda, diskon, dan total ke invoice
             $invoice->denda = $denda;
             $invoice->diskon = $diskon;
             $invoice->total = $total;
-            $invoice->selisihhari = $selisihHari;
             return $invoice;
         });
 
         return response()->json(['invoices' => $invoices]);
+    }
+
+    public function getCustomersByCompany($idcompany)
+    {
+        $customers = DB::table('detailpiutang as x')
+            ->leftJoin('vtbpiutang as y', 'x.no_invoice', '=', 'y.idpiutang')
+            ->leftJoin('customer as c', 'x.idpelanggan', '=', 'c.id_Pelanggan')
+            ->select(
+                'x.idpelanggan',
+                'c.name as customer_name',
+                'c.idcompany',
+                DB::raw('SUM(y.xpiutang) as total_piutang') // Hitung total piutang
+            )
+            ->where('c.idcompany', $idcompany) // Filter berdasarkan perusahaan
+            ->where('y.xpiutang', '>', 0) // Hanya pelanggan dengan piutang > 0
+            ->groupBy('x.idpelanggan', 'c.name', 'c.idcompany') // Group by pelanggan dan perusahaan
+            ->get();
+
+        return response()->json(['customers' => $customers]);
     }
 }

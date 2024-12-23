@@ -18,11 +18,23 @@
                 <h1 class="text-2xl font-bold">PIUTANG BARU</h1>
             </div>
 
-            <h2 class="text-lg font-bold mb-4">Pilih Jenis Piutang :</h2>
 
             <form action="{{ route('piutang-types.create') }}" method="GET" class="ml-8">
                 @csrf
                 <div class="mb-4">
+                    <h2 class="text-lg font-bold mb-4">Pilih Perusahaan</h2>
+                    <label for="perusahaan" class="block text-sm font-medium text-gray-700">Perusahaan</label>
+                    <select id="perusahaan" name="perusahaan" onchange="updateCustomerDropdown()"
+                        class="mt-1 block w-full mb-4 bg-white border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <option value="">-- Pilih Perusahaan --</option>
+                        @foreach ($masterPerusahaan as $type)
+                            <option value="{{ $type->company_id }}"
+                                {{ $selectedPerusahaan == $type->company_id ? 'selected' : '' }}>
+                                {{ $type->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <h2 class="text-lg font-bold mb-4">Pilih Jenis Piutang :</h2>
                     <label for="jenis_form" class="block text-sm font-medium text-gray-700">Jenis Piutang</label>
                     <select id="jenis_form" name="jenis_form"
                         class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2"
@@ -45,6 +57,8 @@
                 <form action="{{ route('piutang-types.store') }}" method="POST" class="ml-8">
                     @csrf
                     <input type="hidden" name="jenis_form" value="{{ $selectedType->kodePiutang }}">
+                    <input type="hidden" name="perusahaan" value="{{ $selectedPerusahaan }}">
+
                     <div class="grid grid-cols-2 gap-4 mb-4">
                         <div>
                             <label for="tanggal_transaksi" class="block text-sm font-medium text-gray-700">Tanggal
@@ -109,8 +123,6 @@
                             <select id="jenis_tagihan" name="jenis_tagihan"
                                 class="mt-1 block w-52 bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
                                 <option value="">-- Pilih Jenis Tagihan --</option>
-                                <option value="tetap" {{ old('jenis_tagihan') == 'tetap' ? 'selected' : '' }}>Tetap
-                                </option>
                                 <option value="berulang" {{ old('jenis_tagihan') == 'berulang' ? 'selected' : '' }}>
                                     Berulang
                                 </option>
@@ -174,13 +186,13 @@
                         <div>
                             <label for="ppn_value" class="block text-sm font-medium text-gray-700">PPN</label>
                             <input type="text" name="ppn_value" id="ppn_value"
-                                class="mt-1 block w-full text-right border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                class="mt-1 block w-full text-right border-gray-300 bg-slate-400 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 readonly>
                         </div>
                         <div>
                             <label for="pph_value" class="block text-sm font-medium text-gray-700">PPh</label>
                             <input type="text" name="pph_value" id="pph_value"
-                                class="mt-1 block w-full text-right border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                class="mt-1 block w-full text-right border-gray-300 rounded-md shadow-sm bg-slate-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 readonly>
                         </div>
 
@@ -191,7 +203,7 @@
                         <label for="total_piutang" class="block text-sm font-medium text-gray-700">Total
                             Piutang</label>
                         <input type="text" name="total_piutang" id="total_piutang"
-                            class="mt-1 block w-full text-right border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            class="mt-1 block w-80 text-right border-gray-300 rounded-md bg-slate-400 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             readonly>
                     </div>
                     <div class="flex justify-end mt-4">
@@ -213,21 +225,27 @@
 
         function updateCustomerDropdown() {
             var tipePelanggan = document.getElementById('tipePelanggan').value;
+            var perusahaan = document.getElementById('perusahaan').value;
             var customerSelect = document.getElementById('nama_pelanggan');
 
-            // Reset dropdown
+            // Reset pelanggan, tapi jangan reset perusahaan
             customerSelect.innerHTML = '<option value="">-- Pilih Pelanggan --</option>';
 
-            // Filter pelanggan berdasarkan tipe pelanggan
+            if (!perusahaan) {
+                alert('Silakan pilih perusahaan terlebih dahulu.');
+                return;
+            }
+
+            // Filter pelanggan berdasarkan perusahaan
             var filteredCustomers = customers.filter(function(customer) {
-                return customer.idtypepelanggan === tipePelanggan;
+                return customer.idcompany === perusahaan &&
+                    (!tipePelanggan || customer.idtypepelanggan === tipePelanggan);
             });
 
-            // Update dropdown dengan pelanggan yang sesuai
             filteredCustomers.forEach(function(customer) {
                 var option = document.createElement('option');
                 option.value = customer.id_Pelanggan;
-                option.textContent = customer.id_Pelanggan + ' - ' + customer.name;
+                option.textContent = customer.name;
                 customerSelect.appendChild(option);
             });
         }

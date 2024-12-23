@@ -27,6 +27,19 @@
 
                     <!-- Dropdown Pelanggan -->
                     <div class="mb-1">
+                        <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Pilih Perusahaan</label>
+                        <select name="company" id="company"
+                            class="w-64 border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            onchange="loadCustomersByCompany(this.value)">
+                            <option value="">-- Pilih Perusahaan --</option>
+                            @foreach ($company as $perusahaan)
+                                <option value="{{ $perusahaan->company_id }}"
+                                    {{ $selectedCustomerId == $perusahaan->company_id ? 'selected' : '' }}>
+                                    {{ $perusahaan->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-1">
                         <label for="customer" class="block text-sm font-medium text-gray-700 mb-1">Pilih Pelanggan</label>
                         <select name="customer" id="customer"
                             class="w-64 border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -112,6 +125,33 @@
 @endsection
 @push('script')
     <script>
+        function loadCustomersByCompany(companyId) {
+            // Cari elemen dropdown pelanggan berdasarkan ID
+            const customerDropdown = document.getElementById('customer');
+
+            // Reset dropdown pelanggan
+            customerDropdown.innerHTML = '<option value="">-- Pilih Pelanggan --</option>';
+
+            if (!companyId) return;
+
+            // Fetch customers by company ID
+            fetch(`/api/customers-by-company/${companyId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.customers.forEach(customer => {
+                        const option = document.createElement('option');
+                        option.value = customer.idpelanggan;
+                        option.textContent =
+                            `${customer.customer_name}`;
+                        customerDropdown.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading customers:', error);
+                });
+        }
+
+
         function loadInvoicesByCustomer(customerId) {
             const invoiceContainer = document.getElementById('invoice-container');
             invoiceContainer.innerHTML = '';
@@ -141,25 +181,26 @@
     <td class="px-3 py-2">
         <input type="text"
             class="piutang-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-            value="${formatRupiah(parseFloat(invoice.tagihan))}"
-            onchange="updatePenaltyAndDiscount(this, ${index})"
-            onfocus="removeFormatting(this)"
-            onblur="applyFormatting(this)">
+            value="${formatRupiah(parseFloat(invoice.tagihan))}" readonly>
         <input type="hidden" name="invoices[${index}][piutang_belum_dibayar]" class="piutang-value" value="${parseFloat(invoice.tagihan)}">
     </td>
     <td class="px-3 py-2">
-        <input type="text"
-            class="diskon-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-            value="${formatRupiah(parseFloat(invoice.diskon))}"
-            onchange="updateRowTotal(this)">
-        <input type="hidden" name="invoices[${index}][diskon]" class="diskon-value" value="${parseFloat(invoice.diskon)}">
+<input type="text"
+    class="diskon-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+    value="${formatRupiah(parseFloat(invoice.diskon))}"
+    onchange="updateRowTotal(this)"
+    onfocus="removeFormatting(this)"
+    onblur="applyFormatting(this)">
+<input type="hidden" name="invoices[${index}][diskon]" class="diskon-value" value="${parseFloat(invoice.diskon)}">
     </td>
     <td class="px-3 py-2">
         <input type="text"
-            class="denda-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-            value="${formatRupiah(parseFloat(invoice.denda))}"
-            onchange="updateRowTotal(this)">
-        <input type="hidden" name="invoices[${index}][denda]" class="denda-value" value="${parseFloat(invoice.denda)}">
+    class="denda-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+    value="${formatRupiah(parseFloat(invoice.denda))}"
+    onchange="updateRowTotal(this)"
+    onfocus="removeFormatting(this)"
+    onblur="applyFormatting(this)">
+<input type="hidden" name="invoices[${index}][denda]" class="denda-value" value="${parseFloat(invoice.denda)}">
     </td>
     <td class="px-3 py-2">
         <input type="text"
@@ -180,7 +221,6 @@
 </tr>`;
 
                         invoiceContainer.insertAdjacentHTML('beforeend', row);
-
                         const deleteButton = invoiceContainer.lastElementChild.querySelector('.delete-btn');
                         deleteButton.addEventListener('click', function() {
                             const row = this.closest('tr');
@@ -189,8 +229,6 @@
                             updateTotalPiutang();
                         });
                     });
-
-                    updateTotalPiutang();
 
                 });
 
@@ -212,58 +250,20 @@
         function updateRowTotal(input) {
             const row = input.closest('tr');
             const piutangValue = parseInt(unformatRupiah(row.querySelector('.piutang-input').value)) || 0;
-            const diskonValue = parseInt(row.querySelector('.diskon-value').value) || 0;
-            const dendaValue = parseInt(row.querySelector('.denda-value').value) || 0;
+            const diskonValue = parseInt(unformatRupiah(row.querySelector('.diskon-input').value)) || 0;
+            const dendaValue = parseInt(unformatRupiah(row.querySelector('.denda-input').value)) || 0;
 
-            // Update hidden piutang value
-            row.querySelector('.piutang-value').value = piutangValue;
+            // Update hidden values
+            row.querySelector('.diskon-value').value = diskonValue;
+            row.querySelector('.denda-value').value = dendaValue;
 
             const newTotal = piutangValue - diskonValue + dendaValue;
 
             row.querySelector('.total-display').value = formatRupiah(newTotal);
-            row.querySelector('.total-value').value = formatRupiah(newTotal);
+            row.querySelector('.total-value').value = newTotal;
 
             updateTotalPiutang();
         }
-
-        function updatePenaltyAndDiscount(piutangInput, index) {
-            const row = piutangInput.closest('tr');
-            const jatuhTempo = new Date(row.querySelector(`[name="invoices[${index}][jatuh_tempo]"]`).value);
-            const tanggalPembayaran = new Date(document.getElementById('tanggal_transaksi').value);
-            const piutangValue = unformatRupiah(piutangInput.value) || 0;
-
-            // Hitung selisih hari antara tanggal pembayaran dan jatuh tempo
-            const selisihHari = Math.floor((tanggalPembayaran - jatuhTempo) / (1000 * 60 * 60 * 24));
-            console.log("Selisih Hari:", selisihHari);
-            // Tarif denda dan diskon per hari
-            const tarifDendaPerHari = 20 / 365;
-            const tarifDiskonPerHari = 6 / 365;
-
-            let denda = 0;
-            let diskon = 0;
-
-            // Jika selisih hari lebih besar dari 0, artinya pembayaran terlambat
-            if (selisihHari > 0) {
-                denda = Math.floor((piutangValue * tarifDendaPerHari * selisihHari) / 100);
-                diskon = 0;
-            }
-            // Jika selisih hari lebih kecil dari 0, artinya pembayaran lebih cepat dari jatuh tempo
-            else if (selisihHari < 0) {
-                denda = 0;
-                diskon = Math.floor((piutangValue * tarifDiskonPerHari * Math.abs(selisihHari)) / 100);
-            }
-
-            // Update input denda dan diskon di baris
-            row.querySelector('.denda-input').value = formatRupiah(denda);
-            row.querySelector('.denda-value').value = denda;
-
-            row.querySelector('.diskon-input').value = formatRupiah(diskon);
-            row.querySelector('.diskon-value').value = diskon;
-
-            // Update total piutang
-            updateRowTotal(piutangInput);
-        }
-
 
         function updateTotalPiutang() {
             let total = 0;
@@ -271,7 +271,25 @@
                 total += parseFloat(input.value) || 0;
             });
             document.getElementById('total-piutang').value = formatRupiah(total);
+            document.querySelector('input[name="total_piutang"]').value = total;
         }
+
+        function formatRupiah(number) {
+            const roundedNumber = Math.floor(number);
+            return `Rp ${roundedNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+        }
+
+        function unformatRupiah(rupiahString) {
+            return parseInt(rupiahString.replace(/[^0-9]/g, ""), 10) || 0;
+        }
+
+        // Event listener for manual changes in diskon and denda
+        document.addEventListener('input', function(event) {
+            if (event.target.classList.contains('diskon-input') || event.target.classList.contains('denda-input')) {
+                updateRowTotal(event.target);
+            }
+        });
+
 
         function formatRupiah(number) {
             const roundedNumber = Math.floor(number);
