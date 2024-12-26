@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Master;
+use App\Models\masterCompany;
 use App\Models\tipePelanggan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -53,25 +55,26 @@ class kp_pelangganController extends Controller
 
         // Fetch all customers for the dropdown menu
         $customers = DB::table('customer')
-            ->join('tipepelanggan', 'customer.idtypepelanggan', '=', 'tipepelanggan.KodeType') // Adjust if needed
-            ->select('customer.id_Pelanggan', 'customer.name', 'tipepelanggan.kodeType as idtypepelanggan')
+            ->join('mastercompany', 'customer.idcompany', '=', 'mastercompany.company_id') // Adjust if needed
+            ->select('customer.id_Pelanggan', 'customer.name', 'mastercompany.company_id as kodeperusahaan')
             ->get();
 
         // Fetch all types of customers
-        $tipePelanggan = tipePelanggan::all();
+
+        $perusahaan = masterCompany::all();
 
         // Determine the selected type of customer
-        $selectedTipePelanggan = $request->has('tipePelanggan') ? $request->tipePelanggan : null;
+        $selectedPerusahaan = $request->has('Perusahaan') ? $request->company_id : null;
 
         // Pass the data to the view
         return view('kartuPelanggan.pelanggan', compact(
             'data',
             'customers',
-            'tipePelanggan',
-            'selectedTipePelanggan',
+            'selectedPerusahaan',
             'selectedCustomer',
             'startDate',
-            'endDate'
+            'endDate',
+            'perusahaan'
         ));
     }
 }

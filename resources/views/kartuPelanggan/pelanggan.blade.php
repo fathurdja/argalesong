@@ -22,14 +22,13 @@
                             required>
                     </div>
                     <div>
-                        <label for="tipePelanggan" class="block text-sm font-medium text-gray-700 mb-2">Tipe
-                            Pelanggan</label>
-                        <select id="tipePelanggan" name="tipePelanggan"
+                        <label for="Perusahaan" class="block text-sm font-medium text-gray-700 mb-2">Perusahaan</label>
+                        <select id="Perusahaan" name="Perusahaan"
                             class="block w-full border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option value="">-- Pilih Tipe Pelanggan --</option>
-                            @foreach ($tipePelanggan as $type)
-                                <option value="{{ $type->kodeType }}"
-                                    {{ $selectedTipePelanggan == $type->kodeType ? 'selected' : '' }}>
+                            <option value="">-- Pilih Perusahaan --</option>
+                            @foreach ($perusahaan as $type)
+                                <option value="{{ $type->company_id }}"
+                                    {{ $selectedPerusahaan == $type->company_id ? 'selected' : '' }}>
                                     {{ $type->name }}
                                 </option>
                             @endforeach
