@@ -22,7 +22,7 @@
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <p><strong>Tipe Pelanggan :</strong>
+                        <p><strong>Tipe Pelanggan : </strong><span class="text-red-600 font-bold text-lg">*</span>
                             <select class="border border-gray-300 p-2 rounded-md w-full" id="tipePelanggan"
                                 name="tipe_pelanggan" required>
                                 @foreach ($customerType as $type)
@@ -36,9 +36,9 @@
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
                         </p>
-                        <p><strong>perusahaan :</strong>
-                            <select class="border border-gray-300 p-2 rounded-md w-full" id="perusahaan"
-                                name="perusahaan" required>
+                        <p><strong>perusahaan : </strong><span class="text-red-600 font-bold text-lg">*</span>
+                            <select class="border border-gray-300 p-2 rounded-md w-full" id="perusahaan" name="perusahaan"
+                                required>
                                 @foreach ($masterPerusahaan as $type)
                                     <option value="{{ $type->company_id }}"
                                         {{ old('perusahaan') == $type->company_id ? 'selected' : '' }}>
@@ -50,7 +50,8 @@
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
                         </p>
-                        <p class="mt-2"><strong>Nama Pelanggan :</strong>
+                        <p class="mt-2"><strong>Nama Pelanggan : </strong><span
+                                class="text-red-600 font-bold text-lg">*</span>
                             <input type="text" id="namaPelanggan" class="border border-gray-300 p-2 rounded-md w-full"
                                 placeholder="wajib diisi" name="name" required>
                             @error('name')
@@ -81,7 +82,8 @@
                             </select>
                             <div id="npwp_input" style="display: none;" class="mt-2">
                                 <input type="text" id="npwp" class="border border-gray-300 p-2 rounded-md w-64 ml-4"
-                                    placeholder="Masukkan NPWP" name="npwp" maxlength="15">
+                                    placeholder="Masukkan NPWP" name="npwp" maxlength="15" oninput="formatNPWP(this)">
+
                                 @error('npwp')
                                     <span class="text-red-600 text-sm">{{ $message }}</span>
                                 @enderror
@@ -92,14 +94,14 @@
                         </p>
                     </div>
                     <div>
-                        <p><strong>Kode Pelanggan :</strong>
+                        <p><strong>Kode Pelanggan : </strong><span class="text-red-600 font-bold text-lg">*</span>
                             <input type="text" id="kode_pelanggan" class="border border-gray-300 p-2 rounded-md w-full"
                                 name="kode_pelanggan" maxlength="15" required>
                             @error('kodePelanggan')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
                         </p>
-                        <p class="mt-2"><strong>% Sharing :</strong>
+                        <p class="mt-2"><strong>% Sharing : </strong><span class="text-red-600 font-bold text-lg">*</span>
                             <input type="text" class="border border-gray-300 p-2 rounded-md w-full" name="sharing"
                                 required>
                             @error('sharing')
@@ -116,21 +118,21 @@
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <p><strong>Alamat :</strong>
+                        <p><strong>Alamat : </strong><span class="text-red-600 font-bold text-lg">*</span>
                             <input type="text" id="alamat" class="border border-gray-300 p-2 rounded-md w-full"
                                 placeholder="wajib diisi" name="alamat" required>
                             @error('alamat')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
                         </p>
-                        <p class="mt-2"><strong>E-mail :</strong>
+                        <p class="mt-2"><strong>E-mail : </strong><span class="text-red-600 font-bold text-lg">*</span>
                             <input type="email" id="email" class="border border-gray-300 p-2 rounded-md w-full"
                                 placeholder="wajib diisi" name="email" required>
                             @error('email')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
                         </p>
-                        <p class="mt-2"><strong>Whatsapp :</strong>
+                        <p class="mt-2"><strong>Whatsapp : </strong><span class="text-red-600 font-bold text-lg">*</span>
                             <input type="text" id="whatsapp" class="border border-gray-300 p-2 rounded-md w-full"
                                 placeholder="wajib diisi" name="whatsapp" required>
                             @error('whatsapp')
@@ -154,14 +156,15 @@
                     </div>
 
                     <div>
-                        <p><strong>Kota :</strong>
+                        <p><strong>Kota : </strong><span class="text-red-600 font-bold text-lg">*</span>
                             <input type="text" id="kota" class="border border-gray-300 p-2 rounded-md w-full"
                                 placeholder="wajib diisi" name="kota" required>
                             @error('kota')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
                         </p>
-                        <p class="mt-2"><strong>Kode Pos :</strong>
+                        <p class="mt-2"><strong>Kode Pos : </strong><span
+                                class="text-red-600 font-bold text-lg">*</span>
                             <input type="text" id="kodePos" class="border border-gray-300 p-2 rounded-md w-full"
                                 placeholder="wajib diisi" name="kode_pos" required>
                             @error('kode_pos')
@@ -169,17 +172,26 @@
                             @enderror
                         </p>
                         <p class="mt-2"><strong>Catatan :</strong>
-                            <input type="text" id="catatan" class="border border-gray-300 p-2 rounded-md w-full"
-                                placeholder="opsional" name="catatan">
+                            <textarea name="catatan" id="catatan" cols="30" rows="10"
+                                class="border border-gray-300 p-2 rounded-md w-full"></textarea>
                             @error('catatan')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
                         </p>
+                        <div class="mt-4 text-gray-600 text-sm ">
+                        </div>
                     </div>
                 </div>
+                <p><span class="text-red-600 font-bold text-lg">*</span> Wajib diisi. Pastikan data
+                    yang diinput
+                    sudah
+                    benar sebelum menyimpan.</p>
+
             </div>
+
             <!-- Tombol Simpan dan Batal -->
-            <div class="mt-6">
+            <div class="mt-6 mb-6">
+
                 <button class="bg-green-700 text-white font-bold py-2 px-4 rounded-md mr-2" type="submit">Simpan</button>
                 <button class="bg-white border border-gray-400 text-black font-bold py-2 px-4 rounded-md">Batal</button>
             </div>
@@ -188,6 +200,36 @@
 @endsection
 @push('script')
     <script>
+        function formatNPWP(input) {
+            // Hapus semua karakter yang bukan angka
+            let value = input.value.replace(/\D/g, '');
+
+            // Format string NPWP: XX.XXX.XXX.X-XXX.XXX
+            let formattedValue = '';
+
+            if (value.length > 0) {
+                formattedValue += value.substring(0, 2); // XX
+            }
+            if (value.length > 2) {
+                formattedValue += '.' + value.substring(2, 5); // .XXX
+            }
+            if (value.length > 5) {
+                formattedValue += '.' + value.substring(5, 8); // .XXX
+            }
+            if (value.length > 8) {
+                formattedValue += '.' + value.substring(8, 9); // .X
+            }
+            if (value.length > 9) {
+                formattedValue += '-' + value.substring(9, 12); // -XXX
+            }
+            if (value.length > 12) {
+                formattedValue += '.' + value.substring(12, 15); // .XXX
+            }
+
+            // Tetapkan nilai input dengan format yang baru
+            input.value = formattedValue;
+        }
+
         document.getElementById('tipePelanggan').addEventListener('change', updateKodePelanggan);
         document.getElementById('tipePiutang').addEventListener('change', updateKodePelanggan);
 

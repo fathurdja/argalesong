@@ -7,15 +7,31 @@
         <!-- Bagian Pencarian dan Tombol Baru -->
         <div class="flex justify-between items-center mb-4">
 
-            <form action="{{ route('customer.index') }}" method="GET" class="w-full max-w-md flex">
-                <input type="text" name="search" placeholder="cari kode / nama"
-                    class="border border-gray-400 p-2 rounded-md flex-grow" value="{{ request('search') }}">
-                <button type="submit" class="ml-4 bg-green-500 text-white font-bold py-2 px-4 rounded-md">
-                    Cari
-                </button>
+            <form id="filterForm" action="{{ route('customer.index') }}" method="GET" class="w-full max-w-md flex space-x-4">
+                <!-- Input untuk pencarian -->
+                <div class="ml-9">
+                    <!-- Dropdown untuk filter perusahaan -->
+                    <label for="idcompany" class="mr-2 text-gray-700 font-bold">Pilih Group:</label>
+                    <input list="groupList" name="idcompany" id="idcompany"
+                        class="border border-gray-300 p-2 rounded-md w-96" placeholder="Search group..."
+                        value="{{ request('idcompany') }}">
+                    <datalist id="groupList">
+                        <option value="">-- Semua Group --</option>
+                        @foreach ($perusahaan as $group)
+                            <option value="{{ $group->company_id }}">
+                                {{ $group->name }}
+                            </option>
+                        @endforeach
+                    </datalist>
+                </div>
+
+                <!-- Tombol "Cari" (tetap ada untuk pencarian teks manual) -->
+
             </form>
+
+
             <a href="{{ route('customer.create') }}">
-                <button class="ml-4 bg-green-500 text-white font-bold py-2 px-4 rounded-md">Baru</button>
+                <button class="ml-4 bg-green-500 text-white font-bold py-3 px-9 rounded-md">Baru</button>
             </a>
         </div>
         <div>
@@ -121,3 +137,16 @@
         @endif
     </div>
 @endsection
+@push('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('idcompany');
+            const form = document.getElementById('filterForm');
+
+            // Kirim form secara otomatis saat input berubah
+            input.addEventListener('change', function() {
+                form.submit();
+            });
+        });
+    </script>
+@endpush

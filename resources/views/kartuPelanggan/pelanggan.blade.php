@@ -57,116 +57,141 @@
         </div>
 
         <!-- Data Piutang, Pembayaran, dan Denda -->
-        <div class="bg-green-100 border border-green-500 rounded-lg shadow-md p-8">
-            <h2 class="bg-green-500 text-white text-center font-semibold py-3 rounded-t-lg">
-                Data Piutang dan Pembayaran
-            </h2>
-            <div class="overflow-x-auto">
-                <table class="w-full table-auto border-collapse border border-gray-200 text-sm">
-                    <thead class="bg-gray-100">
-                        <tr>
-                            <th class="px-6 py-3 border text-gray-700 text-center">Tanggal Piutang</th>
-                            <th class="px-6 py-3 border text-gray-700 text-center">No Invoice</th>
-                            <th class="px-6 py-3 border text-gray-700 text-center">No Bukti Jurnal</th>
-                            <th class="px-6 py-3 border text-gray-700 text-center">Keterangan Piutang</th>
-                            <th class="px-6 py-3 border text-gray-700 text-right">Nominal</th>
-                            <th class="px-6 py-3 border text-gray-700 text-center">Tanggal Jatuh Tempo</th>
-                            <th class="px-6 py-3 border text-gray-700 text-center">Tanggal Bayar</th>
-                            <th class="px-6 py-3 border text-gray-700 text-center">No Jurnal Bayar</th>
-                            <th class="px-6 py-3 border text-gray-700 text-center">No Bukti Bayar</th>
-                            <th class="px-6 py-3 border text-gray-700 text-center">Keterangan Bayar</th>
-                            <th class="px-6 py-3 border text-gray-700 text-right">Nominal Bayar</th>
-                            <th class="px-6 py-3 border text-gray-700 text-right">Saldo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($data as $item)
-                            <tr>
-                                <td class="px-6 py-3 border text-gray-700 text-center">{{ $item['tglpiutang'] ?? '-' }}</td>
-                                <td class="px-6 py-3 border text-gray-700 text-center">{{ $item['noinvoice'] ?? '-' }}</td>
-                                <td class="px-6 py-3 border text-gray-700 text-center">{{ $item['nobuktijurnal'] ?? '-' }}
-                                </td>
-                                <td class="px-6 py-3 border text-gray-700">{{ $item['keterangan'] ?? '-' }}</td>
-                                <td class="px-6 py-3 border text-gray-700 text-right">
-                                    {{ number_format($item['nominal'] ?? 0, 2, ',', '.') }}
-                                </td>
-                                <td class="px-6 py-3 border text-gray-700 text-center">{{ $item['tgljtempo'] ?? '-' }}</td>
-                                <td class="px-6 py-3 border text-gray-700 text-center">{{ $item['tglbayar'] ?? '-' }}</td>
-                                <td class="px-6 py-3 border text-gray-700 text-center">{{ $item['nojrbayar'] ?? '-' }}</td>
-                                <td class="px-6 py-3 border text-gray-700 text-center">{{ $item['nobuktibayar'] ?? '-' }}
-                                </td>
-                                <td class="px-6 py-3 border text-gray-700">{{ $item['ketbayar'] ?? '-' }}</td>
-                                <td class="px-6 py-3 border text-gray-700 text-right">
-                                    {{ number_format($item['nbayar'] ?? 0, 2, ',', '.') }}
-                                </td>
-                                <td class="px-6 py-3 border text-gray-700 text-right">
-                                    {{ number_format(($item['saldo'] ?? 0) < 10 ? 0 : $item['saldo'], 2, ',', '.') }}
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="12" class="px-6 py-3 text-center text-gray-500">Tidak ada data ditemukan.
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+        <div class="bg-white p-4">
+            <div class=" justify-between items-center mb-2">
+                <div class=" justify-between items-center mb-2">
+                    <div class="text-lg font-bold">
+                        {{ $selectedCustomer->name ?? 'Customer Not Selected' }}
+                        <!-- Display the selected customer's name -->
+                    </div>
+                    <div class="text-sm">
+                        Periode: {{ $startDate }} s/d {{ $endDate }} <!-- Display the selected date range -->
+                    </div>
+                </div>
+                <div class="flex overflow-x-auto">
+                    <!-- Piutang Section -->
+                    <div class="w-2/3 border  min-w-max">
+                        <div class="bg-green-500 text-white text-center font-bold">PIUTANG</div>
+                        <div class="flex">
+                            <div class="w-1/2 border-r min-w-max">
+                                <div class="bg-green-500 text-white text-center font-bold">Penagihan Piutang</div>
+                                <table class="w-full text-xs">
+                                    <thead>
+                                        <tr class="bg-gray-300">
+                                            <th class="border border-black p-1">Tgl Terbit</th>
+                                            <th class="border border-black p-1">No Invoice</th>
+                                            <th class="border border-black p-1">No Bukti Jurnal</th>
+                                            <th class="border border-black p-1">Keterangan</th>
+                                            <th class="border border-black p-1">Nominal</th>
+                                            <th class="border border-black p-1">Tgl Jatuh Tempo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Baris P0 -->
+                                        @foreach ($data as $item)
+                                            @if ($item->idrows === 'P0')
+                                                <tr class="bg-yellow-100">
+                                                    <td class="border border-black p-1">{{ $item->tgltrx }}</td>
+                                                    <td class="border border-black p-1">{{ $item->noinvoice }}</td>
+                                                    <td class="border border-black p-1">{{ $item->nobuktijurnal }}</td>
+                                                    <td class="border border-black p-1">{{ $item->keterangan }}</td>
+                                                    <td class="border border-black p-1">
+                                                        {{ number_format($item->nominal, 2) }}
+                                                    </td>
+                                                    <td class="border border-black p-1">{{ $item->tgljtempo }}</td>
+                                                </tr>
+                                                <!-- Tambahkan baris kosong di bagian pembayaran -->
+                                            @endif
+                                        @endforeach
+
+                                        <!-- Baris P1 -->
+                                        @foreach ($data as $item)
+                                            @if ($item->idrows === 'P1')
+                                                <tr>
+                                                    <td class="border border-black p-1">{{ $item->tgltrx }}</td>
+                                                    <td class="border border-black p-1">{{ $item->noinvoice }}</td>
+                                                    <td class="border border-black p-1">{{ $item->nobuktijurnal }}</td>
+                                                    <td class="border border-black p-1">{{ $item->keterangan }}</td>
+                                                    <td class="border border-black p-1">
+                                                        {{ number_format($item->nominal, 2) }}
+                                                    </td>
+                                                    <td class="border border-black p-1">{{ $item->tgljtempo }}</td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="w-1/2 min-w-max">
+                                <div class="bg-green-500 text-white text-center font-bold">Pembayaran Piutang</div>
+                                <table class="w-full text-xs">
+                                    <thead>
+                                        <tr class="bg-gray-300">
+                                            <th class="border border-black p-1">Tgl Bayar</th>
+                                            <th class="border border-black p-1">No Bukti Jurnal</th>
+                                            <th class="border border-black p-1">Keterangan</th>
+                                            <th class="border border-black p-1">Nominal</th>
+                                            <th class="border border-black p-1">Diskon</th>
+                                            <th class="border border-black p-1">Saldo</th>
+                                            <th class="border border-black p-1">Umur Piutang</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($data as $item)
+                                            @if ($item->idrows === 'P0')
+                                                <tr class="bg-yellow-100">
+                                                    <td class="border border-black p-1">{{ $item->tgltrx }}</td>
+                                                    <td class="border border-black p-1"></td>
+                                                    <td class="border border-black p-1">{{ $item->nobuktijurnal }}</td>
+                                                    <td class="border border-black p-1">{{ $item->keterangan }}</td>
+                                                    <td class="border border-black p-1">
+                                                        {{ number_format($item->nominal, 2) }}
+                                                    </td>
+                                                    <td class="border border-black p-1">{{ $item->tgljtempo }}</td>
+                                                </tr>
+                                                <!-- Tambahkan baris kosong di bagian pembayaran -->
+                                            @endif
+                                        @endforeach
+                                        <!-- Baris P2 -->
+                                        @foreach ($data as $item)
+                                            @if ($item->idrows === 'P2')
+                                                <tr>
+                                                    <td class="border border-black p-1">{{ $item->tgltrx }}</td>
+                                                    <td class="border border-black p-1"></td>
+                                                    <td class="border border-black p-1">{{ $item->ketbayar }}</td>
+                                                    <td class="border border-black p-1">
+                                                        {{ number_format($item->nbayar, 2) }}
+                                                    </td>
+                                                    <td class="border border-black p-1">0</td>
+                                                    <td class="border border-black p-1">
+                                                        {{ number_format($item->saldo, 2) }}
+                                                    </td>
+                                                    <td class="border border-black p-1">###</td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                @php
+                                    // Ubah array menjadi koleksi dan ambil saldo terakhir dari P2
+                                    $saldoTerakhir = collect($data)
+                                        ->filter(fn($item) => $item->idrows === 'P2') // Use -> to access object properties
+                                        ->last(); // Get the last object in the filtered collection
+
+                                    // Check if $saldoTerakhir exists and safely access the saldo property
+                                    $saldoTerakhir = $saldoTerakhir ? $saldoTerakhir->saldo : 0;
+                                @endphp
+
+                                <!-- Bagian saldo -->
+
+                                <div class="flex">
+                                    <p class="text-right p-2 font-bold">Saldo Terakhir: </p>
+                                    <div class="text-right p-2 font-bold">{{ number_format($saldoTerakhir, 2) }}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="bg-red-100 border border-red-500 rounded-lg shadow-md">
-            <h2 class="bg-red-500 text-white text-center font-semibold py-2">DENDA</h2>
-            <div class="overflow-x-auto p-6">
-                <table class="w-full table-auto border-collapse border border-gray-200">
-                    <thead class="bg-gray-100">
-                        <tr>
-                            <th class="px-4 py-2 border text-sm font-medium text-gray-700" rowspan="2">Nomor Invoice
-                            </th>
-                            <th class="px-4 py-2 border text-sm font-medium text-gray-700" rowspan="2">Nominal Denda
-                            </th>
-                            <th class="px-4 py-2 border text-sm font-medium text-gray-700" colspan="4">Pembayaran
-                                Denda</th>
-                            <th class="px-4 py-2 border text-sm font-medium text-gray-700" colspan="4">Penghapusan
-                                Denda</th>
-                            <th class="px-4 py-2 border text-sm font-medium text-gray-700" rowspan="2">Saldo</th>
-                        </tr>
-                        <tr>
-                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">Tgl Bayar</th>
-                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">No Bukti Jurnal</th>
-                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">Keterangan</th>
-                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">Nominal</th>
-                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">Tgl Hapus</th>
-                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">Memo</th>
-                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">Keterangan</th>
-                            <th class="px-4 py-2 border text-sm font-medium text-gray-700">Nominal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($secondResult as $denda)
-                            <tr>
-                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">
-                                    {{ $denda['noinvoice'] }}
-                                </td>
-                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">
-                                    {{ number_format($denda['nominal'] ?? 0, 2, ',', '.') }}
-                                </td>
-                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
-                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
-                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
-                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
-                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
-                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
-                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
-                                <td class="px-4 py-2 border text-sm text-gray-700 text-center">-</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="12" class="px-6 py-3 text-center text-gray-500">Tidak ada data ditemukan.
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-@endsection
+        @endsection

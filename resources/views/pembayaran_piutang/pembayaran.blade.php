@@ -228,6 +228,7 @@
                             reindexInvoiceInputs();
                             updateTotalPiutang();
                         });
+                        updateTotalPiutang();
                     });
 
                 });

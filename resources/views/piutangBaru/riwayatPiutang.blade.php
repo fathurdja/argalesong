@@ -3,6 +3,20 @@
 @section('content')
     <div class="mx-auto mt-10">
         <div class="overflow-x-auto bg-white rounded-xl ml-20 px-6 py-10">
+            <form method="GET" action="{{ route('riwayatPiutang') }}" class="mb-6" id="filterForm">
+                <label for="idcompany" class="mr-2 text-gray-700 font-bold">Pilih Group:</label>
+                <input list="groupList" name="idcompany" id="idcompany" class="border border-gray-300 p-2 rounded-md w-96"
+                    placeholder="Search group..." value="{{ request('idcompany') }}">
+                <datalist id="groupList">
+                    <option value="">-- Semua Group --</option>
+                    @foreach ($perusahaan as $group)
+                        <option value="{{ $group->company_id }}">
+                            {{ $group->name }}
+                        </option>
+                    @endforeach
+                </datalist>
+            </form>
+
             <table class="min-w-full">
                 <thead>
                     <tr>
@@ -52,6 +66,24 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <div class="mt-4">
+                {{ $piutang->links() }}
+            </div>
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('idcompany');
+            const form = document.getElementById('filterForm');
+
+            // Kirim form secara otomatis saat input berubah
+            input.addEventListener('change', function() {
+                form.submit();
+            });
+        });
+    </script>
+@endpush

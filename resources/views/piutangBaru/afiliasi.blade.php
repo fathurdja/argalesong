@@ -102,21 +102,23 @@
                             @endforeach
                         </select>
                     </div>
-                    <div id="customerDropdownContainer" class="mb-4">
-                        <label for="nama_pelanggan" class="block text-sm font-medium text-gray-700">Nama
-                            Pelanggan</label>
-                        <select id="nama_pelanggan" name="nama_pelanggan"
-                            class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option value="">-- Pilih Pelanggan --</option>
-                            @foreach ($customers as $type)
-                                <option value="{{ $type->id_Pelanggan }}">
-                                    {{ $type->id_Pelanggan }} {{ $type->name }}
-                                </option>
-                            @endforeach
-                        </select>
+                    <label for="idcompany" class="mr-2 text-gray-700 font-medium ">Pilih Pelanggan:</label>
+                    <div id="customerDropdownContainer" class=" mb-4">
+
+                        <!-- Input dengan Datalist -->
+                        <input list="groupList" name="idcompany" id="idcompany"
+                            class="border border-gray-300 p-2 rounded-md w-96" placeholder="pelanggan ...">
+
+                        <!-- Datalist untuk menampilkan opsi -->
+                        <datalist id="groupList">
+                            @if (!empty($customers))
+                                @foreach ($customers as $pelanggan)
+                                    <option value="{{ $pelanggan->id_Pelanggan }}">{{ $pelanggan->name }} -
+                                        {{ $pelanggan->id_Pelanggan }}</option>
+                                @endforeach
+                            @endif
+                        </datalist>
                     </div>
-
-
                     <div class="flex">
                         <div class="mb-4">
                             <label for="jenis_tagihan" class="block text-sm font-medium text-gray-700">Jenis Tagihan</label>
@@ -224,31 +226,43 @@
         var customers = @json($customers);
 
         function updateCustomerDropdown() {
-            var tipePelanggan = document.getElementById('tipePelanggan').value;
-            var perusahaan = document.getElementById('perusahaan').value;
-            var customerSelect = document.getElementById('nama_pelanggan');
+            const perusahaan = document.getElementById('perusahaan').value; // Ambil perusahaan yang dipilih
+            const tipePelanggan = document.getElementById('tipePelanggan').value; // Tipe pelanggan yang dipilih
+            const datalist = document.getElementById('groupList'); // Referensi elemen datalist
 
-            // Reset pelanggan, tapi jangan reset perusahaan
-            customerSelect.innerHTML = '<option value="">-- Pilih Pelanggan --</option>';
+            // Kosongkan elemen datalist
+            datalist.innerHTML = '';
 
-            if (!perusahaan) {
-                alert('Silakan pilih perusahaan terlebih dahulu.');
-                return;
-            }
-
-            // Filter pelanggan berdasarkan perusahaan
-            var filteredCustomers = customers.filter(function(customer) {
-                return customer.idcompany === perusahaan &&
+            // Filter pelanggan berdasarkan perusahaan dan tipe pelanggan (jika ada)
+            const filteredCustomers = customers.filter(customer => {
+                return (!perusahaan || customer.idcompany === perusahaan) &&
                     (!tipePelanggan || customer.idtypepelanggan === tipePelanggan);
             });
 
-            filteredCustomers.forEach(function(customer) {
-                var option = document.createElement('option');
-                option.value = customer.id_Pelanggan;
-                option.textContent = customer.name;
-                customerSelect.appendChild(option);
+            // Tambahkan opsi ke datalist
+            filteredCustomers.forEach(customer => {
+                const option = document.createElement('option');
+                option.value = customer.id_Pelanggan; // Value adalah kode perusahaan
+                option.textContent =
+                    ` ${customer.name}`; // Gabungkan kode dan nama pelanggan
+                datalist.appendChild(option);
             });
+
+            // Jika tidak ada pelanggan yang cocok, tambahkan opsi kosong
+            if (filteredCustomers.length === 0) {
+                const emptyOption = document.createElement('option');
+                emptyOption.value = '';
+                emptyOption.textContent = '-- Tidak Ada Pelanggan --';
+                datalist.appendChild(emptyOption);
+            }
         }
+
+        // Event listener untuk memperbarui pelanggan saat perusahaan atau tipe pelanggan berubah
+        document.getElementById('perusahaan').addEventListener('change', updateCustomerDropdown);
+        document.getElementById('tipePelanggan').addEventListener('change', updateCustomerDropdown);
+
+        // Panggil fungsi ini saat halaman dimuat untuk inisialisasi awal
+        document.addEventListener('DOMContentLoaded', updateCustomerDropdown);
 
         function formatRupiah(value) {
             return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");

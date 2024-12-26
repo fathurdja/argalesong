@@ -19,37 +19,23 @@ class CustomerController extends Controller
     {
         // Get the search input from the request
         $search = $request->input('search');
+        $companyFilter = $request->input('idcompany'); // Filter perusahaan
 
-        // Initialize $customer to null
-        $customer = null;
+        // Ambil semua perusahaan untuk dropdown
+        $perusahaan = masterCompany::all();
 
+        // Query daftar pelanggan dengan pencarian dan filter perusahaan
+        $daftarPelanggan = Customer::with(['tipePelanggan', 'company'])
+            ->when($search, function ($query) use ($search) {
+                $query->where('id_Pelanggan', 'like', "%$search%")
+                    ->orWhere('name', 'like', "%$search%");
+            })
+            ->when($companyFilter, function ($query) use ($companyFilter) {
+                $query->where('idcompany', $companyFilter);
+            })
+            ->paginate(10); // Anda bisa mengatur jumlah item per halaman
 
-        // If search is provided, search by id_Pelanggan or name
-        if ($search) {
-            $customer = Customer::where('id_Pelanggan', $search)
-                ->orWhere('name', 'like', '%' . $search . '%')
-                ->first();
-        }
-
-        // If search didn't return a result, find the customer by ID
-        $id = $request->input('id'); // Assuming 'id' is passed as a request parameter
-        if (!$customer && $id) {
-            $customer = Customer::with('tipePelanggan')->find($id);
-        }
-
-        // Ensure that the customer and related tipePelanggan/tipePiutang exist
-        $tipePelangganName = null;
-
-        if ($customer) {
-            if ($customer->tipePelanggan) {
-                $tipePelangganName = $customer->tipePelanggan->name;
-            }
-        }
-
-        $daftarPelanggan = customer::with(['tipePelanggan', 'company'])->paginate(2);
-
-        // Return the view with the customer, tipePelangganName, and tipePiutangName
-        return view('daftarPelangggan.formedit', compact('customer', 'tipePelangganName', 'daftarPelanggan'));
+        return view('daftarPelangggan.formedit', compact('daftarPelanggan', 'perusahaan'));
     }
 
 

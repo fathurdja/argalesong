@@ -32,52 +32,46 @@ class kp_pelangganController extends Controller
     {
         // Validate the input
         $request->validate([
-            'nama_pelanggan' => 'required|exists:customer,id_Pelanggan', // assuming you have a customers table
+            'nama_pelanggan' => 'required|exists:customer,id_Pelanggan', // Ensure the customer exists
             'start_date' => 'required|date',
-            'end_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date', // Ensure end_date is not before start_date
         ]);
 
         // Retrieve the input values
         $customerId = $request->input('nama_pelanggan');
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
-        // try {
-        //     $customers = DB::table('customer')->select('id_Pelanggan', 'name')->get();
-        //     $data = DB::select('CALL kartu_piutang(?, ?, ?)', [$request->customer_id, $request->start_date, $request->end_date]);
-        //     dd($data);
-        //     return view('kartuPelanggan.pelanggan', compact('data', 'customers'));
-        // } catch (\Exception $e) {
-        //     dd($e->getMessage()); // This will display any error messages from the stored procedure call
-        // }
-        //$data = DB::select('CALL kartu_piutang(?, ?, ?)', [$customerId, $startDate, $endDate]);
-        $pdo = DB::connection()->getPdo();
-        $stmt = $pdo->prepare('CALL kartu_piutang(?, ?, ?)');
-        $stmt->execute([$customerId, $startDate, $endDate]);
 
-        // Array untuk menampung semua result sets
-        $results = [];
-        do {
-            $results[] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        } while ($stmt->nextRowset());
+        // Fetch the data using the stored procedure
+        $data = DB::select('CALL kartu_piutang(?, ?, ?)', [$customerId, $startDate, $endDate]);
 
-        // Tutup cursor
-        $stmt->closeCursor();
-        // Ambil hasil pertama dan kedua
-        $data = $results[0] ?? [];
-        $secondResult = $results[1] ?? [];
-
-        $tipePelanggan = tipePelanggan::all();
+        // Retrieve the selected customer's details
+        $selectedCustomer = DB::table('customer')
+            ->where('id_Pelanggan', $customerId)
+            ->select('id_Pelanggan', 'name')
+            ->first(); // Fetch only the selected customer's details
 
         // Fetch all customers for the dropdown menu
         $customers = DB::table('customer')
-            ->join('tipepelanggan', 'customer.idtypepelanggan', '=', 'tipepelanggan.KodeType') // Sesuaikan dengan kolom relasi
+            ->join('tipepelanggan', 'customer.idtypepelanggan', '=', 'tipepelanggan.KodeType') // Adjust if needed
             ->select('customer.id_Pelanggan', 'customer.name', 'tipepelanggan.kodeType as idtypepelanggan')
             ->get();
 
+        // Fetch all types of customers
+        $tipePelanggan = tipePelanggan::all();
+
+        // Determine the selected type of customer
         $selectedTipePelanggan = $request->has('tipePelanggan') ? $request->tipePelanggan : null;
-        //dd($data);
-        //dd($data, $secondResult);
+
         // Pass the data to the view
-        return view('kartuPelanggan.pelanggan', compact('data', 'customers', 'tipePelanggan', 'selectedTipePelanggan', 'secondResult'));
+        return view('kartuPelanggan.pelanggan', compact(
+            'data',
+            'customers',
+            'tipePelanggan',
+            'selectedTipePelanggan',
+            'selectedCustomer',
+            'startDate',
+            'endDate'
+        ));
     }
 }
