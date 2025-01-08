@@ -1,21 +1,62 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Argalesong
+## System Requirements
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Before setting up the application, ensure your system meets the following requirements:
+
+- **Composer**: 2.7.4
+- **PHP**: 8.3.7
+- **Node.js**: 20.9.0
+
+## Installation Guide
+
+Follow these steps to configure and run the application:
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/fathurdja/argalesong.git
+cd argalesong
+```
+
+### 2. Install Composer Dependencies
+Install the necessary PHP dependencies using Composer:
+
+```bash
+composer install
+```
+### 3. Configure the Environment File
+Copy the example environment file and configure it according to your environment:
+```bash
+cp .env.example .env
+```
+
+### 4. Install Node.js Dependencies
+Install the required frontend dependencies using npm:
+```bash
+npm install
+```
+
+### 5. Generate Application Key
+Generate a unique application key:
+```bash
+php artisan key:generate
+```
+### 6. Build Frontend Assets
+For production:
+```bash
+npm run build
+```
+For development:
+
+```bash
+npm run dev
+```
+### Jalankan Program 
+```bash
+php artisan serve
+```
 
 
-aplikasi Account Receivable galesong 
 
-REQUIREMENTS SPECIFICATION
--php 8 latest version
--npm latest version
-
-Langkah Langkah clone repository 
-
-1 buka terminal dan jalankan clone repository
 
 
