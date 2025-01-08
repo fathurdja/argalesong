@@ -13,19 +13,22 @@ class kp_pelangganController extends Controller
     public function index(Request $request)
     {
         $tipePelanggan = tipePelanggan::all();
-
+        $perusahaan = masterCompany::all();
+        $customerId = $request->input('nama_pelanggan');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $selectedPerusahaan = $request->input('idcompany');
         // Fetch all customers for the dropdown menu
         $customers = DB::table('customer')
-            ->join('tipepelanggan', 'customer.idtypepelanggan', '=', 'tipepelanggan.KodeType') // Sesuaikan dengan kolom relasi
-            ->select('customer.id_Pelanggan', 'customer.name', 'tipepelanggan.kodeType as idtypepelanggan')
+            ->select('customer.id_Pelanggan', 'customer.name', 'customer.idcompany')->where('customer.idcompany', '=', $selectedPerusahaan)
             ->get();
 
-        $selectedTipePelanggan = $request->has('tipePelanggan') ? $request->tipePelanggan : null;
+
         $data = [];
         $secondResult = [];
 
         // Display the form with customer dropdown and date range inputs
-        return view('kartuPelanggan.pelanggan', compact('customers', 'tipePelanggan', 'selectedTipePelanggan', 'data', 'secondResult'));
+        return view('kartuPelanggan.pelanggan', compact('customers', 'tipePelanggan', 'selectedPerusahaan', 'data', 'secondResult', 'perusahaan', 'startDate', 'endDate'));
         // return view('kartuPelanggan.pelanggan');
     }
 
@@ -34,13 +37,13 @@ class kp_pelangganController extends Controller
     {
         // Validate the input
         $request->validate([
-            'nama_pelanggan' => 'required|exists:customer,id_Pelanggan', // Ensure the customer exists
+            'id_Pelanggan_actual' => 'required|exists:customer,id_Pelanggan', // Ensure the customer exists
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date', // Ensure end_date is not before start_date
         ]);
 
         // Retrieve the input values
-        $customerId = $request->input('nama_pelanggan');
+        $customerId = $request->input('id_Pelanggan_actual');
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
 
@@ -65,7 +68,6 @@ class kp_pelangganController extends Controller
 
         // Determine the selected type of customer
         $selectedPerusahaan = $request->has('Perusahaan') ? $request->company_id : null;
-
         // Pass the data to the view
         return view('kartuPelanggan.pelanggan', compact(
             'data',
@@ -76,5 +78,16 @@ class kp_pelangganController extends Controller
             'endDate',
             'perusahaan'
         ));
+    }
+
+    public function getCustomersByCompany($idcompany)
+    {
+        // Ambil pelanggan berdasarkan idcompany
+        $customers = DB::table('customer')
+            ->where('idcompany', $idcompany)
+            ->select('id_Pelanggan', 'name')
+            ->get();
+
+        return response()->json($customers); // Kirim data dalam format JSON
     }
 }

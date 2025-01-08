@@ -27,11 +27,11 @@ use App\Http\Controllers\Sp_HarianController;
 use App\Http\Controllers\tagihanController;
 use App\Http\Controllers\TipePelangganController;
 use App\Http\Controllers\UmurPiutangController;
-use App\Http\Middleware\CheckExternalApiToken;
+use App\Http\Middleware\CheckAuthToken;
 use Illuminate\Support\Facades\Route;
 
 // Route untuk Dashboard
-Route::get('/', [dashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+Route::get('/', [dashboardController::class, 'index'])->name('dashboard')->middleware(CheckAuthToken::class);
 
 // Route untuk Login dan Register
 Route::get('/login', function () {
@@ -47,10 +47,12 @@ Route::post('/register', [RegisterController::class, 'MakeAccount'])->name('make
 Route::resource('customer', CustomerController::class);
 Route::resource('masterDataPajak', MasterDataPajakController::class);
 Route::resource('piutang-types', PiutangController::class);
-
+Route::get('/get-customers/{idcompany}', [PiutangController::class, 'getCustomers']);
 // Route untuk Laporan Bulanan
 Route::get('/get-monthly-report', [Sp_bulananController::class, 'getMonthlyReport']);
 Route::get('/riwayatPiutang', [riwayatpiutang::class, 'index'])->name('riwayatPiutang');
+Route::get('/riwayatPiutang/printPreview', [riwayatpiutang::class, 'print_Preview'])->name('printriwayatPiutang');
+Route::get('/riwayatPiutang/detail', [riwayatpiutang::class, 'detail'])->name('detailpiutang');
 Route::get('/riwayatPembayaran', [riwayatPembayaran::class, 'index'])->name('riwayatPembayaran');
 
 // Route untuk Pencarian Customer dan Piutang
@@ -63,6 +65,7 @@ Route::get('/pembayaran-piutang/proses', [PembayaranPiutang::class, 'proses'])->
 Route::post('/pembayaran-piutang/bayar', [PembayaranPiutang::class, 'store'])->name('pembayaran-piutang.store');
 Route::get('/api/invoices-by-customer/{customerId}', [PembayaranPiutang::class, 'getInvoicesByCustomer'])->name('invoices.by-customer');
 Route::get('/api/customers-by-company/{companyId}', [PembayaranPiutang::class, 'getCustomersByCompany'])->name('customer.by-company');
+Route::get('/get-customers/{idcompany}', [kp_pelangganController::class, 'getCustomersByCompany']);
 
 // Route untuk Pengaturan Pajak berdasarkan tipe Piutang
 Route::get('/api/pajak/{type}', [PiutangController::class, 'getPajakRate'])->name('getpajakRate');

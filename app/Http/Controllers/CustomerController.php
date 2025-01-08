@@ -63,7 +63,7 @@ class CustomerController extends Controller
             'name' => 'required|string|max:255',
             'ktp' => 'required|string|size:16|unique:customer,ktp', // KTP harus unik
             'npwp_option' => 'nullable',
-            'npwp' => 'nullable|string|size:15|unique:customer,npwp', // NPWP harus unik
+            'npwp' => 'nullable|string', // NPWP harus unik
             'kode_pelanggan' => 'nullable|string|size:8|unique:customer,id_Pelanggan', // id_Pelanggan harus unik
             'sharing' => 'nullable|numeric',
             'alamat' => 'required|string|max:255',
@@ -144,7 +144,7 @@ class CustomerController extends Controller
             'tipe_pelanggan' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'ktp' => 'required|string|size:16',
-            'npwp' => 'required|string|size:15',
+            'npwp' => 'nullable|string',
             'sharing' => 'nullable|numeric',
             'alamat' => 'required|string|max:255',
             'email' => 'required|email|max:255',
@@ -175,5 +175,10 @@ class CustomerController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function getCustomers($idcompany)
+    {
+        $customers = Customer::where('idcompany', $idcompany)->get(['id_Pelanggan', 'name']);
+        return response()->json($customers);
     }
 }

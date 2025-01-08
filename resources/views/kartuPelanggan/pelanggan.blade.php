@@ -7,46 +7,51 @@
             <form method="POST" action="{{ route('kartu-pelanggan-fetchData') }}">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Tanggal Awal -->
                     <div>
                         <label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Awal</label>
                         <input type="date" name="start_date" id="start_date"
                             value="{{ old('start_date', now()->format('Y-m-d')) }}"
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            required>
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                     </div>
+
+                    <!-- Tanggal Akhir -->
                     <div>
                         <label for="end_date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Akhir</label>
                         <input type="date" name="end_date" id="end_date"
                             value="{{ old('end_date', now()->format('Y-m-d')) }}"
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            required>
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                     </div>
+
+                    <!-- Pilih Perusahaan -->
                     <div>
-                        <label for="Perusahaan" class="block text-sm font-medium text-gray-700 mb-2">Perusahaan</label>
-                        <select id="Perusahaan" name="Perusahaan"
-                            class="block w-full border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option value="">-- Pilih Perusahaan --</option>
-                            @foreach ($perusahaan as $type)
-                                <option value="{{ $type->company_id }}"
-                                    {{ $selectedPerusahaan == $type->company_id ? 'selected' : '' }}>
-                                    {{ $type->name }}
-                                </option>
+                        <label for="idcompany" class="block text-sm font-medium text-gray-700 mb-2">Pilih Perusahaan</label>
+                        <input list="groupList" name="idcompany" id="idcompany"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2"
+                            placeholder="Pilih Perusahaan..." onchange="fetchCustomers()" />
+                        <datalist id="groupList">
+                            <option value="">-- Semua Perusahaan --</option>
+                            @foreach ($perusahaan as $group)
+                                <option value="{{ $group->company_id }}">{{ $group->name }}</option>
                             @endforeach
-                        </select>
+                        </datalist>
                     </div>
                 </div>
-                <div class="mt-4">
-                    <label for="nama_pelanggan" class="block text-sm font-medium text-gray-700 mb-2">Pilih Pelanggan</label>
-                    <select name="nama_pelanggan" id="nama_pelanggan"
-                        class="border border-gray-300 rounded-md shadow-sm w-full p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        required>
-                        <option value="">-- Pilih Pelanggan --</option>
-                        @foreach ($customers as $customer)
-                            <option value="{{ $customer->id_Pelanggan }}">{{ $customer->name }}</option>
-                        @endforeach
-                    </select>
+
+                <!-- Pilih Pelanggan -->
+                <div class="mt-6">
+                    <label for="id_Pelanggan" class="block text-sm font-medium text-gray-700 mb-2">Pilih Pelanggan</label>
+                    <input list="pelangganList" name="nama_pelanggan" id="id_Pelanggan"
+                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2"
+                        placeholder="Pilih Pelanggan..." />
+                    <datalist id="pelangganList">
+                        <!-- Opsi pelanggan akan diperbarui dengan AJAX -->
+                    </datalist>
+                    <input type="hidden" name="id_Pelanggan_actual" id="id_Pelanggan_actual" />
                 </div>
-                <div class="mt-4 text-right">
+
+                <!-- Tombol Cari -->
+                <div class="mt-6 text-right">
                     <button type="submit"
                         class="px-6 py-2 bg-blue-500 text-white font-medium rounded-md shadow-sm hover:bg-blue-600 focus:ring focus:ring-blue-300">
                         Cari
@@ -83,6 +88,7 @@
                                             <th class="border border-black p-1">Keterangan</th>
                                             <th class="border border-black p-1">Nominal</th>
                                             <th class="border border-black p-1">Tgl Jatuh Tempo</th>
+                                            <th class="border border-black p-1">Umur Piutang</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -98,6 +104,7 @@
                                                         {{ number_format($item->nominal, 2) }}
                                                     </td>
                                                     <td class="border border-black p-1">{{ $item->tgljtempo }}</td>
+                                                    <td class="border border-black p-1">0</td>
                                                 </tr>
                                                 <!-- Tambahkan baris kosong di bagian pembayaran -->
                                             @endif
@@ -115,6 +122,7 @@
                                                         {{ number_format($item->nominal, 2) }}
                                                     </td>
                                                     <td class="border border-black p-1">{{ $item->tgljtempo }}</td>
+                                                    <td class="border border-black p-1">{{ $item->umurPiutang }}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -132,7 +140,6 @@
                                             <th class="border border-black p-1">Nominal</th>
                                             <th class="border border-black p-1">Diskon</th>
                                             <th class="border border-black p-1">Saldo</th>
-                                            <th class="border border-black p-1">Umur Piutang</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -144,9 +151,11 @@
                                                     <td class="border border-black p-1">{{ $item->nobuktijurnal }}</td>
                                                     <td class="border border-black p-1">{{ $item->keterangan }}</td>
                                                     <td class="border border-black p-1">
-                                                        {{ number_format($item->nominal, 2) }}
+                                                        0
                                                     </td>
-                                                    <td class="border border-black p-1">{{ $item->tgljtempo }}</td>
+                                                    <td class="border border-black p-1">
+                                                        {{ number_format($item->nominal, 2) }}</td>
+
                                                 </tr>
                                                 <!-- Tambahkan baris kosong di bagian pembayaran -->
                                             @endif
@@ -165,32 +174,85 @@
                                                     <td class="border border-black p-1">
                                                         {{ number_format($item->saldo, 2) }}
                                                     </td>
-                                                    <td class="border border-black p-1">###</td>
                                                 </tr>
                                             @endif
                                         @endforeach
+
                                     </tbody>
                                 </table>
                                 @php
                                     // Ubah array menjadi koleksi dan ambil saldo terakhir dari P2
                                     $saldoTerakhir = collect($data)
-                                        ->filter(fn($item) => $item->idrows === 'P2') // Use -> to access object properties
-                                        ->last(); // Get the last object in the filtered collection
+                                        ->filter(fn($item) => $item->idrows === 'P2') // Filter baris dengan idrows 'P2'
+                                        ->last(); // Ambil item terakhir
 
-                                    // Check if $saldoTerakhir exists and safely access the saldo property
-                                    $saldoTerakhir = $saldoTerakhir ? $saldoTerakhir->saldo : 0;
+                                    $saldo = collect($data)
+                                        ->filter(fn($item) => $item->idrows === 'P1') // Filter baris dengan idrows 'P1'
+                                        ->last();
+
+                                    // Pastikan untuk memeriksa keberadaan objek sebelum mengakses propertinya
+                                    $saldoTerakhir = $saldoTerakhir
+                                        ? $saldoTerakhir->saldo
+                                        : ($saldo
+                                            ? $saldo->saldo
+                                            : 0);
                                 @endphp
+
 
                                 <!-- Bagian saldo -->
 
-                                <div class="flex">
+                                <div class="flex mt-11">
                                     <p class="text-right p-2 font-bold">Saldo Terakhir: </p>
                                     <div class="text-right p-2 font-bold">{{ number_format($saldoTerakhir, 2) }}</div>
                                 </div>
 
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         @endsection
+        @push('script')
+            <script>
+                function fetchCustomers() {
+                    const companyId = document.getElementById('idcompany').value; // Ambil ID perusahaan yang dipilih
+                    const pelangganList = document.getElementById('pelangganList'); // Ambil elemen data list pelanggan
+
+                    // Kosongkan data list pelanggan
+                    pelangganList.innerHTML = '';
+
+                    // Pastikan companyId tidak kosong
+                    if (companyId) {
+                        fetch(`/get-customers/${companyId}`) // Panggil endpoint untuk mengambil pelanggan
+                            .then(response => response.json())
+                            .then(data => {
+                                // Tambahkan opsi pelanggan ke dalam data list
+                                data.forEach(customer => {
+                                    const option = document.createElement('option');
+                                    option.value = customer.id_Pelanggan; // Tampilkan nama pelanggan di input
+                                    option.setAttribute('data-id', customer.id_Pelanggan); // Simpan ID pelanggan
+                                    pelangganList.appendChild(option);
+                                });
+
+                                // Simpan ID pelanggan terpilih di hidden input jika diperlukan
+                                document.getElementById('id_Pelanggan_actual').value = '';
+                            })
+                            .catch(error => console.error('Error fetching customers:', error));
+                    }
+                }
+                document.getElementById('id_Pelanggan').addEventListener('input', function() {
+                    const pelangganList = document.getElementById('pelangganList');
+                    const options = pelangganList.options;
+                    const inputValue = this.value; // Nilai input pengguna
+
+                    for (let i = 0; i < options.length; i++) {
+                        if (options[i].value === inputValue) {
+                            // Jika input sesuai dengan nama pelanggan, set hidden input dengan ID pelanggan
+                            document.getElementById('id_Pelanggan_actual').value = options[i].getAttribute('data-id');
+                            break;
+                        }
+                    }
+                });
+            </script>
+        @endpush

@@ -103,22 +103,27 @@
                         </select>
                     </div>
                     <label for="idcompany" class="mr-2 text-gray-700 font-medium ">Pilih Pelanggan:</label>
-                    <div id="customerDropdownContainer" class=" mb-4">
-
-                        <!-- Input dengan Datalist -->
-                        <input list="groupList" name="idcompany" id="idcompany"
-                            class="border border-gray-300 p-2 rounded-md w-96" placeholder="pelanggan ...">
+                    <div id="customerDropdownContainer" class="mb-4">
+                        <!-- Input untuk menampilkan nama pelanggan -->
+                        <input list="groupList" name="nama_pelanggan" id="nama_pelanggan"
+                            class="border border-gray-300 p-2 rounded-md w-96" placeholder="Pilih Pelanggan..."
+                            oninput="syncCustomerId(this)">
 
                         <!-- Datalist untuk menampilkan opsi -->
                         <datalist id="groupList">
                             @if (!empty($customers))
                                 @foreach ($customers as $pelanggan)
-                                    <option value="{{ $pelanggan->id_Pelanggan }}">{{ $pelanggan->name }} -
-                                        {{ $pelanggan->id_Pelanggan }}</option>
+                                    <option data-id="{{ $pelanggan->id_Pelanggan }}" value="{{ $pelanggan->name }}">
+                                        {{ $pelanggan->name }}
+                                    </option>
                                 @endforeach
                             @endif
                         </datalist>
+
+                        <!-- Input tersembunyi untuk menyimpan id_Pelanggan -->
+                        <input type="hidden" name="id_Pelanggan" id="id_Pelanggan">
                     </div>
+
                     <div class="flex">
                         <div class="mb-4">
                             <label for="jenis_tagihan" class="block text-sm font-medium text-gray-700">Jenis Tagihan</label>
@@ -208,6 +213,13 @@
                             class="mt-1 block w-80 text-right border-gray-300 rounded-md bg-slate-400 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             readonly>
                     </div>
+                    <div class="mb-4">
+                        <label for="keterangan" class="block text-sm font-medium text-gray-700">Keterangan</label>
+                        <textarea name="keterangan" id="keterangan"
+                            class="mt-1 block w-full p-3 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            rows="3" placeholder="Tambahkan keterangan..."></textarea>
+                    </div>
+
                     <div class="flex justify-end mt-4">
                         <button type="submit"
                             class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Posting</button>
@@ -242,9 +254,8 @@
             // Tambahkan opsi ke datalist
             filteredCustomers.forEach(customer => {
                 const option = document.createElement('option');
-                option.value = customer.id_Pelanggan; // Value adalah kode perusahaan
-                option.textContent =
-                    ` ${customer.name}`; // Gabungkan kode dan nama pelanggan
+                option.value = customer.id_Pelanggan; // Value tetap id_Pelanggan
+                option.textContent = `${customer.name}`; // Nama pelanggan yang tampil
                 datalist.appendChild(option);
             });
 
@@ -305,5 +316,20 @@
             const jumlahKaliContainer = document.getElementById('jumlah_kali_container');
             jumlahKaliContainer.style.display = this.value === 'berulang' ? 'block' : 'none';
         });
+
+        function syncCustomerId(input) {
+            const datalist = document.getElementById('groupList'); // Referensi elemen datalist
+            const hiddenInput = document.getElementById('id_Pelanggan'); // Input tersembunyi untuk id_Pelanggan
+            const selectedOption = Array.from(datalist.options).find(option => option.textContent.trim() === input.value
+                .trim());
+
+            // Jika nama pelanggan ditemukan di datalist, sinkronkan id_Pelanggan
+            if (selectedOption) {
+                hiddenInput.value = selectedOption.getAttribute('data-id'); // Ambil id_Pelanggan dari atribut data-id
+                input.value = selectedOption.textContent.trim(); // Set input value ke nama pelanggan
+            } else {
+                hiddenInput.value = ''; // Reset jika input tidak cocok
+            }
+        }
     </script>
 @endpush

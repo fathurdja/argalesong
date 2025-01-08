@@ -40,6 +40,7 @@ class riwayatpiutang extends Controller
                 'x.kodepiutang',
                 'm.name as tipepiutang',
                 'x.dpp',
+		'x.created_by',
                 'x.nominal',
                 'c.idcompany',
                 'y.xpiutang as tagihan'
@@ -57,4 +58,15 @@ class riwayatpiutang extends Controller
         // Mengirim data ke view
         return view('piutangBaru.riwayatpiutang', compact('piutang', 'perusahaan', 'filterCompany'));
     }
+
+    // public function print_Preview()
+    // {
+    //     $mpdf = new \Mpdf\Mpdf();
+    //     $mpdf->WriteHTML('<h1>Hello world!</h1>');
+    //     $mpdf->Output();
+    // }
+
+    // public function detail(){
+    //     return view('piutangBaru.detailpiutang');
+    // }
 }

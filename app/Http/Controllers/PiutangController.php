@@ -10,10 +10,12 @@ use App\Models\tipePelanggan;
 use App\Models\TipePiutang;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PiutangController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
@@ -86,6 +88,7 @@ class PiutangController extends Controller
      */
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'nama_pelanggan' => 'required|exists:customer,id_Pelanggan',
             'tanggal_transaksi' => 'required|date',
@@ -99,6 +102,8 @@ class PiutangController extends Controller
             'jenis_tagihan' => 'required|in:tetap,berulang',
             'perusahaan' => 'required|exists:masterCompany,company_id',
             'jumlah_kali' => 'required_if:jenis_tagihan,berulang|nullable|integer|min:1',
+            'keterangan' => 'nullable|string',
+
         ]);
 
         // ... (logic untuk mengolah data yang sudah ada)
@@ -133,7 +138,10 @@ class PiutangController extends Controller
             'jumlahTagihan' => 1,
             'urutanTagihan' => 1,
             'idcompany' => $data['perusahaan'],
-            'statusPembayaran' => 'BELUM LUNAS'
+            'statusPembayaran' => 'BELUM LUNAS',
+            'keterangan' => $data['keterangan'],
+            'created_by' => Cookie::get('user_full_name'),
+
         ]);
     }
     private function convertToDecimal($value)
@@ -171,7 +179,9 @@ class PiutangController extends Controller
                 'jumlahTagihan' => $data['jumlah_kali'],
                 'urutanTagihan' => $i + 1,
                 'idcompany' => $data['perusahaan'],
-                'statusPembayaran' => 'BELUM LUNAS'
+                'statusPembayaran' => 'BELUM LUNAS',
+                'keterangan' => $data['keterangan'],
+                'created_by' => Cookie::get('user_full_name'),
             ]);
 
             // Tambahkan 1 bulan untuk tagihan berikutnya

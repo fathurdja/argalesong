@@ -16,7 +16,7 @@ class riwayatPembayaran extends Controller
             ->when($filterCompany, function ($query, $filterGroup) {
                 return $query->where('Perusahaan', '=', $filterGroup);
             })
-            ->get();
+            ->paginate(10);
 
 
 

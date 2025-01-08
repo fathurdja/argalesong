@@ -26,8 +26,9 @@ class piutang extends Model
         'jenisTagihan',
         'jumlahTagihan',
         'urutanTagihan',
-        'statusPembayaran'
-
+        'statusPembayaran',
+        'keterangan',
+        'created_by'
     ];
     public function pelanggan()
     {
