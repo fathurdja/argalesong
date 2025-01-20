@@ -27,11 +27,11 @@ use App\Http\Controllers\Sp_HarianController;
 use App\Http\Controllers\tagihanController;
 use App\Http\Controllers\TipePelangganController;
 use App\Http\Controllers\UmurPiutangController;
-use App\Http\Middleware\CheckAuthToken;
+
 use Illuminate\Support\Facades\Route;
 
 // Route untuk Dashboard
-Route::get('/', [dashboardController::class, 'index'])->name('dashboard')->middleware(CheckAuthToken::class);
+Route::get('/', [dashboardController::class, 'index'])->name('dashboard');
 
 // Route untuk Login dan Register
 Route::get('/login', function () {
