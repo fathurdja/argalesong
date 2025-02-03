@@ -59,3 +59,8 @@
         </div>
     </div>
 @endsection
+
+{{-- @push('scripts')
+
+@vite('resources/js/test.js')
+@endpush --}}

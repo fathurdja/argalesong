@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'My Application')</title>
-    @vite(['resources/css/app.css', 'resources/css/custom.css', 'resources/js/app.js',])
+    @vite(['resources/css/app.css', 'resources/css/custom.css', 'resources/js/app.js'])
 
 </head>
 
@@ -19,7 +19,7 @@
             </div>
         </main>
     </div>
-    @stack('script')
+    @stack('scripts')
     @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
 
 </body>

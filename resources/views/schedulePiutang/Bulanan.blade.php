@@ -59,7 +59,7 @@
 @endsection
 
 @push('script')
-    {{-- <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
 
             // Format Rupiah
@@ -184,7 +184,5 @@
                 window.print();
             });
         });
-    </script> --}}
-
-    @vite('resources/js/test.js')
+    </script>
 @endpush

@@ -88,16 +88,6 @@
     </div>
 @endsection
 
-@push('script')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const input = document.getElementById('idcompany');
-            const form = document.getElementById('filterForm');
-
-            // Kirim form secara otomatis saat input berubah
-            input.addEventListener('change', function() {
-                form.submit();
-            });
-        });
-    </script>
+@push('scripts')
+@vite('resources/js/test.js') 
 @endpush
