@@ -13,7 +13,7 @@
             <!-- Account 1 -->
             <h3 class="text-lg font-bold mb-4">0108.01001 PPN Masukan</h3>
             <div class="mb-2 text-sm">Periode: 01/07/2024 s/d 12/08/2024</div>
-            <table class="min-w-full table-auto">
+            <table class="table-auto">
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tgl
@@ -102,7 +102,7 @@
         </div>
     </div>
 @endsection
-<html lang="en">
+{{-- <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -113,4 +113,4 @@
 <body class="bg-gray-200 p-4">
     
 </body>
-</html>
+</html> --}}

@@ -2,14 +2,16 @@
 import './bootstrap';
 import 'flowbite';
 
-// Fungsi-fungsi utilitas
-function formatNumber(number) {
-    return new Intl.NumberFormat('id-ID').format(number);
-}
 
-function parseNumber(string) {
-    return parseFloat(string.replace(/\./g, '').replace(',', '.')) || 0;
-}
+// Fungsi-fungsi utilitas
+// function formatNumber(number) {
+//     return new Intl.NumberFormat('id-ID').format(number);
+// }
+
+// function parseNumber(string) {
+//     return parseFloat(string.replace(/\./g, '').replace(',', '.')) || 0;
+// }
+
 
 function formatRupiah(angka) {
     let number_string = angka.toString().replace(/[^,\d]/g, ''),
@@ -216,11 +218,11 @@ document.addEventListener('DOMContentLoaded', function() {
             submenu.classList.remove('active');
         });
     });
-    initializeDateCalculations();
-    initializeTaxCalculation();
-    initializeJenisTagihan();
-    initializeSidebar();
-    initializeCurrencyInput();
+    // initializeDateCalculations();
+    // initializeTaxCalculation();
+    // initializeJenisTagihan();
+    // initializeSidebar();
+    // initializeCurrencyInput();
 
     // Inisialisasi tombol "Tambah Invoice"
     const addInvoiceBtn = document.getElementById('add-invoice-btn');
@@ -267,10 +269,11 @@ window.fetchPajakRates = function(type) {
         });
 }
 // Ekspos fungsi yang perlu diakses secara global
-window.addInvoiceRow = addInvoiceRow;
-window.removeInvoiceRow = removeInvoiceRow;
-window.submitForm = submitForm;
-window.handleEnter = handleEnter;
-window.formatRupiah = formatRupiah;
-window.unformatRupiah = unformatRupiah;
-window.formatCurrency = formatCurrency;
+// window.addInvoiceRow = addInvoiceRow;
+// window.removeInvoiceRow = removeInvoiceRow;
+// window.submitForm = submitForm;
+// window.handleEnter = handleEnter;
+// window.formatRupiah = formatRupiah;
+// window.unformatRupiah = unformatRupiah;
+// window.formatCurrency = formatCurrency;
+
