@@ -7,7 +7,7 @@
         <!-- Year Selection -->
         <div class="flex items-center mb-4">
             <label for="year" class="mr-2 font-semibold text-gray-700">Tahun</label>
-            <select id="year" 
+            <select id="year"
                 class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 @foreach (range(2010, 2032) as $year)
                     <option value="{{ $year }}">{{ $year }}</option>
@@ -59,7 +59,7 @@
 @endsection
 
 @push('script')
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
 
             // Format Rupiah
@@ -184,5 +184,7 @@
                 window.print();
             });
         });
-    </script>
+    </script> --}}
+
+    @vite('resources/js/test.js')
 @endpush

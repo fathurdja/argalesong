@@ -8,7 +8,7 @@
 
     <!-- Tambahkan CSS Anda di sini -->
     {{-- @vite(['resources/css/app.css', 'resources/css/custom.css', 'resources/js/app.js']) --}}
-    @vite(['resources/css/app.css', 'resources/css/custom.css', 'resources/js/app.js', 'resources/js/test.js'])
+    @vite(['resources/css/app.css', 'resources/css/custom.css', 'resources/js/app.js',])
 </head>
 
 <body class=" bg-gray-100 dark:bg-gray-900 w-full h-full">

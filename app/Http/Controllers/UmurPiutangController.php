@@ -24,7 +24,8 @@ class UmurPiutangController extends Controller
                 'x.id',
                 'x.idpelanggan',
                 'customer.idcompany',
-                'customer.name as customer_name', // Nama pelanggan
+                'customer.name as customer_name',
+                'mastercompany.name as company_name', // Nama pelanggan
                 'x.tgltra',
                 'x.no_invoice',
                 'x.tgl_jatuh_tempo',
@@ -58,14 +59,15 @@ class UmurPiutangController extends Controller
     {
         $result = [];
         $today = Carbon::now(); // Tanggal hari ini
-    
+
         foreach ($data as $item) {
-            $companyId = $item->idcompany;
+            $companyid = $item->idcompany;
+            $companyname = $item->company_name;
             $customerId = $item->idpelanggan;
             $customerName = $item->customer_name;
             $invoiceDate = Carbon::parse($item->tgltra); // Gunakan tanggal penerbitan invoice
             $daysPastDue = $invoiceDate->diffInDays($today); // Hitung selisih hari sejak invoice diterbitkan
-    
+
             // Tentukan kategori umur piutang berdasarkan umur dari tanggal penerbitan
             if ($daysPastDue <= 30) {
                 $category = '< 30 days';
@@ -78,18 +80,19 @@ class UmurPiutangController extends Controller
             } else {
                 $category = '> 120 days';
             }
-    
+
             // Jika perusahaan belum ada di array hasil, tambahkan array baru untuknya
-            if (!isset($result[$companyId])) {
-                $result[$companyId] = [
-                    'company_id' => $companyId,
+            if (!isset($result[$companyname])) {
+                $result[$companyname] = [
+                    'company_id' => $companyid,
+                    'company_name' => $companyname,
                     'customers' => []
                 ];
             }
-    
+
             // Jika pelanggan belum ada di dalam perusahaan, tambahkan array baru untuk pelanggan ini
-            if (!isset($result[$companyId]['customers'][$customerId])) {
-                $result[$companyId]['customers'][$customerId] = [
+            if (!isset($result[$companyname]['customers'][$customerId])) {
+                $result[$companyname]['customers'][$customerId] = [
                     'customer_name' => $customerName,
                     '< 30 days' => 0,
                     '> 30 days' => 0,
@@ -100,9 +103,9 @@ class UmurPiutangController extends Controller
                     'invoices' => []
                 ];
             }
-    
+
             // Simpan data invoice untuk pelanggan ini
-            $result[$companyId]['customers'][$customerId]['invoices'][] = [
+            $result[$companyname]['customers'][$customerId]['invoices'][] = [
                 'id' => $item->id,
                 'no_invoice' => $item->no_invoice,
                 'tgltra' => $item->tgltra,
@@ -110,15 +113,16 @@ class UmurPiutangController extends Controller
                 'tagihan' => $item->tagihan,
                 'days_past_due' => $daysPastDue // Sekarang dihitung dari tanggal penerbitan invoice
             ];
-    
+
             // Tambahkan nilai tagihan ke kategori umur piutang pelanggan
-            $result[$companyId]['customers'][$customerId][$category] += $item->tagihan;
-            $result[$companyId]['customers'][$customerId]['total'] += $item->tagihan;
+            $result[$companyname]['customers'][$customerId][$category] += $item->tagihan;
+            $result[$companyname]['customers'][$customerId]['total'] += $item->tagihan;
         }
-    
+
+
         return $result;
     }
-    
+
 
 
     /**

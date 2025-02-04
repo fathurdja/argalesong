@@ -38,7 +38,6 @@ class Sp_bulananController extends Controller
                 'x.urutantagihan',
                 'x.statusPembayaran',
                 'x.jumlahTagihan',
-                'x.diskon',
                 'x.kodepiutang',
                 'x.nominal',
                 'z.nominalbayar',
@@ -65,7 +64,7 @@ class Sp_bulananController extends Controller
                 'saldo_piutang' => $group->sum('tagihan'),
             ];
         });
-
+       
         return response()->json($groupedData->values());
     }
 }
