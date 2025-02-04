@@ -35,7 +35,7 @@
                             <p class="text-lg font-bold text-center">Berlaku Sejak</p>
                             <p>{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }}</p>
                             <div>
-                                <form action="{{ route('masterDataPajak.destroy', $item->id) }}" method="POST"
+                                <form id="formfarm" action="{{ route('masterDataPajak.destroy', $item->id) }}" method="POST"
                                     class="inline"
                                     onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                     @csrf
