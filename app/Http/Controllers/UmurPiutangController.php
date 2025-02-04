@@ -19,9 +19,11 @@ class UmurPiutangController extends Controller
         $query = DB::table('detailpiutang as x')
             ->leftJoin('vtbpiutang as y', 'x.no_invoice', '=', 'y.idpiutang')
             ->leftJoin('customer', 'x.idpelanggan', '=', 'customer.id_Pelanggan') // Join dengan tabel customer untuk nama pelanggan
+            ->leftJoin('mastercompany', 'customer.idcompany', '=', 'mastercompany.company_id') // Join dengan tabel customer untuk nama pelanggan
             ->select(
                 'x.id',
                 'x.idpelanggan',
+                'customer.idcompany',
                 'customer.name as customer_name', // Nama pelanggan
                 'x.tgltra',
                 'x.no_invoice',
@@ -38,10 +40,10 @@ class UmurPiutangController extends Controller
         }
 
         $data = $query->get();
-        // dd($data);
+        //dd($data);
         // Mengelompokkan data berdasarkan nama pelanggan dan kategori umur piutang
         $grouped_data = $this->groupDataByAging($data);
-        // dd($grouped_data);
+        //dd($grouped_data);
         // Menghitung ringkasan total berdasarkan kategori umur piutang
         $totalsByCategory = $this->calculateSummaryTotals($grouped_data);
         // dd($totalsByCategory);
@@ -55,15 +57,16 @@ class UmurPiutangController extends Controller
     private function groupDataByAging($data)
     {
         $result = [];
-        $today = Carbon::now();
-
+        $today = Carbon::now(); // Tanggal hari ini
+    
         foreach ($data as $item) {
+            $companyId = $item->idcompany;
+            $customerId = $item->idpelanggan;
             $customerName = $item->customer_name;
-            $customerId = $item->idpelanggan; // Tambahkan ID pelanggan
-            $dueDate = Carbon::parse($item->tgl_jatuh_tempo);
-            $daysPastDue = $today->diffInDays($dueDate, false); // false agar negatif jika lewat jatuh tempo
-
-            // Tentukan kategori umur piutang
+            $invoiceDate = Carbon::parse($item->tgltra); // Gunakan tanggal penerbitan invoice
+            $daysPastDue = $invoiceDate->diffInDays($today); // Hitung selisih hari sejak invoice diterbitkan
+    
+            // Tentukan kategori umur piutang berdasarkan umur dari tanggal penerbitan
             if ($daysPastDue <= 30) {
                 $category = '< 30 days';
             } elseif ($daysPastDue > 30 && $daysPastDue <= 60) {
@@ -75,10 +78,18 @@ class UmurPiutangController extends Controller
             } else {
                 $category = '> 120 days';
             }
-
-            // Jika pelanggan belum ada di hasil, tambahkan array baru untuknya
-            if (!isset($result[$customerId])) {
-                $result[$customerId] = [
+    
+            // Jika perusahaan belum ada di array hasil, tambahkan array baru untuknya
+            if (!isset($result[$companyId])) {
+                $result[$companyId] = [
+                    'company_id' => $companyId,
+                    'customers' => []
+                ];
+            }
+    
+            // Jika pelanggan belum ada di dalam perusahaan, tambahkan array baru untuk pelanggan ini
+            if (!isset($result[$companyId]['customers'][$customerId])) {
+                $result[$companyId]['customers'][$customerId] = [
                     'customer_name' => $customerName,
                     '< 30 days' => 0,
                     '> 30 days' => 0,
@@ -86,16 +97,28 @@ class UmurPiutangController extends Controller
                     '> 90 days' => 0,
                     '> 120 days' => 0,
                     'total' => 0,
+                    'invoices' => []
                 ];
             }
-
-            // Tambahkan nilai tagihan ke kategori yang sesuai
-            $result[$customerId][$category] += $item->tagihan;
-            $result[$customerId]['total'] += $item->tagihan;
+    
+            // Simpan data invoice untuk pelanggan ini
+            $result[$companyId]['customers'][$customerId]['invoices'][] = [
+                'id' => $item->id,
+                'no_invoice' => $item->no_invoice,
+                'tgltra' => $item->tgltra,
+                'tgl_jatuh_tempo' => $item->tgl_jatuh_tempo,
+                'tagihan' => $item->tagihan,
+                'days_past_due' => $daysPastDue // Sekarang dihitung dari tanggal penerbitan invoice
+            ];
+    
+            // Tambahkan nilai tagihan ke kategori umur piutang pelanggan
+            $result[$companyId]['customers'][$customerId][$category] += $item->tagihan;
+            $result[$companyId]['customers'][$customerId]['total'] += $item->tagihan;
         }
-
+    
         return $result;
     }
+    
 
 
     /**
@@ -112,13 +135,15 @@ class UmurPiutangController extends Controller
             'total' => 0,
         ];
 
-        foreach ($grouped_data as $customerData) {
-            $totals['< 30 days'] += $customerData['< 30 days'];
-            $totals['> 30 days'] += $customerData['> 30 days'];
-            $totals['> 60 days'] += $customerData['> 60 days'];
-            $totals['> 90 days'] += $customerData['> 90 days'];
-            $totals['> 120 days'] += $customerData['> 120 days'];
-            $totals['total'] += $customerData['total'];
+        foreach ($grouped_data as $companyData) {
+            foreach ($companyData['customers'] as $customerData) {
+                $totals['< 30 days'] += $customerData['< 30 days'] ?? 0;
+                $totals['> 30 days'] += $customerData['> 30 days'] ?? 0;
+                $totals['> 60 days'] += $customerData['> 60 days'] ?? 0;
+                $totals['> 90 days'] += $customerData['> 90 days'] ?? 0;
+                $totals['> 120 days'] += $customerData['> 120 days'] ?? 0;
+                $totals['total'] += $customerData['total'] ?? 0;
+            }
         }
 
         return $totals;
