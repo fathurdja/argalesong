@@ -1,33 +1,45 @@
 @extends('layouts.app')
 
+@php
+    $currentYear = date('Y');
+    $currentMonth = date('n');
+    $currentDay = date('j');  
+@endphp
+
 @section('content')
     <div class="bg-white p-4 rounded-lg shadow-lg mt-4 ml-9">
         <h1 class="text-2xl font-bold mb-4">SCHEDULE PIUTANG</h1>
 
-        <!-- Year and Month Selection -->
-        <div class="flex items-center mb-4">
-            <label for="year" class="mr-2 font-semibold text-gray-700">Tahun</label>
-            <select id="year"
-                class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                @foreach (range(2010, 2032) as $year)
-                    <option value="{{ $year }}">{{ $year }}</option>
-                @endforeach
-            </select>
+       <!-- Year and Month Selection -->
+<div class="flex items-center mb-4">
+    <label for="year" class="mr-2 font-semibold text-gray-700">Tahun</label>
+    <select id="year"
+        class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        @foreach (range(2010, 2032) as $year)
+            <option value="{{ $year }}" {{ $year == $currentYear ? 'selected' : '' }}>
+                {{ $year }}
+            </option>
+        @endforeach
+    </select>
 
-            <label for="month" class="ml-4 mr-2 font-semibold text-gray-700">Bulan</label>
-            <select id="month" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                @foreach (['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'] as $key => $month)
-                    <option value="{{ $key + 1 }}">{{ $month }}</option>
-                @endforeach
-            </select>
+    <label for="month" class="ml-4 mr-2 font-semibold text-gray-700">Bulan</label>
+    <select id="month" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        @foreach (['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'] as $key => $month)
+            <option value="{{ $key + 1 }}" {{ ($key + 1) == $currentMonth ? 'selected' : '' }}>
+                {{ $month }}
+            </option>
+        @endforeach
+    </select>
 
-            <label for="day" class="ml-4 mr-2 font-semibold text-gray-700">Hari</label>
-            <select id="day" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                @foreach (range(1, 31) as $day)
-                    <option value="{{ $day }}">{{ $day }}</option>
-                @endforeach
-            </select>
-        </div>
+    <label for="day" class="ml-4 mr-2 font-semibold text-gray-700">Hari</label>
+    <select id="day" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        @foreach (range(1, 31) as $day)
+            <option value="{{ $day }}" {{ $day == $currentDay ? 'selected' : '' }}>
+                {{ $day }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
         <!-- Invoice Table -->
         <div class="bg-white shadow-md rounded-lg p-6">
