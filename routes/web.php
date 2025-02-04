@@ -93,7 +93,7 @@ Route::get('/pp-baru', [pp_baruController::class, 'index'])->name('pp-baru');
 Route::get('/sp-bulanan', [Sp_bulananController::class, 'index'])->name('sp-bulanan');
 Route::get('/sp-harian', [Sp_HarianController::class, 'index'])->name('sp-harian');
 // Route untuk API mendapatkan laporan harian
-Route::get('/api/daily-report', [Sp_HarianController::class, 'getDailyReport']);
+Route::get('/daily-report', [Sp_HarianController::class, 'getDailyReport']);
 
 
 // Route untuk Jatuh Tempo

@@ -15,14 +15,16 @@
             </select>
 
             <label for="month" class="ml-4 mr-2 font-semibold text-gray-700">Bulan</label>
-            <select id="month" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <select id="month"
+                class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 @foreach (['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'] as $key => $month)
                     <option value="{{ $key + 1 }}">{{ $month }}</option>
                 @endforeach
             </select>
 
             <label for="day" class="ml-4 mr-2 font-semibold text-gray-700">Hari</label>
-            <select id="day" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <select id="day"
+                class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 @foreach (range(1, 31) as $day)
                     <option value="{{ $day }}">{{ $day }}</option>
                 @endforeach
@@ -56,7 +58,8 @@
 
         <!-- Print Button -->
         <div class="flex justify-end mt-6">
-            <button id="print-btn" onclick="window.print()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md shadow-sm hover:bg-gray-300">Cetak</button>
+            <button id="print-btn" onclick="window.print()"
+                class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md shadow-sm hover:bg-gray-300">Cetak</button>
         </div>
     </div>
 @endsection
@@ -67,33 +70,54 @@
         document.getElementById('month').addEventListener('change', fetchData);
         document.getElementById('day').addEventListener('change', fetchData);
 
+        // Format Rupiah
+        function formatRupiah(angka) {
+            if (angka === undefined || angka === null || isNaN(angka)) {
+                return 'Rp. 0'; // Atau nilai default lainnya jika angka null atau undefined
+            }
+            // Pastikan angka adalah integer, hilangkan desimal jika ada
+            angka = Math.floor(angka);
+
+            let number_string = angka.toString(),
+                sisa = number_string.length % 3,
+                rupiah = number_string.substr(0, sisa),
+                ribuan = number_string.substr(sisa).match(/\d{3}/g);
+
+            if (ribuan) {
+                let separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            return 'Rp. ' + rupiah;
+        }
+
         function fetchData() {
             const year = document.getElementById('year').value;
             const month = document.getElementById('month').value;
             const day = document.getElementById('day').value;
 
-            fetch(`/api/daily-report?year=${year}&month=${month}&day=${day}`)
-
+            fetch(`/daily-report?year=${year}&month=${month}&day=${day}`)
                 .then(response => response.json())
                 .then(data => {
                     const reportBody = document.getElementById('report-body');
                     reportBody.innerHTML = '';
 
                     if (data.length === 0) {
-                        reportBody.innerHTML = '<tr><td colspan="7" class="text-center px-6 py-3">No data available</td></tr>';
+                        reportBody.innerHTML =
+                            '<tr><td colspan="7" class="text-center px-6 py-3">No data available</td></tr>';
                         return;
                     }
 
                     data.forEach((item, index) => {
                         const row = `<tr>
-                            <td class="px-6 py-3">${index + 1}</td>
-                            <td class="px-6 py-3">${item.kodepiutang}</td>
-                            <td class="px-6 py-3">${item.pelanggan}</td>
-                            <td class="px-6 py-3">${item.jatuh_tempo}</td>
-                            <td class="px-6 py-3 text-right">${item.total_piutang}</td>
-                            <td class="px-6 py-3 text-right">${item.total_pembayaran}</td>
-                            <td class="px-6 py-3 text-right">${item.saldo_piutang}</td>
-                        </tr>`;
+                        <td class="px-6 py-3">${index + 1}</td>
+                        <td class="px-6 py-3">${item.kodepiutang}</td>
+                        <td class="px-6 py-3">${item.pelanggan}</td>
+                        <td class="px-6 py-3">${item.jatuh_tempo}</td>
+                        <td class="px-6 py-3 text-right">${formatRupiah(item.total_piutang)}</td>
+                        <td class="px-6 py-3 text-right">${formatRupiah(item.total_pembayaran)}</td>
+                        <td class="px-6 py-3 text-right">${formatRupiah(item.saldo_piutang)}</td>
+                    </tr>`;
                         reportBody.innerHTML += row;
                     });
                 });
