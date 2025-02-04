@@ -1,5 +1,7 @@
 // nama komentar mengikuti nama file blade views
-
+console.log("hello world");
+console.log("hello world");
+console.log("hello world");
 // formBaru
 function formatNPWP(input) {
     // Hapus semua karakter yang bukan angka
@@ -179,7 +181,7 @@ function loadInvoicesByCustomer(customerId) {
 <td class="px-3 py-2">
 <input type="text"
 	class="piutang-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-	value="${formatRupiah(parseFloat(invoice.tagihan))}" readonly>
+	value="${formatRupiahPembayaran(parseFloat(invoice.tagihan))}" readonly>
 <input type="hidden" name="invoices[${index}][piutang_belum_dibayar]" class="piutang-value" value="${parseFloat(
                     invoice.tagihan
                 )}">
@@ -187,7 +189,7 @@ function loadInvoicesByCustomer(customerId) {
 <td class="px-3 py-2">
 <input type="text"
 class="diskon-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-value="${formatRupiah(parseFloat(invoice.diskon))}"
+value="${formatRupiahPembayaran(parseFloat(invoice.diskon))}"
 onchange="updateRowTotal(this)"
 onfocus="removeFormatting(this)"
 onblur="applyFormatting(this)">
@@ -198,7 +200,7 @@ onblur="applyFormatting(this)">
 <td class="px-3 py-2">
 <input type="text"
 class="denda-input border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-value="${formatRupiah(parseFloat(invoice.denda))}"
+value="${formatRupiahPembayaran(parseFloat(invoice.denda))}"
 onchange="updateRowTotal(this)"
 onfocus="removeFormatting(this)"
 onblur="applyFormatting(this)">
@@ -209,7 +211,7 @@ onblur="applyFormatting(this)">
 <td class="px-3 py-2">
 <input type="text"
 	class="total-display border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-	value="${formatRupiah(parseFloat(invoice.total))}" readonly>
+	value="${formatRupiahPembayaran(parseFloat(invoice.total))}" readonly>
 <input type="hidden" name="invoices[${index}][total]" class="total-value" value="${parseFloat(
                     invoice.total
                 )}">
@@ -250,7 +252,7 @@ function removeFormatting(input) {
 
 function applyFormatting(input) {
     const value = parseInt(input.value) || 0;
-    input.value = formatRupiah(value);
+    input.value = formatRupiahPembayaran(value);
     const row = input.closest("tr");
     row.querySelector(".piutang-value").value = value;
     updatePenaltyAndDiscount(input, input.closest("tr").rowIndex);
@@ -272,7 +274,8 @@ function updateRowTotal(input) {
 
     const newTotal = piutangValue - diskonValue + dendaValue;
 
-    row.querySelector(".total-display").value = formatRupiah(newTotal);
+    row.querySelector(".total-display").value =
+        formatRupiahPembayaran(newTotal);
     row.querySelector(".total-value").value = newTotal;
 
     updateTotalPiutang();
@@ -287,7 +290,7 @@ function updateTotalPiutang() {
     document.querySelector('input[name="total_piutang"]').value = total;
 }
 
-function formatRupiah(number) {
+function formatRupiahPembayaran(number) {
     const roundedNumber = Math.floor(number);
     return `Rp ${roundedNumber
         .toString()
@@ -307,17 +310,6 @@ document.addEventListener("input", function (event) {
         updateRowTotal(event.target);
     }
 });
-
-function formatRupiah(number) {
-    const roundedNumber = Math.floor(number);
-    return `Rp ${roundedNumber
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
-}
-
-function unformatRupiah(rupiahString) {
-    return parseInt(rupiahString.replace(/[^0-9]/g, ""), 10) || 0;
-}
 
 function reindexInvoiceInputs() {
     const rows = document.querySelectorAll(".invoice-row");
@@ -401,14 +393,14 @@ document
 // Panggil fungsi ini saat halaman dimuat untuk inisialisasi awal
 document.addEventListener("DOMContentLoaded", updateCustomerDropdown);
 
-function formatRupiah(value) {
+function formatRupiahAfiliasi(value) {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
 function formatDPP(input) {
     let value = input.value.replace(/\./g, ""); // Remove existing dots for reformatting
     if (!isNaN(value) && value !== "") {
-        input.value = formatRupiah(value); // Apply Rupiah format
+        input.value = formatRupiahAfiliasi(value); // Apply Rupiah format
     } else {
         input.value = ""; // Clear if not a valid number
     }
@@ -427,16 +419,16 @@ function calculatePiutang() {
     const pphValue = (dppInput * pphRate) / 100;
 
     // Set formatted values for PPN and PPh
-    document.getElementById("ppn_value").value = formatRupiah(
+    document.getElementById("ppn_value").value = formatRupiahAfiliasi(
         ppnValue.toFixed(0)
     );
-    document.getElementById("pph_value").value = formatRupiah(
+    document.getElementById("pph_value").value = formatRupiahAfiliasi(
         pphValue.toFixed(0)
     );
 
     // Calculate total piutang
     const totalPiutang = dppInput + ppnValue - pphValue;
-    document.getElementById("total_piutang").value = formatRupiah(
+    document.getElementById("total_piutang").value = formatRupiahAfiliasi(
         totalPiutang.toFixed(0)
     );
 }
@@ -489,7 +481,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Bulanan
 document.addEventListener("DOMContentLoaded", function () {
     // Format Rupiah
-    function formatRupiah(angka) {
+    function formatRupiahAfiliasi(angka) {
         if (angka === undefined || angka === null || isNaN(angka)) {
             return "Rp. 0"; // Atau nilai default lainnya jika angka null atau undefined
         }
@@ -544,13 +536,13 @@ document.addEventListener("DOMContentLoaded", function () {
 	<td class="px-6 py-4 whitespace-nowrap">${item.id_pelanggan}</td>
 	<td class="px-6 py-4 whitespace-nowrap">${item.pelanggan}</td>
 	<td class="px-6 py-4 whitespace-nowrap">${item.jatuh_tempo}</td>
-	<td class="px-6 py-4 whitespace-nowrap text-right">${formatRupiah(
+	<td class="px-6 py-4 whitespace-nowrap text-right">${formatRupiahAfiliasi(
         item.total_piutang
     )}</td>
-	<td class="px-6 py-4 whitespace-nowrap text-right">${formatRupiah(
+	<td class="px-6 py-4 whitespace-nowrap text-right">${formatRupiahAfiliasi(
         pembayaran
     )}</td>
-  <td class="px-6 py-4 whitespace-nowrap text-right">${formatRupiah(
+  <td class="px-6 py-4 whitespace-nowrap text-right">${formatRupiahAfiliasi(
       item.saldo_piutang < 10 ? 0 : item.saldo_piutang
   )}</td>
 
@@ -562,7 +554,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     tbody.innerHTML += `
 			<tr>
 				<td colspan="6" class="px-6 py-4 whitespace-nowrap text-right font-bold">Total</td>
-				<td class="px-6 py-4 whitespace-nowrap text-right font-bold">${formatRupiah(
+				<td class="px-6 py-4 whitespace-nowrap text-right font-bold">${formatRupiahAfiliasi(
                     totalSaldoPiutang
                 )}</td>
 			</tr>
