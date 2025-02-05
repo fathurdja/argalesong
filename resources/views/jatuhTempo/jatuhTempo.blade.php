@@ -25,57 +25,59 @@
             </div>
         </div>
 
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Invoice
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kode
-                        Perusahaan</th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama
-                        Pelanggan</th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tgl Invoice
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tgl Jatuh
-                        Tempo</th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Piutang Belum
-                        Dibayar</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">INV024255</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PRS348</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PT Fast Food Indonesia</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">03/02/2023</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">02/03/2023</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">23,000,000</td>
-                </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">INV024256</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PRS500</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PT Tiga Dua Delapan</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15/02/2023</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">14/03/2023</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">50,000,000</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="6" class="px-6 py-4 text-right font-bold text-gray-700">Total</td>
-                    <td class="px-6 py-4 font-bold text-gray-700">73,000,000</td>
-                </tr>
-            </tfoot>
-        </table>
+        <div class="min-w-full overflow-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Invoice
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kode
+                            Perusahaan</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama
+                            Pelanggan</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tgl Invoice
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tgl Jatuh
+                            Tempo</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Piutang Belum
+                            Dibayar</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">INV024255</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PRS348</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PT Fast Food Indonesia</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">03/02/2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">02/03/2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">23,000,000</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">INV024256</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PRS500</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PT Tiga Dua Delapan</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15/02/2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">14/03/2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">50,000,000</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6" class="px-6 py-4 text-right font-bold text-gray-700">Total</td>
+                        <td class="px-6 py-4 font-bold text-gray-700">73,000,000</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
 @endsection

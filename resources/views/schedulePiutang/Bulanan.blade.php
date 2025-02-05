@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto mt-4 p-4 rounded-lg bg-white ml-11">
+    <div class="container mx-auto mt-4 p-4 rounded-lg bg-white ml-10">
         <h1 class="text-2xl font-bold mb-4">SCHEDULE PIUTANG</h1>
 
         <!-- Year Selection -->
@@ -16,7 +16,7 @@
         </div>
 
         <!-- Month Tabs -->
-        <div class="flex justify-between mb-4 border-b-2 border-gray-200">
+        <div class="flex justify-between mb-4 border-b-2 border-gray-200 min-w-full overflow-auto">
             @foreach (['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'] as $key => $month)
                 <div id="month-{{ $key + 1 }}" class="py-2 px-4 cursor-pointer text-gray-700 hover:text-black">
                     {{ $month }}
@@ -25,7 +25,7 @@
         </div>
 
         <!-- Monthly Report Table -->
-        <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="bg-white shadow-md rounded-lg p-6 min-w-full overflow-auto">
             <table class="min-w-full table-auto">
                 <thead class="bg-gray-50">
                     <tr>

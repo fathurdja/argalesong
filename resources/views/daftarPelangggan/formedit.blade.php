@@ -5,7 +5,7 @@
 
 
         <!-- Bagian Pencarian dan Tombol Baru -->
-        <div class="flex justify-between items-center mb-4">
+        <div class="flex justify-between items-center mb-4 ">
 
             <form id="filterForm" action="{{ route('customer.index') }}" method="GET" class="w-full max-w-md flex space-x-4">
                 <!-- Input untuk pencarian -->
@@ -41,9 +41,12 @@
             <!-- Informasi Pelanggan -->
             <div class="bg-white border border-gray-400 p-4 rounded-md">
                 <!-- Bagian Atas: Kode dan Nama Perusahaan -->
-                <div class="flex justify-between items-center border-b border-gray-400 pb-2 mb-2">
-                    <h2 class="text-xl font-bold">{{ $customer->id_Pelanggan }}</h2>
-                    <h2 class="text-xl font-bold">{{ $customer->name }}</h2>
+                <div class="flex justify-between items-center border-b border-gray-400 gap-4 ">
+                    <h2 class="text-xl font-bold ">{{ $customer->id_Pelanggan }}</h2>
+                    <h2 class="text-xl font-bold  bg-slate-900 ">{{ $customer->name }}</h2>
+                {{-- <div class="flex justify-between items-center border-b border-gray-400 gap-4 ">
+                    <h2 class="text-xl font-bold md:text-md">{{ $customer->id_Pelanggan }}</h2>
+                    <h2 class="text-xl font-bold md:text-md bg-slate-900 ">{{ $customer->name }}</h2> --}}
                     <div class="flex space-x-2">
                         <a href="{{ route('customer.edit', $customer->id) }}"><button
                                 class="bg-green-700 text-black font-bold py-1 px-3 rounded-md">Edit Data</button></a>

@@ -50,74 +50,76 @@
         <!-- Table Section -->
         <div class="mt-6">
             <h2 class="text-lg font-semibold mb-4">Juli</h2>
-            <table class="min-w-full border-collapse border border-gray-300">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th scope="col"
-                            class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            No</th>
-                        <th scope="col"
-                            class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Tgl Pengajuan Pemutihan</th>
-                        <th scope="col"
-                            class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Nama Pelanggan</th>
-                        <th scope="col"
-                            class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            No Invoice</th>
-                        <th scope="col"
-                            class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Tgl Invoice</th>
-                        <th scope="col"
-                            class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Nominal Pemutihan</th>
-                        <th scope="col"
-                            class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Alasan Pemutihan</th>
-                        <th scope="col"
-                            class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Dokumen Pendukung</th>
-                        <th scope="col"
-                            class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Status Pengajuan</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white">
-                    <tr>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">1</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">01/07/2024</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">PT XXX</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">INV0024</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">23/07/2022</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">Rp12,000,000</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">.....</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">memo</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">Release</td>
-                    </tr>
-                    <tr>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">2</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">13/07/2024</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">PT XXX</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">INV1234</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">02/07/2022</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">Rp50,000,000</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">.....</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">memo</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">Release</td>
-                    </tr>
-                    <tr>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">3</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">20/07/2024</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">PT XXX</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">INV0044</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">01/07/2023</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">Rp5,000,000</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">.....</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">memo</td>
-                        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">Release</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="min-w-full overflow-auto">
+                <table class="min-w-full border-collapse border border-gray-300">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col"
+                                class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                No</th>
+                            <th scope="col"
+                                class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Tgl Pengajuan Pemutihan</th>
+                            <th scope="col"
+                                class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Nama Pelanggan</th>
+                            <th scope="col"
+                                class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                No Invoice</th>
+                            <th scope="col"
+                                class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Tgl Invoice</th>
+                            <th scope="col"
+                                class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Nominal Pemutihan</th>
+                            <th scope="col"
+                                class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Alasan Pemutihan</th>
+                            <th scope="col"
+                                class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Dokumen Pendukung</th>
+                            <th scope="col"
+                                class="border border-gray-300 px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Status Pengajuan</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">1</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">01/07/2024</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">PT XXX</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">INV0024</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">23/07/2022</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">Rp12,000,000</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">.....</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">memo</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">Release</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">2</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">13/07/2024</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">PT XXX</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">INV1234</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">02/07/2022</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">Rp50,000,000</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">.....</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">memo</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">Release</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">3</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">20/07/2024</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">PT XXX</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">INV0044</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">01/07/2023</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">Rp5,000,000</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">.....</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">memo</td>
+                            <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">Release</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection

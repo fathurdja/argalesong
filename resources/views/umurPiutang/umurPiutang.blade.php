@@ -17,74 +17,76 @@
             @if (empty($grouped_data) || count($grouped_data) === 0)
                 <p class="text-gray-500">No data was found for this search.</p>
             @else
-                <table class="min-w-full table-auto border-collapse border border-gray-300">
-                    <thead class="bg-gray-50">
-                        <tr class="border border-gray-300">
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kode
-                            </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama
-                                Pelanggan</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                < 30 Hari</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">> 30
-                                Hari</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">> 60
-                                Hari</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">> 90
-                                Hari</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">>
-                                120 Hari</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Total</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @php $totalKeseluruhan = 0; @endphp
-                        @foreach ($grouped_data as $companyId => $companyData)
-                            <!-- Nama Perusahaan -->
-                            <tr class="bg-gray-100 font-bold">
-                                <td colspan="8" class="px-6 py-3 text-left text-sm uppercase">{{ $companyId }}</td>
+                <div class="min-w-full overflow-x-auto">
+                    <table class="min-w-full table-auto border-collapse border border-gray-300 ">
+                        <thead class="bg-gray-50">
+                            <tr class="border border-gray-300 ">
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kode
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama
+                                    Pelanggan</th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    < 30 Hari</th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">> 30
+                                    Hari</th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">> 60
+                                    Hari</th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">> 90
+                                    Hari</th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">>
+                                    120 Hari</th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Total</th>
                             </tr>
-                            @php $subtotal = 0; @endphp
-
-                            @foreach ($companyData['customers'] as $customerId => $agingData)
-                                <tr>
-                                    <td class="px-6 py-4 text-sm text-gray-500">{{ $customerId }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">{{ $agingData['customer_name'] }}</td>
-                                    <td class="px-6 py-4 text-right text-gray-900">
-                                        {{ number_format($agingData['< 30 days'] ?? 0, 0, ',', '.') }}</td>
-                                    <td class="px-6 py-4 text-right text-gray-900">
-                                        {{ number_format($agingData['> 30 days'] ?? 0, 0, ',', '.') }}</td>
-                                    <td class="px-6 py-4 text-right text-gray-900">
-                                        {{ number_format($agingData['> 60 days'] ?? 0, 0, ',', '.') }}</td>
-                                    <td class="px-6 py-4 text-right text-gray-900">
-                                        {{ number_format($agingData['> 90 days'] ?? 0, 0, ',', '.') }}</td>
-                                    <td class="px-6 py-4 text-right text-gray-900">
-                                        {{ number_format($agingData['> 120 days'] ?? 0, 0, ',', '.') }}</td>
-                                    <td class="px-6 py-4 text-right text-gray-900 font-bold">
-                                        {{ number_format($agingData['total'] ?? 0, 0, ',', '.') }}</td>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @php $totalKeseluruhan = 0; @endphp
+                            @foreach ($grouped_data as $companyId => $companyData)
+                                <!-- Nama Perusahaan -->
+                                <tr class="bg-gray-100 font-bold">
+                                    <td colspan="8" class="px-6 py-3 text-left text-sm uppercase">{{ $companyId }}</td>
                                 </tr>
-                                @php $subtotal += $agingData['total']; @endphp
+                                @php $subtotal = 0; @endphp
+    
+                                @foreach ($companyData['customers'] as $customerId => $agingData)
+                                    <tr>
+                                        <td class="px-6 py-4 text-sm text-gray-500">{{ $customerId }}</td>
+                                        <td class="px-6 py-4 text-sm text-gray-900">{{ $agingData['customer_name'] }}</td>
+                                        <td class="px-6 py-4 text-right text-gray-900">
+                                            {{ number_format($agingData['< 30 days'] ?? 0, 0, ',', '.') }}</td>
+                                        <td class="px-6 py-4 text-right text-gray-900">
+                                            {{ number_format($agingData['> 30 days'] ?? 0, 0, ',', '.') }}</td>
+                                        <td class="px-6 py-4 text-right text-gray-900">
+                                            {{ number_format($agingData['> 60 days'] ?? 0, 0, ',', '.') }}</td>
+                                        <td class="px-6 py-4 text-right text-gray-900">
+                                            {{ number_format($agingData['> 90 days'] ?? 0, 0, ',', '.') }}</td>
+                                        <td class="px-6 py-4 text-right text-gray-900">
+                                            {{ number_format($agingData['> 120 days'] ?? 0, 0, ',', '.') }}</td>
+                                        <td class="px-6 py-4 text-right text-gray-900 font-bold">
+                                            {{ number_format($agingData['total'] ?? 0, 0, ',', '.') }}</td>
+                                    </tr>
+                                    @php $subtotal += $agingData['total']; @endphp
+                                @endforeach
+    
+                                <!-- Subtotal Perusahaan -->
+                                <tr class="font-bold bg-gray-100">
+                                    <td colspan="7" class="px-6 py-4 text-right">Subtotal</td>
+                                    <td class="px-6 py-4 text-right">{{ number_format($subtotal, 0, ',', '.') }}</td>
+                                </tr>
+    
+                                @php $totalKeseluruhan += $subtotal; @endphp
                             @endforeach
-
-                            <!-- Subtotal Perusahaan -->
-                            <tr class="font-bold bg-gray-100">
-                                <td colspan="7" class="px-6 py-4 text-right">Subtotal</td>
-                                <td class="px-6 py-4 text-right">{{ number_format($subtotal, 0, ',', '.') }}</td>
+                        </tbody>
+    
+                        <!-- Total Seluruhnya -->
+                        <tfoot>
+                            <tr class="font-bold bg-gray-200">
+                                <td colspan="7" class="px-6 py-4 text-right">Total Seluruhnya</td>
+                                <td class="px-6 py-4 text-right">{{ number_format($totalKeseluruhan, 0, ',', '.') }}</td>
                             </tr>
-
-                            @php $totalKeseluruhan += $subtotal; @endphp
-                        @endforeach
-                    </tbody>
-
-                    <!-- Total Seluruhnya -->
-                    <tfoot>
-                        <tr class="font-bold bg-gray-200">
-                            <td colspan="7" class="px-6 py-4 text-right">Total Seluruhnya</td>
-                            <td class="px-6 py-4 text-right">{{ number_format($totalKeseluruhan, 0, ',', '.') }}</td>
-                        </tr>
-                    </tfoot>
-                </table>
+                        </tfoot>
+                    </table>
+                </div>
 
                 <!-- Action Buttons -->
                 <div class="flex justify-between mt-6">

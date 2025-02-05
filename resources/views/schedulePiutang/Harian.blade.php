@@ -11,7 +11,7 @@
     <h1 class="text-2xl font-bold mb-4">SCHEDULE PIUTANG</h1>
 
     <!-- Year and Month Selection -->
-    <div class="flex items-center mb-4">
+    <div class="flex items-center mb-4 md:w-max-screen">
         <label for="year" class="mr-2 font-semibold text-gray-700">Tahun</label>
         <select id="year" 
             class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
@@ -24,7 +24,7 @@
 
         <label for="month" class="ml-4 mr-2 font-semibold text-gray-700">Bulan</label>
         <select id="month"
-            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            class="border-gray-300 sm:overflow-scroll rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             @foreach (['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'] as $key => $month)
                 <option value="{{ $key + 1 }}" {{ ($key + 1) == $currentMonth ? 'selected' : '' }}>
                     {{ $month }}
@@ -44,7 +44,7 @@
     </div>
 
         <!-- Invoice Table -->
-        <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="bg-white shadow-md rounded-lg p-6 overflow-auto">
             <table class="min-w-full table-auto">
                 <thead class="bg-gray-50">
                     <tr>
