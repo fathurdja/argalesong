@@ -33,19 +33,25 @@ class Sp_HarianController extends Controller
                 'x.tgl_jatuh_tempo',
                 'z.nominalbayar as total_pembayaran',
                 'x.nominal as total_piutang',
-                'z.sisaPiutang as saldo_piutang'
+                'y.xpiutang as saldo_piutang',
+                DB::raw('CASE WHEN y.xpiutang <= 10 THEN 0 ELSE y.xpiutang END AS tagihan')
             )
             ->whereYear('x.tgltra', $year)
             ->whereMonth('x.tgltra', $month)
             ->whereDay('x.tgltra', $day)
             ->get();
 
-        // If there is no data, return an empty response
+        // Filter out items where tagihan (xpiutang) is 0
+        $piutangData = $piutangData->filter(function ($item) {
+            return $item->tagihan > 0; // Only keep items where tagihan is greater than 0
+        });
+
+        // If there is no data after filtering, return an empty response
         if ($piutangData->isEmpty()) {
             return response()->json([]);
         }
 
-        // Organize data by customer (group by idpelanggan)
+        // Organize data by customer (group by customer_name)
         $groupedData = $piutangData->groupBy('customer_name')->map(function ($group) {
             $firstItem = $group->first();
             return [

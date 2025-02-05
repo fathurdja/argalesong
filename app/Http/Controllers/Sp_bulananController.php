@@ -50,6 +50,9 @@ class Sp_bulananController extends Controller
             ->whereMonth('x.tgltra', $month)
             ->get();
 
+        $piutangData = $piutangData->filter(function ($item) {
+            return $item->tagihan > 0; // Only keep items where tagihan is greater than 0
+        });
         $groupedData = $piutangData->groupBy('idpelanggan')->map(function ($group) {
             // Access properties using object notation
             $firstItem = $group->first();
@@ -64,7 +67,7 @@ class Sp_bulananController extends Controller
                 'saldo_piutang' => $group->sum('tagihan'),
             ];
         });
-       
+
         return response()->json($groupedData->values());
     }
 }
