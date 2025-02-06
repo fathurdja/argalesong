@@ -51,8 +51,8 @@
 
                     </tbody>
                 </table>
-                <button class="bg-red-600 rounded-md shadow mt-5 px-7">
-                    <p class=" text-white">Konfirmasi!</p>
+                <button class="active:scale-[.95] hover:bg-white hover:text-[#] transition-all text-white border-2 bg-red-700 hover:text-red-700 border-red-700 font-bold py-1 px-4 rounded-md shadow-sm mt-4">
+                    Konfirmasi
                 </button>
 
             </div>

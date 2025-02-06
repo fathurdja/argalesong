@@ -23,43 +23,43 @@
             <form action="{{ route('login') }}" method="POST">
                 @csrf
                 <div class="mt-3">
-                    <label for="user" class="block text-base mb-2">email</label>
-                    <input type="text" id="user" name="email" value=""
-                        class="border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 "
-                        placeholder="Enter email" />
+                    <label for="user" class="block text-base mb-2">Email</label>
+                    <input  type="text" id="user" name="email" value=""
+                        class="border rounded-sm w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 "
+                        placeholder="Masukkan email" />
                     @error('email')
                         <span class="text-red-600 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="mt-3">
-                    <label for="password" class="block text-base mb-2">Password</label>
-                    <input type="password" id="password" name="password"
-                        class="border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600"
-                        placeholder="Enter Password..." />
+                    <label for="password" class="block text-base mb-2">Kata sandi</label>
+                    <input  type="password" id="password" name="password"
+                        class="border w-full rounded-sm text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600"
+                        placeholder="Masukkan kata sandi" />
                     @error('password')
                         <span class="text-red-600 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="mt-3 flex justify-between items-center">
                     <div>
-                        <input type="checkbox" name="remember">
-                        <label>Remember Me</label>
+                        <input id="remember" type="checkbox" name="remember" class="focus:ring-0 focus:outline-none rounded-full">
+                        <label for="remember">Ingat saya</label>
                     </div>
                     <div>
-                        <a href="#" class="text-indigo-800 font-semibold">Forgot Password?</a>
+                        <a href="#" class="text-indigo-800 font-semibold">Lupa kata sandi?</a>
                     </div>
                 </div>
                 <div class="mt-5 bg-gray-800">
                     <button type="submit"
                         class="border-2   text-white py-1 w-full  hover:text-indigo-700 font-semibold">
                         <i class="fa-solid fa-right-to-bracket"></i>
-                        &nbsp;&nbsp;Login
+                        &nbsp;&nbsp;Masuk
                     </button>
                 </div>
                 <div class="text-center mt-3 bg-gray-800 p-1 border-2 ">
                     <a href="{{ route('register') }}"
                         class="text-white hover:text-blue-900 hover:underline  w-full  font-semibold">Daftar
-                        Akun</a>
+                        akun</a>
                 </div>
                 @if ($errors->has('email'))
                     <div class="mt-3 text-red-600 text-sm">

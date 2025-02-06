@@ -53,7 +53,7 @@
                 <!-- Tombol Cari -->
                 <div class="mt-6 text-right">
                     <button type="submit"
-                        class="px-6 py-2 bg-blue-500 text-white font-medium rounded-md shadow-sm hover:bg-blue-600 focus:ring focus:ring-blue-300">
+                        class="active:scale-[.95] hover:bg-white hover:text-[#3D5AD0] transition-all font-medium text-white border-2 border-[#3D5AD0] rounded-md shadow-sm px-4 py-1 bg-[#3D5AD0]">
                         Cari
                     </button>
                 </div>

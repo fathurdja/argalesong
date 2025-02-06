@@ -91,8 +91,8 @@
                 <!-- Action Buttons -->
                 <div class="flex justify-between mt-6">
                     <button
-                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md shadow-sm hover:bg-gray-300">Print</button>
-                    <button class="px-4 py-2 bg-green-500 text-white rounded-md shadow-sm hover:bg-green-600">Save to
+                        class="active:scale-[.95] hover:text-white hover:bg-[#312D2D] bg-white font-medium transition-all border-2 border-[#312D2D] rounded-md shadow-sm px-4 py-1 hover:bg-[#312D2D]">Print</button>
+                    <button class="active:scale-[.95] hover:bg-white hover:text-[#0F8114] transition-all text-white font-medium border-2 border-[#0F8114] rounded-md shadow-sm px-4 py-1 bg-[#0F8114]">Save to
                         Excel</button>
                 </div>
             @endif

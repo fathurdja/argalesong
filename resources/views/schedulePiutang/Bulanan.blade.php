@@ -53,7 +53,7 @@
         <!-- Print Button -->
         <div class="flex justify-end my-5">
             <button id="print-btn"
-                class="px-4 py-2 bg-green-600 text-white rounded-md shadow-sm hover:bg-gray-300">Cetak</button>
+                class="active:scale-[.95] hover:bg-white hover:text-[#0F8114] transition-all text-white font-medium border-2 border-[#0F8114] rounded-md shadow-sm px-4 py-1 bg-[#0F8114]">Cetak</button>
         </div>
     </div>
 @endsection

@@ -117,7 +117,7 @@
                 <div class="flex justify-end space-x-2">
 
                     <button type="button" onclick="submitForm('store')"
-                        class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Bayar</button>
+                        class="active:scale-[.95] hover:bg-white hover:text-[#0F8114] transition-all text-white font-medium border-2 border-[#0F8114] rounded-md shadow-sm px-4 py-1 bg-[#0F8114]">Bayar</button>
                 </div>
             </form>
         </div>
