@@ -438,7 +438,7 @@
 
                     <div class="mt-4">
                         <label for="dpp" class="block text-sm font-medium text-gray-700">DPP</label>
-                        <input type="text" name="dpp" id="dpp"
+                        <input type="number" name="dpp" id="dpp"
                             class="mt-1 block w-full text-right p-3 border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                             value="0">
                     </div>
@@ -446,13 +446,13 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                         <div>
                             <label for="ppn_value" class="block text-sm font-medium text-gray-700">PPN</label>
-                            <input type="text" name="ppn_value" id="ppn_value"
+                            <input type="number" name="ppn_value" id="ppn_value"
                                 class="mt-1 block w-full text-right border-gray-300 bg-gray-100 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                                 readonly>
                         </div>
                         <div>
                             <label for="pph_value" class="block text-sm font-medium text-gray-700">PPh</label>
-                            <input type="text" name="pph_value" id="pph_value"
+                            <input type="number" name="pph_value" id="pph_value"
                                 class="mt-1 block w-full text-right border-gray-300 bg-gray-100 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                                 readonly>
                         </div>
