@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="bg-gray-100 p-6 mt-7 ml-9">
+    <div class="bg-gray-100 p-6">
         <!-- Form Edit Pelanggan -->
         <form action="{{ route('customer.update', $customer->id) }}" method="POST">
             @csrf

@@ -145,13 +145,13 @@
                     </table>
                 </div> --}}
                 <div class="overflow-hidden md:overflow-x-auto">
-                    <table class="min-w-full table-fixed border-collapse border border-gray-400 text-[10px] sm:text-xs md:text-m">
+                    <table class="min-w-full table-fixed border-collapse border border-gray-400 text-[10px] sm:text-xs md:text-[15px]">
                         <thead>
                             <tr class="bg-gray-200">
-                                <th class="border border-gray-400 px-1 py-2 w-16">ID</th>
-                                <th class="border border-gray-400 px-1 py-2 w-28">Jenis Piutang</th>
-                                <th class="border border-gray-400 px-1 py-2 w-28">Tanggal Transaksi</th>
-                                <th class="border border-gray-400 px-1 py-2 w-12 text-center sm:hidden">Aksi</th>
+                                <th class="border border-gray-400 px-1 py-2 ">ID</th>
+                                <th class="border border-gray-400 px-1 py-2 ">Jenis Piutang</th>
+                                <th class="border border-gray-400 px-1 py-2 ">Tanggal Transaksi</th>
+                                <th class="border border-gray-400 px-1 py-2  text-center sm:hidden">Aksi</th>
                                 <th class="border border-gray-400 px-1 py-2 hidden sm:table-cell">Jatuh Tempo</th>
                                 <th class="border border-gray-400 px-1 py-2 hidden sm:table-cell">Tipe Pelanggan</th>
                                 <th class="border border-gray-400 px-1 py-2 hidden sm:table-cell">Nama Pelanggan</th>

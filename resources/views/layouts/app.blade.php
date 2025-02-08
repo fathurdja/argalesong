@@ -11,10 +11,10 @@
 
 <body class="bg-gray-200 min-h-screen flex flex-col">
     @include('partials.navbar')
-    <div class="flex flex-1 overflow-hidden">
+    <div class="flex flex-1 ">
         @include('partials.sidebar')
-        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 px-2 md:px-20 md:container  ">
-            <div class=" flex items-center justify-center">
+        <main class="flex justify-start items-center flex-col bg-gray-200 px-2 md:px-20 w-full max-w-full overflow-x-hidden">
+            <div class="w-full max-w-full flex items-center justify-center">
                 @yield('content')
             </div>
         </main>

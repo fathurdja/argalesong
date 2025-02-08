@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-    <div class="p-6 bg-white rounded-lg shadow-md mt-6 ml-12">
-        <div class="flex justify-start items-center mb-4 space-x-4">
+    <div class="sm:p-6 bg-white rounded-lg shadow-md mt-6 w-full">
+        <div class="flex justify-start mb-4 w-full flex-col sm:flex-row gap-2 sm:gap-10 px-2 py-1 sm:p-4">
             <div class="flex items-center">
                 <label for="tahun" class="mr-2 text-sm font-medium text-gray-700">Tahun</label>
                 <select id="tahun" name="tahun"

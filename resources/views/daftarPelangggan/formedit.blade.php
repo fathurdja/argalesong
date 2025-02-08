@@ -1,159 +1,117 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="bg-gray-100 p-6 mt-7 ml-9">
+    
+        <div class="bg-gray-100 w-full px-2 py-1">
 
-
-        <!-- Bagian Pencarian dan Tombol Baru -->
-        <div class="flex justify-between items-center mb-4 ">
-
-            <form id="filterForm" action="{{ route('customer.index') }}" method="GET" class="w-full max-w-md flex space-x-4">
-                <!-- Input untuk pencarian -->
-                <div class="ml-9">
-                    <!-- Dropdown untuk filter perusahaan -->
-                    <label for="idcompany" class="mr-2 text-gray-700 font-bold">Pilih Group:</label>
-                    <input list="groupList" name="idcompany" id="idcompany"
-                        class="border border-gray-300 p-2 rounded-md w-96" placeholder="Search group..."
-                        value="{{ request('idcompany') }}">
-                    <datalist id="groupList">
-                        <option value="">-- Semua Group --</option>
-                        @foreach ($perusahaan as $group)
-                            <option value="{{ $group->company_id }}">
-                                {{ $group->name }}
-                            </option>
-                        @endforeach
-                    </datalist>
-                </div>
-
-                <!-- Tombol "Cari" (tetap ada untuk pencarian teks manual) -->
-
-            </form>
-
-
-            <a href="{{ route('customer.create') }}">
-                <button class="ml-4 bg-green-500 text-white font-bold py-3 px-9 rounded-md">Baru</button>
-            </a>
-        </div>
-        <div>
-            <h1 class="text-3xl py-3 font-semibold">DAFTAR PELANGGAN</h1>
-        </div>
-        @if (isset($customer))
-            <!-- Informasi Pelanggan -->
-            <div class="bg-white border border-gray-400 p-4 rounded-md">
-                <!-- Bagian Atas: Kode dan Nama Perusahaan -->
-                <div class="flex justify-between items-center border-b border-gray-400 gap-4 ">
-                    <h2 class="text-xl font-bold ">{{ $customer->id_Pelanggan }}</h2>
-                    <h2 class="text-xl font-bold  bg-slate-900 ">{{ $customer->name }}</h2>
-                {{-- <div class="flex justify-between items-center border-b border-gray-400 gap-4 ">
-                    <h2 class="text-xl font-bold md:text-md">{{ $customer->id_Pelanggan }}</h2>
-                    <h2 class="text-xl font-bold md:text-md bg-slate-900 ">{{ $customer->name }}</h2> --}}
-                    <div class="flex space-x-2">
-                        <a href="{{ route('customer.edit', $customer->id) }}"><button
-                                class="bg-green-700 text-black font-bold py-1 px-3 rounded-md">Edit Data</button></a>
-                        <button class="bg-red-600 text-black font-bold py-1 px-3 rounded-md">Hapus</button>
+            <!-- Bagian Pencarian dan Tombol Baru -->
+            <div class="flex justify-between items-center mb-4 flex-wrap">
+                <form id="filterForm" action="{{ route('customer.index') }}" method="GET" class="w-full max-w-sm flex space-x-4">
+                    <div class="">
+                        <label for="idcompany" class="mr-2 text-2xl text-gray-700 font-bold">Pilih Group:</label>
+                        <input list="groupList" name="idcompany" id="idcompany"
+                            class="border border-gray-300 p-4 rounded-md w-full sm:w-96" placeholder="Search group..."
+                            value="{{ request('idcompany') }}">
+                        <datalist id="groupList">
+                            <option value="">-- Semua Group --</option>
+                            @foreach ($perusahaan as $group)
+                                <option value="{{ $group->company_id }}">
+                                    {{ $group->name }}
+                                </option>
+                            @endforeach
+                        </datalist>
                     </div>
+                </form>
+                <div class="flex justify-end w-full items-end">
+                    <a href="{{ route('customer.create') }}" class="bg-green-500 justify-items-end text-white font-bold py-3 px-9 rounded-md">
+                        Baru
+                    </a>
                 </div>
-
-                <!-- Detail Pelanggan -->
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <p><strong>Tipe Pelanggan :</strong> {{ $tipePelangganName }}</p>
-
-                        <p><strong>NPWP :</strong> {{ $customer->npwp }}</p>
-                        <p><strong>Alamat :</strong> {{ $customer->alamat }}</p>
-                        <p><strong>E-mail :</strong> {{ $customer->email }}</p>
-                        <p><strong>Whatsapp :</strong> {{ $customer->whatsapp }}</p>
-                        <p><strong>Telepon :</strong> {{ $customer->telepon }}</p>
-                        <p><strong>Fax :</strong> {{ $customer->fax }}</p>
-                    </div>
-                    <div>
-                        <p><strong>% Sharing :</strong> {{ $customer->sharing }}%</p>
-                        <p><strong>Kota :</strong> {{ $customer->kota }}</p>
-                        <p><strong>Kode Pos :</strong> {{ $customer->kode_pos }}</p>
-                    </div>
-                </div>
-
-                <!-- Bagian Bawah: Informasi Tambahan -->
-                <div class="border-t border-gray-400 pt-2 mt-2 text-sm flex justify-between">
-                    <p>
-                        <strong>Di input oleh :</strong>
-                        {{-- {{ Auth::user()->name }} on
-                        {{ $customer->created_at ? $pelanggan->created_at->format('l d/m/Y') : '' }} --}}
-                    </p>
-                    <p>
-                        <strong>Terakhir diedit :</strong>
-                        {{-- {{ Auth::user()->name }} on
-                        {{ $customer->updated_at ? $pelanggan->updated_at->format('l d/m/Y') : '' }} --}}
-                    </p>
-                </div>
+                
             </div>
-        @else
-            @foreach ($daftarPelanggan as $pelanggan)
-                <div class="bg-white border border-gray-400 p-4 rounded-md mb-5">
-                    <!-- Bagian Atas: Kode dan Nama Perusahaan -->
-                    <div class="flex justify-between items-center border-b border-gray-400 pb-2 mb-2">
-                        <h2 class="text-xl font-bold">{{ $pelanggan->id_Pelanggan }}</h2>
-                        <h2 class="text-xl font-bold">{{ $pelanggan->name }}</h2>
-                        <div class="flex space-x-2">
-                            <a href="{{ route('customer.edit', $pelanggan->id) }}"><button
+            <div>
+                <h1 class="text-3xl py-3 font-bold">DAFTAR PELANGGAN</h1>
+            </div>
+            @if (isset($customer))
+                <div class="bg-white border border-gray-400 p-4 rounded-md">
+                    <div class="flex justify-between items-center border-b border-gray-400 gap-4">
+                        <h2 class="text-xl font-bold">{{ $customer->id_Pelanggan }}</h2>
+                        <h2 class="text-xl font-bold bg-slate-900">{{ $customer->name }}</h2>
+                        <div class="flex space-x-2 ml-auto">
+                            <a href="{{ route('customer.edit', $customer->id) }}"><button
                                     class="bg-green-700 text-black font-bold py-1 px-3 rounded-md">Edit Data</button></a>
                             <button class="bg-red-600 text-black font-bold py-1 px-3 rounded-md">Hapus</button>
                         </div>
                     </div>
-
-                    <!-- Detail Pelanggan -->
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <p><strong>Perusahaan</strong> {{ $pelanggan->company->name }}</p>
-                            <p><strong>Tipe Pelanggan :</strong> {{ $pelanggan->tipePelanggan->name }}</p>
-                            <p><strong>NPWP :</strong> {{ $pelanggan->npwp }}</p>
-                            <p><strong>Alamat :</strong> {{ $pelanggan->alamat }}</p>
-                            <p><strong>E-mail :</strong> {{ $pelanggan->email }}</p>
-                            <p><strong>Whatsapp :</strong> {{ $pelanggan->whatsapp }}</p>
-                            <p><strong>Telepon :</strong> {{ $pelanggan->telepon }}</p>
-                            <p><strong>Fax :</strong> {{ $pelanggan->fax }}</p>
+                            <p><strong>Tipe Pelanggan :</strong> {{ $tipePelangganName }}</p>
+                            <p><strong>NPWP :</strong> {{ $customer->npwp }}</p>
+                            <p><strong>Alamat :</strong> {{ $customer->alamat }}</p>
+                            <p><strong>E-mail :</strong> {{ $customer->email }}</p>
+                            <p><strong>Whatsapp :</strong> {{ $customer->whatsapp }}</p>
+                            <p><strong>Telepon :</strong> {{ $customer->telepon }}</p>
+                            <p><strong>Fax :</strong> {{ $customer->fax }}</p>
                         </div>
                         <div>
-                            <p><strong>% Sharing :</strong> {{ $pelanggan->sharing }}%</p>
-                            <p><strong>Kota :</strong> {{ $pelanggan->kota }}</p>
-                            <p><strong>Kode Pos :</strong> {{ $pelanggan->kode_pos }}</p>
+                            <p><strong>% Sharing :</strong> {{ $customer->sharing }}%</p>
+                            <p><strong>Kota :</strong> {{ $customer->kota }}</p>
+                            <p><strong>Kode Pos :</strong> {{ $customer->kode_pos }}</p>
                         </div>
-                    </div>
-
-                    <!-- Bagian Bawah: Informasi Tambahan -->
-                    <div class="border-t border-gray-400 pt-2 mt-2 text-sm flex justify-between">
-                        {{-- <p>
-                            <strong>Di input oleh :</strong>
-                            {{ Auth::user()->name }} on
-                            {{ $pelanggan->created_at ? $pelanggan->created_at->format('l d/m/Y') : '' }}
-                        </p>
-                        <p>
-                            <strong>Terakhir diedit :</strong>
-                            {{ Auth::user()->name }} on
-                            {{ $pelanggan->updated_at ? $pelanggan->updated_at->format('l d/m/Y') : '' }}
-                        </p> --}}
                     </div>
                 </div>
-            @endforeach
-            <div>{{ $daftarPelanggan->links() }}</div>
-            <!-- Informasi Tidak Ditemukan -->
-        @endif
-    </div>
+            @else
+                @foreach ($daftarPelanggan as $pelanggan)
+                    <div class="bg-white border border-gray-400 p-4 rounded-md mb-5">
+                        <div class="flex justify-between items-center border-b border-gray-400 pb-2 mb-2">
+                            <h2 class="text-xl font-bold m-5">{{ $pelanggan->id_Pelanggan }}</h2>
+                            <h2 class="text-xl font-bold m-5">{{ $pelanggan->name }}</h2>
+                            <div class="flex space-x-2 ml-auto">
+                                <a href="{{ route('customer.edit', $pelanggan->id) }}" class="p-2 bg-green-700 text-white rounded-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621"/><path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"/></g>
+                                    </svg>
+                                </a>                            
+                                <button class="p-2 bg-red-600 text-white rounded-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>                        
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <p><strong>Perusahaan :</strong> {{ $pelanggan->company->name }}</p>
+                                <p><strong>Tipe Pelanggan :</strong> {{ $pelanggan->tipePelanggan->name }}</p>
+                                <p><strong>NPWP :</strong> {{ $pelanggan->npwp }}</p>
+                                <p><strong>Alamat :</strong> {{ $pelanggan->alamat }}</p>
+                                <p><strong>E-mail :</strong> {{ $pelanggan->email }}</p>
+                                <p><strong>Whatsapp :</strong> {{ $pelanggan->whatsapp }}</p>
+                                <p><strong>Telepon :</strong> {{ $pelanggan->telepon }}</p>
+                                <p><strong>Fax :</strong> {{ $pelanggan->fax }}</p>
+                            </div>
+                            <div>
+                                <p><strong>% Sharing :</strong> {{ $pelanggan->sharing }}%</p>
+                                <p><strong>Kota :</strong> {{ $pelanggan->kota }}</p>
+                                <p><strong>Kode Pos :</strong> {{ $pelanggan->kode_pos }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                <div>{{ $daftarPelanggan->links() }}</div>
+            @endif
+        </div>
+   
 @endsection
-@push('script')
-{{-- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const input = document.getElementById('idcompany');
-        const form = document.getElementById('filterForm');
-
-        // Kirim form secara otomatis saat input berubah
-        input.addEventListener('change', function() {
-            form.submit();
-        });
-    });
-</script> --}}
 
 @push('scripts')
-
 @vite('resources/js/test.js')
 @endpush
+
+
+@push('scripts')
+    <script type="module">
+        import { createIcons, icons } from 'lucide';
+        createIcons({ icons });
+    </script>
+@endpush
+<script src="https://unpkg.com/lucide@latest"></script>
