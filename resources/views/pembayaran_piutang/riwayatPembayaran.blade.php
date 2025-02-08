@@ -26,7 +26,7 @@
                         <th class="px-4 py-2 border border-gray-300 w-32">ID Pembayaran</th>
                         <th class="px-4 py-2 border border-gray-300 w-48">Nama Pelanggan</th>
                         <th class="px-4 py-2 border border-gray-300 w-40">Mode Pembayaran</th>
-                        <th class="px-4 py-2 border border-gray-300 w-48">Total Semua Piutang</th>
+                        <th class="px-4 py-2 bo rder border-gray-300 w-48">Total Semua Piutang</th>
                         <th class="px-4 py-2 border border-gray-300 w-48">Nominal yang Dibayar</th>
                         <th class="px-4 py-2 border border-gray-300 w-48">Sisa</th>
                         <th class="px-4 py-2 border border-gray-300 w-32">Action</th>

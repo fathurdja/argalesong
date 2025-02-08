@@ -10,13 +10,13 @@
     @vite(['resources/css/app.css', 'resources/css/custom.css', 'resources/js/app.js'])
 </head>
 
-<body class=" bg-gray-100 dark:bg-gray-900 w-full h-full "> 
+<body class=" bg-gray-100 w-full h-full "> 
     {{-- flex items-center justify-center flex-wrap --}}
-    <div class="flex h-screen bg-gray-200">
+    <div class="flex h-screen bg-gray-200 md:bg-gray-300 lg:bg-gray-200">
 
         @include('partials.sidebar')
 
-        <div class="flex-1 px-20">
+        <div class="min-w-full min-h-full flex justify-center items-center">
             @yield('content')
         </div>
     </div>

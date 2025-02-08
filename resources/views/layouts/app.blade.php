@@ -13,8 +13,8 @@
     @include('partials.navbar')
     <div class="flex flex-1 overflow-hidden">
         @include('partials.sidebar')
-        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-4">
-            <div class="container mx-auto px-4 sm:px-8 ">
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 px-2 md:px-20 md:container  ">
+            <div class=" flex items-center justify-center">
                 @yield('content')
             </div>
         </main>

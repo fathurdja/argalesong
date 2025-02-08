@@ -79,9 +79,6 @@ Route::post('/storeTipePiutang', [masterdatacontroller::class, 'storeTipePiutang
 // -> delete master piutang
 // Route::delete('/master-data-piutang/{id}', [masterdatacontroller::class, 'destroy'])->name('master_data_piutang_delete');
 
-
-
-
 Route::get('/kartu-pelanggan', [kp_pelangganController::class, 'index'])->name('kp_pelanggan');
 
 // Route to fetch and display the data after form submission (POST request)

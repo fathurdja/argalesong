@@ -43,7 +43,7 @@
                 <div class="mt-3 flex justify-between items-center">
                     <div>
                         <input id="remember" type="checkbox" name="remember" class="focus:ring-0 focus:outline-none rounded-full">
-                        <label for="remember">Ingat saya</label>
+                        <label for="remember" class="">Ingat saya</label>
                     </div>
                     <div>
                         <a href="#" class="text-indigo-800 font-semibold">Lupa kata sandi?</a>

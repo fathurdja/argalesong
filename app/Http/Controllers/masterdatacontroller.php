@@ -139,6 +139,6 @@ class masterdatacontroller extends Controller
         // Redirect back with a success message
         return redirect()->route('master_data_piutang')->with('success', 'Item berhasil ditambahkan.');
     }
+
     // buatkan method destroy (delete)
-   
 }

@@ -8,6 +8,9 @@
         <div class="p-6">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 @foreach ($columns as $title => $items)
+              
+
+
                     <div>
                         <h3 class="font-semibold mb-2 text-center bg-gray-100 py-1">{{ $title }}</h3>
                         <ul class="space-y-1">
@@ -104,4 +107,3 @@
         </div>
     @endif
 @endsection
-
