@@ -1,12 +1,13 @@
-<aside
-    class=" hidden sidebar fixed inset-y-0 left-0 bg-gray-700 border-r dark:bg-gray-800 dark:border-gray-700 md:flex flex-col justify-between">
-    <div>
+<link rel="stylesheet" href="custom.css">
+<aside id="aside"
+    class="hidden sidebar fixed inset-y-0 left-0 bg-gray-700 border-r md:flex flex-col justify-between">
+    <div class="overflow-x-clip overflow-y-auto">
         <div class="flex items-center justify-center h-16 shadow-md">
             <a class="p-2 text-white" href="{{ route('dashboard') }}">
                 <img src="{{ asset('assets/logo/galesong.png') }}" alt="" class="w-9 h-9">
             </a>
         </div>
-        <nav class="px-4 py-2">
+        <nav class="px-4 py-2">        
             <ul class="space-y-2">
                 <a href="{{ route('dashboard') }}">
                     <li
@@ -364,8 +365,76 @@
         </button>
     </form>
 </aside>
+{{-- <div id="close-menu" class="w-20px h-20px fixed top-5 right-5 bg-slate-900">dsd</div>
+<script>
+    document.getElementById('close-menu').addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        document.getElementById('aside').classList.add('block');
+    });
+</script> --}}
+{{-- <aside id="sidebar" class="fixed inset-y-0 left-0 bg-gray-800 border-r border-gray-700 flex flex-col justify-between w-64 transform -translate-x-full transition-transform duration-300 md:translate-x-0 shadow-lg">
+    <div>
+        <div class="flex items-center justify-between h-16 px-4 bg-gray-900 shadow-md">
+            <a class="p-2 text-white" href="{{ route('dashboard') }}">
+                <img src="{{ asset('assets/logo/galesong.png') }}" alt="Logo" class="w-9 h-9">
+            </a>
+            <button id="close-menu" class="text-white md:hidden text-2xl">&times;</button>
+        </div>
+        <nav>
+            <ul class="space-y-2 p-2">
+                <!-- Piutang -->
+                <li>
+                    <button id="dropdownPiutang" data-dropdown-toggle="submenuPiutang" class="sidebar-item flex items-center p-3 w-full text-white rounded-lg hover:bg-blue-600">
+                        <span class="flex-1 ml-3">Piutang</span>
+                        <span class="transition-transform">▼</span>
+                    </button>
+                    <div id="submenuPiutang" class="hidden z-10 bg-gray-700 rounded-lg shadow-md">
+                        <a href="{{ route('piutang-types.create') }}" class="submenu-link block px-4 py-2 text-white hover:bg-blue-600">Piutang Baru</a>
+                        <a href="{{ route('riwayatPiutang') }}" class="submenu-link block px-4 py-2 text-white hover:bg-blue-600">Riwayat Piutang</a>
+                    </div>
+                </li>
 
-<aside id="sidebar" class=" md:hidden fixed inset-y-0 right-0 bg-gray-700 border-l dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-between w-64 transform translate-x-full transition-transform duration-300">
+                <!-- Pembayaran -->
+                <li>
+                    <button id="dropdownPembayaran" data-dropdown-toggle="submenuPembayaran" class="sidebar-item flex items-center p-3 w-full text-white rounded-lg hover:bg-blue-600">
+                        <span class="flex-1 ml-3">Pembayaran</span>
+                        <span class="transition-transform">▼</span>
+                    </button>
+                    <div id="submenuPembayaran" class="hidden z-10 bg-gray-700 rounded-lg shadow-md">
+                        <a href="{{ route('pembayaran-piutang.show') }}" class="submenu-link block px-4 py-2 text-white hover:bg-blue-600">Pembayaran Piutang</a>
+                        <a href="{{ route('riwayatPembayaran') }}" class="submenu-link block px-4 py-2 text-white hover:bg-blue-600">Riwayat Pembayaran</a>
+                    </div>
+                </li>
+
+                <li><a href="{{ route('detailpiutang.index') }}" class="sidebar-item block p-3 text-white rounded-lg hover:bg-blue-600">Umur Piutang</a></li>
+
+                <!-- Schedule Piutang -->
+                <li>
+                    <button id="dropdownSchedule" data-dropdown-toggle="submenuSchedule" class="sidebar-item flex items-center p-3 w-full text-white rounded-lg hover:bg-blue-600">
+                        <span class="flex-1 ml-3">Schedule Piutang</span>
+                        <span class="transition-transform">▼</span>
+                    </button>
+                    <div id="submenuSchedule" class="hidden z-10 bg-gray-700 rounded-lg shadow-md">
+                        <a href="{{ route('sp-bulanan') }}" class="submenu-link block px-4 py-2 text-white hover:bg-blue-600">Bulanan</a>
+                        <a href="{{ route('sp-harian') }}" class="submenu-link block px-4 py-2 text-white hover:bg-blue-600">Harian</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <form method="POST" action="{{ route('logout') }}" class="mt-4">
+        @csrf
+        <button type="submit" class="sidebar-item flex items-center p-4 w-full text-white rounded-lg hover:bg-red-600">
+            <h3 class="font-bold ml-2">Logout</h3>
+        </button>
+    </form>
+</aside> --}}
+
+
+
+
+{{-- <aside id="sidebar" class=" md:hidden fixed inset-y-0 right-0 bg-gray-700 border-l dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-between w-64 transform translate-x-full transition-transform duration-300">
     <div>
         <div class="flex items-center justify-between h-16 shadow-md px-4">
             <a class="p-2 text-white" href="{{ route('dashboard') }}">
@@ -419,4 +488,371 @@
     closeMenu.addEventListener('click', () => {
         sidebar.classList.add('translate-x-full');
     });
-</script>
+</script> --}}
+
+{{-- <button id="menu-toggle" class="fixed top-4 left-4 z-50 p-2 bg-blue-600 text-white rounded-md md:hidden">
+    &#9776;
+</button> --}}
+    {{-- <aside id="sidebar" class="fixed inset-y-0 left-0 bg-gray-700 border-r dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-between w-64 transform -translate-x-full transition-transform duration-300 md:translate-x-0">
+        <div>
+            <div class="flex items-center justify-between h-16 shadow-md px-4">
+                <a class="p-2 text-white" href="{{ route('dashboard') }}">
+                    <img src="{{ asset('assets/logo/galesong.png') }}" alt="" class="w-9 h-9">
+                </a>
+                <button id="close-menu" class="text-white md:hidden">&times;</button>
+            </div>
+            <nav class="px-4 py-2">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="{{ route('dashboard') }}" class="sidebar-item flex items-center p-2 text-white rounded-md hover:bg-blue-700 dark:hover:bg-gray-700">
+                            <span class="ml-2">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('customer.index') }}" class="sidebar-item flex items-center p-2 text-white rounded-md hover:bg-blue-700 dark:hover:bg-gray-700">
+                            <span class="ml-2">Daftar Pelanggan</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('riwayatPiutang') }}" class="sidebar-item flex items-center p-2 text-white rounded-md hover:bg-blue-700 dark:hover:bg-gray-700">
+                            <span class="ml-2">Riwayat Piutang</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <form method="POST" action="{{ route('logout') }}" class="mt-4">
+            @csrf
+            <button type="submit" class="sidebar-item flex items-center p-4 w-full text-white rounded-lg hover:bg-blue-700 dark:text-white dark:bg-gray-800">
+                <h3 class="font-bold ml-2">Logout</h3>
+            </button>
+        </form>
+    </aside> --}}
+
+{{-- <script>
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('-translate-x-full');
+    });
+    document.getElementById('close-menu').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.add('-translate-x-full');
+    });
+</script> --}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{-- 
+untuk cari prompt
+<nav class="px-4 py-2">
+    <ul class="space-y-2">
+        <a href="{{ route('dashboard') }}">
+            <li
+                class="sidebar-item p-2 text-white rounded-md dark:text-white hover:bg-blue-700 dark:hover:bg-gray-700">
+                <span class="text">Dashboard</span>
+            </li>
+        </a>
+    </ul>
+    <ul class="space-y-2">
+        <li>
+
+            <div
+                class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                <a href="{{ route('customer.index') }}"> <span
+                        class="flex-1 ml-3 text-left whitespace-nowrap text">Daftar Pelanggan</span></a>
+            </div>
+            <ul class="py-2 text sidebar-submenu">
+                <li class="sidebar-submenu-item">
+                    <a href="{{ route('customer.create') }}"
+                        class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">Baru</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="space-y-2">
+        <li>
+            <a class="arrow">
+                <div
+                    class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                    <span class="flex-1 ml-3 text-left whitespace-nowrap text">Piutang</span>
+                </div>
+            </a>
+            <ul class="py-2 text sidebar-submenu">
+                <li class="sidebar-submenu-item">
+                    <a href="{{ route('piutang-types.create') }}"
+                        class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Piutang
+                        Baru</a>
+                </li>
+                <li class="sidebar-submenu-item">
+                    <a href="{{ route('riwayatPiutang') }}"
+                        class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Riwayat
+                        Piutang</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="space-y-2">
+        <li>
+            <a class="arrow">
+                <div
+                    class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                   <span class="flex-1 ml-3 text-left whitespace-nowrap text">Pembayaran</span>
+                </div>
+            </a>
+            <ul class="py-2 text sidebar-submenu">
+                <li class="sidebar-submenu-item">
+                    <a href="{{ route('pembayaran-piutang.show') }}"
+                        class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Pembayaran
+                        Piutang</a>
+                </li>
+                <li class="sidebar-submenu-item">
+                    <a href="{{ route('riwayatPembayaran') }}"
+                        class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Riwayat
+                        Pembayaran</a>
+                </li>
+
+            </ul>
+
+        </li>
+    </ul>
+    <ul class="space-y-2">
+        <li>
+            <a class="arrow">
+                <div
+                    class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                    <span class="flex-1 ml-3 text-left whitespace-nowrap text">Kartu Piutang</span>
+                </div>
+            </a>
+            <ul class="py-2 text sidebar-submenu">
+                <li class="sidebar-submenu-item">
+                    <a href="{{ route('kp_pelanggan') }}"
+                        class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Pelanggan</a>
+                </li>
+                <li class="sidebar-submenu-item">
+                    <a href="{{ route('kp-bukanpelanggan') }}"
+                        class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Bukan
+                        Pelanggan</a>
+                </li>
+
+            </ul>
+        </li>
+    </ul>
+    <ul class="space-y-2">
+        <a href="{{ route('detailpiutang.index') }}">
+            <li
+                class="sidebar-item p-2 text-white rounded-md dark:text-white hover:bg-blue-700 dark:hover:bg-gray-700">
+                <span class="text">Umur Piutang</span>
+            </li>
+        </a>
+    </ul>
+    <ul class="space-y-2">
+        <li>
+            <a class="arrow">
+                <div
+                    class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                    <span class="flex-1 ml-3 text-left whitespace-nowrap text">Schedule Piutang</span>
+                </div>
+            </a>
+            <ul class="py-2 text sidebar-submenu">
+                <li class="sidebar-submenu-item">
+                    <a href="{{ route('sp-bulanan') }}"
+                        class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Bulanan</a>
+                </li>
+                <li class="sidebar-submenu-item">
+                    <a href="{{ route('sp-harian') }}"
+                        class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Harian</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="space-y-2">
+        <li>
+            <div
+                class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                <a href="{{ route('jatuh-tempo') }}"><span
+                        class="flex-1 ml-3 text-left whitespace-nowrap text">Jatuh
+                        Tempo</span></a>
+            </div>
+        </li>
+    </ul>
+    <ul class="space-y-2">
+        <li>
+            <a class="arrow">
+                <div
+                    class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                    <span class="flex-1 ml-3 text-left whitespace-nowrap text">Pemutihan Piutang</span>
+                </div>
+            </a>
+            <ul class="py-2 text sidebar-submenu">
+                <li class="sidebar-submenu-item">
+                    <a href="{{ route('pp-pengajuan') }}"
+                        class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Pengajuan</a>
+                </li>
+                <li class="sidebar-submenu-item">
+                    <a href="{{ route('pp-baru') }}"
+                        class="flex items-center p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Baru</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="space-y-2">
+        <li>
+            <div
+                class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                <a href="{{ route('master_data_piutang') }}"><span
+                        class="flex-1 ml-3 text-left whitespace-nowrap text">MD Piutang</span></a>
+            </div>
+        </li>
+    </ul>
+    <ul class="space-y-2">
+        <li>
+            <div
+                class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+             
+                <a href="{{ route('masterDataPajak.index') }}"><span
+                        class="flex-1 ml-3 text-left whitespace-nowrap text">MD Pajak</span></a>
+            </div>
+        </li>
+    </ul>
+</nav>
+</div> --}}
+
+{{-- sudah baik --}}
+{{-- <aside id="sidebar" class="fixed inset-y-0 left-0 bg-gray-700 border-r dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-between w-64 transform -translate-x-full transition-transform duration-300 md:translate-x-0">
+    <div>
+        <div class="flex items-center justify-between h-16 shadow-md px-4">
+            <a class="p-2 text-white" href="{{ route('dashboard') }}">
+                <img src="{{ asset('assets/logo/galesong.png') }}" alt="" class="w-9 h-9">
+            </a>
+            <button id="close-menu" class="text-white md:hidden">&times;</button>
+        </div>
+        <nav>
+            <ul class="space-y-2">
+                <li>
+                    <a class="arrow cursor-pointer">
+                        <div class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700">
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap">Piutang</span>
+                        </div>
+                    </a>
+                    <ul class="py-2 text sidebar-submenu hidden">
+                        <li><a href="{{ route('piutang-types.create') }}" class="submenu-link">Piutang Baru</a></li>
+                        <li><a href="{{ route('riwayatPiutang') }}" class="submenu-link">Riwayat Piutang</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="arrow cursor-pointer">
+                        <div class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700">
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap">Pembayaran</span>
+                        </div>
+                    </a>
+                    <ul class="py-2 text sidebar-submenu hidden">
+                        <li><a href="{{ route('pembayaran-piutang.show') }}" class="submenu-link">Pembayaran Piutang</a></li>
+                        <li><a href="{{ route('riwayatPembayaran') }}" class="submenu-link">Riwayat Pembayaran</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="arrow cursor-pointer">
+                        <div class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700">
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap">Kartu Piutang</span>
+                        </div>
+                    </a>
+                    <ul class="py-2 text sidebar-submenu hidden">
+                        <li><a href="{{ route('kp_pelanggan') }}" class="submenu-link">Pelanggan</a></li>
+                        <li><a href="{{ route('kp-bukanpelanggan') }}" class="submenu-link">Bukan Pelanggan</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ route('detailpiutang.index') }}" class="sidebar-item">Umur Piutang</a></li>
+                <li>
+                    <a class="arrow cursor-pointer">
+                        <div class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700">
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap">Schedule Piutang</span>
+                        </div>
+                    </a>
+                    <ul class="py-2 text sidebar-submenu hidden">
+                        <li><a href="{{ route('sp-bulanan') }}" class="submenu-link">Bulanan</a></li>
+                        <li><a href="{{ route('sp-harian') }}" class="submenu-link">Harian</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ route('jatuh-tempo') }}" class="sidebar-item">Jatuh Tempo</a></li>
+                <li>
+                    <a class="arrow cursor-pointer">
+                        <div class="sidebar-item flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700">
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap">Pemutihan Piutang</span>
+                        </div>
+                    </a>
+                    <ul class="py-2 text sidebar-submenu hidden">
+                        <li><a href="{{ route('pp-pengajuan') }}" class="submenu-link">Pengajuan</a></li>
+                        <li><a href="{{ route('pp-baru') }}" class="submenu-link">Baru</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ route('master_data_piutang') }}" class="sidebar-item">MD Piutang</a></li>
+                <li><a href="{{ route('masterDataPajak.index') }}" class="sidebar-item">MD Pajak</a></li>
+            </ul>
+        </nav>
+    </div>
+    <form method="POST" action="{{ route('logout') }}" class="mt-4">
+        @csrf
+        <button type="submit" class="sidebar-item flex items-center p-4 w-full text-white rounded-lg hover:bg-blue-700 dark:text-white dark:bg-gray-800">
+            <h3 class="font-bold ml-2">Logout</h3>
+        </button>
+    </form>
+</aside> --}}
+
+
+
+{{-- <script>
+    document.querySelectorAll('.arrow').forEach(item => {
+        item.addEventListener('click', function () {
+            const submenu = this.nextElementSibling;
+            submenu.classList.toggle('hidden');
+        });
+    });
+</script> --}}
+
+{{-- sudah baik css --}}
+{{-- <style>
+    .sidebar-submenu {
+        display: none;
+    }
+    .sidebar-submenu.hidden {
+        display: none;
+    }
+    .sidebar-submenu:not(.hidden) {
+        display: block;
+    }
+    .submenu-link {
+        display: block;
+        padding: 8px 16px;
+        color: white;
+        text-decoration: none;
+    }
+    .submenu-link:hover {
+        background-color: #1d4ed8;
+    }
+</style> --}}
+
