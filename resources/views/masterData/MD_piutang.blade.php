@@ -1,16 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="max-w-7xl mx-auto bg-white shadow-md rounded-lg overflow-hidden mt-4 ml-14 ">
+    <div class=" max-w-full mx-auto bg-white shadow-md rounded-lg overflow-hidden mt-2 p-10 lg:p-10 mb-5 lg:mt-10">
         <div class="bg-white text-center py-2 text-lg font-bold">
             MASTER DATA PIUTANG
         </div>
         <div class="p-6">
             <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                 @foreach ($columns as $title => $items)
-              
-
-
                     <div>
                         <h3 class="font-semibold mb-2 text-center bg-gray-100 py-1">{{ $title }}</h3>
                         <ul class="space-y-1">

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="bg-gray-100 px-2 py-1 sm:py-6 sm:px-4 ">
+    <div class="bg-gray-100 p-10 sm:py-6 sm:px-4 lg:mt-10 lg:mb-10 lg:min-w-full lg:ml-20   ">
         @if ($errors->any())
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                 <ul>
@@ -19,7 +19,7 @@
         <form action="{{ route('customer.store') }}" method="POST" class="">
             @csrf
             <div class="bg-white border border-gray-400 p-4 rounded-md mb-6">
-                <h2 class="text-center text-lg font-bold mb-4 border-b border-gray-400 pb-2">DATA PELANGGAN</h2>
+                <h2 class="text-center text-lg font-bold mb-4 border-b border-gray-400">DATA PELANGGAN</h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
