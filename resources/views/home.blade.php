@@ -41,8 +41,8 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class="justify-center items-center w-full  mt-5 flex md:hidden ">
-                    <ul class="justify-center items-center w-full pl-12 scroll-smooth  py-1 flex md:hidden flex-row gap-5 overflow-scroll scrollbar-hide">
+                <div class="justify-center items-cente  mt-5 flex md:hidden ">
+                    <ul class="justify-center items-start w-full pl-14 scroll-smooth py-1 flex md:hidden flex-row gap-5 overflow-scroll scrollbar-hide">
                         <li>
                             <a href="{{ route('customer.index') }}">
                                 <div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
@@ -54,52 +54,93 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('customer.index') }}">
+                            <a href="{{ route('riwayatPiutang') }}">
                                 <div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
                                     <div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
                                     </div>
-                                    <span >Daftar Pelanggan</span>
+                                    <span >Piutang</span>
                                 </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('customer.index') }}">
+                            <a href="{{ route('pembayaran-piutang.show') }}">
                                 <div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
                                     <div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
                                     </div>
-                                    <span >Daftar Pelanggan</span>
+                                    <span >Pembayaran</span>
                                 </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('customer.index') }}">
+                            <a href="{{ route('kp_pelanggan') }}">
                                 <div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
                                     <div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
                                     </div>
-                                    <span >Daftar Pelanggan</span>
+                                    <span >Kartu Piutang</span>
                                 </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('customer.index') }}">
+                            <a href="{{ route('detailpiutang.index') }}">
                                 <div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
                                     <div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
                                     </div>
-                                    <span >Daftar Pelanggan</span>
+                                    <span >Umur Piutang
+                                    </span>
                                 </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('customer.index') }}">
+                            <a href="{{ route('sp-bulanan') }}">
                                 <div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
                                     <div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
                                     </div>
-                                    <span >Daftar Pelanggan</span>
+                                    <span >Schedule Piutang</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('jatuh-tempo') }}">
+                                <div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
+                                    <div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
+                                    </div>
+                                    <span >Jatuh Tempo</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('pp-pengajuan') }}">
+                                <div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
+                                    <div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
+                                    </div>
+                                    <span >Pemutihan Piutang</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('master_data_piutang') }}">
+                                <div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
+                                    <div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
+                                    </div>
+                                    <span >MD Piutang</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('masterDataPajak.index') }}">
+                                <div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
+                                    <div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
+                                    </div>
+                                    <span >MD Pajak</span>
                                 </div>
                             </a>
                         </li>
