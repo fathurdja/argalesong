@@ -50,8 +50,9 @@ export default {
         },
     },
     plugins: [
-        require("flowbite/plugin"),
+        require("flowbite/plugin", '@tailwindcss/scrollbar'),
         "resources/js/app.js",
+        "resources/js/test.js",
         "resources/js/test.js",
     ],
 };

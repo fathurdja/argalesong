@@ -51,3 +51,27 @@
     margin-left: auto;
     cursor: pointer;
 } 
+
+/* humburger menu sidebar */
+/* humburger menu sidebar */
+.humburger span {
+    transition: all 0.3s ease-in-out;
+}
+
+.humburger span:first-child {
+    transform: rotate(-45deg) translateY(10px) translateX(-5px);
+}
+
+.humburger span:nth-child(2) {
+    opacity: 0;
+}
+
+.humburger span:nth-child(3) {
+    opacity: 0;
+}
+
+.humburger span:last-child {
+    transform: rotate(45deg) translateY(-10px) translateX(-5px);
+    width: 100%;
+}
+

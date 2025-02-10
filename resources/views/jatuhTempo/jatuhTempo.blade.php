@@ -26,55 +26,115 @@
         </div>
 
         <div class="min-w-full overflow-auto">
-            <table class="min-w-full divide-y divide-gray-200">
+            <table class="min-w-full divide-y divide-gray-200 text-[10px] sm:text-xs md:text-md lg:text-lg">
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                            class="px-2 py-1  sm:px-6 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
                         <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Invoice
+                            class="px-2 py-1  sm:px-6 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No
+                            Invoice
                         </th>
                         <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kode
+                            class="px-2 py-1  sm:px-6 sm:py-3 text-left text-xs font-medium text-gray-500 hidden sm:table-cell uppercase tracking-wider">
+                            Kode
                             Perusahaan</th>
                         <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama
+                            class="px-2 py-1  sm:px-6 sm:py-3 text-left text-xs font-medium text-gray-500 hidden sm:table-cell uppercase tracking-wider">
+                            Nama
                             Pelanggan</th>
                         <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tgl Invoice
+                            class="px-2 py-1  sm:px-6 sm:py-3 text-left text-xs font-medium text-gray-500 hidden sm:table-cell uppercase tracking-wider">
+                            Tgl Invoice
                         </th>
                         <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tgl Jatuh
+                            class="px-2 py-1  sm:px-6 sm:py-3 text-left text-xs font-medium text-gray-500 hidden sm:table-cell uppercase tracking-wider">
+                            Tgl Jatuh
                             Tempo</th>
                         <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Piutang Belum
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Piutang
+                            Belum
                             Dibayar</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 table-cell sm:hidden uppercase tracking-wider">
+                            Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">INV024255</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PRS348</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PT Fast Food Indonesia</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">03/02/2023</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">02/03/2023</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">PRS348</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">PT Fast Food Indonesia</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">03/02/2023</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">02/03/2023</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">23,000,000</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm table-cell sm:hidden text-gray-500">
+                            <div class="w-3 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                                    <path fill="#2196f3" d="M17.1 5L14 8.1L29.9 24L14 39.9l3.1 3.1L36 24z" />
+                                </svg>
+                            </div>
+                        </td>
                     </tr>
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">INV024256</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PRS500</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PT Tiga Dua Delapan</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15/02/2023</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">14/03/2023</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">50,000,000</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">INV024255</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">PRS348</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">PT Fast Food Indonesia</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">03/02/2023</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">02/03/2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">23,000,000</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm table-cell sm:hidden text-gray-500">
+                            <div class="w-3 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                                    <path fill="#2196f3" d="M17.1 5L14 8.1L29.9 24L14 39.9l3.1 3.1L36 24z" />
+                                </svg>
+                            </div>
+                        </td>
                     </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">INV024255</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">PRS348</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">PT Fast Food Indonesia</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">03/02/2023</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">02/03/2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">23,000,000</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm table-cell sm:hidden text-gray-500">
+                            <div class="w-3 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                                    <path fill="#2196f3" d="M17.1 5L14 8.1L29.9 24L14 39.9l3.1 3.1L36 24z" />
+                                </svg>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">INV024255</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">PRS348</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">PT Fast Food Indonesia</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">03/02/2023</td>
+                        <td class="px-1 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm hidden sm:table-cell text-gray-500">02/03/2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">23,000,000</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm table-cell sm:hidden text-gray-500">
+                            <div class="w-3 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                                    <path fill="#2196f3" d="M17.1 5L14 8.1L29.9 24L14 39.9l3.1 3.1L36 24z" />
+                                </svg>
+                            </div>
+                        </td>
+                    </tr>
+
                 </tbody>
                 <tfoot>
-                    <tr>
-                        <td colspan="6" class="px-6 py-4 text-right font-bold text-gray-700">Total</td>
-                        <td class="px-6 py-4 font-bold text-gray-700">73,000,000</td>
+                    <tr class="hidden sm:table-row">
+                        <td colspan="6" class="px-6 py-4 text-right sm:text-lg lg:text-lg font-bold text-gray-700">Total</td>
+                        <td class="px-6 py-4 font-bold text-gray-700 text-lg">73,000,000</td>
+                    </tr>
+                    <tr class="table-row sm:hidden">
+                        <td colspan="3" class="px-2 text-md py-1 text-right font-bold text-gray-700">Total</td>
+                        <td class="px-2 py-1 font-bold text-gray-700">73,000,000</td>
                     </tr>
                 </tfoot>
             </table>
