@@ -13,7 +13,7 @@
     <div class="container mx-auto mt-5 px-4 md:ml-9 ml-9">
         <div class="bg-white p-6 rounded-lg shadow-md">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <h1 class="text-xl font-bold text-center md:text-left">MASTER DATA PAJAK</h1>
+                <h1 class="ttext-2xl font-bold mb-4 text-left">MASTER DATA PAJAK</h1>
                 <div class="text-sm mt-2 md:mt-0">{{ \Carbon\Carbon::now()->format('l, d/m/Y \a\t H:i:s') }}</div>
             </div>
 

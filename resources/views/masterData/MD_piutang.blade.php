@@ -2,7 +2,7 @@
 
 @section('content')
     <div class=" max-w-full mx-auto bg-white shadow-md rounded-lg overflow-hidden mt-2 p-10 lg:p-10 mb-5 lg:mt-10">
-        <div class="bg-white text-center py-2 text-lg font-bold">
+        <div class="text-2xl font-bold mb-4">
             MASTER DATA PIUTANG
         </div>
         <div class="p-6">

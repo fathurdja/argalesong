@@ -102,20 +102,27 @@
                             @endforeach
                         </select>
                     </div>
+                    <label for="idcompany" class="mr-2 text-gray-700 font-medium ">Pilih Pelanggan:</label>
                     <div id="customerDropdownContainer" class="mb-4">
-                        <label for="nama_pelanggan" class="block text-sm font-medium text-gray-700">Nama
-                            Pelanggan</label>
-                        <select id="nama_pelanggan" name="nama_pelanggan"
-                            class="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option value="">-- Pilih Pelanggan --</option>
-                            @foreach ($customers as $type)
-                                <option value="{{ $type->id_Pelanggan }}">
-                                    {{ $type->id_Pelanggan }} {{ $type->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                        <!-- Input untuk menampilkan nama pelanggan -->
+                        <input list="groupList" name="nama_pelanggan" id="nama_pelanggan"
+                            class="border border-gray-300 p-2 rounded-md w-96" placeholder="Pilih Pelanggan..."
+                            oninput="syncCustomerId(this)">
 
+                        <!-- Datalist untuk menampilkan opsi -->
+                        <datalist id="groupList">
+                            @if (!empty($customers))
+                                @foreach ($customers as $pelanggan)
+                                    <option data-id="{{ $pelanggan->id_Pelanggan }}" value="{{ $pelanggan->name }}">
+                                        {{ $pelanggan->name }}
+                                    </option>
+                                @endforeach
+                            @endif
+                        </datalist>
+
+                        <!-- Input tersembunyi untuk menyimpan id_Pelanggan -->
+                        <input type="hidden" name="id_Pelanggan" id="id_Pelanggan">
+                    </div>
 
                     <div class="flex">
                         <div class="mb-4">
@@ -206,6 +213,13 @@
                             class="mt-1 block w-80 text-right border-gray-300 rounded-md bg-slate-400 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             readonly>
                     </div>
+                    <div class="mb-4">
+                        <label for="keterangan" class="block text-sm font-medium text-gray-700">Keterangan</label>
+                        <textarea name="keterangan" id="keterangan"
+                            class="mt-1 block w-full p-3 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            rows="3" placeholder="Tambahkan keterangan..."></textarea>
+                    </div>
+
                     <div class="flex justify-end mt-4">
                         <button type="submit"
                             class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Posting</button>
@@ -224,31 +238,42 @@
         var customers = @json($customers);
 
         function updateCustomerDropdown() {
-            var tipePelanggan = document.getElementById('tipePelanggan').value;
-            var perusahaan = document.getElementById('perusahaan').value;
-            var customerSelect = document.getElementById('nama_pelanggan');
+            const perusahaan = document.getElementById('perusahaan').value; // Ambil perusahaan yang dipilih
+            const tipePelanggan = document.getElementById('tipePelanggan').value; // Tipe pelanggan yang dipilih
+            const datalist = document.getElementById('groupList'); // Referensi elemen datalist
 
-            // Reset pelanggan, tapi jangan reset perusahaan
-            customerSelect.innerHTML = '<option value="">-- Pilih Pelanggan --</option>';
+            // Kosongkan elemen datalist
+            datalist.innerHTML = '';
 
-            if (!perusahaan) {
-                alert('Silakan pilih perusahaan terlebih dahulu.');
-                return;
-            }
-
-            // Filter pelanggan berdasarkan perusahaan
-            var filteredCustomers = customers.filter(function(customer) {
-                return customer.idcompany === perusahaan &&
+            // Filter pelanggan berdasarkan perusahaan dan tipe pelanggan (jika ada)
+            const filteredCustomers = customers.filter(customer => {
+                return (!perusahaan || customer.idcompany === perusahaan) &&
                     (!tipePelanggan || customer.idtypepelanggan === tipePelanggan);
             });
 
-            filteredCustomers.forEach(function(customer) {
-                var option = document.createElement('option');
-                option.value = customer.id_Pelanggan;
-                option.textContent = customer.name;
-                customerSelect.appendChild(option);
+            // Tambahkan opsi ke datalist
+            filteredCustomers.forEach(customer => {
+                const option = document.createElement('option');
+                option.value = customer.id_Pelanggan; // Value tetap id_Pelanggan
+                option.textContent = ${customer.name}; // Nama pelanggan yang tampil
+                datalist.appendChild(option);
             });
+
+            // Jika tidak ada pelanggan yang cocok, tambahkan opsi kosong
+            if (filteredCustomers.length === 0) {
+                const emptyOption = document.createElement('option');
+                emptyOption.value = '';
+                emptyOption.textContent = '-- Tidak Ada Pelanggan --';
+                datalist.appendChild(emptyOption);
+            }
         }
+
+        // Event listener untuk memperbarui pelanggan saat perusahaan atau tipe pelanggan berubah
+        document.getElementById('perusahaan').addEventListener('change', updateCustomerDropdown);
+        document.getElementById('tipePelanggan').addEventListener('change', updateCustomerDropdown);
+
+        // Panggil fungsi ini saat halaman dimuat untuk inisialisasi awal
+        document.addEventListener('DOMContentLoaded', updateCustomerDropdown);
 
         function formatRupiah(value) {
             return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -291,5 +316,20 @@
             const jumlahKaliContainer = document.getElementById('jumlah_kali_container');
             jumlahKaliContainer.style.display = this.value === 'berulang' ? 'block' : 'none';
         });
+
+        function syncCustomerId(input) {
+            const datalist = document.getElementById('groupList'); // Referensi elemen datalist
+            const hiddenInput = document.getElementById('id_Pelanggan'); // Input tersembunyi untuk id_Pelanggan
+            const selectedOption = Array.from(datalist.options).find(option => option.textContent.trim() === input.value
+                .trim());
+
+            // Jika nama pelanggan ditemukan di datalist, sinkronkan id_Pelanggan
+            if (selectedOption) {
+                hiddenInput.value = selectedOption.getAttribute('data-id'); // Ambil id_Pelanggan dari atribut data-id
+                input.value = selectedOption.textContent.trim(); // Set input value ke nama pelanggan
+            } else {
+                hiddenInput.value = ''; // Reset jika input tidak cocok
+            }
+        }
     </script>
 @endpush

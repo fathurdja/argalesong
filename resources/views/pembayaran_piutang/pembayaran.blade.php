@@ -9,7 +9,7 @@
         @endif
 
         <div class="p-6 ">
-            <h1 class="text-2xl font-bold mb-6 ">PEMBAYARAN PIUTANG</h1>
+            <h1 class="text-2xl font-bold mb-4">PEMBAYARAN PIUTANG</h1>
             <form method="POST" action="{{ route('pembayaran-piutang.proses') }}" id="paymentForm"
                 data-store-url="{{ route('pembayaran-piutang.store') }}">
                 @csrf

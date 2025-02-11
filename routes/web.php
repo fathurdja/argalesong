@@ -106,3 +106,11 @@ Route::post('/tagihan/get-data', [tagihanController::class, 'getData']);
 
 // Route tambahan untuk Umur Piutang
 Route::get('/umur-piutang', [UmurPiutangController::class, 'index'])->name('umur-piutang');
+
+
+
+
+// mbul testing
+Route::get('/mbul-test', function(){
+    return view('pembayaran_piutang/pembayaranDetail');
+});

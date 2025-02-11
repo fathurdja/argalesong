@@ -13,7 +13,7 @@
             </div>
         @endif
 
-        <h1 class="text-3xl py-2 font-semibold">PELANGGAN BARU</h1>
+        <h1 class="text-2xl font-bold mb-4">PELANGGAN BARU</h1>
 
         {{-- <form action="{{ route('customer.store') }}" method="POST" class="overflow-auto max-h-screen"> --}}
         <form action="{{ route('customer.store') }}" method="POST" class="">
