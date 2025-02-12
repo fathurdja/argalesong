@@ -233,10 +233,10 @@
 
 @endsection
 
-@push('script')
+@push('scripts')
     <script>
         var customers = @json($customers);
-
+        cal
         function updateCustomerDropdown() {
             const perusahaan = document.getElementById('perusahaan').value; // Ambil perusahaan yang dipilih
             const tipePelanggan = document.getElementById('tipePelanggan').value; // Tipe pelanggan yang dipilih
@@ -255,7 +255,7 @@
             filteredCustomers.forEach(customer => {
                 const option = document.createElement('option');
                 option.value = customer.id_Pelanggan; // Value tetap id_Pelanggan
-                option.textContent = ${customer.name}; // Nama pelanggan yang tampil
+                option.textContent = `${customer.name}`; // Nama pelanggan yang tampil
                 datalist.appendChild(option);
             });
 

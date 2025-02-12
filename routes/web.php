@@ -54,6 +54,9 @@ Route::get('/riwayatPiutang', [riwayatpiutang::class, 'index'])->name('riwayatPi
 Route::get('/riwayatPiutang/printPreview', [riwayatpiutang::class, 'print_Preview'])->name('printriwayatPiutang');
 Route::get('/riwayatPiutang/detail', [riwayatpiutang::class, 'detail'])->name('detailpiutang');
 Route::get('/riwayatPembayaran', [riwayatPembayaran::class, 'index'])->name('riwayatPembayaran');
+//mbul buat detail
+Route::get('/riwayatPembayaran/detail/{IDPembayaran}', [riwayatPembayaran::class, 'detail'])->name('riwayatPembayaran.detail');
+
 
 // Route untuk Pencarian Customer dan Piutang
 Route::get('/customer/search', [CustomerController::class, 'index'])->name('customer.search');
@@ -113,4 +116,7 @@ Route::get('/umur-piutang', [UmurPiutangController::class, 'index'])->name('umur
 // mbul testing
 Route::get('/mbul-test', function(){
     return view('pembayaran_piutang/pembayaranDetail');
+});
+Route::get('/riwayatPembayaranDetail', function(){
+    return view('pembayaran_piutang/riwayatPembayaranDetail');
 });
