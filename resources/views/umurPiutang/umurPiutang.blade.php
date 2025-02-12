@@ -5,7 +5,7 @@
         <!-- Search Bar -->
         <div class="mb-4 sm:mb-6">
             <form action="{{ route('umur-piutang') }}" method="GET">
-                <input type="text" name="search" placeholder="Search for code / name" value="{{ $search ?? '' }}"
+                <input type="text" name="search" placeholder="Cari berdasarkan kode atau nama" value="{{ $search ?? '' }}"
                     class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-xs sm:text-sm px-3 sm:px-4 py-2">
             </form>
         </div>
@@ -15,7 +15,7 @@
             <h1 class="text-lg sm:text-2xl font-bold mb-4 sm:mb-6">UMUR PIUTANG</h1>
 
             @if (empty($grouped_data) || count($grouped_data) === 0)
-                <p class="text-gray-500">No data was found for this search.</p>
+                <p class="text-gray-500">Data tidak ditemukan!</p>
             @else
                 <div class="overflow-clip sm:overflow-x-auto">
                     <table class="min-w-full table-auto border border-gray-300 text-xs sm:text-sm">

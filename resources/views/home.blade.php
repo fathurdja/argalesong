@@ -3,7 +3,7 @@
 @extends('layouts.app2')
 
 @section('content')
-    <div class="flex flex-col sm:flex-row justify-center md:justify-evenly items-center bg-gray-300 md:shadow lg:shadow rounded-lg max-w-full md:h-full gap-1 container p-4">
+    <div class="flex flex-col sm:flex-row justify-center md:justify-evenly items-center bg-gray-100 md:shadow lg:shadow rounded-lg max-w-full md:h-full gap-1 container p-4">
         <!-- Bagian Kiri: Informasi Perusahaan dan Pengguna -->
         <div class="text-center flex items-center justify-center flex-col gap-2 w-full md:w-auto">
             <h1 class="text-lg md:text-xl lg:text-2xl font-bold">PT SINAR GALESONG PRATAMA</h1>

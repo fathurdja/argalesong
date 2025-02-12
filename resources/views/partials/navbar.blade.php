@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="custom.css">
 
-<header>
-    <nav class="bg-gray-300 border-gray-200 px-4 py-2 dark:bg-gray-800 w-full flex flex-row justify-evenly">
+<header class="fixed top-0 inset-x-0 ">
+    <nav class="bg-gray-300 border-gray-200 px-4 py-0 dark:bg-gray-800 w-full flex flex-row justify-evenly">
         <div class="container mx-auto flex flex-wrap items-center justify-between px-4 md:px-6">
             <div class="flex items-center space-x-3">
                 <a href="" class="flex items-center">
@@ -56,27 +56,13 @@
     e.preventDefault();
     e.currentTarget.classList.toggle('humburger');
     const aside = document.getElementById('aside');
-    const subMenut = document.querySelector('.sidebar .sidebar-item .text')
-    const subMenut2 = document.querySelector('#aside .sidebar-submenu')
-    console.log('hello word')
-    console.log(subMenut2);
+    const asideTextChild = aside.querySelector('.sidebar-item ')
     aside.classList.toggle('hidden');
-// aside.classList.toggle('ml-2');
-subMenut.classList.toggle('opacity-170');
-subMenut.classList.toggle('ml-2');
-subMenut2.classList.toggle('block');
+    // aside.style.width = '250px';
+    // asideTextChild.style.marginLeft = '10px';
 
 
 
 
 });
 </script>
-
-
-<style>
-    
-</style>
-{{-- .sidebar:hover .sidebar-item .text {
-    opacity: 1;
-    margin-left: 1rem;
-} --}}

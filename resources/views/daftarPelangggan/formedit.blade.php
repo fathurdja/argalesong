@@ -65,9 +65,9 @@
             </div>
         @else
             @foreach ($daftarPelanggan as $pelanggan)
-                <div class="bg-white border border-gray-400 p-4 rounded-md mb-5">
-                    <div class="flex justify-between items-center border-b border-gray-400">
-                        <div class="gap-2 flex flex-col items-start justify-center md:flex-row">
+                <div class="bg-white shadow-sm p-4 rounded-md mb-5">
+                    <div class="flex justify-between items-center border-b border-gray-600 opacity-95">
+                        <div class="gap-2 flex flex-col items-start justify-center  md:flex-row">
                             <h2 class="text-xl font-bold md:m-5">{{ $pelanggan->id_Pelanggan }}</h2>
                             <h2 class="text-lg md:text-xl font-bold md:m-5">{{ $pelanggan->name }}</h2>
                         </div>
@@ -94,7 +94,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                         <div>
                             <p><strong>Perusahaan :</strong> {{ $pelanggan->company->name }}</p>
                             <p><strong>Tipe Pelanggan :</strong> {{ $pelanggan->tipePelanggan->name }}</p>

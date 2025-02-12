@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto bg-white rounded-lg shadow-md ">
+    <div class="container mx-auto bg-white rounded-lg shadow-md lg:mt-10 md:mt-10 ">
         <div class="md:py-10 px-2 md:px-6">
             <!-- Form Filter -->
             <form method="GET" action="{{ route('riwayatPembayaran') }}" class="mb-6" id="filterForm">

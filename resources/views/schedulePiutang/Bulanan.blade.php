@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto mt-4 m-10 p-4 rounded-lg bg-white ">
+    <div class="container mx-auto mt-20 m-10 p-4 rounded-lg bg-white ">
         <h1 class="text-2xl font-bold mb-4">SCHEDULE PIUTANG</h1>
 
         <!-- Year Selection -->
@@ -47,7 +47,7 @@
         <!-- Table for Mobile & Tablet -->
         <div class="lg:hidden bg-white shadow-md rounded-lg p-6 overflow-auto">
             <table class="min-w-full table-auto">
-                <thead class="bg-gray-50">
+                <thead class="bg-gray-50 ">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Pelanggan</th>

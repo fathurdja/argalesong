@@ -35,7 +35,7 @@ class riwayatpiutang extends Controller
                 'x.ppn',
                 'x.pph',
                 'x.urutantagihan',
-                'x.statusPembayaran',
+            'x.statusPembayaran',
                 'x.jumlahTagihan',
                 'x.kodepiutang',
                 'm.name as tipepiutang',

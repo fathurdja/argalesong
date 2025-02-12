@@ -7,7 +7,7 @@
 @endphp
 
 @section('content')
-<div class="bg-white p-4 rounded-lg shadow-lg mt-4 ml-9">
+<div class="bg-white p-4 rounded-lg shadow-lg mt-20 ml-9">
     <h1 class="text-2xl font-bold mb-4">SCHEDULE PIUTANG</h1>
 
     <!-- Year and Month Selection -->

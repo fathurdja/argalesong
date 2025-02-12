@@ -13,7 +13,7 @@
     @include('partials.navbar')
     <div class="flex flex-1 ">
         @include('partials.sidebar')
-        <main class="flex justify-start items-center flex-col bg-gray-200 px-2 md:px-20 w-full max-w-full overflow-x-hidden">
+        <main class="flex justify-start items-center flex-col lg:bg-gray-200 bg-white px-2 md:px-20 w-full max-w-full overflow-x-hidden">
             <div class="w-full max-w-full flex items-center justify-center">
                 @yield('content')
             </div>

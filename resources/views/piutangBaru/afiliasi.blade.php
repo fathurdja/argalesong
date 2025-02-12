@@ -5,7 +5,7 @@
 
 
         @if ($errors->any())
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 ml-9">
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 ">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -13,7 +13,7 @@
                 </ul>
             </div>
         @endif
-        <div class="bg-white shadow-md rounded-lg p-8 ml-9 min-w-full">
+        <div class="bg-white shadow-md rounded-lg px-2 md:px-5 min-w-full">
             <div class="text-center mb-6">
                 <h1 class="text-2xl font-bold">PIUTANG BARU</h1>
             </div>
@@ -144,9 +144,9 @@
                         </div>
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-4 ">
                         <label class="block text-sm font-medium text-gray-700">Pajak</label>
-                        <div class="mt-2 flex items-center gap-4">
+                        <div class="mt-2 flex  gap-4  flex-col md:flex-row justify-center items-start">
                             <div class="flex items-center">
                                 <label for="" class="mr-2">PPN:</label>
                                 <select name="ppnType" id="ppn_type"
@@ -158,7 +158,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="flex items-center ml-4 ">
+                            <div class="flex items-center">
                                 <label for="pajak_type" class="mr-2">PPh:</label>
                                 <select name="pajak_type" id="pajak_type" onchange="fetchPajakRates(this.value)"
                                     class="mt-1 block w-52 bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
@@ -169,7 +169,7 @@
                                 </select>
                             </div>
 
-                            <div class="flex items-center ml-4">
+                            <div class="flex items-center">
                                 <label for="tarif" class="mr-2">tarif:</label>
                                 <select name="tarif" id="tarif"
                                     class="bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">

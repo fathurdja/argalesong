@@ -361,6 +361,7 @@
                     </path>
                 </g>
             </svg>
+            {{-- opacity-0 group:hover-opacity-100 --}}
             <h3 class="font-bold ml-2 text">Logout</h3>
         </button>
     </form>
