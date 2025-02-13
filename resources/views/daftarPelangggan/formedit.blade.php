@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="bg-gray-100 w-full lg:mt-10  p-5">
+    <div class="bg-gray-100 w-full lg:mt-10 p-5">
 
         <!-- Bagian Pencarian dan Tombol Baru -->
         <div class="flex justify-between items-center mb-4 flex-wrap">
@@ -40,7 +40,7 @@
                         <h2 class="text-xl font-bold">{{ $customer->id_Pelanggan }}</h2>
                         <h2 class="text-xl font-bold bg-slate-900">{{ $customer->name }}</h2>
                     </div>
-                    <div class="flex space-x-2 ml-auto">
+                    <div class="flex space-x-2 ml-auto z-1">
                         <a href="{{ route('customer.edit', $customer->id) }}"><button
                                 class="bg-green-700 text-black font-bold py-1 px-3 rounded-md">Edit Data</button></a>
                         <button class="bg-red-600 text-black font-bold py-1 px-3 rounded-md">Hapus</button>
@@ -74,7 +74,7 @@
                         <hr class="">
                         <div class="flex space-x-2 ml-auto">
                             <a href="{{ route('customer.edit', $pelanggan->id) }}"
-                                class="p-2 bg-green-700 text-white rounded-md">
+                                class="p-2 bg-green-700 h-full text-white rounded-md">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24">
                                     <rect width="24" height="24" fill="none" />
                                     <g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"
@@ -85,13 +85,24 @@
                                     </g>
                                 </svg>
                             </a>
-                            <button class="p-2 bg-red-600 text-white rounded-md">
+                            
+                            {{-- <button class="p-2 bg-red-600 text-white rounded-md">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M6 18L18 6M6 6l12 12" />
                                 </svg>
-                            </button>
+                            </button> --}}
+                            <form action="{{ route('customer.destroy', $pelanggan->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pelanggan ini?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="p-2 bg-red-600 text-white rounded-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </form>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">

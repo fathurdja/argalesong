@@ -59,9 +59,12 @@ Route::get('/riwayatPembayaran/detail/{IDPembayaran}', [riwayatPembayaran::class
 
 
 // Route untuk Pencarian Customer dan Piutang
+
 Route::get('/customer/search', [CustomerController::class, 'index'])->name('customer.search');
 Route::get('/piutang/group', [UmurPiutangController::class, 'index'])->name('detailpiutang.index');
 Route::get('/fetch-companies', [masterCompany::class, 'fetchAndStoreCompanies']);
+// delete mbul
+Route::delete('/customer/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
 // Route untuk Pembayaran Piutang
 Route::get('/pembayaran-piutang', [PembayaranPiutang::class, 'showForm'])->name('pembayaran-piutang.show');
 Route::get('/pembayaran-piutang/proses', [PembayaranPiutang::class, 'proses'])->name('pembayaran-piutang.proses');

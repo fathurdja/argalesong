@@ -184,6 +184,18 @@ class CustomerController extends Controller
 
 //     return redirect()->route('customers.index')->with('success', 'Customer deleted successfully.');
 // }
+public function destroy($id)
+{
+    // Cari pelanggan berdasarkan ID
+    $customer = Customer::findOrFail($id);
+
+    // Hapus pelanggan dari database
+    $customer->delete();
+
+    // Redirect dengan pesan sukses
+    return redirect()->route('customer.index')->with('success', 'Pelanggan berhasil dihapus.');
+}
+
 
     public function getCustomers($idcompany)
     {

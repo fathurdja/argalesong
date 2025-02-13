@@ -31,7 +31,7 @@ export default {
                 "Noto Color Emoji",
             ],
             poppins: [
-                "Poppins", "sans-serif"
+                "Poppins", "Inter","sans-serif"
             ],
             sans: [
                 "Inter",
