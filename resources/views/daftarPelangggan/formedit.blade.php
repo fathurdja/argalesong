@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="bg-gray-100 w-full lg:mt-10 lg:ml-10 p-5">
+    <div class="bg-gray-100 w-full lg:mt-10  p-5">
 
         <!-- Bagian Pencarian dan Tombol Baru -->
         <div class="flex justify-between items-center mb-4 flex-wrap">

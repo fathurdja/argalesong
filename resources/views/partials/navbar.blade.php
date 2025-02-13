@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="custom.css">
 
-<header class="fixed top-0 inset-x-0 ">
-    <nav class="bg-gray-300 border-gray-200 px-4 py-0 dark:bg-gray-800 w-full flex flex-row justify-evenly">
+<header class="fixed top-0 inset-x-0  ">
+    <nav class="bg-gray-300 border-gray-200 px-4 py-3 lg:px-14 md:px-12 gap-2 dark:bg-gray-800 w-full flex flex-row justify-evenly">
         <div class="container mx-auto flex flex-wrap items-center justify-between px-4 md:px-6">
             <div class="flex items-center space-x-3">
                 <a href="" class="flex items-center">

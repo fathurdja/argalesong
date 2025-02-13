@@ -37,7 +37,7 @@
 
 
                         <a href="{{ route('customer.index') }}"> <span
-                                class="flex-1 ml-3 text-left whitespace-nowrap text">Daftar Pelanggan</span></a>
+                                class="flex-1 text-left whitespace-nowrap text">Daftar Pelanggan</span></a>
                         <svg aria-hidden="true" class="arrow w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -392,7 +392,7 @@
                     </button>
                     <div id="submenuPiutang" class="hidden z-10 bg-gray-700 rounded-lg shadow-md">
                         <a href="{{ route('piutang-types.create') }}" class="submenu-link block px-4 py-2 text-white hover:bg-blue-600">Piutang Baru</a>
-                        <a href="{{ route('riwayatPiutang') }}" class="submenu-link block px-4 py-2 text-white hover:bg-blue-600">Riwayat Piutang</a>
+                        <a href="{{ ro  ute('riwayatPiutang') }}" class="submenu-link block px-4 py-2 text-white hover:bg-blue-600">Riwayat Piutang</a>
                     </div>
                 </li>
 

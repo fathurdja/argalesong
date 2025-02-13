@@ -35,7 +35,7 @@
                     </thead>
                     <tbody>
                         @forelse ($riwayatPembayaran as $riwayat)
-                        
+                            
                             <tr class="hover:bg-gray-100" onclick="window.location='{{ route('riwayatPembayaran.detail', $riwayat->IDPembayaran) }}'">
                                 <td class="px-1 py-2  md:px-4 md:py-2 border border-gray-300 truncate">{{ $riwayat->IDPembayaran }}</td>
                                 <td class="px-1 py-2 text-[8px] sm:text-xs md:text-md md:px-4 md:py-2 border border-gray-300 truncate">{{ $riwayat->NamaPelanggan }}</td>

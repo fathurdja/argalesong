@@ -18,7 +18,7 @@
             </div>
 
             @if (session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative my-4 text-center">
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded  my-4 text-center">
                     {{ session('success') }}
                 </div>
             @endif
@@ -26,7 +26,7 @@
             <!-- Daftar Pajak -->
             <div class="mt-4 space-y-4 ">
                 @foreach ($data as $item)
-                    <div class="bg-gray-100 p-4 rounded-lg shadow flex flex-row  md:items-center justify-between gap-4">
+                    <div class="bg-gray-100 p-4 rounded-lg shadow flex flex-row items-center justify-between gap-4">
                         <div class="md:text-left">
                             <p class="text-lg font-bold">{{ $item->name }}</p>
                             <p class="text-sm text-gray-600">Berlaku sejak: {{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }}</p>
@@ -35,7 +35,7 @@
 
                         <!-- Tombol Hapus -->
                         <form action="{{ route('masterDataPajak.destroy', $item->id) }}" method="POST" class="inline"
-                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="">
+                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus data {{ $item->name }}?');" class="">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="p-2 bg-red-600 hover:bg-red-700 text-white rounded-md ">
@@ -51,7 +51,7 @@
             <!-- Form Tambah Pajak -->
             <form action="{{ route('masterDataPajak.store') }}" method="POST" class="mt-6">
                 @csrf
-                <div class="grid lg:ml-48 md:ml-40 grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="grid md:ml-40 grid-cols-1 md:grid-cols-4 gap-4">
                     <input type="text" name="new_tax_name" class="border rounded p-2 w-full" placeholder="Nama Pajak" required>
                     <input type="text" name="new_tax_value" class="border rounded p-2 w-full" placeholder="Nilai (%)" required>
                     <input type="date" name="new_tax_date" class="border rounded p-2 w-full" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" required>
