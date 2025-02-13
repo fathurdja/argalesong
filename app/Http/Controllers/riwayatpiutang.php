@@ -59,14 +59,5 @@ class riwayatpiutang extends Controller
         return view('piutangBaru.riwayatpiutang', compact('piutang', 'perusahaan', 'filterCompany'));
     }
 
-    // public function print_Preview()
-    // {
-    //     $mpdf = new \Mpdf\Mpdf();
-    //     $mpdf->WriteHTML('<h1>Hello world!</h1>');
-    //     $mpdf->Output();
-    // }
-
-    // public function detail(){
-    //     return view('piutangBaru.detailpiutang');
-    // }
+    // public function print_ta
 }
