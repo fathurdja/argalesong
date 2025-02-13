@@ -103,9 +103,11 @@ Route::get('/sp-harian', [Sp_HarianController::class, 'index'])->name('sp-harian
 // Route untuk API mendapatkan laporan harian
 Route::get('/daily-report', [Sp_HarianController::class, 'getDailyReport']);
 
-
 // Route untuk Jatuh Tempo
 Route::get('/jatuh-tempo', [JatuhTempoController::class, 'index'])->name('jatuh-tempo');
+// mbul jatuh tempo
+Route::get('/jatuh-tempo/data/{year}/{month}', [JatuhTempoController::class, 'getJatuhTempo']);
+
 
 // Route untuk mendapatkan data Tagihan
 Route::post('/tagihan/get-data', [tagihanController::class, 'getData']);

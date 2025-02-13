@@ -68,7 +68,7 @@
     </div>
 @endsection
 
-@push('script')
+@push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             function fetchData(month, year) {
