@@ -4,7 +4,9 @@
 
 @section('content')
     <div
-        class="flex flex-col sm:flex-row justify-center md:justify-evenly items-center bg-gray-100 lg:-pt-10 lg:-mt-10 rounded-lg max-w-full md:h-full gap-1 container p-4 lg:-ml-10">
+        class="flex flex-col sm:flex-row justify-center md:justify-evenly items-center bg-gray-100 
+        
+        rounded-lg max-w-full md:h-full gap-5 lg:gap-1 container p-4 ">
         <!-- Bagian Kiri: Informasi Perusahaan dan Pengguna -->
         <div class="text-center flex items-center justify-center flex-col gap-2 w-full md:w-auto">
             <h1 class="text-lg md:text-xl lg:text-2xl font-bold">PT SINAR GALESONG PRATAMA</h1>
@@ -28,7 +30,7 @@
                     <thead>
                         <tr>
                             <th
-                                class="border border-gray-200 px-1 py-1 md:px-4 md:py-2 text-[#2E2659] text-center md:text-left">
+                                class="border border-gray-200 px-1 py-0 md:px-4 md:py-2 text-[#2E2659] text-center md:text-left">
                                 No</th>
                             <th
                                 class="border border-gray-200 px-1 py-1 md:px-4 md:py-2 text-[#2E2659] text-center md:text-left">
@@ -55,7 +57,7 @@
                     </tbody>
                 </table>
                     <ul
-                        class="justify-start pl-4 mt-5 items-start scroll-smooth py-1 w-full flex sm:hidden flex-row space-x-5 overflow-auto scrollbar-hide">
+                        class="justify-start pl-4 mt-10 lg:mt-0 items-start scroll-smooth py-1 w-full flex sm:hidden flex-row space-x-6 overflow-auto scrollbar-hide">
                         <li>
                             <a href="{{ route('customer.index') }}">
                                 <div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">

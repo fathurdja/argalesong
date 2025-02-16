@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto bg-white rounded-lg shadow-md lg:mt-10 md:mt-10 ">
+    <div class="container mx-auto bg-white rounded-lg shadow-md m-10 ">
         <div class="md:py-10 px-2 md:px-6">
             <!-- Form Filter -->
             <form method="GET" action="{{ route('riwayatPembayaran') }}" class="mb-6" id="filterForm">
@@ -24,12 +24,12 @@
                 <table class="min-w-full table-fixed text-[10px] sm:text-xs md:text-md lg:!text-lg bg-white border border-gray-300 rounded-lg">
                     <thead>
                         <tr class="bg-gray-200">
-                            <th class="px-1 py-2  md:px-4 md:py-2 border border-gray-300">ID Pembayaran</th>
-                            <th class="px-1 py-2  md:px-4 md:py-2 border border-gray-300 w-48">Nama Pelanggan</th>
-                            <th class="px-1 py-2 hidden sm:table-cell md:px-4 md:py-2 border border-gray-300">Mode Pembayaran</th>
-                            <th class="px-1 py-2 md:px-4 md:py-2 bo rder border-gray-300 w-48">Total Semua Piutang</th>
-                            <th class="px-1 py-2 hidden sm:table-cell md:px-4 md:py-2 border border-gray-300 w-48">Nominal yang Dibayar</th>
-                            <th class="px-1 py-2 hidden sm:table-cell md:px-4 md:py-2 border border-gray-300 w-48">Sisa</th>
+                            <th class="px-1 py-3  md:px-4  border border-gray-300">ID Pembayaran</th>
+                            <th class="px-1 py-3  md:px-4  border border-gray-300 w-48">Nama Pelanggan</th>
+                            <th class="px-1 py-3 hidden sm:table-cell md:px-4  border border-gray-300">Mode Pembayaran</th>
+                            <th class="px-1 py-3 md:px-4  bo rder border-gray-300 w-48">Total Semua Piutang</th>
+                            <th class="px-1 py-3 hidden sm:table-cell md:px-4  border border-gray-300 w-48">Nominal yang Dibayar</th>
+                            <th class="px-1 py-3 hidden sm:table-cell md:px-4  border border-gray-300 w-48">Sisa</th>
                             <th class="sm:hidden px-1 py-2  md:px-4 md:py-2 border border-gray-300 w-5">Aksi</th>
                         </tr>
                     </thead>
@@ -37,14 +37,14 @@
                         @forelse ($riwayatPembayaran as $riwayat)
                             
                             <tr class="hover:bg-gray-100 cursor-pointer" onclick="window.location='{{ route('riwayatPembayaran.detail', $riwayat->IDPembayaran) }}'">
-                                <td class="px-1 py-2  md:px-4 md:py-2 border border-gray-300 truncate">{{ $riwayat->IDPembayaran }}</td>
-                                <td class="px-1 py-2 text-[8px] sm:text-xs md:text-md md:px-4 md:py-2 lg:text-lg border border-gray-300 truncate">{{ $riwayat->NamaPelanggan }}</td>
-                                <td class="px-1 py-2 hidden sm:table-cell  md:px-4 md:py-2 border border-gray-300 truncate">{{ $riwayat->ModePembayaran }}</td>
-                                <td class="px-1 py-2 text-[8px] sm:text-xs md:text-md  md:px-4 lg:text-lg md:py-2 border border-gray-300 text-right truncate">
+                                <td class="px-1 py-3  md:px-4  border border-gray-300 font-semibold truncate">{{ $riwayat->IDPembayaran }}</td>
+                                <td class="px-1 py-3 text-[8px] sm:text-xs md:text-md md:px-4  lg:text-lg border border-gray-300 truncate">{{ $riwayat->NamaPelanggan }}</td>
+                                <td class="px-1 py-3 hidden sm:table-cell  md:px-4  border border-gray-300 truncate">{{ $riwayat->ModePembayaran }}</td>
+                                <td class="px-1 py-3 text-[8px] sm:text-xs md:text-md  md:px-4 lg:text-lg  border border-gray-300 text-right truncate">
                                     Rp{{ number_format($riwayat->TotalSemuaPiutang, 0, ',', '.') }}</td>
-                                <td class="px-1 py-2  md:px-4 hidden sm:table-cell  md:py-2 border border-gray-300 text-right truncate">
+                                <td class="px-1 py-3  md:px-4 hidden sm:table-cell   border border-gray-300 text-right truncate">
                                     Rp{{ number_format($riwayat->NominalyangDibayar, 0, ',', '.') }}</td>
-                                <td class="px-1 py-2 hidden sm:table-cell  md:px-4 md:py-2 border border-gray-300 text-right truncate">
+                                <td class="px-1 py-3 hidden sm:table-cell  md:px-4  border border-gray-300 text-right truncate">
                                     Rp{{ number_format($riwayat->Sisa, 0, ',', '.') }}
                                 </td>
                                 <td class="sm:hidden px-1 py-2  md:px-4 md:py-2 border border-gray-300 text-blue-500 hover:underline truncate">

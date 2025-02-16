@@ -54,9 +54,17 @@
 
 
             <div class="flex justify-end space-x-2">
-                <button type="button" onclick=""
-                    class="active:scale-[.95] hover:bg-white hover:text-[#0F8114] transition-all text-white font-medium border-2 border-[#0F8114] rounded-md shadow-sm px-4 py-1 bg-[#810f0f]">Kembali</button>
+                <button type="button" onclick="window.location.href='{{ route('riwayatPembayaran') }}'"
+                    class="active:scale-[.95] flex flex-row items-center group justify-center gap-1 py-1 hover:bg-white hover:text-[#161616] transition-all text-white font-medium border-2 border-[#161616] rounded-md shadow-sm px-4 bg-[#161616]">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="white" class="group-hover:fill-[#161616] transition-colors" d="m4 10l9 9l1.4-1.5L7 10l7.4-7.5L13 1z"/></svg>
+                    </div>
+                    <span>
+                        Kembali
+                    </span>
+                </button>
             </div>
+            
         </div>
     </div>
 @endsection

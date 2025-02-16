@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response.ok) throw new Error("Gagal mengambil data");
             
             const data = await response.json();
-            console.log(data); // Debugging
+            console.log(data); 
 
             tbody.innerHTML = "";
             let rows = "";

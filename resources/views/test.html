@@ -1,49 +1,169 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konfirmasi Hapus</title>
+    <title>Mobile Menu</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-<body class="flex items-center justify-center min-h-screen bg-gray-100 flex-col gap-20">
-    <button type="button" onclick="konfirmasiDelete()"
-        class="active:scale-[.95] hover:bg-white hover:text-[#0F8114] transition-all text-white font-medium border-2 border-[#0F8114] rounded-md shadow-sm px-4 py-1 bg-[#810f0f]">
-        Hapus Pelanggan
-    </button>
-
+<body class="bg-gray-100">
+    <nav class="bg-blue-600 text-white p-4">
+        <div class="flex justify-between items-center">
+            <span class="text-xl font-bold">Logo</span>
+            <button id="menu-button" class="text-xl focus:outline-none">☰</button>
+        </div>
+    </nav>
+    
+    <div id="menu" class="hidden bg-white shadow-md w-64 fixed top-0 left-0 h-full p-4">
+        <button id="close-menu" class="text-xl font-bold text-red-600">×</button>
+        <ul class="mt-4 space-y-2">
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Home</a></li>
+            <li class="group">
+                <button class="submenu-toggle w-full text-left px-4 py-2 hover:bg-gray-200">Services ▼</button>
+                <ul class="hidden ml-4 mt-1 space-y-1">
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Web Design</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">SEO</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Marketing</a></li>
+                </ul>
+            </li>
+            <li class="group">
+                <button class="submenu-toggle w-full text-left px-4 py-2 hover:bg-gray-200">Products ▼</button>
+                <ul class="hidden ml-4 mt-1 space-y-1">
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Laptops</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Phones</a></li>
+                </ul>
+            </li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">About Us</a></li>
+            <li class="group">
+                <button class="submenu-toggle w-full text-left px-4 py-2 hover:bg-gray-200">Portfolio ▼</button>
+                <ul class="hidden ml-4 mt-1 space-y-1">
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Designs</a></li>
+                </ul>
+            </li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Blog</a></li>
+            <li class="group">
+                <button class="submenu-toggle w-full text-left px-4 py-2 hover:bg-gray-200">Contact ▼</button>
+                <ul class="hidden ml-4 mt-1 space-y-1">
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Support</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Sales</a></li>
+                </ul>
+            </li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">FAQ</a></li>
+        </ul>
+    </div>
+    
     <script>
-        function konfirmasiDelete() {
-            const modalHTML = `
-                <div id="confirmModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-6">
-                    <div class="bg-white p-6 rounded-md shadow-lg text-center">
-                        <p class="text-lg font-semibold text-gray-800">Apakah Anda yakin ingin menghapus pelanggan?</p>
-                        <div class="mt-4 flex justify-center space-x-4">
-                            <button id="confirmYes" class="px-4 py-2 bg-red-600 text-white rounded">Ya</button>
-                            <button id="confirmNo" class="px-4 py-2 bg-gray-300 text-black rounded">Batal</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            // Tambahkan modal ke dalam body tanpa menghapus konten lain
-            document.body.insertAdjacentHTML("beforeend", modalHTML);
-
-            // Event listener untuk tombol "Ya"
-            document.getElementById("confirmYes").addEventListener("click", function () {
-                alert("Pelangan dihapus! (Simulasi submit form)");
-                document.getElementById("confirmModal").remove();
+        document.getElementById('menu-button').addEventListener('click', function() {
+            document.getElementById('menu').classList.toggle('hidden');
+        });
+        document.getElementById('close-menu').addEventListener('click', function() {
+            document.getElementById('menu').classList.add('hidden');
+        });
+        document.querySelectorAll('.submenu-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                this.nextElementSibling.classList.toggle('hidden');
             });
-
-            // Event listener untuk tombol "Batal"
-            document.getElementById("confirmNo").addEventListener("click", function () {
-                document.getElementById("confirmModal").remove();
-            });
-        }
+        });
     </script>
-
 </body>
+</html> -->
 
-</html>
+<!-- <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-600 text-white p-4">
+        <span class="text-xl font-bold">Logo</span>
+    </nav>
+    
+    <div id="menu" class="hidden bg-white shadow-md w-64 fixed bottom-16 left-4 p-4 rounded-lg">
+        <ul class="mt-2 space-y-2">
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Home</a></li>
+            <li class="group">
+                <button class="submenu-toggle w-full text-left px-4 py-2 hover:bg-gray-200">Services ▼</button>
+                <ul class="hidden ml-4 mt-1 space-y-1">
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Web Design</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">SEO</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Marketing</a></li>
+                </ul>
+            </li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">About Us</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Contact</a></li>
+        </ul>
+    </div>
+    
+    <button id="menu-button" class="fixed bottom-4 left-4 bg-blue-600 text-white p-4 rounded-full shadow-lg">☰</button>
+    
+    <script>
+        document.getElementById('menu-button').addEventListener('click', function() {
+            document.getElementById('menu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('.submenu-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                this.nextElementSibling.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html> -->
+
+
+<!-- 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 pb-16">
+    <nav class="bg-blue-600 text-white p-4">
+        <span class="text-xl font-bold">Logo</span>
+    </nav>
+    
+    <div id="menu" class="hidden bg-white shadow-md w-full fixed bottom-16 left-0 p-4 rounded-t-lg">
+        <ul class="mt-2 space-y-2">
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Home</a></li>
+            <li class="group">
+                <button class="submenu-toggle w-full text-left px-4 py-2 hover:bg-gray-200">Services ▼</button>
+                <ul class="hidden ml-4 mt-1 space-y-1">
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Web Design</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">SEO</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Marketing</a></li>
+                </ul>
+            </li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">About Us</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Contact</a></li>
+        </ul>
+    </div>
+    
+    <div class="fixed bottom-0 left-0 w-full bg-white shadow-md flex justify-around py-2">
+        <button id="menu-button" class="text-blue-600 text-2xl">☰</button>
+        <a href="#" class="text-gray-700 text-sm">Home</a>
+        <a href="#" class="text-gray-700 text-sm">Services</a>
+        <a href="#" class="text-gray-700 text-sm">About</a>
+        <a href="#" class="text-gray-700 text-sm">Contact</a>
+    </div>
+    
+    <script>
+        document.getElementById('menu-button').addEventListener('click', function() {
+            document.getElementById('menu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('.submenu-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                this.nextElementSibling.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html> -->
+
+
+
+<!-- scroll -->

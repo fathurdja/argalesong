@@ -17,7 +17,7 @@
 
         @include('partials.sidebar')
 
-        <div class="min-w-full min-h-full flex justify-center items-center pt-20 lg:pl-16">
+        <div class="min-w-full min-h-full flex justify-center items-center ">
             @yield('content')
         </div>
     </div>

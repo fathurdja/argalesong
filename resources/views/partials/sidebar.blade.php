@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="custom.css">
 <aside id="aside"
-    class="hidden sidebar fixed inset-y-0 left-0 bg-gray-700 border-r md:flex flex-col justify-between">
+    class="hidden sidebar fixed inset-y-0 left-0 -mx-1 -my-1 bg-gray-700 border-r md:flex flex-col justify-between">
     <div class="overflow-x-clip overflow-y-auto">
         <div class="flex items-center justify-center h-16 shadow-md">
             <a class="p-2 text-white" href="{{ route('dashboard') }}">

@@ -2,15 +2,15 @@
 
 @section('content')
 
-    <div class="bg-gray-100 w-full lg:mt-10 p-5">
+    <div class="bg-gray-100 w-full p-5 mt-10">
 
         <!-- Bagian Pencarian dan Tombol Baru -->
         <div class="flex justify-between items-center mb-4 flex-wrap">
             <form id="filterForm" action="{{ route('customer.index') }}" method="GET" class="w-full max-w-sm flex space-x-4">
                 <div class="">
-                    <label for="idcompany" class="mr-2 text-2xl text-gray-700 font-bold">Pilih Group:</label>
+                    <label for="idcompany" class="mr-2 text-xl text-gray-700 font-bold">Pilih Group:</label>
                     <input list="groupList" name="idcompany" id="idcompany"
-                        class="border border-gray-300 p-4 rounded-md w-full sm:w-96" placeholder="Search group..."
+                        class="border border-gray-300 py-2 px-4 rounded-md w-full sm:w-96" placeholder="Search group..."
                         value="{{ request('idcompany') }}">
                     <datalist id="groupList">
                         <option value="">-- Semua Group --</option>
@@ -24,7 +24,7 @@
             </form>
             <div class="flex justify-end w-full items-end">
                 <a href="{{ route('customer.create') }}"
-                    class="bg-green-500 justify-items-end text-white font-bold py-3 px-9 rounded-md">
+                    class="bg-green-500 justify-items-end text-white font-bold py-2 px-5 lg:py-2 lg:px-7 rounded-md">
                     Baru
                 </a>
             </div>
@@ -66,7 +66,7 @@
         @else
             @foreach ($daftarPelanggan as $pelanggan)
                 <div class="bg-white shadow-sm p-4 rounded-md mb-5">
-                    <div class="flex justify-between items-center border-b border-gray-600 opacity-95">
+                    <div class="flex justify-between items-center border-b border-gray-600 opacity-95 gap-1">
                         <div class="gap-2 flex flex-col items-start justify-center  md:flex-row">
                             <h2 class="text-xl font-bold md:m-5">{{ $pelanggan->id_Pelanggan }}</h2>
                             <h2 class="text-lg md:text-xl font-bold md:m-5">{{ $pelanggan->name }}</h2>
@@ -94,7 +94,7 @@
                                 </svg>
                             </button> --}}
                             {{-- <form action="{{ route('customer.destroy', $pelanggan->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pelanggan {{ $pelanggan->company->name }} ini?');"> --}}
-                            <form action="{{ route('customer.destroy', $pelanggan->id) }}" method="POST" class="inline-block" onsubmit="return konfirmasiDelete(e, this);">
+                            <form action="{{ route('customer.destroy', $pelanggan->id) }}" method="POST" class="inline-block" onsubmit="return confirm('apakah anda ingin menghapus pelanggan {{ $pelanggan->name }}');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="p-2 bg-red-600 text-white rounded-md">
