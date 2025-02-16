@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mt-6 sm:mt-10 px-2 sm:px-4">
+    <div class="container mt-6 sm:mt-12 px-2 sm:px-4">
         <!-- Search Bar -->
         <div class="mb-4 sm:mb-6">
             <form action="{{ route('umur-piutang') }}" method="GET" class="flex gap-2">

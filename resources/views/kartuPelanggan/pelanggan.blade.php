@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container py-2 px-1 lg:px-4 lg:py-8 ">
+    <div class="container py-2 px-1 lg:px-4 lg:py-8 mt-10">
         <!-- Form Pencarian -->
         <div class="bg-gray-100 p-6 rounded-lg shadow-md mb-6">
             <form method="POST" action="{{ route('kartu-pelanggan-fetchData') }}">
@@ -53,15 +53,18 @@
                 <!-- Tombol Cari -->
                 <div class="mt-6 text-right">
                     <button type="submit"
-                        class="active:scale-[.95] hover:bg-white hover:text-[#3D5AD0] transition-all font-medium text-white border-2 border-[#3D5AD0] rounded-md shadow-sm px-4 py-1 bg-[#3D5AD0]">
-                        Cari
-                    </button>
+                    class="active:scale-[.95] hover:bg-white hover:text-[#3D5AD0] transition-all font-medium text-white border-2 border-[#3D5AD0] rounded-md shadow-sm px-4 py-1 bg-[#3D5AD0]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14" />
+                    </svg>
+                </button>
                 </div>
             </form>
         </div>
 
         <!-- Data Piutang, Pembayaran, dan Denda -->
-        <div class="bg-white p-4">
+        <div class="bg-white p-4 ">
             <div class=" justify-between items-center mb-2">
                 <div class=" justify-between items-center mb-2">
                     <div class="text-lg font-bold">

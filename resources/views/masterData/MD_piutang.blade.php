@@ -6,7 +6,7 @@
             MASTER DATA PIUTANG
         </div>
         <div class="p-6">
-            <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-2">
+            <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-10 mb-2">
                 @foreach ($columns as $title => $items)
                     <div>
                         <h3 class="font-semibold mb-2 text-center bg-gray-100 py-1">{{ $title }}</h3>
@@ -32,7 +32,7 @@
                     </div>
                 @endforeach
             </div>
-            <div class="flex justify-center gap-4 mt-4">
+            <div class="flex justify-center gap-4 mt-14">
                 <button class="inline-flex items-center justify-center w-full lg:w-auto active:scale-[.95] hover:bg-white hover:text-[#0F8114] transition-all text-white font-medium border-2 border-[#0F8114] rounded-md shadow-sm px-6 py-2 bg-[#0F8114]">
                     Simpan
                 </button>
