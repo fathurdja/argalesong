@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="min-w-full flex flex-col justify-center">
+    <div class="min-w-full flex flex-col justify-center lg:ml-10 mt-10">
         <div class="bg-white rounded-xl px-2 py-5 !container ">
             <!-- Form Filter -->
             <form method="GET" action="{{ route('riwayatPiutang') }}" class="mb-6 flex flex-row justify-start items-center" id="filterForm">
@@ -168,29 +168,29 @@
                         <tbody>
                             @forelse ($piutang as $item)
                                 <tr class="hover:bg-gray-100">
-                                    <td class="border border-gray-400 px-1 py-2 underline text-blue-600 truncate">
+                                    <td class="border border-gray-400 px-1 py-3 md:py-2 truncate">
                                         <a href="{{ route('printriwayatPiutang', ['nomor_invoice' => $item->no_invoice]) }}">
                                             {{ $item->no_invoice }}
                                         </a>
                                     </td>
-                                    <td class="border border-gray-400 px-1 py-2 truncate">{{ $item->tipepiutang }}</td>
-                                    <td class="border border-gray-400 px-1 py-2 truncate">{{ $item->tgltra }}</td>
-                                    <td class="border border-gray-400 px-1 py-2 md:hidden     ">
+                                    <td class="border border-gray-400 px-1 py-3 md:py-2 truncate">{{ $item->tipepiutang }}</td>
+                                    <td class="border border-gray-400 px-1 py-3 md:py-2 truncate">{{ $item->tgltra }}</td>
+                                    <td class="border border-gray-400 px-1 py-3 md:py-2 md:hidden     ">
                                         <div class="w-3 mx-auto">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="#2196f3" d="M17.1 5L14 8.1L29.9 24L14 39.9l3.1 3.1L36 24z"/></svg>
                                         </div>
                                     </td>
-                                    <td class="border border-gray-400 px-1 py-2 hidden sm:table-cell">{{ $item->tgl_jatuh_tempo }}</td>
-                                    <td class="border border-gray-400 px-1 py-2 hidden sm:table-cell">{{ $item->tipe_pelanggan }}</td>
-                                    <td class="border border-gray-400 px-1 py-2 hidden sm:table-cell">{{ $item->customer_name }}</td>
-                                    <td class="border border-gray-400 px-1 py-2 hidden sm:table-cell">{{ $item->jenistagihan }}</td>
-                                    <td class="border border-gray-400 px-1 py-2 hidden sm:table-cell">{{ number_format($item->dpp, 2) }}</td>
-                                    <td class="border border-gray-400 px-1 py-2 hidden sm:table-cell">{{ number_format($item->ppn, 2) }}</td>
-                                    <td class="border border-gray-400 px-1 py-2 hidden sm:table-cell">{{ number_format($item->pph, 2) }}</td>
-                                    <td class="border border-gray-400 px-1 py-2 hidden sm:table-cell">{{ number_format($item->nominal, 2) }}</td>
-                                    <td class="border border-gray-400 px-1 py-2 hidden sm:table-cell">{{ $item->created_by ?? 'GL' }}</td>
-                                    <td class="border border-gray-400 px-1 py-2 hidden sm:table-cell">{{ number_format($item->tagihan, 2) }}</td>
-                                    <td class="border border-gray-400 px-1 py-2 hidden sm:table-cell 
+                                    <td class="border border-gray-400 px-1 py-3 md:py-2 hidden sm:table-cell">{{ $item->tgl_jatuh_tempo }}</td>
+                                    <td class="border border-gray-400 px-1 py-3 md:py-2 hidden sm:table-cell">{{ $item->tipe_pelanggan }}</td>
+                                    <td class="border border-gray-400 px-1 py-3 md:py-2 hidden sm:table-cell">{{ $item->customer_name }}</td>
+                                    <td class="border border-gray-400 px-1 py-3 md:py-2 hidden sm:table-cell">{{ $item->jenistagihan }}</td>
+                                    <td class="border border-gray-400 px-1 py-3 md:py-2 hidden sm:table-cell">{{ number_format($item->dpp, 2) }}</td>
+                                    <td class="border border-gray-400 px-1 py-3 md:py-2 hidden sm:table-cell">{{ number_format($item->ppn, 2) }}</td>
+                                    <td class="border border-gray-400 px-1 py-3 md:py-2 hidden sm:table-cell">{{ number_format($item->pph, 2) }}</td>
+                                    <td class="border border-gray-400 px-1 py-3 md:py-2 hidden sm:table-cell">{{ number_format($item->nominal, 2) }}</td>
+                                    <td class="border border-gray-400 px-1 py-3 md:py-2 hidden sm:table-cell">{{ $item->created_by ?? 'GL' }}</td>
+                                    <td class="border border-gray-400 px-1 py-3 md:py-2 hidden sm:table-cell">{{ number_format($item->tagihan, 2) }}</td>
+                                    <td class="border border-gray-400 px-1 py-3 md:py-2 hidden sm:table-cell 
                                         @if ($item->statusPembayaran == 'LUNAS') bg-green-500 text-white
                                         @elseif($item->statusPembayaran == 'SEBAGIAN') bg-yellow-500 text-white
                                         @else bg-red-500 text-white @endif">

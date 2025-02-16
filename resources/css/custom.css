@@ -1,7 +1,7 @@
 
 * {
     /* margin: 0px !important; */
-  
+  font-family: poppins !important;
 }
 
 .sidebar {
@@ -12,7 +12,7 @@
 }
 
 .sidebar:hover {
-    width: 15rem;
+    width: 16rem;
 }
 
 .sidebar-item {
@@ -34,6 +34,10 @@
     margin-left: 0.5rem;
 }
 
+/* .sidebar .sidebar-item .text {
+    opacity: 1;
+    margin-left: 1rem;
+} */
 .sidebar:hover .sidebar-item .text {
     opacity: 1;
     margin-left: 1rem;
@@ -53,13 +57,12 @@
 } 
 
 /* humburger menu sidebar */
-/* humburger menu sidebar */
 .humburger span {
     transition: all 0.3s ease-in-out;
 }
 
 .humburger span:first-child {
-    transform: rotate(-45deg) translateY(10px) translateX(-5px);
+    transform: rotate(-45deg) translateY(8px) translateX(-5px);
 }
 
 .humburger span:nth-child(2) {
@@ -71,7 +74,7 @@
 }
 
 .humburger span:last-child {
-    transform: rotate(45deg) translateY(-10px) translateX(-5px);
+    transform: rotate(45deg) translateY(-8px) translateX(-5px);
     width: 100%;
 }
 

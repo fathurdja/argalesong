@@ -1,114 +1,169 @@
+<!-- <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-600 text-white p-4">
+        <div class="flex justify-between items-center">
+            <span class="text-xl font-bold">Logo</span>
+            <button id="menu-button" class="text-xl focus:outline-none">☰</button>
+        </div>
+    </nav>
+    
+    <div id="menu" class="hidden bg-white shadow-md w-64 fixed top-0 left-0 h-full p-4">
+        <button id="close-menu" class="text-xl font-bold text-red-600">×</button>
+        <ul class="mt-4 space-y-2">
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Home</a></li>
+            <li class="group">
+                <button class="submenu-toggle w-full text-left px-4 py-2 hover:bg-gray-200">Services ▼</button>
+                <ul class="hidden ml-4 mt-1 space-y-1">
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Web Design</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">SEO</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Marketing</a></li>
+                </ul>
+            </li>
+            <li class="group">
+                <button class="submenu-toggle w-full text-left px-4 py-2 hover:bg-gray-200">Products ▼</button>
+                <ul class="hidden ml-4 mt-1 space-y-1">
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Laptops</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Phones</a></li>
+                </ul>
+            </li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">About Us</a></li>
+            <li class="group">
+                <button class="submenu-toggle w-full text-left px-4 py-2 hover:bg-gray-200">Portfolio ▼</button>
+                <ul class="hidden ml-4 mt-1 space-y-1">
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Designs</a></li>
+                </ul>
+            </li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Blog</a></li>
+            <li class="group">
+                <button class="submenu-toggle w-full text-left px-4 py-2 hover:bg-gray-200">Contact ▼</button>
+                <ul class="hidden ml-4 mt-1 space-y-1">
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Support</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Sales</a></li>
+                </ul>
+            </li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">FAQ</a></li>
+        </ul>
+    </div>
+    
+    <script>
+        document.getElementById('menu-button').addEventListener('click', function() {
+            document.getElementById('menu').classList.toggle('hidden');
+        });
+        document.getElementById('close-menu').addEventListener('click', function() {
+            document.getElementById('menu').classList.add('hidden');
+        });
+        document.querySelectorAll('.submenu-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                this.nextElementSibling.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-600 text-white p-4">
+        <span class="text-xl font-bold">Logo</span>
+    </nav>
+    
+    <div id="menu" class="hidden bg-white shadow-md w-64 fixed bottom-16 left-4 p-4 rounded-lg">
+        <ul class="mt-2 space-y-2">
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Home</a></li>
+            <li class="group">
+                <button class="submenu-toggle w-full text-left px-4 py-2 hover:bg-gray-200">Services ▼</button>
+                <ul class="hidden ml-4 mt-1 space-y-1">
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Web Design</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">SEO</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Marketing</a></li>
+                </ul>
+            </li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">About Us</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Contact</a></li>
+        </ul>
+    </div>
+    
+    <button id="menu-button" class="fixed bottom-4 left-4 bg-blue-600 text-white p-4 rounded-full shadow-lg">☰</button>
+    
+    <script>
+        document.getElementById('menu-button').addEventListener('click', function() {
+            document.getElementById('menu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('.submenu-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                this.nextElementSibling.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html> -->
+
+
+<!-- 
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="https://cdn.tailwindcss.com"></script>
-	<title>Hamburger Menu</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-<body class="flex items-center justify-center min-h-screen bg-gray-100">
-
-	<!-- Tombol Hamburger -->
-	<!-- <button id="menu-humburger" class="fixed top-2 right-4 w-8  flex flex-col justify-center items-end gap-[3px] group">
-		<span class="block w-full h-1 bg-gray-800 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
-		<span class="block w-[90%] h-1 bg-gray-800 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
-		<span class="block w-full h-1 bg-gray-800 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
-		<span class="block w-[90%] h-1 bg-gray-800 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
-	</button>
-	<div id="container" class="w-[500px] h-[500px]  hidden bg-slate-900">
-		Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores, aliquid! Inventore possimus deserunt et soluta consequuntur omnis molestias quis minima qui, expedita voluptatibus incidunt consectetur, harum ducimus vitae cupiditate architecto.
-	</div>
-	 -->
-
-	<div class="justify-center items-center w-full px-2 py-1 flex flex-row gap-7 overflow-auto scrollbar-hide bg-slate-600">
-			<a href="">
-					<div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
-						<div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
-						</div>
-						<span >Daftar Pelanggan</span>
-					</div>
-				</a>
-				<a href="">
-					<div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
-						<div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
-						</div>
-						<span >Daftar Pelanggan</span>
-					</div>
-				</a>
-				<a href="">
-					<div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
-						<div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
-						</div>
-						<span >Daftar Pelanggan</span>
-					</div>
-				</a>
-				<a href="">
-					<div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
-						<div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
-						</div>
-						<span >Daftar Pelanggan</span>
-					</div>
-				</a>
-				<a href="">
-					<div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
-						<div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
-						</div>
-						<span >Daftar Pelanggan</span>
-					</div>
-				</a>
-				<a href="">
-					<div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
-						<div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
-						</div>
-						<span >Daftar Pelanggan</span>
-					</div>
-				</a>
-	</div>
-
-
-
-	<script>
-
-		document.getElementById('menu-humburger').addEventListener('click', (e) => {
-			e.preventDefault();
-			// e.currentTarget.classList.toggle('open');
-			// const container = document.getElementById('container').classList.toggle('hidden');
-			const falsy = false;
-			!falsy ? document.getElementById('container').classList.toggle('block') : document.getElementById('container').classList.toggle('hidden');
-		});
-	</script>
-
-	<style>
-		.menu-humburger span {
-			transition: all 0.3s ease-in-out;
-		}
-
-		.menu-humburger span:first-child {
-			transform: rotate(-45deg) translateY(10px) translateX(-5px);
-		}
-
-		.menu-humburger span:nth-child(2) {
-			opacity: 0;
-		}
-
-		.menu-humburger span:nth-child(3) {
-			opacity: 0;
-		}
-
-		.menu-humburger span:last-child {
-			transform: rotate(45deg) translateY(-10px) translateX(-5px);
-			width: 100%;
-		}
-	</style>
-
+<body class="bg-gray-100 pb-16">
+    <nav class="bg-blue-600 text-white p-4">
+        <span class="text-xl font-bold">Logo</span>
+    </nav>
+    
+    <div id="menu" class="hidden bg-white shadow-md w-full fixed bottom-16 left-0 p-4 rounded-t-lg">
+        <ul class="mt-2 space-y-2">
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Home</a></li>
+            <li class="group">
+                <button class="submenu-toggle w-full text-left px-4 py-2 hover:bg-gray-200">Services ▼</button>
+                <ul class="hidden ml-4 mt-1 space-y-1">
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Web Design</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">SEO</a></li>
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Marketing</a></li>
+                </ul>
+            </li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">About Us</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Contact</a></li>
+        </ul>
+    </div>
+    
+    <div class="fixed bottom-0 left-0 w-full bg-white shadow-md flex justify-around py-2">
+        <button id="menu-button" class="text-blue-600 text-2xl">☰</button>
+        <a href="#" class="text-gray-700 text-sm">Home</a>
+        <a href="#" class="text-gray-700 text-sm">Services</a>
+        <a href="#" class="text-gray-700 text-sm">About</a>
+        <a href="#" class="text-gray-700 text-sm">Contact</a>
+    </div>
+    
+    <script>
+        document.getElementById('menu-button').addEventListener('click', function() {
+            document.getElementById('menu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('.submenu-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                this.nextElementSibling.classList.toggle('hidden');
+            });
+        });
+    </script>
 </body>
+</html> -->
 
-</html>
+
+
+<!-- scroll -->

@@ -28,4 +28,10 @@ class riwayatPembayaran extends Controller
 
         return view('pembayaran_piutang.riwayatPembayaran', compact('riwayatPembayaran', 'perusahaan', 'filterCompany'));
     }
+
+    // mbul buat untuk detail pembayaran
+    public function detail($IDPembayaran){
+        $detail = DB::table('vtb_riwayatpembayaran')->where('IDPembayaran', $IDPembayaran)->first();
+        return view('pembayaran_piutang.riwayatPembayaranDetail', compact('detail'));
+    }
 }

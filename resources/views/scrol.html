@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hide Navbar on Scroll</title>
+    <style>
+        body {
+            height: 2000px; /* Agar halaman bisa di-scroll */
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            transition: top 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">Navigasi</div>
+
+    <script>
+        let prevScrollPos = window.pageYOffset;
+
+        window.onscroll = function () {
+			console.log('hei')
+			
+            let currentScrollPos = window.pageYOffset;
+            let navbar = document.querySelector(".navbar");
+			console.log("prevScrollPos", prevScrollPos);
+			console.log("currentScrollPos", currentScrollPos);
+
+            if (prevScrollPos > currentScrollPos) {
+                navbar.style.top = "0"; // Muncul saat scroll ke atas
+				console.log('nav muncul')
+            } else {
+                navbar.style.top = "-60px"; // Menghilang saat scroll ke bawah
+            }
+            prevScrollPos = currentScrollPos;
+			console.log('nav hilang')
+        };
+    </script>
+
+</body>
+</html>

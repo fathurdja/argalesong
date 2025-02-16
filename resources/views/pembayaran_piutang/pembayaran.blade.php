@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="bg-white shadow-md rounded-lg overflow-hidden ">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden mt-10">
         @if ($errors->any())
             <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
                 <p class="font-bold">Error!</p>
@@ -9,7 +9,7 @@
         @endif
 
         <div class="p-6 ">
-            <h1 class="text-2xl font-bold mb-6 ">PEMBAYARAN PIUTANG</h1>
+            <h1 class="text-2xl font-bold mb-4">PEMBAYARAN PIUTANG</h1>
             <form method="POST" action="{{ route('pembayaran-piutang.proses') }}" id="paymentForm"
                 data-store-url="{{ route('pembayaran-piutang.store') }}">
                 @csrf

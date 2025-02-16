@@ -18,7 +18,7 @@
             @endif
 
             <div class="bg-white border border-gray-400 p-4 rounded-md mb-6">
-                <h2 class="text-center text-lg font-bold mb-4 border-b border-gray-400 pb-2">EDIT DATA PELANGGAN</h2>
+                <h2 class="text-2xl font-bold mb-4">EDIT DATA PELANGGAN</h2>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
@@ -128,3 +128,4 @@
         </form>
     </div>
 @endsection
+
