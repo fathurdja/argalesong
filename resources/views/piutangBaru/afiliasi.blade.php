@@ -480,7 +480,7 @@
 @push('scripts')
     <script>
         var customers = @json($customers);
-        cal
+      
         function updateCustomerDropdown() {
             const perusahaan = document.getElementById('perusahaan').value; // Ambil perusahaan yang dipilih
             const tipePelanggan = document.getElementById('tipePelanggan').value; // Tipe pelanggan yang dipilih
