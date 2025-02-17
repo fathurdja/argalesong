@@ -7,11 +7,11 @@
 @endphp
 
 @section('content')
-<div class="bg-white p-4 rounded-lg shadow-lg px-2 mt-10">
+<div class="bg-white p-4 rounded-lg shadow-lg px-2 mt-10 lg:mt-20">
     <h1 class="text-2xl font-bold mb-4">SCHEDULE PIUTANG</h1>
 
     <!-- Year and Month Selection -->
-    <div class="flex items-center mb-4 md:w-max-screen overflow-x-auto flex-wrap">
+    <div class="flex items-center mb-4 md:w-max-screen overflow-x-auto flex-wrap ">
         <label for="year" class="mr-2 font-semibold text-gray-700">Tahun</label>
         <select id="year" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             @foreach (range(2010, 2032) as $year)
@@ -22,6 +22,7 @@
         </select>
 
         <label for="month" class=" font-semibold text-gray-700">Bulan</label>
+        <label for="month" class=" font-semibold text-gray-700">Bulan</label>
         <select id="month" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm overflow-x-auto">
             @foreach (['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'] as $key => $month)
                 <option value="{{ $key + 1 }}" {{ ($key + 1) == $currentMonth ? 'selected' : '' }}>
@@ -30,6 +31,7 @@
             @endforeach
         </select>
 
+        <label for="day" class=" font-semibold text-gray-700">Hari</label>
         <label for="day" class=" font-semibold text-gray-700">Hari</label>
         <select id="day" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             @foreach (range(1, 31) as $day)

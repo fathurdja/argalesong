@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="w-full flex flex-col justify-center items-start mt-14 gap-5 px-2 sm:px-6 lg:px-8 mb-10">
+    <div class="w-full flex flex-col justify-center items-start mt-5 gap-5 px-2 sm:px-6 lg:px-8 mb-10">
         <!-- Search Bar -->
         <div class="w-full flex flex-row justify-center items-center gap-2">
             <input type="text" placeholder="Cari kode / nama"

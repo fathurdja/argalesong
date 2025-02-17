@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container mx-auto mt-20 m-10 p-4 rounded-lg bg-white ">
+    <div class="container mx-auto mt-20 m-10 p-4 rounded-lg bg-white ">
         <h1 class="text-2xl font-bold mb-4">SCHEDULE PIUTANG</h1>
 
         <!-- Year Selection -->
@@ -57,17 +58,18 @@
                 </thead>
                 <tbody id="report-body-mobile" class="bg-white divide-y divide-gray-200 text-sm">
                     <!-- Data will be populated via JavaScript -->
-                </tbody>
-            </table>
+                </div>
+            </div>
         </div>
+
         <!-- Print Button -->
-    <div class="flex justify-end mt-6">
-        <button id="print-btn" onclick="window.print()" class="active:scale-[.95] hover:bg-white hover:text-[#0F8114] transition-all text-white font-medium border-2 border-[#0F8114] rounded-md shadow-sm px-4 py-1 bg-[#0F8114]">Cetak</button>
-    </div>
-    
+        <div class="flex justify-end mt-6">
+            <button id="print-btn" onclick="window.print()" class="active:scale-[.95] hover:bg-white hover:text-[#0F8114] transition-all text-white font-medium border-2 border-[#0F8114] rounded-md shadow-sm px-4 py-1 bg-[#0F8114]">Cetak</button>
+        </div>
     </div>
 @endsection
 
+@push('scripts')
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -81,9 +83,10 @@
                         tbodyMobile.innerHTML = '';
 
                         if (data.length === 0) {
-                            tbodyLaptop.innerHTML = tbodyMobile.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-gray-500">Data tidak ditemukan</td></tr>';
+                            tbodyLaptop.innerHTML = tbodyMobile.innerHTML = '<div class="text-center py-4 text-gray-500">Data tidak ditemukan</div>';
                         } else {
                             data.forEach((item, index) => {
+                                // For laptop/tablet display (Full Table)
                                 tbodyLaptop.innerHTML += `
                                     <tr>
                                         <td class="px-1 md:px-6 py-4 md:py-4">${index + 1}</td>
@@ -93,19 +96,36 @@
                                         <td class="px-2 md:px-6 py-4 md:py-4 text-right">${item.total_piutang}</td>
                                         <td class="px-2 md:px-6 py-4 md:py-4 text-right">${item.total_pembayaran}</td>
                                         <td class="px-2 md:px-6 py-4 md:py-4 text-right">${item.saldo_piutang}</td>
+                                        <td class="px-2 md:px-6 py-4">${index + 1}</td>
+                                        <td class="px-2 md:px-6 py-4">${item.id_pelanggan}</td>
+                                        <td class="px-2 md:px-6 py-4">${item.pelanggan}</td>
+                                        <td class="px-2 md:px-6 py-4">${item.jatuh_tempo}</td>
+                                        <td class="px-2 md:px-6 py-4 text-right">${item.total_piutang}</td>
+                                        <td class="px-2 md:px-6 py-4 text-right">${item.total_pembayaran}</td>
+                                        <td class="px-2 md:px-6 py-4 text-right">${item.saldo_piutang}</td>
                                     </tr>`;
 
+
+                                // For mobile display (Simplified View)
                                 tbodyMobile.innerHTML += `
-                                    <tr>
-                                        <td class="px-2 md:px-6 py-4 md:py-4">${index + 1}</td>
-                                        <td class="px-2 md:px-6 py-4 md:py-4">${item.pelanggan}</td>
-                                        <td class="px-2 md:px-6 py-4 md:py-4 text-right">${item.saldo_piutang}</td>
-                                        <td class="px-2 md:px-6 py-4 md:py-4 text-center">
-                                            <a href="/detail/${item.id_pelanggan}" class="text-blue-600"><div class="sm:hidden w-3 mx-auto">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="#2196f3" d="M17.1 5L14 8.1L29.9 24L14 39.9l3.1 3.1L36 24z"/></svg>
-                                    </div></a>
-                                        </td>
-                                    </tr>`;
+                                    <div class="flex justify-between text-sm py-3 px-4">
+                                        <div class="flex-1 font-bold">${item.pelanggan}</div>
+                                        <div class="flex-1 text-right">${item.saldo_piutang}</div>
+                                    </div>
+                                    <div class="flex justify-between text-xs py-1 px-4">
+                                        <div class="flex-1">${item.jatuh_tempo}</div>
+                                        <div class="flex-1 text-right">Pembayaran : ${item.total_pembayaran}</div>
+                                    </div>
+                                    <div class="flex justify-between text-xs py-1 px-4">
+                                        <div class="flex-1 font-bold">Saldo Piutang</div>
+                                        <div class="flex-1 text-right">${item.total_piutang}</div>
+                                    </div>
+                                    <div class="text-right px-4 py-2">
+                                        <a href="/detail/${item.id_pelanggan}" class="text-blue-600">
+                                            <span class="font-medium">Selengkapnya</span>
+                                        </a>
+                                    </div>
+                                `;
                             });
                         }
                     });
