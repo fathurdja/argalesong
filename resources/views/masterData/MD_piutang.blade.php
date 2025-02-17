@@ -36,7 +36,7 @@
                 <button class="inline-flex items-center justify-center w-full lg:w-auto active:scale-[.95] hover:bg-white hover:text-[#0F8114] transition-all text-white font-medium border-2 border-[#0F8114] rounded-md shadow-sm px-6 py-2 bg-[#0F8114]">
                     Simpan
                 </button>
-                <button class="inline-flex items-center justify-center w-full lg:w-auto active:scale-[.95] hover:bg-white hover:text-red-700 transition-all text-white border-2 bg-red-700 hover:text-red-700 border-red-700 py-2 px-6 rounded-md shadow-sm font-medium">
+                <button class="inline-flex items-center justify-center w-full lg:w-auto active:scale-[.95] hover:bg-white transition-all text-white border-2 bg-red-700 hover:text-red-700 border-red-700 py-2 px-6 rounded-md shadow-sm font-medium">
                     Batal
                 </button>
             </div>            

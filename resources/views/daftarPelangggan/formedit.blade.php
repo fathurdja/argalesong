@@ -125,7 +125,8 @@
                     </div>
                 </div>
             @endforeach
-            <div>{{ $daftarPelanggan->links() }}</div>
+            {{-- Paginate  --}}
+            {{-- <div>{{ $daftarPelanggan->links() }}</div>  --}}
         @endif
     </div>
 
