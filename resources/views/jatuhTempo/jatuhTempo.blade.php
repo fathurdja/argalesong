@@ -55,6 +55,6 @@
 @endsection
 
 @push('scripts')
-@vite('resources/js/jatuhTempo.js')
+@vite('resources/js/jatuh-tempo.js')
 @endpush
 

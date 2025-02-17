@@ -134,7 +134,7 @@
 
 @push('scripts')
     @vite('resources/js/test.js')
-    @vite('resources/js/formEdit.js')
+    @vite('resources/js/form-edit.js')
     
 @endpush
 
