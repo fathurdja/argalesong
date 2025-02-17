@@ -10,7 +10,7 @@
             </ul>
         </div>
     @endif
-    <div class="container mx-auto mt-5 px-4 md:ml-9 ">
+    <div class="container mx-auto mt-14 px-2 md:ml-9 lg:mt-20 ">
         <div class="bg-white p-6 rounded-lg shadow-md">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <h1 class="text-2xl font-bold mb-4 text-left">MASTER DATA PAJAK</h1>
@@ -62,7 +62,7 @@
                     <button type="submit" class="flex-1 md:flex-none min-w-[120px] active:scale-[.95] hover:bg-white hover:text-[#0F8114] transition-all text-white font-medium border-2 border-[#0F8114] rounded-md shadow-sm px-4 py-2 bg-[#0F8114]">
                         Simpan
                     </button>
-                    <a href="{{ route('masterDataPajak.index') }}" class="flex-1 md:flex-none min-w-[120px] text-center active:scale-[.95] hover:bg-white hover:text-red-700 transition-all text-white border-2 bg-red-700 hover:text-red-700 border-red-700 py-2 px-4 rounded-md shadow-sm font-medium">
+                    <a href="{{ route('masterDataPajak.index') }}" class="flex-1 md:flex-none min-w-[120px] text-center active:scale-[.95] hover:bg-white hover:text-red-700 transition-all text-white border-2 bg-red-700 border-red-700 py-2 px-4 rounded-md shadow-sm font-medium">
                         Batal
                     </a>
                 </div>                

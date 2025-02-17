@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+<<<<<<< HEAD
     <div class="container py-2 px-1 lg:px-4 lg:py-8 mt-10">
+=======
+    <div class="container py-2 px-1 lg:px-4 lg:py-8 mt-14 lg:mt-20">
+>>>>>>> 22b439fa0aa212f7803fa2fb06b0f615faf31463
         <!-- Form Pencarian -->
         <div class="bg-gray-100 p-6 rounded-lg shadow-md mb-6">
             <form method="POST" action="{{ route('kartu-pelanggan-fetchData') }}">

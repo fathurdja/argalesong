@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class=" max-w-full mx-auto bg-white shadow-md rounded-lg overflow-hidden mt-2 p-10 lg:p-10 mb-5 lg:mt-10">
+    <div class=" max-w-full mx-auto bg-white shadow-md rounded-lg overflow-hidden p-10 lg:p-7 mb-5 mt-10 lg:mt-20">
         <div class="text-2xl font-bold mb-4">
             MASTER DATA PIUTANG
         </div>
@@ -15,9 +15,9 @@
                                 <li class="flex items-center">
                                     <span class="mr-2">
                                         <a href="#">
-                                            <div class="bg-red-500 p-1 rounded-sm text-white hover:scale-110 active:scale-90">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" d="M7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21zm2-4h2V8H9zm4 0h2V8h-2z"/>
+                                            <div class="p-2 bg-red-600 hover:bg-red-700 text-white rounded-md active:scale-95">
+                                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                                                 </svg>
                                             </div>
                                         </a>
@@ -32,11 +32,15 @@
                     </div>
                 @endforeach
             </div>
+<<<<<<< HEAD
             <div class="flex justify-center gap-4 mt-14">
+=======
+            <div class="flex justify-center gap-4 mt-8">
+>>>>>>> 22b439fa0aa212f7803fa2fb06b0f615faf31463
                 <button class="inline-flex items-center justify-center w-full lg:w-auto active:scale-[.95] hover:bg-white hover:text-[#0F8114] transition-all text-white font-medium border-2 border-[#0F8114] rounded-md shadow-sm px-6 py-2 bg-[#0F8114]">
                     Simpan
                 </button>
-                <button class="inline-flex items-center justify-center w-full lg:w-auto active:scale-[.95] hover:bg-white hover:text-red-700 transition-all text-white border-2 bg-red-700 hover:text-red-700 border-red-700 py-2 px-6 rounded-md shadow-sm font-medium">
+                <button class="inline-flex items-center justify-center w-full lg:w-auto active:scale-[.95] hover:bg-white hover:text-red-700 transition-all text-white border-2 bg-red-700 border-red-700 py-2 px-6 rounded-md shadow-sm font-medium">
                     Batal
                 </button>
             </div>            

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="p-6 bg-white rounded-lg shadow-md mt-5 lg:ml-10">
+    <div class="p-6 bg-white rounded-lg shadow-md mt-10 lg:ml-10 lg:mt-20">
         <div class="border-b border-gray-200 pb-4">
             <h1 class="text-2xl font-bold mb-4">PEMUTIHAN PIUTANG: PENGAJUAN</h1>
         </div>

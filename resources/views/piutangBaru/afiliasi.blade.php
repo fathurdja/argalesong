@@ -243,7 +243,11 @@
         @endif
     </div>
 </div> --}}
+<<<<<<< HEAD
     <div class="container mx-auto mt-10">
+=======
+    <div class="container mx-auto mt-14 lg:mt-20">
+>>>>>>> 22b439fa0aa212f7803fa2fb06b0f615faf31463
 
 
         @if ($errors->any())
