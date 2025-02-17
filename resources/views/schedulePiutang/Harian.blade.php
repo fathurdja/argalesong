@@ -7,11 +7,11 @@
 @endphp
 
 @section('content')
-<div class="bg-white p-4 rounded-lg shadow-lg px-2 mt-10">
+<div class="bg-white p-4 rounded-lg shadow-lg px-2 mt-10 lg:mt-20">
     <h1 class="text-2xl font-bold mb-4">SCHEDULE PIUTANG</h1>
 
     <!-- Year and Month Selection -->
-    <div class="flex items-center mb-4 md:w-max-screen overflow-x-auto flex-wrap">
+    <div class="flex items-center mb-4 md:w-max-screen overflow-x-auto flex-wrap ">
         <label for="year" class="mr-2 font-semibold text-gray-700">Tahun</label>
         <select id="year" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             @foreach (range(2010, 2032) as $year)
