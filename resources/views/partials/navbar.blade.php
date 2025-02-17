@@ -66,18 +66,5 @@
 subMenut.classList.toggle('opacity-170');
 subMenut.classList.toggle('ml-2');
 subMenut2.classList.toggle('block');
-
-
-
-
-});
+    });
 </script>
-
-
-<style>
-    
-</style>
-{{-- .sidebar:hover .sidebar-item .text {
-    opacity: 1;
-    margin-left: 1rem;
-} --}}
