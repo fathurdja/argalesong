@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto mt-20 m-10 p-4 rounded-lg bg-white">
+    <div class="container mx-auto mt-14 m-10 p-4 rounded-lg bg-white">
         <h1 class="text-2xl font-bold mb-4">Jatuh Tempo</h1>
 
 @php
@@ -97,42 +97,42 @@
                     tbodyLaptop.innerHTML = '';
                     tbodyMobile.innerHTML = '';
 
-                    if (data.length === 0) {
-                        tbodyLaptop.innerHTML = tbodyMobile.innerHTML = '<div class="text-center py-4 text-gray-500">Data tidak ditemukan</div>';
-                    } else {
-                        data.forEach((item, index) => {
-                            // For laptop/tablet display (Full Table)
-                            tbodyLaptop.innerHTML += `
-                                <tr>
-                                    <td class="px-2 md:px-6 py-4">${index + 1}</td>
-                                    <td class="px-2 md:px-6 py-4">${item.no_invoice}</td>
-                                    <td class="px-2 md:px-6 py-4">${item.kode_perusahaan}</td>
-                                    <td class="px-2 md:px-6 py-4">${item.nama_pelanggan}</td>
-                                    <td class="px-2 md:px-6 py-4">${item.tgl_invoice}</td>
-                                    <td class="px-2 md:px-6 py-4">${item.tgl_jatuh_tempo}</td>
-                                    <td class="px-2 md:px-6 py-4 text-right">${item.piutang_belum_dibayar}</td>
-                                </tr>`;
+                        if (data.length === 0) {
+                            tbodyLaptop.innerHTML = tbodyMobile.innerHTML = '<div class="text-center py-4 text-gray-500">Data tidak ditemukan</div>';
+                        } else {
+                            data.forEach (pelanggan => {
+                                // For laptop/tablet display (Full Table)
+                                tbodyLaptop.innerHTML += `
+                                    <tr>
+                                        <td class="px-2 md:px-6 py-4">${index + 1}</td>
+                                        <td class="px-2 md:px-6 py-4">${pelanggan.no_invoice}</td>
+                                        <td class="px-2 md:px-6 py-4">${pelanggan.kode_perusahaan}</td>
+                                        <td class="px-2 md:px-6 py-4">${pelanggan.nama_pelanggan}</td>
+                                        <td class="px-2 md:px-6 py-4">${pelanggan.tgl_invoice}</td>
+                                        <td class="px-2 md:px-6 py-4">${pelanggan.tgl_jatuh_tempo}</td>
+                                        <td class="px-2 md:px-6 py-4 text-right">${pelanggan.piutang_belum_dibayar}</td>
+                                    </tr>`;
 
-                            // For mobile display (Simplified View)
-                            tbodyMobile.innerHTML += `
-                                <div class="flex justify-between text-sm py-3 px-4">
-                                    <div class="flex-1 font-bold">${item.nama_pelanggan}</div>
-                                    <div class="flex-1 text-right">${item.piutang_belum_dibayar}</div>
-                                </div>
-                                <div class="flex justify-between text-xs py-1 px-4">
-                                    <div class="flex-1">${item.tgl_jatuh_tempo}</div>
-                                    <div class="flex-1 text-right">No Invoice : ${item.no_invoice}</div>
-                                </div>
-                                <div class="text-right px-4 py-2">
-                                    <a href="/jatuh-tempo/detail/${item.id}" class="text-blue-600">
-                                        <span class="font-medium">Selengkapnya</span>
-                                    </a>
-                                </div>
-                            `;
-                        });
-                    }
-                });
-        }
+                                // For mobile display (Simplified View)
+                                tbodyMobile.innerHTML += `
+                                    <div class="flex justify-between text-sm py-3 px-4">
+                                        <div class="flex-1 font-bold">${pelanggan.nama_pelanggan}</div>
+                                        <div class="flex-1 text-right">${pelanggan.piutang_belum_dibayar}</div>
+                                    </div>
+                                    <div class="flex justify-between text-xs py-1 px-4">
+                                        <div class="flex-1">${pelanggan.tgl_jatuh_tempo}</div>
+                                        <div class="flex-1 text-right">No Invoice : ${pelanggan.no_invoice}</div>
+                                    </div>
+                                    <div class="text-right px-4 py-2">
+                                        <a href="/jatuh-tempo/detail/${pelanggan.id}" class="text-blue-600">
+                                            <span class="font-medium">Selengkapnya</span>
+                                        </a>
+                                    </div>
+                                `;
+                            });
+                        }
+                    });
+            }
 
         const currentMonth = new Date().getMonth() + 1;
         const currentYear = new Date().getFullYear();
@@ -147,17 +147,16 @@
             });
         });
 
-        // Listen for year and month changes
-        document.getElementById('tahun').addEventListener('change', function() {
-            fetchData(currentMonth, this.value);
-        });
+            // Listen for year and month changes
+            document.getElementById('tahun').addEventListener('change', function() {
+                fetchData(currentMonth, this.value);
+            });
+    
+    tahunSelect.addEventListener("change", getData);
+    bulanSelect.addEventListener("change", getData);
 
-        document.getElementById('bulan').addEventListener('change', function() {
-            fetchData(this.value, currentYear);
-        });
-    });
+    getData(); 
+});
 </script>
 @endpush
-
-    
 

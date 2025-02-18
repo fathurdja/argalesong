@@ -38,7 +38,7 @@
             <table class="min-w-full table-auto">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No</th>
+                        <th class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kode Pelanggan</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Pelanggan</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Jatuh Tempo</th>
@@ -107,16 +107,16 @@
                                     <div>
                                         <a href="/detail/${item.id_pelanggan}" class="text-slate-800">
                                         <div class="flex justify-between text-sm py-3 px-4">
-                                        <div class="flex-1 font-bold">${item.pelanggan}</div>
-                                        <div class="flex-1 text-right">${item.saldo_piutang}</div>
+                                        <div class="flex-1 font-bold text-black ">${item.pelanggan}</div>
+                                        <div class="flex-1 text-right text-black ">${item.saldo_piutang}</div>
                                     </div>
                                     <div class="flex justify-between text-xs py-1 px-4">
-                                        <div class="flex-1">${item.jatuh_tempo}</div>
-                                        <div class="flex-1 text-right">Pembayaran : ${item.total_pembayaran}</div>
+                                        <div class="flex-1 text-black ">${item.jatuh_tempo}</div>
+                                        <div class="flex-1 text-right text-black ">Pembayaran : ${item.total_pembayaran}</div>
                                     </div>
                                     <div class="flex justify-between text-xs py-1 px-4">
-                                        <div class="flex-1 font-bold">Saldo Piutang</div>
-                                        <div class="flex-1 text-right">${item.total_piutang}</div>
+                                        <div class="flex-1 font-bold text-black ">Saldo Piutang</div>
+                                        <div class="flex-1 text-right text-black ">${item.total_piutang}</div>
                                     </div>
                                     <div class="text-right px-4 py-2">
                                         
