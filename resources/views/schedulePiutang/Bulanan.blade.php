@@ -1,4 +1,14 @@
 @extends('layouts.app')
+@php
+    $startYear = 2020;
+    $currentYear = date('Y'); 
+    $currentMonth = date('n');
+    // belum digunakan 
+    $months = [
+        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
+@endphp
 
 @section('content')
     <div class="container mx-auto mt-20 m-10 p-4 rounded-lg bg-white ">
@@ -14,7 +24,6 @@
                 @endforeach
             </select>
         </div>
-
         <!-- Month Tabs -->
         <div class="flex justify-between mb-4 border-b-2 border-gray-200 overflow-auto">
             @foreach (['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'] as $key => $month)
