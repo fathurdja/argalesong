@@ -9,7 +9,7 @@
             <label for="year" class="mr-2 font-semibold text-gray-700">Tahun</label>
             <select id="year" 
                 class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                @foreach (range(2010, 2032) as $year)
+                @foreach (range(2020, 2025) as $year)
                     <option value="{{ $year }}">{{ $year }}</option>
                 @endforeach
             </select>
@@ -51,7 +51,7 @@
                     <div class="flex-1 text-left">Transaksi</div>
                     <div class="flex-1 text-right">Jumlah</div>
                 </div>
-                <div id="report-body-mobile" class="bg-white divide-y divide-gray-200 text-sm">
+                <div id="report-body-mobile" class="bg-white divide-y  divide-gray-200 text-sm">
                     <!-- Data will be populated via JavaScript -->
                 </div>
             </div>
@@ -96,7 +96,7 @@
                                 // For mobile display (Simplified View)
                                 tbodyMobile.innerHTML += `
                                     <div>
-                                        <a href="/detail/${item.id_pelanggan}" class="text-blue-600">
+                                        <a href="/detail/${item.id_pelanggan}" class="text-slate-800">
                                         <div class="flex justify-between text-sm py-3 px-4">
                                         <div class="flex-1 font-bold">${item.pelanggan}</div>
                                         <div class="flex-1 text-right">${item.saldo_piutang}</div>
