@@ -52,7 +52,8 @@ Route::get('/get-customers/{idcompany}', [PiutangController::class, 'getCustomer
 Route::get('/get-monthly-report', [Sp_bulananController::class, 'getMonthlyReport']);
 Route::get('/riwayatPiutang', [riwayatpiutang::class, 'index'])->name('riwayatPiutang');
 Route::get('/riwayatPiutang/printPreview', [riwayatpiutang::class, 'print_Preview'])->name('printriwayatPiutang');
-Route::get('/riwayatPiutang/detail', [riwayatpiutang::class, 'detail'])->name('detailpiutang');
+// dhimas buat detail
+Route::get('/riwayatPiutang/detail/{customer_name}', [riwayatpiutang::class, 'detail'])->name('detailpiutang.detail');
 Route::get('/riwayatPembayaran', [riwayatPembayaran::class, 'index'])->name('riwayatPembayaran');
 //mbul buat detail
 Route::get('/riwayatPembayaran/detail/{IDPembayaran}', [riwayatPembayaran::class, 'detail'])->name('riwayatPembayaran.detail');
