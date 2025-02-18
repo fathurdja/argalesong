@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="min-w-full flex flex-col justify-center lg:ml-10 mt-10">
+    <div class="min-w-full flex flex-col justify-center lg:ml-10 mt-14 lg:mt-20">
         <div class="bg-white rounded-xl px-2 py-5 !container ">
             <!-- Form Filter -->
             <form method="GET" action="{{ route('riwayatPiutang') }}" class="mb-6 flex flex-row justify-start items-center" id="filterForm">

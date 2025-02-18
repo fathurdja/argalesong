@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="container mx-auto mt-20 m-10 p-4 rounded-lg bg-white ">
-    <div class="container mx-auto mt-20 m-10 p-4 rounded-lg bg-white ">
         <h1 class="text-2xl font-bold mb-4">SCHEDULE PIUTANG</h1>
 
         <!-- Year Selection -->
@@ -25,7 +24,7 @@
             @endforeach
         </div>
 
-        <!-- Table for Laptop -->
+        <!-- Table for Laptop (Desktop View) -->
         <div class="hidden lg:block bg-white shadow-md rounded-lg lg:p-6">
             <table class="min-w-full table-auto">
                 <thead class="bg-gray-50">
@@ -45,18 +44,14 @@
             </table>
         </div>
 
-        <!-- Table for Mobile & Tablet -->
+        <!-- Table for Mobile & Tablet (Mobile View) -->
         <div class="lg:hidden bg-white shadow-md rounded-lg lg:p-6 overflow-auto">
-            <table class="min-w-full table-auto">
-                <thead class="bg-gray-50 ">
-                    <tr>
-                        <th class="lg:px-6 px-2 py-4 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase">No</th>
-                        <th class="lg:px-6 px-2 py-4 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Pelanggan</th>
-                        <th class="lg:px-6 px-2 py-4 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase">Saldo Piutang</th>
-                        <th class="lg:px-6 px-2 py-4 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="report-body-mobile" class="bg-white divide-y divide-gray-200 text-sm">
+            <div class="space-y-4">
+                <div class="flex justify-between text-sm font-semibold py-2 px-4 bg-gray-50">
+                    <div class="flex-1 text-left">Transaksi</div>
+                    <div class="flex-1 text-right">Jumlah</div>
+                </div>
+                <div id="report-body-mobile" class="bg-white divide-y divide-gray-200 text-sm">
                     <!-- Data will be populated via JavaScript -->
                 </div>
             </div>
@@ -69,7 +64,6 @@
     </div>
 @endsection
 
-@push('scripts')
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -89,13 +83,6 @@
                                 // For laptop/tablet display (Full Table)
                                 tbodyLaptop.innerHTML += `
                                     <tr>
-                                        <td class="px-1 md:px-6 py-4 md:py-4">${index + 1}</td>
-                                        <td class="px-2 md:px-6 py-4 md:py-4">${item.id_pelanggan}</td>
-                                        <td class="px-2 md:px-6 py-4 md:py-4">${item.pelanggan}</td>
-                                        <td class="px-2 md:px-6 py-4 md:py-4">${item.jatuh_tempo}</td>
-                                        <td class="px-2 md:px-6 py-4 md:py-4 text-right">${item.total_piutang}</td>
-                                        <td class="px-2 md:px-6 py-4 md:py-4 text-right">${item.total_pembayaran}</td>
-                                        <td class="px-2 md:px-6 py-4 md:py-4 text-right">${item.saldo_piutang}</td>
                                         <td class="px-2 md:px-6 py-4">${index + 1}</td>
                                         <td class="px-2 md:px-6 py-4">${item.id_pelanggan}</td>
                                         <td class="px-2 md:px-6 py-4">${item.pelanggan}</td>

@@ -22,7 +22,6 @@
         </select>
 
         <label for="month" class=" font-semibold text-gray-700">Bulan</label>
-        <label for="month" class=" font-semibold text-gray-700">Bulan</label>
         <select id="month" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm overflow-x-auto">
             @foreach (['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'] as $key => $month)
                 <option value="{{ $key + 1 }}" {{ ($key + 1) == $currentMonth ? 'selected' : '' }}>
@@ -31,7 +30,6 @@
             @endforeach
         </select>
 
-        <label for="day" class=" font-semibold text-gray-700">Hari</label>
         <label for="day" class=" font-semibold text-gray-700">Hari</label>
         <select id="day" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             @foreach (range(1, 31) as $day)
