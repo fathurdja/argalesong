@@ -9,11 +9,8 @@ document.addEventListener('DOMContentLoaded', function (){
 		for(let i = 0; i < asideTextChild.length; i++) {
 			// asideTextChild[i].classList.toggle('hidden');
             asideTextChild[i].style.opacity = asideTextChild[i].classList.contains('hidden')? 0 : 1;
-		}
-
-		
-		// navbar ketika discroll
-		
+		}		
+		// navbar ketika discroll	
 	});
 
 	const navbar = document.getElementById('navbar');
