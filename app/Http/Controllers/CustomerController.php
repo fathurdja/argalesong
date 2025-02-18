@@ -33,8 +33,8 @@ class CustomerController extends Controller
             ->when($companyFilter, function ($query) use ($companyFilter) {
                 $query->where('idcompany', $companyFilter);
             })
-            ->paginate(10); // Anda bisa mengatur jumlah item per halaman
-
+            // ->paginate(10); // Anda bisa mengatur jumlah item per halaman
+            ->get(); // mengambil semua
         return view('daftarPelangggan.formedit', compact('daftarPelanggan', 'perusahaan'));
     }
 

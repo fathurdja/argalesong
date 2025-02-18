@@ -130,6 +130,7 @@
                 fetchData(currentMonth, this.value);
             });
 
+<<<<<<< HEAD
             document.getElementById('bulan').addEventListener('change', function() {
                 fetchData(this.value, currentYear);
             });
@@ -137,3 +138,12 @@
     </script>
 @endpush
     
+=======
+    tahunSelect.addEventListener("change", getData);
+    bulanSelect.addEventListener("change", getData);
+
+    getData(); 
+});
+</script>
+@endpush
+>>>>>>> 38c1050955b41c437fe57aa734c1ebf9a76cafe2

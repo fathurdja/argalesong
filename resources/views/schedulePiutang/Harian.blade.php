@@ -118,7 +118,6 @@
                 });
             });
     }
-
     fetchData();
 </script>
 @endpush
