@@ -95,7 +95,9 @@
 
                                 // For mobile display (Simplified View)
                                 tbodyMobile.innerHTML += `
-                                    <div class="flex justify-between text-sm py-3 px-4">
+                                    <div>
+                                        <a href="/detail/${item.id_pelanggan}" class="text-blue-600">
+                                        <div class="flex justify-between text-sm py-3 px-4">
                                         <div class="flex-1 font-bold">${item.pelanggan}</div>
                                         <div class="flex-1 text-right">${item.saldo_piutang}</div>
                                     </div>
@@ -108,10 +110,11 @@
                                         <div class="flex-1 text-right">${item.total_piutang}</div>
                                     </div>
                                     <div class="text-right px-4 py-2">
-                                        <a href="/detail/${item.id_pelanggan}" class="text-blue-600">
+                                        
                                             <span class="font-medium">Selengkapnya</span>
-                                        </a>
+                                      
                                     </div>
+                                      </a></div>
                                 `;
                             });
                         }

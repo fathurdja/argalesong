@@ -69,6 +69,7 @@
             <div class="block md:hidden">
                 <div class="space-y-4">
                     @forelse ($riwayatPembayaran as $riwayat)
+                    <a href="{{ route('riwayatPembayaran.detail', $riwayat->IDPembayaran) }}" class="text-blue-500 hover:underline text-lg mt-2 block">
                         <div class="border-b border-gray-300 pb-4">
                             <div class="text-lg font-bold text-gray-700">{{ $riwayat->IDPembayaran }}</div>
                             <div class="text-sm text-gray-500">{{ $riwayat->NamaPelanggan }}</div>
@@ -76,7 +77,7 @@
                             <div class="text-lg font-semibold text-gray-900">Total Piutang: Rp{{ number_format($riwayat->TotalSemuaPiutang, 0, ',', '.') }}</div>
                             <div class="text-lg text-gray-700">Nominal Dibayar: Rp{{ number_format($riwayat->NominalyangDibayar, 0, ',', '.') }}</div>
                             <div class="text-lg text-gray-700">Sisa: Rp{{ number_format($riwayat->Sisa, 0, ',', '.') }}</div>
-                            <a href="{{ route('riwayatPembayaran.detail', $riwayat->IDPembayaran) }}" class="text-blue-500 hover:underline text-lg mt-2 block">Selengkapnya</a>
+                            </a>
                         </div>
                     @empty
                         <div class="text-center text-gray-500">Tidak ada data riwayat pembayaran.</div>
