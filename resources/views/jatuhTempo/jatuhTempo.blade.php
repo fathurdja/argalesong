@@ -17,30 +17,32 @@
 @endphp
 
 <div class="sm:p-6 bg-white rounded-lg shadow-md mt-14 lg:mt-20 w-full">
-    <div class="flex justify-start mb-4 w-full flex-col sm:flex-row gap-2 sm:gap-10 px-2 py-1 sm:p-4">
+    <div class="flex justify-start mb-4 w-full flex-col sm:flex-col gap-2 sm:gap-10 px-2 py-1 sm:p-4">
          <!-- Pilihan Tahun -->
-         <div class="flex items-center">
-            <label for="tahun" class="mr-2 text-sm font-medium text-gray-700">Tahun</label>
-            <select id="tahun" name="tahun" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 sm:text-sm rounded-md">
-                @for ($year = $startYear; $year <= $endYear; $year++)
-                    <option value="{{ $year }}" {{ $year == $currentYear ? 'selected' : '' }}>
-                        {{ $year }}
-                    </option>
-                @endfor
-            </select>
-        </div>
-         <!-- Pilihan Bulan -->
-         <div class="flex items-center">
-            <label for="bulan" class="mr-2 text-sm font-medium text-gray-700">Bulan</label>
-            <select id="bulan" name="bulan" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 sm:text-sm rounded-md">
-                @foreach ($months as $index => $bulan)
-                    @if ($index + 1 <= $currentMonth || request('tahun') < $endYear)
-                        <option value="{{ $index + 1 }}" {{ ($index + 1) == $currentMonth ? 'selected' : '' }}>
-                            {{ $bulan }}
+         <div class="flex gap-5">
+            <div class="flex items-center">
+                <label for="tahun" class="mr-2 text-sm font-medium text-gray-700">Tahun</label>
+                <select id="tahun" name="tahun" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 sm:text-sm rounded-md">
+                    @for ($year = $startYear; $year <= $endYear; $year++)
+                        <option value="{{ $year }}" {{ $year == $currentYear ? 'selected' : '' }}>
+                            {{ $year }}
                         </option>
-                    @endif
-                @endforeach
-            </select>
+                    @endfor
+                </select>
+            </div>
+             <!-- Pilihan Bulan -->
+             <div class="flex items-center">
+                <label for="bulan" class="mr-2 text-sm font-medium text-gray-700">Bulan</label>
+                <select id="bulan" name="bulan" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 sm:text-sm rounded-md">
+                    @foreach ($months as $index => $bulan)
+                        @if ($index + 1 <= $currentMonth || request('tahun') < $endYear)
+                            <option value="{{ $index + 1 }}" {{ ($index + 1) == $currentMonth ? 'selected' : '' }}>
+                                {{ $bulan }}
+                            </option>
+                        @endif
+                    @endforeach
+                </select>
+             </div>
          </div>
         <!-- Table for Laptop (Desktop View) -->
         <div class="hidden lg:block bg-white shadow-md rounded-lg lg:p-6">
