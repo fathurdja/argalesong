@@ -1,4 +1,14 @@
 @extends('layouts.app')
+@php
+    $startYear = 2020;
+    $currentYear = date('Y'); 
+    $currentMonth = date('n');
+    // belum digunakan 
+    $months = [
+        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
+@endphp
 
 @section('content')
     <div class="container mx-auto mt-20 m-10 p-4 rounded-lg bg-white ">
@@ -9,12 +19,11 @@
             <label for="year" class="mr-2 font-semibold text-gray-700">Tahun</label>
             <select id="year" 
                 class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                @foreach (range(2010, 2032) as $year)
+                @foreach (range(2020, 2025) as $year)
                     <option value="{{ $year }}">{{ $year }}</option>
                 @endforeach
             </select>
         </div>
-
         <!-- Month Tabs -->
         <div class="flex justify-between mb-4 border-b-2 border-gray-200 overflow-auto">
             @foreach (['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'] as $key => $month)
@@ -51,7 +60,7 @@
                     <div class="flex-1 text-left">Transaksi</div>
                     <div class="flex-1 text-right">Jumlah</div>
                 </div>
-                <div id="report-body-mobile" class="bg-white divide-y divide-gray-200 text-sm">
+                <div id="report-body-mobile" class="bg-white divide-y  divide-gray-200 text-sm">
                     <!-- Data will be populated via JavaScript -->
                 </div>
             </div>
@@ -96,7 +105,7 @@
                                 // For mobile display (Simplified View)
                                 tbodyMobile.innerHTML += `
                                     <div>
-                                        <a href="/detail/${item.id_pelanggan}" class="text-blue-600">
+                                        <a href="/detail/${item.id_pelanggan}" class="text-slate-800">
                                         <div class="flex justify-between text-sm py-3 px-4">
                                         <div class="flex-1 font-bold text-black ">${item.pelanggan}</div>
                                         <div class="flex-1 text-right text-black ">${item.saldo_piutang}</div>

@@ -52,32 +52,6 @@
 
 </header>
 
-<script>
-    document.getElementById('menu-humburger').addEventListener('click', (e) => {
-    e.preventDefault();
-    e.currentTarget.classList.toggle('humburger');
-    const aside = document.getElementById('aside');
-    const subMenut = document.querySelector('.sidebar .sidebar-item .text')
-    const subMenut2 = document.querySelector('#aside .sidebar-submenu')
-    console.log('hello word')
-    console.log(subMenut2);
-    aside.classList.toggle('hidden');
-// aside.classList.toggle('ml-2');
-subMenut.classList.toggle('opacity-170');
-subMenut.classList.toggle('ml-2');
-subMenut2.classList.toggle('block');
-
-
-
-
-});
-</script>
-
-
-<style>
-    
-</style>
-{{-- .sidebar:hover .sidebar-item .text {
-    opacity: 1;
-    margin-left: 1rem;
-} --}}
+@push('scripts')
+@vite('resources/js/navigasi.js')
+@endpush

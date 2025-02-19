@@ -28,19 +28,17 @@
 }
 
 .sidebar-item .text {
-    opacity: 0;
     white-space: nowrap;
     transition: opacity 0.3s;
-    margin-left: 0.5rem;
 }
 
 /* .sidebar .sidebar-item .text {
     opacity: 1;
     margin-left: 1rem;
 } */
-.sidebar:hover .sidebar-item .text {
+.sidebar .sidebar-item .text {
     opacity: 1;
-    margin-left: 1rem;
+    margin-left: 1.2rem;
 }
 
 .sidebar .sidebar-submenu.active {
