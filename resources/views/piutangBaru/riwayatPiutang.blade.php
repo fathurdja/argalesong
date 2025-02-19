@@ -43,7 +43,7 @@
                         </thead>
                         <tbody>
                             @forelse ($piutang as $item)
-                                <tr class="hover:bg-gray-100 cursor-pointer" onclick="window.location='{{ route('detailpiutang.detail', $item->no_invoice) }}>
+                                <tr class="hover:bg-gray-100">
                                     <td class="border border-gray-400 px-1 py-3 md:py-2 truncate">
                                         <a href="{{ route('printriwayatPiutang', ['nomor_invoice' => $item->no_invoice]) }}">
                                             {{ $item->no_invoice }}
