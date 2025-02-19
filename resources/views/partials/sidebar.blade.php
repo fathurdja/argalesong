@@ -350,8 +350,8 @@
     </div>
     <form method="POST" action="{{ route('logout') }}" class="w-full">
         @csrf
-        <button type="submit"
-            class="sidebar-item  pt-4 flex items-center p-4 w-full text-base font-normal text-white rounded-lg hover:bg-blue-700 dark:text-white dark:bg-gray-800">
+        <button type="submit"   
+            class="sidebar-item gap-1 pt-4 flex items-center p-4 w-full text-base font-normal text-white rounded-lg hover:bg-blue-700 dark:text-white dark:bg-gray-800">
             <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 32 32"
                 class="w-6 h-6 flex-shrink-0 " fill="#ffffff">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -363,7 +363,7 @@
                 </g>
             </svg>
             {{-- opacity-0 group:hover-opacity-100 --}}
-            <h3 class="font-bold ml-2 text">Logout</h3>
+            <h3 class="font-bold text">Logout</h3>
         </button>
     </form>
 </aside>

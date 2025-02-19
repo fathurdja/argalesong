@@ -37,3 +37,10 @@ document.getElementById('id_Pelanggan').addEventListener('input', function() {
 		}
 	}
 });
+
+
+
+// document.querySelector('button')[0].addEventListener('click', ()=> {
+// 	const tabelData = document.getElementById('tabel-data');
+// 	tabelData.classList.remove('hidden');
+// });

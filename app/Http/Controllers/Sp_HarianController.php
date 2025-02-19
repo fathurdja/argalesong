@@ -66,4 +66,20 @@ class Sp_HarianController extends Controller
 
         return response()->json($groupedData->values());
     }
+// sp-harian detail mbul
+    public function detail($id_pelanggan){
+        $data = DB::table('detailpiutang as x')
+        ->leftJoin('vtbpiutang as y', 'x.no_invoice', '=', 'y.idpiutang')
+        ->leftJoin('pembayaranpiutang as z', 'x.no_invoice', '=', 'z.no_invoice')
+        ->leftJoin('customer as c', 'x.idpelanggan', '=', 'c.id_Pelanggan')
+        ->select(
+            'x.kodepiutang',
+            'c.name as customer_name',
+            'x.tgl_jatuh_tempo',
+            'z.nominalbayar as total_pembayaran',
+            'x.nominal as total_piutang',
+            'y.xpiutang as saldo_piutang')->first();
+            
+        return view('schedulePiutang.harian-detail', compact('data'));
+    }
 }

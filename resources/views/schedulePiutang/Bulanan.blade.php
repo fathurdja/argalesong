@@ -91,7 +91,9 @@
                             data.forEach((item, index) => {
                                 // For laptop/tablet display (Full Table)
                                 tbodyLaptop.innerHTML += `
-                                    <tr>
+                                 <a href="/sp-bulanan/detail/${item.id_pelanggan}" class="text-slate-800">
+                                <tr>
+                                       
                                         <td class="px-2 md:px-6 py-4">${index + 1}</td>
                                         <td class="px-2 md:px-6 py-4">${item.id_pelanggan}</td>
                                         <td class="px-2 md:px-6 py-4">${item.pelanggan}</td>
@@ -99,13 +101,15 @@
                                         <td class="px-2 md:px-6 py-4 text-right">${item.total_piutang}</td>
                                         <td class="px-2 md:px-6 py-4 text-right">${item.total_pembayaran}</td>
                                         <td class="px-2 md:px-6 py-4 text-right">${item.saldo_piutang}</td>
-                                    </tr>`;
+                                       
+                                    </tr> </a>`
+                                    ;
 
 
                                 // For mobile display (Simplified View)
                                 tbodyMobile.innerHTML += `
                                     <div>
-                                        <a href="/detail/${item.id_pelanggan}" class="text-slate-800">
+                                        <a href="/sp-bulanan/detail/${item.id_pelanggan}" class="text-slate-800">
                                         <div class="flex justify-between text-sm py-3 px-4">
                                         <div class="flex-1 font-bold text-black ">${item.pelanggan}</div>
                                         <div class="flex-1 text-right text-black ">${item.saldo_piutang}</div>
