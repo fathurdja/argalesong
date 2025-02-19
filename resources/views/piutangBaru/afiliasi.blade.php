@@ -303,7 +303,7 @@
                     <input type="hidden" name="jenis_form" value="{{ $selectedType->kodePiutang }}">
                     <input type="hidden" name="perusahaan" value="{{ $selectedPerusahaan }}">
 
-                    <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="grid grid-cols-1 gap-4 mb-4">
                         <div>
                             <label for="tanggal_transaksi" class="block text-sm font-medium text-gray-700">Tanggal
                                 Transaksi</label>
@@ -350,7 +350,7 @@
                     <div id="customerDropdownContainer" class="mb-4">
                         <!-- Input untuk menampilkan nama pelanggan -->
                         <input list="groupList" name="nama_pelanggan" id="nama_pelanggan"
-                            class="border border-gray-300 p-2 rounded-md w-96" placeholder="Pilih Pelanggan..."
+                            class="border border-gray-300 p-2 rounded-md w-80" placeholder="Pilih Pelanggan..."
                             oninput="syncCustomerId(this)">
 
                         <!-- Datalist untuk menampilkan opsi -->
@@ -390,8 +390,8 @@
 
                     <div class="mb-4 ">
                         <label class="block text-sm font-medium text-gray-700">Pajak</label>
-                        <div class="mt-2 flex  gap-4  flex-col md:flex-row justify-start items-center ">
-                            <div class="flex  flex-col justify-start items -center">
+                        <div class="mt-2 flex  gap-4  flex-col md:flex-row justify-start">
+                            <div class="flex  flex-col justify-start">
                                 <label for="" class="mr-2">PPN:</label>
                                 <select name="ppnType" id="ppn_type"
                                     class="mt-1 block w-52 bg-white border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">

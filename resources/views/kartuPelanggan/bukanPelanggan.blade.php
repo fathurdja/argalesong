@@ -22,70 +22,38 @@
             <div class="mb-2 text-sm">Periode: 01/07/2024 s/d 12/08/2024</div>
 
             <!-- Scroll hanya untuk layar kecil -->
-            <div class="min-w-full overflow-x-auto">
-                <!-- Table for Laptop (Desktop View) -->
-                <div class="hidden lg:block">
-                    <table class="min-w-full table-auto">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tgl Terbit</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No Bukti Jurnal</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Keterangan</th>
-                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Debet</th>
-                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Kredit</th>
-                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Saldo</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 text-sm">
-                            @foreach([
-                                ['tgl' => '29/5/2024', 'no' => 'FN0240529001', 'ket' => 'Lorem ipsum dolor sit amet.', 'debet' => '254,545', 'kredit' => '', 'saldo' => '254,545'],
-                                ['tgl' => '28/6/2024', 'no' => 'FN0240628001', 'ket' => 'Vestibulum vel metus sit amet.', 'debet' => '67,919', 'kredit' => '', 'saldo' => '322,464']
-                            ] as $entry)
-                            <tr>
-                                <td class="px-6 py-4">{{ $entry['tgl'] }}</td>
-                                <td class="px-6 py-4">{{ $entry['no'] }}</td>
-                                <td class="px-6 py-4">{{ $entry['ket'] }}</td>
-                                <td class="px-6 py-4 text-right">{{ $entry['debet'] }}</td>
-                                <td class="px-6 py-4 text-right">{{ $entry['kredit'] }}</td>
-                                <td class="px-6 py-4 text-right">{{ $entry['saldo'] }}</td>
-                            </tr>
-                            @endforeach
-                            <tr class="bg-gray-50 font-bold">
-                                <td colspan="5" class="px-6 py-4 text-right">Total</td>
-                                <td class="px-6 py-4 text-right">{{ $account['total'] }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Table for Mobile & Tablet (Mobile View) -->
-                <div class="lg:hidden bg-white shadow-lg space-y-8 rounded-lg lg:p-6 overflow-auto">
-                    <div class="space-y-4 mb-5">
+            <div class=" min-w-full overflow-x-auto">
+                <table class="min-w-full border-collapse">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tgl Terbit</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Bukti Jurnal</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Keterangan</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Debet</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Kredit</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Saldo</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
                         @foreach([
-                            ['tgl' => '29/5/2024', 'no' => 'FN0240529001', 'ket' => 'Lorem ipsum dolor sit amet.', 'debet' => '254,545', 'kredit' => '', 'saldo' => '254,545'],
-                            ['tgl' => '28/6/2024', 'no' => 'FN0240628001', 'ket' => 'Vestibulum vel metus sit amet.', 'debet' => '67,919', 'kredit' => '', 'saldo' => '322,464']
+                            ['tgl' => '29/5/2024', 'no' => 'FN0240529001', 'ket' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent varius.', 'debet' => '254,545', 'kredit' => '', 'saldo' => '254,545'],
+                            ['tgl' => '28/6/2024', 'no' => 'FN0240628001', 'ket' => 'Vestibulum vel metus sit amet nisi ullamcorper.', 'debet' => '67,919', 'kredit' => '', 'saldo' => '322,464']
                         ] as $entry)
-                        <div class="border-b-2 border-gray-200 pb-4">
-                            <div class="flex justify-between text-sm font-semibold py-2 px-2">
-                                <div class="flex-1">Tanggal Terbit: {{ $entry['tgl'] }}</div>
-                                <div class="flex-1 text-right">{{ $entry['debet'] }}</div>
-                            </div>
-                            <div class="flex justify-between text-xs py-1 px-4">
-                                <div class="flex-1 text-gray-600">No Bukti: {{ $entry['no'] }}</div>
-                                <div class="flex-1 text-gray-600">Kredit: {{ $entry['kredit'] }}</div>
-                            </div>
-                            <div class="fjustify-between text-xs py-1 px-4">
-                                <div class=" text-gray-600">Keterangan: {{ $entry['ket'] }}</div>
-                                <div class="text-right font-bold text-sm text-black mt-5">Saldo: {{ $entry['saldo'] }}</div>
-                            </div>
-                        </div>
+                        <tr>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{{ $entry['tgl'] }}</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{{ $entry['no'] }}</td>
+                            <td class="px-4 py-3 text-sm text-gray-500">{{ $entry['ket'] }}</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-right text-gray-500">{{ $entry['debet'] }}</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-right text-gray-500">{{ $entry['kredit'] }}</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-right text-gray-500">{{ $entry['saldo'] }}</td>
+                        </tr>
                         @endforeach
-                        <div class="flex justify-between font-bold py-3 px-4 bg-gray-50">
-                            <span>Total</span>
-                            <span>{{ $account['total'] }}</span>
-                        </div>
-                    </div>
-                </div>
+                        <tr class="bg-gray-50 font-bold">
+                            <td colspan="5" class="px-4 py-3 text-right">Total</td>
+                            <td class="px-4 py-3 text-right">{{ $account['total'] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         @endforeach

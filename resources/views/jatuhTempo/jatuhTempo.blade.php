@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto mt-14 m-10 p-4 rounded-lg bg-white">
-        <h1 class="text-2xl font-bold mb-4">Jatuh Tempo</h1>
+    <div class="container mx-auto mt-14 m-10 lg:p-10 p-2 rounded-lg bg-white">
+        <h1 class="text-2xl font-bold ">JATUH TEMPO</h1>
 
 @php
     $startYear = 2020;
@@ -16,8 +16,10 @@
     ];
 @endphp
 
-<div class="sm:p-6 bg-white rounded-lg shadow-md mt-14 lg:mt-20 w-full">
-    <div class="flex justify-start mb-4 w-full flex-col sm:flex-col gap-2 sm:gap-10 px-2 py-1 sm:p-4">
+
+<div>
+    <div class="flex justify-start mb-4 lg:mt-4 mt-4 w-full flex-col sm:flex-col gap-2 sm:gap-10 px-2 py-1 sm:p-4">
+
          <!-- Pilihan Tahun -->
          <div class="flex gap-5">
             <div class="flex items-center">
@@ -161,4 +163,3 @@
 });
 </script>
 @endpush
-
