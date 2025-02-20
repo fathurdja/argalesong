@@ -85,7 +85,7 @@
                         @forelse ($piutang as $item)
                         {{-- <a href="{{ route('detailpiutang.detail', ['customer_name' => $item->customer_name]) }}" class="text-blue-500 hover:underline text-lg mt-2 block"> --}}
                             <div class="border-b border-gray-300 bg-blue-100 pb-4 p-4">
-                                <a href="{{ route('detailpiutang', ['noInvoice' => $item->no_invoice]) }}">
+                                <a href="{{ route('detail-piutang', ['noInvoice' => $item->no_invoice]) }}">
 
 
                                     <div class="block text-2x1 font-bold text-gray-700 mt-4">

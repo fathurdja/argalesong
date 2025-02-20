@@ -4,7 +4,7 @@
     <div class="bg-white shadow-md rounded-lg overflow-hidden lg:mt-20 mt-10">
 
         <div class="p-6">
-            <h1 class="text-2xl font-bold mb-6">Halaman Riwayat Pengajuan Piutang</h1>
+            <h1 class="text-2xl font-bold mb-6">Halaman Detail Riwayat Piutang</h1>
 
             <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">ID Pengajuan Piutang</label>

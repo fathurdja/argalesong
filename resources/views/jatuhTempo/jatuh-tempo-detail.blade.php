@@ -3,7 +3,7 @@
 @section('content')
     <div class="bg-white shadow-md rounded-lg overflow-hidden lg:mt-20 mt-10 w-full">
         <div class="px-2 py-6">
-            <h1 class="text-2xl font-bold mb-6">Detail Jatuh Tempo</h1>
+            <h1 class="text-2xl font-bold mb-6">Halaman Detail Jatuh Tempo</h1>
 
            <div class="">
 			<div class="mb-6">
@@ -53,7 +53,7 @@
             </div>
 
             <div class="flex justify-end space-x-2">
-                <button type="button" onclick="window.location.href='{{ route('sp-harian') }}'"
+                <button type="button" onclick="window.location.href='{{ route('jatuh-tempo') }}'"
                     class="active:scale-[.95] flex flex-row items-center group justify-center gap-1 py-1 hover:bg-white hover:text-[#161616] transition-all text-white font-medium border-2 border-[#161616] rounded-md shadow-sm px-4 bg-[#161616]">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
