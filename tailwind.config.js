@@ -30,6 +30,9 @@ export default {
                 "Segoe UI Symbol",
                 "Noto Color Emoji",
             ],
+            poppins: [
+                "Poppins", "Inter","sans-serif"
+            ],
             sans: [
                 "Inter",
                 "ui-sans-serif",

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="bg-gray-100 p-10 sm:py-6 sm:px-4 lg:mt-10 lg:mb-10 lg:min-w-full lg:ml-20   ">
+    <div class="bg-gray-100 p-10 sm:py-6 sm:px-4 lg:mt-10 lg:mb-10 lg:min-w-full   ">
         @if ($errors->any())
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                 <ul>
@@ -13,7 +13,7 @@
             </div>
         @endif
 
-        <h1 class="text-3xl py-2 font-semibold">PELANGGAN BARU</h1>
+        <h1 class="text-2xl font-bold mb-4">PELANGGAN BARU</h1>
 
         {{-- <form action="{{ route('customer.store') }}" method="POST" class="overflow-auto max-h-screen"> --}}
         <form action="{{ route('customer.store') }}" method="POST" class="">

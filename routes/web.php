@@ -52,13 +52,20 @@ Route::get('/get-customers/{idcompany}', [PiutangController::class, 'getCustomer
 Route::get('/get-monthly-report', [Sp_bulananController::class, 'getMonthlyReport']);
 Route::get('/riwayatPiutang', [riwayatpiutang::class, 'index'])->name('riwayatPiutang');
 Route::get('/riwayatPiutang/printPreview', [riwayatpiutang::class, 'print_Preview'])->name('printriwayatPiutang');
-Route::get('/riwayatPiutang/detail', [riwayatpiutang::class, 'detail'])->name('detailpiutang');
+// dhimas buat detail
+Route::get('/riwayatPiutang/detail/{customer_name}', [riwayatpiutang::class, 'detail'])->name('detailpiutang.detail');
 Route::get('/riwayatPembayaran', [riwayatPembayaran::class, 'index'])->name('riwayatPembayaran');
+//mbul buat detail
+Route::get('/riwayatPembayaran/detail/{IDPembayaran}', [riwayatPembayaran::class, 'detail'])->name('riwayatPembayaran.detail');
+
 
 // Route untuk Pencarian Customer dan Piutang
+
 Route::get('/customer/search', [CustomerController::class, 'index'])->name('customer.search');
 Route::get('/piutang/group', [UmurPiutangController::class, 'index'])->name('detailpiutang.index');
 Route::get('/fetch-companies', [masterCompany::class, 'fetchAndStoreCompanies']);
+// delete mbul
+Route::delete('/customer/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
 // Route untuk Pembayaran Piutang
 Route::get('/pembayaran-piutang', [PembayaranPiutang::class, 'showForm'])->name('pembayaran-piutang.show');
 Route::get('/pembayaran-piutang/proses', [PembayaranPiutang::class, 'proses'])->name('pembayaran-piutang.proses');
@@ -97,12 +104,25 @@ Route::get('/sp-harian', [Sp_HarianController::class, 'index'])->name('sp-harian
 // Route untuk API mendapatkan laporan harian
 Route::get('/daily-report', [Sp_HarianController::class, 'getDailyReport']);
 
-
 // Route untuk Jatuh Tempo
 Route::get('/jatuh-tempo', [JatuhTempoController::class, 'index'])->name('jatuh-tempo');
+// mbul jatuh tempo
+Route::get('/jatuh-tempo/data/{year}/{month}', [JatuhTempoController::class, 'getJatuhTempo']);
+
 
 // Route untuk mendapatkan data Tagihan
 Route::post('/tagihan/get-data', [tagihanController::class, 'getData']);
 
 // Route tambahan untuk Umur Piutang
 Route::get('/umur-piutang', [UmurPiutangController::class, 'index'])->name('umur-piutang');
+
+
+
+
+// mbul testing
+Route::get('/mbul-test', function(){
+    return view('pembayaran_piutang/pembayaranDetail');
+});
+Route::get('/riwayatPembayaranDetail', function(){
+    return view('pembayaran_piutang/riwayatPembayaranDetail');
+});

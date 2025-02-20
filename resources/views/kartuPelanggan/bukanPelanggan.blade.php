@@ -1,11 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="w-full flex flex-col justify-center items-start mt-5 gap-5 px-2 sm:px-6 lg:px-8 mb-10">
+    <div class="w-full flex flex-col justify-center items-start mt-14 lg:mt-20 gap-5 px-2 sm:px-6 lg:px-8 mb-10">
         <!-- Search Bar -->
-        <div class="w-full">
+        <div class="w-full flex gap-2">
             <input type="text" placeholder="Cari kode / nama"
                 class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm px-4 py-2">
+            <button type="submit"
+                class="active:scale-[.95] hover:bg-white hover:text-[#3D5AD0] transition-all font-medium text-white border-2 border-[#3D5AD0] rounded-md shadow-sm px-4 py-1 bg-[#3D5AD0]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"/></svg>
+            </button>
         </div>
 
         <!-- Ledger Table Section -->
@@ -13,7 +17,7 @@
             ['title' => '0108.01001 PPN Masukan', 'total' => '577,009'],
             ['title' => '0105.01004 Asuransi Dibayar Di Muka', 'total' => '577,009']
         ] as $account)
-        <div class="w-full bg-white shadow-md rounded-lg px-4 py-4">
+        <div class="w-full lg:bg-white shadow-md rounded-lg px-4 py-4">
             <h3 class="text-lg font-bold mb-2">{{ $account['title'] }}</h3>
             <div class="mb-2 text-sm">Periode: 01/07/2024 s/d 12/08/2024</div>
 

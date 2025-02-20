@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="custom.css">
 
-<header>
-    <nav class="bg-gray-300 border-gray-200 px-4 py-2 dark:bg-gray-800 w-full flex flex-row justify-evenly">
+<header id="navbar" class="fixed top-0 inset-x-0 z-10 transition-[top]">
+    <nav
+        class="bg-gray-300 border-gray-200 px-4  py-3 lg:px-14 md:px-12 gap-2 dark:bg-gray-800 w-full flex flex-row justify-evenly">
         <div class="container mx-auto flex flex-wrap items-center justify-between px-4 md:px-6">
             <div class="flex items-center space-x-3">
                 <a href="" class="flex items-center">
@@ -38,45 +39,19 @@
         </div> --}}
         <button id="menu-humburger" class="md:hidden  w-8  flex flex-col justify-center items-end gap-[3px] group">
             <span
-                class="block w-full h-1 bg-gray-800 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
+                class="block w-full h-[3px] bg-gray-700 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
             <span
-                class="block w-[90%] h-1 bg-gray-800 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
+                class="block w-[90%] h-[3px] bg-gray-700 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
             <span
-                class="block w-full h-1 bg-gray-800 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
+                class="block w-full h-[3px] bg-gray-700 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
             <span
-                class="block w-[90%] h-1 bg-gray-800 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
+                class="block w-[90%] h-[3px] bg-gray-700 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
         </button>
     </nav>
 
 
 </header>
 
-<script>
-    document.getElementById('menu-humburger').addEventListener('click', (e) => {
-    e.preventDefault();
-    e.currentTarget.classList.toggle('humburger');
-    const aside = document.getElementById('aside');
-    const subMenut = document.querySelector('.sidebar .sidebar-item .text')
-    const subMenut2 = document.querySelector('#aside .sidebar-submenu')
-    console.log('hello word')
-    console.log(subMenut2);
-    aside.classList.toggle('hidden');
-// aside.classList.toggle('ml-2');
-subMenut.classList.toggle('opacity-170');
-subMenut.classList.toggle('ml-2');
-subMenut2.classList.toggle('block');
-
-
-
-
-});
-</script>
-
-
-<style>
-    
-</style>
-{{-- .sidebar:hover .sidebar-item .text {
-    opacity: 1;
-    margin-left: 1rem;
-} --}}
+@push('scripts')
+@vite('resources/js/navigasi.js')
+@endpush

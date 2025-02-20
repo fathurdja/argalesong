@@ -8,15 +8,16 @@
 
     <!-- Tambahkan CSS Anda di sini -->
     @vite(['resources/css/app.css', 'resources/css/custom.css', 'resources/js/app.js'])
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body class=" bg-gray-100 w-full h-full "> 
+<body class="  bg-gray-100 w-full h-full "> 
     {{-- flex items-center justify-center flex-wrap --}}
-    <div class="flex h-screen bg-gray-200 md:bg-gray-300 lg:bg-gray-200">
+    <div class="flex h-screen bg-gray-100 md:bg-gray-100 lg:bg-gray-100">
 
         @include('partials.sidebar')
 
-        <div class="min-w-full min-h-full flex justify-center items-center">
+        <div class="min-w-full min-h-full flex justify-center items-center ">
             @yield('content')
         </div>
     </div>

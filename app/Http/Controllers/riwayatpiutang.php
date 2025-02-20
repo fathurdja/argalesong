@@ -35,7 +35,7 @@ class riwayatpiutang extends Controller
                 'x.ppn',
                 'x.pph',
                 'x.urutantagihan',
-                'x.statusPembayaran',
+            'x.statusPembayaran',
                 'x.jumlahTagihan',
                 'x.kodepiutang',
                 'm.name as tipepiutang',
@@ -59,14 +59,11 @@ class riwayatpiutang extends Controller
         return view('piutangBaru.riwayatpiutang', compact('piutang', 'perusahaan', 'filterCompany'));
     }
 
-    // public function print_Preview()
-    // {
-    //     $mpdf = new \Mpdf\Mpdf();
-    //     $mpdf->WriteHTML('<h1>Hello world!</h1>');
-    //     $mpdf->Output();
-    // }
+    // public function print_ta
 
-    // public function detail(){
-    //     return view('piutangBaru.detailpiutang');
-    // }
+    // Dhimas buat detail riwayat piutang
+    public function detail($customer_name) {
+        $detail = DB::table('detailpiutang as x')->where('customer_name', $customer_name)->first();
+        return view('piutangBaru.detailriwayatpiutang', compact('detail'));
+    } 
 }

@@ -1,114 +1,67 @@
+
+
 <!DOCTYPE html>
-<html lang="id">
-
+<html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="https://cdn.tailwindcss.com"></script>
-	<title>Hamburger Menu</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
-
-<body class="flex items-center justify-center min-h-screen bg-gray-100">
-
-	<!-- Tombol Hamburger -->
-	<!-- <button id="menu-humburger" class="fixed top-2 right-4 w-8  flex flex-col justify-center items-end gap-[3px] group">
-		<span class="block w-full h-1 bg-gray-800 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
-		<span class="block w-[90%] h-1 bg-gray-800 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
-		<span class="block w-full h-1 bg-gray-800 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
-		<span class="block w-[90%] h-1 bg-gray-800 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
-	</button>
-	<div id="container" class="w-[500px] h-[500px]  hidden bg-slate-900">
-		Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores, aliquid! Inventore possimus deserunt et soluta consequuntur omnis molestias quis minima qui, expedita voluptatibus incidunt consectetur, harum ducimus vitae cupiditate architecto.
-	</div>
-	 -->
-
-	<div class="justify-center items-center w-full px-2 py-1 flex flex-row gap-7 overflow-auto scrollbar-hide bg-slate-600">
-			<a href="">
-					<div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
-						<div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
-						</div>
-						<span >Daftar Pelanggan</span>
-					</div>
-				</a>
-				<a href="">
-					<div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
-						<div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
-						</div>
-						<span >Daftar Pelanggan</span>
-					</div>
-				</a>
-				<a href="">
-					<div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
-						<div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
-						</div>
-						<span >Daftar Pelanggan</span>
-					</div>
-				</a>
-				<a href="">
-					<div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
-						<div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
-						</div>
-						<span >Daftar Pelanggan</span>
-					</div>
-				</a>
-				<a href="">
-					<div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
-						<div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
-						</div>
-						<span >Daftar Pelanggan</span>
-					</div>
-				</a>
-				<a href="">
-					<div class="w-[50px] flex justify-start items-center flex-col text-center text-xs/4">
-						<div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="90%" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/></svg>
-						</div>
-						<span >Daftar Pelanggan</span>
-					</div>
-				</a>
-	</div>
-
-
-
-	<script>
-
-		document.getElementById('menu-humburger').addEventListener('click', (e) => {
-			e.preventDefault();
-			// e.currentTarget.classList.toggle('open');
-			// const container = document.getElementById('container').classList.toggle('hidden');
-			const falsy = false;
-			!falsy ? document.getElementById('container').classList.toggle('block') : document.getElementById('container').classList.toggle('hidden');
-		});
-	</script>
-
-	<style>
-		.menu-humburger span {
-			transition: all 0.3s ease-in-out;
-		}
-
-		.menu-humburger span:first-child {
-			transform: rotate(-45deg) translateY(10px) translateX(-5px);
-		}
-
-		.menu-humburger span:nth-child(2) {
-			opacity: 0;
-		}
-
-		.menu-humburger span:nth-child(3) {
-			opacity: 0;
-		}
-
-		.menu-humburger span:last-child {
-			transform: rotate(45deg) translateY(-10px) translateX(-5px);
-			width: 100%;
-		}
-	</style>
-
+<body>
+    <nav class="flex items-center justify-between px-4 py-2 bg-white shadow-md md:hidden fixed bottom-0 inset-x-0">
+       <!-- Navigation Menu -->
+       <ul class="flex flex-row justify-between items-center space-x-6 w-full">
+       <li>
+         <!-- Hamburger Menu -->
+         <button id="menu-humburger" class="md:hidden w-8 flex flex-col justify-center items-end gap-[3px] group">
+            <span class="block w-full h-[3px] bg-gray-700 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
+            <span class="block w-[90%] h-[3px] bg-gray-700 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
+            <span class="block w-full h-[3px] bg-gray-700 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
+            <span class="block w-[90%] h-[3px] bg-gray-700 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
+        </button>
+       </li>
+        
+       
+            <li>
+                <a href="#" class="w-[40px] flex flex-col items-center text-center text-xs">
+                    <div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
+                        <svg class="fill-white w-6 h-6" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M755.2 938.666667H290.133333C224 938.666667 170.666667 885.333333 170.666667 819.2V204.8C170.666667 ..."></path>
+                        </svg>
+                    </div>
+                    <span>Piutang</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="w-[40px] flex flex-col items-center text-center text-xs">
+                    <div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
+                        <svg class="fill-white w-6 h-6" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M755.2 938.666667H290.133333C224 938.666667 170.666667 885.333333 170.666667 819.2V204.8C170.666667 ..."></path>
+                        </svg>
+                    </div>
+                    <span>Piutang</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="w-[40px] flex flex-col items-center text-center text-xs">
+                    <div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
+                        <svg class="fill-white w-6 h-6" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M755.2 938.666667H290.133333C224 938.666667 170.666667 885.333333 170.666667 819.2V204.8C170.666667 ..."></path>
+                        </svg>
+                    </div>
+                    <span>Piutang</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="w-[40px] flex flex-col items-center text-center text-xs">
+                    <div class="w-full rounded-sm py-1 px-2 bg-[#5F708A] text-white flex justify-center items-center">
+                        <svg class="fill-white w-6 h-6" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M755.2 938.666667H290.133333C224 938.666667 170.666667 885.333333 170.666667 819.2V204.8C170.666667 ..."></path>
+                        </svg>
+                    </div>
+                    <span>Piutang</span>
+                </a>
+    </nav>
 </body>
-
 </html>

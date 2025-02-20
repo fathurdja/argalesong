@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
-    <div class="p-4 bg-white rounded-lg shadow-md mt-5 ml-12">
+    <div class="p-4 bg-white rounded-lg shadow-md mt-10 lg:mt-20 ml-10">
         <!-- Header Section -->
         <div class="border-b border-gray-200 pb-4">
-            <h1 class="text-lg font-bold text-center">PEMUTIHAN PIUTANG: BARU</h1>
+            <h1 class="text-2xl font-bold mb-4">PEMUTIHAN PIUTANG: BARU</h1>
         </div>
 
         <!-- Form Section -->

@@ -33,8 +33,8 @@ class CustomerController extends Controller
             ->when($companyFilter, function ($query) use ($companyFilter) {
                 $query->where('idcompany', $companyFilter);
             })
-            ->paginate(10); // Anda bisa mengatur jumlah item per halaman
-
+            // ->paginate(10); // Anda bisa mengatur jumlah item per halaman
+            ->get(); // mengambil semua
         return view('daftarPelangggan.formedit', compact('daftarPelanggan', 'perusahaan'));
     }
 
@@ -172,10 +172,31 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
-    }
+//     public function destroy($id_Pelanggan)
+// {
+//     $customer = Customer::find($id_Pelanggan);
+
+//     if (!$customer) {
+//         return redirect()->back()->with('error', 'Customer not found.');
+//     }
+
+//     $customer->delete();
+
+//     return redirect()->route('customers.index')->with('success', 'Customer deleted successfully.');
+// }
+public function destroy($id)
+{
+    // Cari pelanggan berdasarkan ID
+    $customer = Customer::findOrFail($id);
+
+    // Hapus pelanggan dari database
+    $customer->delete();
+
+    // Redirect dengan pesan sukses
+    return redirect()->route('customer.index')->with('success', 'Pelanggan berhasil dihapus.');
+}
+
+
     public function getCustomers($idcompany)
     {
         $customers = Customer::where('idcompany', $idcompany)->get(['id_Pelanggan', 'name']);
