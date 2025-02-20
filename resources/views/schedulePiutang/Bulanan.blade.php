@@ -56,7 +56,7 @@
         <!-- Table for Mobile & Tablet (Mobile View) -->
         <div class="lg:hidden bg-white shadow-md rounded-lg lg:p-6 overflow-auto">
             <div class="space-y-4">
-                <div class="flex justify-between text-sm font-semibold py-2 px-4 bg-gray-50">
+                <div class="flex justify-between text-lg font-semibold py-2 px-4 bg-gray-50">
                     <div class="flex-1 text-left">Transaksi</div>
                     <div class="flex-1 text-right">Jumlah</div>
                 </div>
@@ -106,15 +106,15 @@
                                 tbodyMobile.innerHTML += `
                                     <div>
                                         <a href="/detail/${item.id_pelanggan}" class="text-slate-800">
-                                        <div class="flex justify-between text-sm py-3 px-4">
+                                        <div class="flex justify-between text-lg py-3 px-4">
                                         <div class="flex-1 font-bold text-black ">${item.pelanggan}</div>
                                         <div class="flex-1 text-right text-black ">${item.saldo_piutang}</div>
                                     </div>
-                                    <div class="flex justify-between text-xs py-1 px-4">
+                                    <div class="flex justify-between text-sm py-1 px-4">
                                         <div class="flex-1 text-black ">${item.jatuh_tempo}</div>
                                         <div class="flex-1 text-right text-black ">Pembayaran : ${item.total_pembayaran}</div>
                                     </div>
-                                    <div class="flex justify-between text-xs py-1 px-4">
+                                    <div class="flex justify-between text-sm py-1 px-4">
                                         <div class="flex-1 font-bold text-black ">Saldo Piutang</div>
                                         <div class="flex-1 text-right text-black ">${item.total_piutang}</div>
                                     </div>

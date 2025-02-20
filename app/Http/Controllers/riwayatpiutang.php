@@ -62,8 +62,8 @@ class riwayatpiutang extends Controller
     // public function print_ta
 
     // Dhimas buat detail riwayat piutang
-    public function detail($customer_name) {
-        $detail = DB::table('detailpiutang as x')->where('customer_name', $customer_name)->first();
+    public function detail($no_invoice) {
+        $detail = DB::table('detailpiutang as x')->where('no_invoice', $no_invoice)->first();
         return view('piutangBaru.detailriwayatpiutang', compact('detail'));
     } 
 }
