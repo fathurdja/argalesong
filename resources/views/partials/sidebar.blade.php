@@ -58,7 +58,7 @@
                 <li>
                     <a class="arrow">
                         <div
-                            class="sidebar-item flex {{ request()->routeIs('piutang-types.create') ? 'bg-blue-700' : '' }} {{ request()->routeIs('riwayatPiutang') ? 'bg-blue-700' : '' }} items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                            class="sidebar-item flex {{ request()->routeIs('piutang-types.create') ? 'bg-blue-700' : '' }} {{ request()->routeIs('riwayatPiutang') ? 'bg-blue-700' : '' }} {{ request()->routeIs('detail-piutang') ? 'bg-blue-700' : '' }} items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
                             <svg class="fill-white flex-shrink-0 w-6 h-6 text-white transition duration-75 group-hover:text-white dark:text-white dark:group-hover:text-white"
                                 viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -99,7 +99,7 @@
                 <li>
                     <a class="arrow">
                         <div
-                            class="sidebar-item flex items-center p-2 {{ request()->routeIs('riwayatPembayaran') ? 'bg-blue-700' : '' }} {{ request()->routeIs('pembayaran-piutang.show') ? 'bg-blue-700' : '' }} w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                            class="sidebar-item flex items-center p-2 {{ request()->routeIs('riwayatPembayaran') ? 'bg-blue-700' : '' }} {{ request()->routeIs('pembayaran-piutang.show') ? 'bg-blue-700' : '' }} {{ request()->routeIs('riwayatPembayaran.detail') ? 'bg-blue-700' : '' }}  w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
                             <svg class="w-6 h-6 flex-shrink-0 fill-white"viewBox="0 0 32 32"
                                 enable-background="new 0 0 32 32" id="Stock_cut" version="1.1" xml:space="preserve"
                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -207,7 +207,7 @@
                 <li>
                     <a class="arrow">
                         <div
-                            class="sidebar-item {{ request()->routeIs('sp-bulanan') ? 'bg-blue-700' : '' }} {{ request()->routeIs('sp-harian') ? 'bg-blue-700' : '' }} flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                            class="sidebar-item {{ request()->routeIs('sp-bulanan') ? 'bg-blue-700' : '' }} {{ request()->routeIs('sp-bulanan.detail') ? 'bg-blue-700' : '' }} {{ request()->routeIs('sp-harian') ? 'bg-blue-700' : '' }} {{ request()->routeIs('sp-harian.detail') ? 'bg-blue-700' : '' }} flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
                             <svg class="fill-white flex-shrink-0 w-6 h-6 text-white transition duration-75 group-hover:text-white dark:text-white dark:group-hover:text-white"
                                 xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 32 32"
                                 data-name="Layer 13" id="Layer_13">
@@ -248,11 +248,11 @@
                     <ul class="py-2 text sidebar-submenu">
                         <li class="sidebar-submenu-item">
                             <a href="{{ route('sp-bulanan') }}"
-                                class="flex items-center {{ request()->routeIs('sp-bulanan') ? 'bg-gray-500' : '' }} p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Bulanan</a>
+                                class="flex items-center {{ request()->routeIs('sp-bulanan') ? 'bg-gray-500' : '' }} {{ request()->routeIs('sp-bulanan.detail') ? 'bg-gray-500' : '' }} p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Bulanan</a>
                         </li>
                         <li class="sidebar-submenu-item">
                             <a href="{{ route('sp-harian') }}"
-                                class="flex items-center {{ request()->routeIs('sp-harian') ? 'bg-gray-500' : '' }} p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Harian</a>
+                                class="flex items-center {{ request()->routeIs('sp-harian') ? 'bg-gray-500' : '' }} {{ request()->routeIs('sp-harian.detail') ? 'bg-gray-500' : '' }} p-2 pl-4 w-full text-sm text font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 ">Harian</a>
                         </li>
                     </ul>
                 </li>
@@ -260,7 +260,7 @@
             <ul class="space-y-2">
                 <li>
                     <div
-                        class="sidebar-item {{ request()->routeIs('jatuh-tempo') ? 'bg-blue-700' : '' }} flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
+                        class="sidebar-item {{ request()->routeIs('jatuh-tempo') ? 'bg-blue-700' : '' }} {{ request()->routeIs('jatuh-tempo.detail') ? 'bg-blue-700' : '' }} flex items-center p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-700 dark:text-white dark:hover:bg-gray-700">
                         <svg class=" fill-white w-6 h-6 flex-shrink-0" viewBox="0 0 1024 1024" version="1.1"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -350,8 +350,8 @@
     </div>
     <form method="POST" action="{{ route('logout') }}" class="w-full">
         @csrf
-        <button type="submit"
-            class="sidebar-item  pt-4 flex items-center p-4 w-full text-base font-normal text-white rounded-lg hover:bg-blue-700 dark:text-white dark:bg-gray-800">
+        <button type="submit"   
+            class="sidebar-item gap-1 pt-4 flex items-center p-4 w-full text-base font-normal text-white rounded-lg hover:bg-blue-700 dark:text-white dark:bg-gray-800">
             <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 32 32"
                 class="w-6 h-6 flex-shrink-0 " fill="#ffffff">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -363,7 +363,7 @@
                 </g>
             </svg>
             {{-- opacity-0 group:hover-opacity-100 --}}
-            <h3 class="font-bold ml-2 text">Logout</h3>
+            <h3 class="font-bold text">Logout</h3>
         </button>
     </form>
 </aside>
@@ -385,6 +385,7 @@
 
 
 
+// smeentera
 
 
 

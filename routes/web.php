@@ -53,7 +53,9 @@ Route::get('/get-monthly-report', [Sp_bulananController::class, 'getMonthlyRepor
 Route::get('/riwayatPiutang', [riwayatpiutang::class, 'index'])->name('riwayatPiutang');
 Route::get('/riwayatPiutang/printPreview', [riwayatpiutang::class, 'print_Preview'])->name('printriwayatPiutang');
 // dhimas buat detail
-Route::get('/riwayatPiutang/detail/{no_invoice}', [riwayatpiutang::class, 'detail'])->name('detailpiutang.detail');
+use App\Http\Controllers\RiwayatPiutangController;
+
+Route::get('/riwayatPiutang/detail/{noInvoice}', [riwayatpiutang::class, 'detail'])->name('detail-piutang');
 Route::get('/riwayatPembayaran', [riwayatPembayaran::class, 'index'])->name('riwayatPembayaran');
 //mbul buat detail
 Route::get('/riwayatPembayaran/detail/{IDPembayaran}', [riwayatPembayaran::class, 'detail'])->name('riwayatPembayaran.detail');
@@ -100,7 +102,11 @@ Route::get('/pp-baru', [pp_baruController::class, 'index'])->name('pp-baru');
 
 // Route untuk Laporan SP Bulanan dan Harian
 Route::get('/sp-bulanan', [Sp_bulananController::class, 'index'])->name('sp-bulanan');
+// mbul detail sp-bulanan
+Route::get('/sp-bulanan/detail/{id_pelanggan}', [Sp_bulananController::class, 'detail'])->name('sp-bulanan.detail');
 Route::get('/sp-harian', [Sp_HarianController::class, 'index'])->name('sp-harian');
+// mbul detail sp-harian
+Route::get('/sp-harian/detail/{id_pelanggan}', [Sp_HarianController::class, 'detail'])->name('sp-harian.detail');
 // Route untuk API mendapatkan laporan harian
 Route::get('/daily-report', [Sp_HarianController::class, 'getDailyReport']);
 
@@ -108,6 +114,8 @@ Route::get('/daily-report', [Sp_HarianController::class, 'getDailyReport']);
 Route::get('/jatuh-tempo', [JatuhTempoController::class, 'index'])->name('jatuh-tempo');
 // mbul jatuh tempo
 Route::get('/jatuh-tempo/data/{year}/{month}', [JatuhTempoController::class, 'getJatuhTempo']);
+// mbul jatuh tempo
+Route::get('/jatuh-tempo/detail/{no_invoice}', [JatuhTempoController::class, 'detail'])->name('jatuh-tempo.detail');
 
 
 // Route untuk mendapatkan data Tagihan
