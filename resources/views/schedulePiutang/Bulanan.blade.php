@@ -20,7 +20,7 @@
             <select id="year" 
                 class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 @foreach (range(2020, 2025) as $year)
-                    <option value="{{ $year }}">{{ $year }}</option>
+                    <option value="{{ $year }}" >{{ $year }}</option>
                 @endforeach
             </select>
         </div>
