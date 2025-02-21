@@ -61,8 +61,8 @@
         </table>
     </div>
     <!-- Table for Mobile & Tablet (Mobile View) -->
-    <div class="md:hidden bg-white shadow-md rounded-lg lg:p-6 ">
-        <div class="space-y-4 mb-5">
+    <div class="md:hidden bg-white shadow-md rounded-lg lg:p-6 overflow-auto">
+        <div class="space-y-4">
             <div class="flex justify-between text-sm font-semibold py-2 px-4 bg-gray-50">
                 <div class="flex-1 text-left">Transaksi</div>
                 <div class="flex-1 text-right">Jumlah</div>
@@ -141,17 +141,17 @@
                 // Data untuk tampilan mobile
                 const rowMobile = `<div>
                     <a href="sp-harian/detail/${item.id_pelanggan}" class="block text-slate-800">
-                        <div class="flex justify-between py-3 px-4">
-                            <span class="font-bold text-lg">${item.pelanggan}</span>
-                            <span class="text-right font-semibold text-lg">${formatRupiah(item.saldo_piutang)}</span>
+                        <div class="flex justify-between  py-2">
+                            <span class="font-bold">${item.pelanggan}</span>
+                            <span class="text-right font-semibold">${formatRupiah(item.saldo_piutang)}</span>
                         </div>
-                        <div class="text-gray-600 flex justify-between items-center flex-wrap gap-2 py-3 px-4">
-                            <div class="text-sm">${item.jatuh_tempo}</div>
-                            <div class="text-sm">Pembayaran: ${formatRupiah(item.total_pembayaran)}</div>
-                            <div class="font-bold text-sm">Total Piutang: </div>
-                            <div class="font-bold text-sm">${formatRupiah(item.total_piutang)}</div>
+                        <div class="text-gray-600 flex justify-between items-center flex-wrap gap-2">
+                            <div>${item.jatuh_tempo}</div>
+                            <div>Pembayaran: ${formatRupiah(item.total_pembayaran)}</div>
+                            <div class="font-bold">Total Piutang: </div>
+                            <div class="font-bold">${formatRupiah(item.total_piutang)}</div>
                         </div>
-                        <div class="text-right text-lg text-blue-500 font-medium mt-2 py-3 px-4">Selengkapnya</div>
+                        <div class="text-right text-blue-500 font-medium mt-2">Selengkapnya</div>
                     </a>
                 </div>`;
 

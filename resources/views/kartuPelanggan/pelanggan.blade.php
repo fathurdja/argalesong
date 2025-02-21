@@ -51,7 +51,7 @@
                 </div>
 
                 <!-- Tombol Cari -->
-                <div class="mt-6 text-right">
+                <div id="pencarian-pelanggan" class="mt-6 text-right">
                     <button type="submit""
                         class="active:scale-[.95] hover:bg-white hover:text-[#3D5AD0] transition-all font-medium text-white border-2 border-[#3D5AD0] rounded-md shadow-sm px-4 py-1 bg-[#3D5AD0]">
                         Cari
@@ -61,7 +61,7 @@
         </div>
 
         <!-- Data Piutang, Pembayaran, dan Denda -->
-        <div id="tabel-data" class="bg-white p-4  ">
+        <div id="tabel-data" class="bg-white p-4 hidden ">
             <div class=" justify-between items-center mb-2">
                 <div class=" justify-between items-center mb-2">
                     <div class="text-lg font-bold">

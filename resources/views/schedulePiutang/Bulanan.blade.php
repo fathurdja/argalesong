@@ -20,7 +20,7 @@
             <select id="year" 
                 class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 @foreach (range(2020, 2025) as $year)
-                    <option value="{{ $year }}">{{ $year }}</option>
+                    <option value="{{ $year }}" >{{ $year }}</option>
                 @endforeach
             </select>
         </div>
@@ -109,7 +109,7 @@
                                 // For mobile display (Simplified View)
                                 tbodyMobile.innerHTML += `
                                     <div>
-                                        <a href="/detail/${item.id_pelanggan}" class="text-slate-800">
+                                        <a href="/sp-bulanan/detail/${item.id_pelanggan}" class="text-slate-800">
                                         <div class="flex justify-between text-sm py-3 px-4">
                                         <div class="flex-1 font-bold text-black ">${item.pelanggan}</div>
                                         <div class="flex-1 text-right text-black ">${item.saldo_piutang}</div>

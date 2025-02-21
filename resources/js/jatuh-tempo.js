@@ -82,15 +82,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 // sisa membuat detailnya
                 mobileRows += `
                 <a href="/jatuh-tempo/detail/${pelanggan.no_invoice}" class="text-slate-800 ">
-                    <div class="flex justify-between text-lg py-3 px-4">
+                    <div class="flex justify-between text-sm py-3 px-4">
                         <div class="flex-1 font-bold text-black">${pelanggan.no_invoice}</div>
                         <div class="flex-1 text-right text-black">${pelanggan.jumlahTagihan ?? '-'}</div>
                     </div>
-                    <div class="flex justify-between text-sm py-1 px-4">
+                    <div class="flex justify-between text-xs py-1 px-4">
                         <div class="flex-1 text-black">${pelanggan.tgl_jatuh_tempo}</div>
                         <div class="flex-1 text-right text-black">Pembayaran: ${pelanggan.jumlahTagihan ?? '-'}</div>
                     </div>
-                    <div class="flex justify-between text-sm py-1 px-4">
+                    <div class="flex justify-between text-xs py-1 px-4">
                         <div class="flex-1 font-bold text-black">Saldo Piutang</div>
                         <div class="flex-1 text-right text-black">${pelanggan.jumlahTagihan ?? '-'}</div>
                     </div>

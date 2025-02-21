@@ -59,33 +59,33 @@
                 </div>
 
                 <!-- Table for Mobile & Tablet (Mobile View) -->
-                    <div class="lg:hidden bg-white shadow-lg space-y-8 rounded-lg text-lg lg:p-6 overflow-auto">
-                        <div class="space-y-4 mb-5">
-                            @foreach([
-                                ['tgl' => '29/5/2024', 'no' => 'FN0240529001', 'ket' => 'Lorem ipsum dolor sit amet.', 'debet' => '254,545', 'kredit' => '', 'saldo' => '254,545'],
-                                ['tgl' => '28/6/2024', 'no' => 'FN0240628001', 'ket' => 'Vestibulum vel metus sit amet.', 'debet' => '67,919', 'kredit' => '', 'saldo' => '322,464']
-                            ] as $entry)
-                            <div class="border-b-2 border-gray-200 pb-6">
-                                <div class="flex justify-between text-lg font-semibold py-2 px-2">
-                                    <div class="flex-1">Tanggal Terbit: {{ $entry['tgl'] }}</div>
-                                    <div class="flex-1 text-right">{{ $entry['debet'] }}</div>
-                                </div>
-                                <div class="flex justify-between text-lg py-1 px-4">
-                                    <div class="flex-1 text-gray-600">No Bukti: {{ $entry['no'] }}</div>
-                                    <div class="flex-1 text-gray-600">Kredit: {{ $entry['kredit'] }}</div>
-                                </div>
-                                <div class="justify-between text-lg py-1 px-4">
-                                    <div class="text-gray-600">Keterangan: {{ $entry['ket'] }}</div>
-                                    <div class="text-right font-bold text-lg text-black mt-5">Saldo: {{ $entry['saldo'] }}</div>
-                                </div>
+                <div class="lg:hidden bg-white shadow-lg space-y-8 rounded-lg text-lg lg:p-6 overflow-auto">
+                    <div class="space-y-4 mb-5">
+                        @foreach([
+                            ['tgl' => '29/5/2024', 'no' => 'FN0240529001', 'ket' => 'Lorem ipsum dolor sit amet.', 'debet' => '254,545', 'kredit' => '', 'saldo' => '254,545'],
+                            ['tgl' => '28/6/2024', 'no' => 'FN0240628001', 'ket' => 'Vestibulum vel metus sit amet.', 'debet' => '67,919', 'kredit' => '', 'saldo' => '322,464']
+                        ] as $entry)
+                        <div class="border-b-2 border-gray-200 pb-4">
+                            <div class="flex justify-between text-lg font-semibold py-2 px-2">
+                                <div class="flex-1">Tanggal Terbit: {{ $entry['tgl'] }}</div>
+                                <div class="flex-1 text-right">{{ $entry['debet'] }}</div>
                             </div>
-                            @endforeach
-                            <div class="flex justify-between text-lg font-bold py-3 px-4 bg-gray-50 mt-4">
-                                <span>Total</span>
-                                <span>{{ $account['total'] }}</span>
+                            <div class="flex justify-between text-lg py-1 px-4">
+                                <div class="flex-1 text-gray-600">No Bukti: {{ $entry['no'] }}</div>
+                                <div class="flex-1 text-gray-600">Kredit: {{ $entry['kredit'] }}</div>
+                            </div>
+                            <div class="justify-between text-lg py-1 px-4">
+                                <div class=" text-gray-600">Keterangan: {{ $entry['ket'] }}</div>
+                                <div class="text-right font-bold text-lg text-black mt-5">Saldo: {{ $entry['saldo'] }}</div>
                             </div>
                         </div>
+                        @endforeach
+                        <div class="flex justify-between text-lg font-bold py-3 px-4 bg-gray-50">
+                            <span>Total</span>
+                            <span>{{ $account['total'] }}</span>
+                        </div>
                     </div>
+                </div>
             </div>
         </div>
         @endforeach
