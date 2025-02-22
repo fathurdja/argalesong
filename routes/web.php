@@ -85,8 +85,13 @@ Route::get('/master-data-piutang', [masterdatacontroller::class, 'index'])->name
 Route::get('/master-data-piutang-create', [masterdatacontroller::class, 'create'])->name('master_data_piutang_create');
 Route::post('/storeTipePelanggan', [masterdatacontroller::class, 'storeTipePelanggan'])->name('storeTipePelanggan');
 Route::post('/storeTipePiutang', [masterdatacontroller::class, 'storeTipePiutang'])->name('storeTipePiutang');
-// -> delete master piutang
+// // -> delete master piutang
 // Route::delete('/master-data-piutang/{id}', [masterdatacontroller::class, 'destroy'])->name('master_data_piutang_delete');
+// Route untuk menghapus item
+Route::delete('/master-data-piutang/{id}', [masterdatacontroller::class, 'destroy'])->name('master_data_piutang.destroy');
+
+
+
 
 Route::get('/kartu-pelanggan', [kp_pelangganController::class, 'index'])->name('kp_pelanggan');
 
