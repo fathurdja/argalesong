@@ -11,7 +11,7 @@
     <h1 class="text-2xl font-bold mb-4">SCHEDULE PIUTANG</h1>
 
     <!-- Year and Month Selection -->
-    <div class="lg:flex items-center mb-4 md:w-max-screen overflow-x-auto flex-wrap ">
+    <div class="lg:flex items-center mb-4 md:w-max-screen overflow-x-auto lg:flex-wrap">
         <label for="year" class="mr-2 font-semibold text-gray-700">Tahun</label>
         <select id="year" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             @foreach (range(2020, $currentYear) as $year) {{-- Menggunakan tahun dinamis --}}
@@ -67,7 +67,7 @@
                 <div class="flex-1 text-left">Transaksi</div>
                 <div class="flex-1 text-right">Jumlah</div>
             </div>
-            <div id="mobile-body" class="bg-white divide-y md:hidden divide-gray-200 text-sm">
+            <div id="mobile-body" class="bg-white divide-y md:hidden divide-gray-200 text-sm p-4">
                <!-- Data will be populated via JavaScript mobile-->
             </div>
         </div>
@@ -141,16 +141,16 @@
                 // Data untuk tampilan mobile
                 const rowMobile = `<div>
                     <a href="sp-harian/detail/${item.id_pelanggan}" class="block text-slate-800">
-                        <div class="flex justify-between  py-2">
+                        <div class="flex justify-between py-2">
                             <span class="font-bold">${item.pelanggan}</span>
                             <span class="text-right font-semibold">${formatRupiah(item.saldo_piutang)}</span>
                         </div>
                         <div class="text-gray-600 flex justify-between items-center flex-wrap gap-2">
                             <div>${item.jatuh_tempo}</div>
                             <div>Pembayaran: ${formatRupiah(item.total_pembayaran)}</div>
-                            <div class="font-bold">Total Piutang: </div>
-                            <div class="font-bold">${formatRupiah(item.total_piutang)}</div>
                         </div>
+                            <div class="font-bold"></div>
+                            <div class="font-bold">Total Piutang : ${formatRupiah(item.total_piutang)}</div>
                         <div class="text-right text-blue-500 font-medium mt-2">Selengkapnya</div>
                     </a>
                 </div>`;

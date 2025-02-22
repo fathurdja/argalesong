@@ -12,10 +12,10 @@
 
 @section('content')
     <div class="container mx-auto mt-20 m-10 p-4 rounded-lg bg-white ">
-        <h1 class="text-2xl font-bold mb-4">SCHEDULE PIUTANG</h1>
+        <h1 class="text-2xl font-bold mb-4 lg:p-2 lg:ml-2">SCHEDULE PIUTANG</h1>
 
         <!-- Year Selection -->
-        <div class="flex items-center mb-4">
+        <div class="flex items-center mb-4 lg:ml-6">
             <label for="year" class="mr-2 font-semibold text-gray-700">Tahun</label>
             <select id="year" 
                 class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
@@ -95,12 +95,12 @@
                                 <tr>
                                        
                                         <td class="px-2 md:px-6 py-4">${index + 1}</td>
-                                        <td class="px-2 md:px-6 py-4">${item.id_pelanggan}</td>
+                                        <td class="px-2 md:px-6 py-4 font-semibold">${item.id_pelanggan}</td>
                                         <td class="px-2 md:px-6 py-4">${item.pelanggan}</td>
                                         <td class="px-2 md:px-6 py-4">${item.jatuh_tempo}</td>
                                         <td class="px-2 md:px-6 py-4 text-right">${item.total_piutang}</td>
                                         <td class="px-2 md:px-6 py-4 text-right">${item.total_pembayaran}</td>
-                                        <td class="px-2 md:px-6 py-4 text-right">${item.saldo_piutang}</td>
+                                        <td class="px-2 md:px-6 py-4 text-right font-semibold">${item.saldo_piutang}</td>
                                        
                                     </tr> </a>`
                                     ;
@@ -111,7 +111,7 @@
                                     <div>
                                         <a href="/sp-bulanan/detail/${item.id_pelanggan}" class="text-slate-800">
                                         <div class="flex justify-between text-sm py-3 px-4">
-                                        <div class="flex-1 font-bold text-black ">${item.pelanggan}</div>
+                                        <div class="flex-1 font-right text-black ">${item.pelanggan}</div>
                                         <div class="flex-1 text-right text-black ">${item.saldo_piutang}</div>
                                     </div>
                                     <div class="flex justify-between text-sm py-1 px-4">
