@@ -73,22 +73,22 @@
                 
                 <!-- Mobile Table -->
                 <div class="md:hidden">
-                    <div class="space-y-4">
-                        <div class="border-b border-gray-300 pb-4">
-                            <div class="text-sm text-gray-700">No</div>
-                            <div class="text-sm font-semibold text-gray-900">1</div>
+                    <div class="space-y-4 bg-blue-100 shadow-sm p-3">
+                        <div class="border-gray-300 ">
+                            <div class="text-lg text-gray-700">No</div>
+                            <div class="text-lg font-semibold text-gray-900">1</div>
                         </div>
-                        <div class="border-b border-gray-300 pb-4">
-                            <div class="text-sm text-gray-700">Nama Pelanggan</div>
-                            <div class="text-sm font-semibold text-gray-900">PT XXX</div>
+                        <div class="border-gray-300">
+                            <div class="text-lg text-gray-700">Nama Pelanggan</div>
+                            <div class="text-lg font-semibold text-gray-900">PT XXX</div>
                         </div>
-                        <div class="border-b border-gray-300 pb-4">
-                            <div class="text-sm text-gray-700">Nominal Pemutihan</div>
-                            <div class="text-sm font-semibold text-gray-900">Rp12,000,000</div>
+                        <div class="border-gray-300">
+                            <div class="text-lg text-gray-700">Nominal Pemutihan</div>
+                            <div class="text-lg font-semibold text-gray-900">Rp12,000,000</div>
                         </div>
-                        <div class="border-b border-gray-300 pb-4">
-                            <div class="text-sm text-gray-700">Status Pengajuan</div>
-                            <div class="text-sm font-semibold text-gray-900">Release</div>
+                        <div class="border-gray-300">
+                            <div class="text-lg text-gray-700">Status Pengajuan</div>
+                            <div class="text-lg font-semibold text-gray-900">Release</div>
                         </div>
                     </div>
                 </div>
