@@ -88,7 +88,8 @@ Route::post('/storeTipePiutang', [masterdatacontroller::class, 'storeTipePiutang
 // // -> delete master piutang
 // Route::delete('/master-data-piutang/{id}', [masterdatacontroller::class, 'destroy'])->name('master_data_piutang_delete');
 // Route untuk menghapus item
-Route::delete('/master-data-piutang/{id}', [masterdatacontroller::class, 'destroy'])->name('master_data_piutang.destroy');
+// Route::delete('/master-data-piutang/{id}', [masterdatacontroller::class, 'destroy'])->name('master_data_piutang.destroy');
+Route::delete('/master-data-piutang-delete', [MasterDataController::class, 'destroy'])->name('master_data_destroy');
 
 
 

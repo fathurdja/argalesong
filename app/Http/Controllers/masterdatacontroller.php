@@ -124,45 +124,25 @@ class masterdatacontroller extends Controller
     }
 
     // Method destroy
-    public function destroy(Request $request)
+        public function destroy(Request $request)
     {
+        // Validasi bahwa ada header dan id yang diberikan
         $request->validate([
-            'id' => 'required|integer',
             'headerName' => 'required|string|max:255',
+            'id' => 'required|integer',
         ]);
 
-        // Tentukan nama tabel berdasarkan header yang dipilih
+        // Mendapatkan nama tabel berdasarkan header yang diterima
         $table = $this->getTableName($request->input('headerName'));
 
-        // Hapus data dari tabel yang sesuai berdasarkan id
+        // Menghapus record dari tabel yang sesuai
         $deleted = DB::table($table)->where('id', $request->input('id'))->delete();
 
         if ($deleted) {
             return redirect()->route('master_data_piutang')->with('success', 'Item berhasil dihapus.');
         } else {
-            return redirect()->route('master_data_piutang')->with('error', 'Gagal menghapus item.');
+            return redirect()->route('master_data_piutang')->with('error', 'Item tidak ditemukan.');
         }
     }
 
-    // Method destroy untuk Tipe Piutang
-    public function destroyTipePiutang($id)
-    {
-        $deleted = DB::table('tipepiutang')->where('id', $id)->delete();
-        if ($deleted) {
-            return redirect()->route('master_data_piutang')->with('success', 'Tipe Piutang berhasil dihapus.');
-        } else {
-            return redirect()->route('master_data_piutang')->with('error', 'Gagal menghapus Tipe Piutang.');
-        }
-    }
-
-    // Method destroy untuk Tipe Pelanggan
-    public function destroyTipePelanggan($id)
-    {
-        $deleted = DB::table('tipepelanggan')->where('id', $id)->delete();
-        if ($deleted) {
-            return redirect()->route('master_data_piutang')->with('success', 'Tipe Pelanggan berhasil dihapus.');
-        } else {
-            return redirect()->route('master_data_piutang')->with('error', 'Gagal menghapus Tipe Pelanggan.');
-        }
-    }
 }
