@@ -125,7 +125,8 @@
 
             data.forEach((item, index) => {
                 // Data untuk tampilan desktop
-                const rowReport = `<tr>
+                // const rowReport = `<tr onclick="window.location.href='sp-harian/detail/${item.id_pelanggan}'">
+                const rowReport = `<tr >
                     <td class="md:px-6 px-2 md:py-3 py-4">${index + 1}</td>
                     <td class="md:px-6 px-2 md:py-3 py-4">${item.pelanggan}</td>
                     <td class="md:px-6 px-2 md:py-3 py-4 text-right">${formatRupiah(item.saldo_piutang)}</td>

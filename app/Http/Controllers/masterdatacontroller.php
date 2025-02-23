@@ -130,10 +130,10 @@ class masterdatacontroller extends Controller
             'id' => 'required|integer',
             'headerName' => 'required|string|max:255',
         ]);
+       
 
         // Tentukan nama tabel berdasarkan header yang dipilih
         $table = $this->getTableName($request->input('headerName'));
-
         // Hapus data dari tabel yang sesuai berdasarkan id
         $deleted = DB::table($table)->where('id', $request->input('id'))->delete();
 
