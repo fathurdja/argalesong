@@ -90,9 +90,10 @@
                         } else {
                             data.forEach((item, index) => {
                                 // For laptop/tablet display (Full Table)
+                                // onclick="window.location.href='/sp-bulanan/detail/${item.id_pelanggan}'"
                                 tbodyLaptop.innerHTML += `
-                                 <a href="/sp-bulanan/detail/${item.id_pelanggan}" class="text-slate-800">
-                                <tr>
+                                
+                                <tr onclick="window.location.href='/sp-bulanan/detail/${item.id_pelanggan}'">
                                        
                                         <td class="px-2 md:px-6 py-4">${index + 1}</td>
                                         <td class="px-2 md:px-6 py-4 font-semibold">${item.id_pelanggan}</td>
@@ -102,7 +103,7 @@
                                         <td class="px-2 md:px-6 py-4 text-right">${item.total_pembayaran}</td>
                                         <td class="px-2 md:px-6 py-4 text-right font-semibold">${item.saldo_piutang}</td>
                                        
-                                    </tr> </a>`
+                                    </tr> `
                                     ;
 
 

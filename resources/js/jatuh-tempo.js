@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             data.forEach((pelanggan, index) => {
                 // Tampilkan dalam tabel desktop
-                rows += `<tr>
+                rows += `<tr onclick="window.location.href='/jatuh-tempo/detail/${pelanggan.no_invoice}'">
                             <td class="px-6 py-4 text-sm text-gray-500">${index + 1}</td>
                             <td class="px-6 py-4 text-sm text-gray-500">${pelanggan.no_invoice}</td>
                             <td class="px-6 py-4 text-sm hidden sm:table-cell text-gray-500">${pelanggan.kodepiutang}</td>
