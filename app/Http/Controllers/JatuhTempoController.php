@@ -23,4 +23,10 @@ class JatuhTempoController extends Controller
 
         return response()->json($jatuhTempo);
     }
+
+    // mbul detail jatuh tempo
+    public function detail($no_invoice){
+        $pelanggan = piutang::where('no_invoice', $no_invoice)->first();
+        return view('jatuhTempo.jatuh-tempo-detail', compact('pelanggan'));
+    }
 }

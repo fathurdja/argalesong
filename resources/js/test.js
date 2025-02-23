@@ -31,12 +31,7 @@ function formatNPWP(input) {
     input.value = formattedValue;
 }
 
-document
-    .getElementById("tipePelanggan")
-    .addEventListener("change", updateKodePelanggan);
-document
-    .getElementById("tipePiutang")
-    .addEventListener("change", updateKodePelanggan);
+
 
 function updateKodePelanggan() {
     var tipePelanggan = document.getElementById("tipePelanggan").value;
@@ -119,6 +114,45 @@ document.addEventListener("DOMContentLoaded", function () {
     input.addEventListener("change", function () {
         form.submit();
     });
+
+    document
+    .getElementById("tipePelanggan")
+    .addEventListener("change", updateKodePelanggan);
+document
+    .getElementById("tipePiutang")
+    .addEventListener("change", updateKodePelanggan);
+
+    function updateRowTotal(input) {
+        const row = input.closest("tr");
+        const piutangValue =
+            parseInt(unformatRupiah(row.querySelector(".piutang-input").value)) ||
+            0;
+        const diskonValue =
+            parseInt(unformatRupiah(row.querySelector(".diskon-input").value)) || 0;
+        const dendaValue =
+            parseInt(unformatRupiah(row.querySelector(".denda-input").value)) || 0;
+    
+        // Update hidden values
+        row.querySelector(".diskon-value").value = diskonValue;
+        row.querySelector(".denda-value").value = dendaValue;
+    
+        const newTotal = piutangValue - diskonValue + dendaValue;
+    
+        row.querySelector(".total-display").value = formatRupiah(newTotal);
+        row.querySelector(".total-value").value = newTotal;
+    
+        updateTotalPiutang();
+    }
+    
+    function updateTotalPiutang() {
+        let total = 0;
+        document.querySelectorAll(".total-value").forEach((input) => {
+            total += parseFloat(input.value) || 0;
+        });
+        document.getElementById("total-piutang").value = formatRupiah(total);
+        document.querySelector('input[name="total_piutang"]').value = total;
+    }
+    
 });
 
 // end formEdit
@@ -256,36 +290,6 @@ function applyFormatting(input) {
     updatePenaltyAndDiscount(input, input.closest("tr").rowIndex);
 }
 
-function updateRowTotal(input) {
-    const row = input.closest("tr");
-    const piutangValue =
-        parseInt(unformatRupiah(row.querySelector(".piutang-input").value)) ||
-        0;
-    const diskonValue =
-        parseInt(unformatRupiah(row.querySelector(".diskon-input").value)) || 0;
-    const dendaValue =
-        parseInt(unformatRupiah(row.querySelector(".denda-input").value)) || 0;
-
-    // Update hidden values
-    row.querySelector(".diskon-value").value = diskonValue;
-    row.querySelector(".denda-value").value = dendaValue;
-
-    const newTotal = piutangValue - diskonValue + dendaValue;
-
-    row.querySelector(".total-display").value = formatRupiah(newTotal);
-    row.querySelector(".total-value").value = newTotal;
-
-    updateTotalPiutang();
-}
-
-function updateTotalPiutang() {
-    let total = 0;
-    document.querySelectorAll(".total-value").forEach((input) => {
-        total += parseFloat(input.value) || 0;
-    });
-    document.getElementById("total-piutang").value = formatRupiah(total);
-    document.querySelector('input[name="total_piutang"]').value = total;
-}
 
 function formatRupiah(number) {
     const roundedNumber = Math.floor(number);
@@ -298,15 +302,6 @@ function unformatRupiah(rupiahString) {
     return parseInt(rupiahString.replace(/[^0-9]/g, ""), 10) || 0;
 }
 
-// Event listener for manual changes in diskon and denda
-document.addEventListener("input", function (event) {
-    if (
-        event.target.classList.contains("diskon-input") ||
-        event.target.classList.contains("denda-input")
-    ) {
-        updateRowTotal(event.target);
-    }
-});
 
 function formatRupiah(number) {
     const roundedNumber = Math.floor(number);
@@ -351,6 +346,17 @@ document.addEventListener("DOMContentLoaded", function () {
     input.addEventListener("change", function () {
         form.submit();
     });
+
+    
+// Event listener for manual changes in diskon and denda
+document.addEventListener("input", function (event) {
+    if (
+        event.target.classList.contains("diskon-input") ||
+        event.target.classList.contains("denda-input")
+    ) {
+        updateRowTotal(event.target);
+    }
+});
 });
 // End riwayatPembayaran
 
@@ -624,3 +630,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 // End Bulanan
+
+
+
+// custom mbul
+document.addEventListener("DOMContentLoaded",  () => {
+    
+})

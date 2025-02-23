@@ -12,15 +12,15 @@
 
 @section('content')
     <div class="container mx-auto mt-20 m-10 p-4 rounded-lg bg-white ">
-        <h1 class="text-2xl font-bold mb-4">SCHEDULE PIUTANG</h1>
+        <h1 class="text-2xl font-bold mb-4 lg:p-2 lg:ml-2">SCHEDULE PIUTANG</h1>
 
         <!-- Year Selection -->
-        <div class="flex items-center mb-4">
+        <div class="flex items-center mb-4 lg:ml-6">
             <label for="year" class="mr-2 font-semibold text-gray-700">Tahun</label>
             <select id="year" 
                 class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 @foreach (range(2020, 2025) as $year)
-                    <option value="{{ $year }}">{{ $year }}</option>
+                    <option value="{{ $year }}" >{{ $year }}</option>
                 @endforeach
             </select>
         </div>
@@ -56,7 +56,7 @@
         <!-- Table for Mobile & Tablet (Mobile View) -->
         <div class="lg:hidden bg-white shadow-md rounded-lg lg:p-6 overflow-auto">
             <div class="space-y-4">
-                <div class="flex justify-between text-sm font-semibold py-2 px-4 bg-gray-50">
+                <div class="flex justify-between text-lg font-semibold py-2 px-4 bg-gray-50">
                     <div class="flex-1 text-left">Transaksi</div>
                     <div class="flex-1 text-right">Jumlah</div>
                 </div>
@@ -90,31 +90,36 @@
                         } else {
                             data.forEach((item, index) => {
                                 // For laptop/tablet display (Full Table)
+                                // onclick="window.location.href='/sp-bulanan/detail/${item.id_pelanggan}'"
                                 tbodyLaptop.innerHTML += `
-                                    <tr>
+                                
+                                <tr onclick="window.location.href='/sp-bulanan/detail/${item.id_pelanggan}'">
+                                       
                                         <td class="px-2 md:px-6 py-4">${index + 1}</td>
-                                        <td class="px-2 md:px-6 py-4">${item.id_pelanggan}</td>
+                                        <td class="px-2 md:px-6 py-4 font-semibold">${item.id_pelanggan}</td>
                                         <td class="px-2 md:px-6 py-4">${item.pelanggan}</td>
                                         <td class="px-2 md:px-6 py-4">${item.jatuh_tempo}</td>
                                         <td class="px-2 md:px-6 py-4 text-right">${item.total_piutang}</td>
                                         <td class="px-2 md:px-6 py-4 text-right">${item.total_pembayaran}</td>
-                                        <td class="px-2 md:px-6 py-4 text-right">${item.saldo_piutang}</td>
-                                    </tr>`;
+                                        <td class="px-2 md:px-6 py-4 text-right font-semibold">${item.saldo_piutang}</td>
+                                       
+                                    </tr> `
+                                    ;
 
 
                                 // For mobile display (Simplified View)
                                 tbodyMobile.innerHTML += `
                                     <div>
-                                        <a href="/detail/${item.id_pelanggan}" class="text-slate-800">
+                                        <a href="/sp-bulanan/detail/${item.id_pelanggan}" class="text-slate-800">
                                         <div class="flex justify-between text-sm py-3 px-4">
-                                        <div class="flex-1 font-bold text-black ">${item.pelanggan}</div>
+                                        <div class="flex-1 font-right text-black ">${item.pelanggan}</div>
                                         <div class="flex-1 text-right text-black ">${item.saldo_piutang}</div>
                                     </div>
-                                    <div class="flex justify-between text-xs py-1 px-4">
+                                    <div class="flex justify-between text-sm py-1 px-4">
                                         <div class="flex-1 text-black ">${item.jatuh_tempo}</div>
                                         <div class="flex-1 text-right text-black ">Pembayaran : ${item.total_pembayaran}</div>
                                     </div>
-                                    <div class="flex justify-between text-xs py-1 px-4">
+                                    <div class="flex justify-between text-sm py-1 px-4">
                                         <div class="flex-1 font-bold text-black ">Saldo Piutang</div>
                                         <div class="flex-1 text-right text-black ">${item.total_piutang}</div>
                                     </div>

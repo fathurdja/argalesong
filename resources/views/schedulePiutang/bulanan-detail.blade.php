@@ -4,12 +4,12 @@
     <div class="bg-white shadow-md rounded-lg overflow-hidden lg:mt-20 mt-10">
 
         <div class="p-6">
-            <h1 class="text-2xl font-bold mb-6">Halaman Detail Riwayat Piutang</h1>
+            <h1 class="text-2xl font-bold mb-6">Halaman Detail Bulanan</h1>
 
             <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">ID Pengajuan Piutang</label>
                 <div class="w-full border-gray-300 font-bold rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-lg p-2 bg-gray-100">
-                    {{ $detail->no_invoice }}
+                    {{ $data->no_invoice }}
                 </div>
             </div>
 
@@ -17,47 +17,45 @@
                 <div class="mb-6">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Nama Pelanggan</label>
                     <div class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-lg p-2 bg-gray-100">
-                        {{ $detail->customer_name }}
+                        {{ $data->customer_name }}
                     </div>
                 </div>
                 <div class="mb-6">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Transaksi</label>
                     <div class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-lg p-2 bg-gray-100">
-                        {{ $detail->tgltra }}
+                        {{ $data->tgltra }}
                     </div>
                 </div>
             </div>
 
-            <!-- Fields for Total Piutang and DPP -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Total Piutang</label>
                     <div class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-lg p-2 bg-gray-100">
-                        Rp{{ number_format($detail->nominal, 2, ',', '.') }}
+                        Rp{{ number_format($data->nominal, 2, ',', '.') }}
                     </div>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">DPP</label>
                     <div class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-lg p-2 bg-gray-100">
-                        Rp{{ number_format($detail->dpp, 2, ',', '.') }}
+                        Rp{{ number_format($data->jumlahTagihan, 2, ',', '.') }}
                     </div>
                 </div>
             </div>
 
-            <!-- Fields for PPN, PPH, and Status -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">PPN</label>
                     <div class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-lg p-2 bg-gray-100">
-                        Rp{{ number_format($detail->ppn, 2, ',', '.') }}
+                        Rp{{ number_format($data->ppn, 2, ',', '.') }}
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">PPH</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Pajak</label>
                     <div class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-lg p-2 bg-gray-100">
-                        Rp{{ number_format($detail->pph, 2, ',', '.') }}
+                        Rp{{ number_format($data->pajak, 2, ',', '.') }}
                     </div>
                 </div>
             </div>
@@ -66,9 +64,9 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Status Pengajuan</label>
                     <div class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-lg p-2 bg-gray-100">
-                        @if ($detail->statusPembayaran == 'LUNAS') 
+                        @if ($data->statusPembayaran == 'LUNAS') 
                             <span class="bg-green-500 text-white px-2 py-1 rounded">Lunas</span>
-                        @elseif($detail->statusPembayaran == 'SEBAGIAN') 
+                        @elseif($data->statusPembayaran == 'SEBAGIAN') 
                             <span class="bg-yellow-500 text-white px-2 py-1 rounded">Sebagian</span>
                         @else 
                             <span class="bg-red-500 text-white px-2 py-1 rounded">Belum Lunas</span>
@@ -88,7 +86,6 @@
                     <span>Kembali</span>
                 </button>
             </div>
-
         </div>
     </div>
 @endsection

@@ -13,39 +13,32 @@ class masterdatacontroller extends Controller
 {
     function index()
     {
-
-        $tipePelanggan = tipePelanggan::pluck('name')->toArray();
-        $tipePiutang = TipePiutang::pluck('name')->toArray();
-        $jatuhTempo = JatuhTempo::pluck('name')->toArray();
-        $lewatPlafon = LewatPlafon::pluck('name')->toArray();
-
+        $tipePelanggan = tipePelanggan::all(); // Menggunakan all() untuk mendapatkan objek
+        $tipePiutang = TipePiutang::all(); // Menggunakan all() untuk mendapatkan objek
+        $jatuhTempo = JatuhTempo::all(); // Menggunakan all() untuk mendapatkan objek
+        $lewatPlafon = LewatPlafon::all(); // Menggunakan all() untuk mendapatkan objek
+    
         $columns = [
             'Tipe Pelanggan' => $tipePelanggan,
             'Tipe Piutang' => $tipePiutang,
             'Jika Jatuh Tempo' => $jatuhTempo,
             'Jika Lewat Plafon' => $lewatPlafon
         ];
-
-        // Debugging the content of $columns
-
-
+    
         return view('masterData.MD_piutang', ['columns' => $columns]);
-        // Return the view with the data
-
     }
+    
 
     public function storeTipePelanggan(Request $request)
     {
-        // Validate the request data
         $request->validate([
             'headerName' => 'required|string|max:255',
             'typeName' => 'required|string|max:255',
         ]);
 
-        // Determine the table to insert data into based on the type
         $table = $this->getTableName($request->input('headerName'));
         $nextId = $this->generateNextId($table);
-        // Insert the data into the appropriate table
+
         DB::table($table)->insert([
             'kodeType' => $nextId,
             'name' => $request->input('typeName'),
@@ -53,29 +46,26 @@ class masterdatacontroller extends Controller
             'updated_at' => now(),
         ]);
 
-        // Redirect back with a success message
         return redirect()->route('master_data_piutang')->with('success', 'Item berhasil ditambahkan.');
     }
+
     private function generateNextId($table)
     {
-        // Extract the highest numeric part from the IDs in the table that match the pattern 'P<number>'
         $lastRecord = DB::table($table)
             ->where('kodeType', 'like', 'P%')
             ->orderBy(DB::raw('CAST(SUBSTRING(kodeType, 2) AS UNSIGNED)'), 'desc')
             ->first();
 
         if (!$lastRecord) {
-            return 'P1'; // Default to 'P1' if there are no records that match the pattern
+            return 'P1';
         }
 
-        // Extract the numeric part from the last record
         if (preg_match('/P(\d+)/', $lastRecord->kodeType, $matches)) {
             $nextNumber = (int)$matches[1] + 1;
-            $nextId = 'P' . $nextNumber;
-            return $nextId;
+            return 'P' . $nextNumber;
         }
 
-        return 'P1'; // Fallback to 'P1' in case of unexpected issues
+        return 'P1';
     }
 
     private function getTableName($type)
@@ -89,7 +79,6 @@ class masterdatacontroller extends Controller
                 return 'jatuh_tempos';
             case 'Jika Lewat Plafon':
                 return 'lewat_plafons';
-                // Add other cases here for different types
             default:
                 throw new \Exception('Unknown type: ' . $type);
         }
@@ -97,18 +86,16 @@ class masterdatacontroller extends Controller
 
     public function create(Request $request)
     {
-
-        $tipePelanggan = tipePelanggan::pluck('name')->toArray();
-        $tipePiutang = TipePiutang::pluck('name')->toArray();
-        $jatuhTempo = JatuhTempo::pluck('name')->toArray();
-        $lewatPlafon = LewatPlafon::pluck('name')->toArray();
+        $tipePelanggan = tipePelanggan::all(); // Menggunakan all() untuk mendapatkan objek
+        $tipePiutang = TipePiutang::all(); // Menggunakan all() untuk mendapatkan objek
+        $jatuhTempo = JatuhTempo::all(); // Menggunakan all() untuk mendapatkan objek
+        $lewatPlafon = LewatPlafon::all(); // Menggunakan all() untuk mendapatkan objek
 
         $columns = [
             'Tipe Pelanggan' => $tipePelanggan,
             'Tipe Piutang' => $tipePiutang,
             'Jika Jatuh Tempo' => $jatuhTempo,
             'Jika Lewat Plafon' => $lewatPlafon
-
         ];
 
         $header = $request->query('header');
@@ -118,17 +105,14 @@ class masterdatacontroller extends Controller
 
     public function storeTipePiutang(Request $request)
     {
-        // Validate the request data
         $request->validate([
             'headerName' => 'required|string|max:255',
             'kode' => 'required|string|max:10',
             'typeName' => 'required|string|max:255',
         ]);
 
-        // Determine the table to insert data into based on the type
         $table = $this->getTableName($request->input('headerName'));
 
-        // Insert the data into the appropriate table
         DB::table($table)->insert([
             'kodePiutang' => $request->input('kode'),
             'name' => $request->input('typeName'),
@@ -136,9 +120,49 @@ class masterdatacontroller extends Controller
             'updated_at' => now(),
         ]);
 
-        // Redirect back with a success message
         return redirect()->route('master_data_piutang')->with('success', 'Item berhasil ditambahkan.');
     }
 
-    // buatkan method destroy (delete)
+    // Method destroy
+    public function destroy(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer',
+            'headerName' => 'required|string|max:255',
+        ]);
+       
+
+        // Tentukan nama tabel berdasarkan header yang dipilih
+        $table = $this->getTableName($request->input('headerName'));
+        // Hapus data dari tabel yang sesuai berdasarkan id
+        $deleted = DB::table($table)->where('id', $request->input('id'))->delete();
+
+        if ($deleted) {
+            return redirect()->route('master_data_piutang')->with('success', 'Item berhasil dihapus.');
+        } else {
+            return redirect()->route('master_data_piutang')->with('error', 'Gagal menghapus item.');
+        }
+    }
+
+    // Method destroy untuk Tipe Piutang
+    public function destroyTipePiutang($id)
+    {
+        $deleted = DB::table('tipepiutang')->where('id', $id)->delete();
+        if ($deleted) {
+            return redirect()->route('master_data_piutang')->with('success', 'Tipe Piutang berhasil dihapus.');
+        } else {
+            return redirect()->route('master_data_piutang')->with('error', 'Gagal menghapus Tipe Piutang.');
+        }
+    }
+
+    // Method destroy untuk Tipe Pelanggan
+    public function destroyTipePelanggan($id)
+    {
+        $deleted = DB::table('tipepelanggan')->where('id', $id)->delete();
+        if ($deleted) {
+            return redirect()->route('master_data_piutang')->with('success', 'Tipe Pelanggan berhasil dihapus.');
+        } else {
+            return redirect()->route('master_data_piutang')->with('error', 'Gagal menghapus Tipe Pelanggan.');
+        }
+    }
 }
