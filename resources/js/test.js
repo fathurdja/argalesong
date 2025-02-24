@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // }
 
 // end formBaru
-
+calculatePiutang()
 // formEdit
 document.addEventListener("DOMContentLoaded", function () {
     const input = document.getElementById("idcompany");
@@ -444,8 +444,8 @@ function calculatePiutang() {
 // Event listeners to trigger calculation when PPN or PPh types change
 document
     .getElementById("ppn_type")
-    .addEventListener("change", calculatePiutang);
-document.getElementById("tarif").addEventListener("change", calculatePiutang);
+    .addEventListener("change", calculatePiutang());
+document.getElementById("tarif").addEventListener("change", calculatePiutang());
 // Show or hide 'jumlah_kali' input based on 'jenis_tagihan' selection
 document
     .getElementById("jenis_tagihan")
