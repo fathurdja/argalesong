@@ -6,6 +6,7 @@
 
         <!-- Bagian Pencarian dan Tombol Baru -->
         <div class="flex justify-between items-center mb-4 flex-wrap">
+            
             <form id="filterForm" action="{{ route('customer.index') }}" method="GET" class="w-full max-w-sm flex space-x-4">
                 <div class="">
                     <label for="idcompany" class="mr-2 text-xl text-gray-700 font-bold">Pilih Group:</label>
@@ -21,7 +22,27 @@
                         @endforeach
                     </datalist>
                 </div>
+                
             </form>
+            <form id="searchForm" action="{{ route('customer.index') }}" method="GET" class="w-full flex gap-2 mb-6">
+                <input type="text" name="search" id="search" placeholder="Cari berdasarkan kode atau nama pelanggan"
+                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm px-4 py-2"
+                    value="{{ request('search') }}">
+                <button type="submit"
+                    class="active:scale-[.95] hover:bg-white hover:text-[#3D5AD0] transition-all font-medium text-white border-2 border-[#3D5AD0] rounded-md shadow-sm px-4 py-1 bg-[#3D5AD0]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"/>
+                    </svg>
+                </button>
+            </form>
+            {{-- <div class="w-full flex gap-2 mb-5">
+                <input type="text" placeholder="Cari kode / nama"
+                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm px-4 py-2">
+                <button type="submit"
+                    class="active:scale-[.95] hover:bg-white hover:text-[#3D5AD0] transition-all font-medium text-white border-2 border-[#3D5AD0] rounded-md shadow-sm px-4 py-1 bg-[#3D5AD0]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"/></svg>
+                </button>
+            </div> --}}
             <div class="flex justify-end w-full items-end">
                 <a href="{{ route('customer.create') }}"
                     class="bg-green-500 justify-items-end text-white font-bold py-2 px-5 lg:py-2 lg:px-7 rounded-md">
@@ -30,6 +51,7 @@
             </div>
 
         </div>
+        
         <div>
             <h1 class="text-2xl font-bold mb-4">DAFTAR PELANGGAN</h1>
         </div>

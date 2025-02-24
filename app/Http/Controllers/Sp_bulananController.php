@@ -70,4 +70,35 @@ class Sp_bulananController extends Controller
 
         return response()->json($groupedData->values());
     }
+
+    // sp bulanan detail mbul
+    public function detail($id_pelanggan){
+        $data = DB::table('detailpiutang as x')
+        ->leftJoin('vtbpiutang as y', 'x.no_invoice', '=', 'y.idpiutang')
+        ->leftJoin('pembayaranpiutang as z', 'x.no_invoice', '=', 'z.no_invoice')
+        ->leftJoin('customer as c', 'x.idpelanggan', '=', 'c.id_Pelanggan')
+        ->select(
+            'x.id',
+            'x.idpelanggan',
+            'c.name as customer_name',
+            'x.tgltra',
+            'x.no_invoice',
+            'x.tgl_jatuh_tempo',
+            'x.jhari',
+            'x.jenistagihan',
+            'x.ppn',
+            'x.pajak',
+            'x.urutantagihan',
+            'x.statusPembayaran',
+            'x.jumlahTagihan',
+            'x.kodepiutang',
+            'x.nominal',
+            'z.nominalbayar',
+            'y.payment as bayar',
+            'z.sisaPiutang',
+            'y.xpiutang as tagihan')
+        ->where('x.idpelanggan', $id_pelanggan)->first();
+        return view('schedulePiutang.bulanan-detail', compact('data'));
+
+    }
 }

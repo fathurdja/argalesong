@@ -245,7 +245,7 @@
         @endif
     </div>
 </div> --}}
-    <div class="container mx-auto mt-10">
+    <div class="container mx-auto mt-10 lg:mt-14">
 
 
         @if ($errors->any())

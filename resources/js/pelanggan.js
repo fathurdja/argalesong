@@ -11,6 +11,7 @@ function fetchCustomers() {
 			.then(response => response.json())
 			.then(data => {
 				// Tambahkan opsi pelanggan ke dalam data list
+				console.log(data)
 				data.forEach(customer => {
 					const option = document.createElement('option');
 					option.value = customer.id_Pelanggan; // Tampilkan nama pelanggan di input
@@ -37,3 +38,13 @@ document.getElementById('id_Pelanggan').addEventListener('input', function() {
 		}
 	}
 });
+
+document.addEventListener('DOMContentLoaded', () =>  {
+	const tabelData = document.getElementById('tabel-data');
+	const pencarianPelanggan = document.getElementById('pencarian-pelanggan');
+
+	pencarianPelanggan.addEventListener('click', (e) => {
+		e.preventDefault();
+		tabelData.classList.remove('hidden');
+	});
+})

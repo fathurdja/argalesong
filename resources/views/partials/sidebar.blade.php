@@ -386,12 +386,15 @@
 
 
 // smeentera
+<<<<<<< HEAD
 // Inisialisasi semua komponen
 document.addEventListener('DOMContentLoaded', function() {
   
    
   const currencyInputDisplay = document.getElementById('nominalDibayarDisplay');
   const currencyInputHidden = document.getElementById('nominalDibayar');
+=======
+>>>>>>> 9b8d9a4d3ca22d126eb87527cdccf9dc3ebf0be6
 
   if (currencyInputDisplay && currencyInputHidden) {
       currencyInputDisplay.addEventListener('input', function() {
