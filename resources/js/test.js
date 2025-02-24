@@ -308,16 +308,16 @@ document.addEventListener("input", function (event) {
     }
 });
 
-function formatRupiah(number) {
-    const roundedNumber = Math.floor(number);
-    return `Rp ${roundedNumber
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
-}
+// function formatRupiah(number) {
+//     const roundedNumber = Math.floor(number);
+//     return `Rp ${roundedNumber
+//         .toString()
+//         .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+// }
 
-function unformatRupiah(rupiahString) {
-    return parseInt(rupiahString.replace(/[^0-9]/g, ""), 10) || 0;
-}
+// function unformatRupiah(rupiahString) {
+//     return parseInt(rupiahString.replace(/[^0-9]/g, ""), 10) || 0;
+// }
 
 function reindexInvoiceInputs() {
     const rows = document.querySelectorAll(".invoice-row");
@@ -401,9 +401,9 @@ document
 // Panggil fungsi ini saat halaman dimuat untuk inisialisasi awal
 document.addEventListener("DOMContentLoaded", updateCustomerDropdown);
 
-function formatRupiah(value) {
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
+// function formatRupiah(value) {
+//     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+// }
 
 function formatDPP(input) {
     let value = input.value.replace(/\./g, ""); // Remove existing dots for reformatting
