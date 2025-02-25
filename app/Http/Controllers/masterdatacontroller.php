@@ -131,6 +131,7 @@ class masterdatacontroller extends Controller
             'headerName' => 'required|string|max:255',
             'id' => 'required|integer',
         ]);
+       
 
         // Mendapatkan nama tabel berdasarkan header yang diterima
         $table = $this->getTableName($request->input('headerName'));

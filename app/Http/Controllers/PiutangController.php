@@ -219,7 +219,14 @@ class PiutangController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $piutang = Piutang::with(['customer', 'company'])->find($id);
+
+        if (!$piutang) {
+            Alert::error('Gagal!', 'Data piutang tidak ditemukan.');
+            return redirect()->route('riwayatPiutang');
+        }
+
+        return view('piutang.show', compact('piutang'));
     }
 
     /**
