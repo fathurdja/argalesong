@@ -130,8 +130,7 @@
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                         <div>
-                            <p><strong>Perusahaan :</strong> {{ $pelanggan->company->name }}</p>
-                            <p><strong>Tipe Pelanggan :</strong> {{ $pelanggan->tipePelanggan->name }}</p>
+                            <p><strong>Perusahaan :</strong> {{ $pelanggan->company ? $pelanggan->company->name : 'Data not available' }}</p>                          <p><strong>Tipe Pelanggan :</strong> {{ $pelanggan->tipePelanggan ? $pelanggan->tipePelanggan->name : 'Data not available' }}</p>
                             <p><strong>NPWP :</strong> {{ $pelanggan->npwp }}</p>
                             <p><strong>Alamat :</strong> {{ $pelanggan->alamat }}</p>
                             <p><strong>E-mail :</strong> {{ $pelanggan->email }}</p>

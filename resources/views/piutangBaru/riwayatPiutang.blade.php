@@ -83,20 +83,15 @@
                 <div class="block md:hidden">
                     <div class="space-y-4 mb-10">
                         @forelse ($piutang as $item)
+
                         {{-- <a href="{{ route('detailpiutang.detail', ['customer_name' => $item->customer_name]) }}" class="text-blue-500 hover:underline text-lg mt-2 block"> --}}
-                            <div class="border-b border-gray-300 bg-blue-100 pb-4 p-4">
+                            <div class="border-b border-gray-300 bg-blue-100 pb-4 p-4">   
                                 <a href="{{ route('detail-piutang', ['noInvoice' => $item->no_invoice]) }}">
-
-
+                                <div class=" flex">
                                     <div class="block text-2x1 font-bold text-gray-700 mt-4">
                                         {{ $item->no_invoice }}
                                     </div>
-                                    <div class="text-lg font-bold text-gray-500">{{ $item->customer_name }}</div>
-                                    <div class="text-lg text-black">{{ $item->tipepiutang }}</div>
-                                    <div class="text-lg text-black">{{ $item->tgltra }}</div>
-                                    <div class="text-lg font-semibold text-gray-900">Total Piutang: Rp{{ number_format($item->nominal, 2) }}</div>
-                            {{-- </a> --}}
-                                    <div class="text-lg text-gray-700 mt-4">Status: 
+                                    <div class="text-lg text-gray-700 mt-2 ml-24">
                                         <span class="inline-block 
                                             @if ($item->statusPembayaran == 'LUNAS') bg-green-500 text-white
                                             @elseif($item->statusPembayaran == 'SEBAGIAN') bg-yellow-500 text-white
@@ -104,7 +99,13 @@
                                             px-2 py-1 rounded">
                                             {{ $item->statusPembayaran }}
                                         </span>
-                                    </div>
+                                    </div>     
+                                </div>
+                                    <div class="text-lg font-bold text-gray-500">{{ $item->customer_name }}</div>
+                                    <div class="text-lg text-black">{{ $item->tipepiutang }}</div>
+                                    <div class="text-lg text-black">{{ $item->tgltra }}</div>
+                                    <div class="text-lg font-semibold text-gray-900">Total Piutang: Rp{{ number_format($item->nominal, 2) }}</div>
+                            {{-- </a> --}}
                                 </a>
                                 
                             </div>

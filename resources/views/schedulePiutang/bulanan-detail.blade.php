@@ -6,6 +6,20 @@
         <div class="p-6">
             <h1 class="text-2xl font-bold mb-6">Halaman Detail Bulanan</h1>
 
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-4">
+                <div>
+                    <div class=" rounded-md sha sm:text-sm text-lg p-2 flex justify-end">
+                        @if ($data->statusPembayaran == 'LUNAS') 
+                            <span class="bg-green-500 text-white px-2 py-1 rounded">Lunas</span>
+                        @elseif($data->statusPembayaran == 'SEBAGIAN') 
+                            <span class="bg-yellow-500 text-white px-2 py-1 rounded">Sebagian</span>
+                        @else 
+                            <span class="bg-red-500 text-white px-2 py-1 rounded">Belum Lunas</span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
             <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">ID Pengajuan Piutang</label>
                 <div class="w-full border-gray-300 font-bold rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-lg p-2 bg-gray-100">
@@ -56,21 +70,6 @@
                     <label class="block text-sm font-medium text-gray-700 mb-1">Pajak</label>
                     <div class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-lg p-2 bg-gray-100">
                         Rp{{ number_format($data->pajak, 2, ',', '.') }}
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Status Pengajuan</label>
-                    <div class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-lg p-2 bg-gray-100">
-                        @if ($data->statusPembayaran == 'LUNAS') 
-                            <span class="bg-green-500 text-white px-2 py-1 rounded">Lunas</span>
-                        @elseif($data->statusPembayaran == 'SEBAGIAN') 
-                            <span class="bg-yellow-500 text-white px-2 py-1 rounded">Sebagian</span>
-                        @else 
-                            <span class="bg-red-500 text-white px-2 py-1 rounded">Belum Lunas</span>
-                        @endif
                     </div>
                 </div>
             </div>
