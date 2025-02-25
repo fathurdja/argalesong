@@ -104,6 +104,7 @@ Route::get('/kp-bukan-Pelanggan', [kp_bukanPelangganController::class, 'index'])
 
 // Route untuk Pengajuan dan Pengajuan Baru
 Route::get('/pp-pengajuan', [pp_pengajuan::class, 'index'])->name('pp-pengajuan');
+Route::get('/pp-pengajuan/detail', [pp_pengajuan::class, 'detail'])->name('pp-pengajuan.detail');
 Route::get('/pp-baru', [pp_baruController::class, 'index'])->name('pp-baru');
 
 // Route untuk Laporan SP Bulanan dan Harian

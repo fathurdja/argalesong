@@ -74,6 +74,7 @@
                 <!-- Mobile Table -->
                 <div class="md:hidden">
                     <div class="space-y-4 bg-blue-100 shadow-sm p-3">
+                    <a href="/pp-pengajuan/detail">
                         <div class="border-gray-300 ">
                             <div class="text-lg text-gray-700">No</div>
                             <div class="text-lg font-semibold text-gray-900">1</div>
@@ -90,6 +91,7 @@
                             <div class="text-lg text-gray-700">Status Pengajuan</div>
                             <div class="text-lg font-semibold text-gray-900">Release</div>
                         </div>
+                    </a>
                     </div>
                 </div>
             </div>

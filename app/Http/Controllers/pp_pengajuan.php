@@ -10,4 +10,8 @@ class pp_pengajuan extends Controller
     {
         return view('pemutihanPiutang.pengajuan');
     }
+    public function detail()
+    {
+        return view('pemutihanPiutang.detailpengajuan');
+    }
 }
