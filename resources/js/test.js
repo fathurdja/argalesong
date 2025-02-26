@@ -1,4 +1,11 @@
-// nama komentar mengikuti nama file blade views
+console.log("Page loaded");
+console.log("Form baru loaded");
+console.log("Form edit loaded");
+console.log("Pembayaran loaded");
+console.log("Riwayat pembayaran loaded");
+console.log("Afiliasi loaded");
+console.log("Riwayat piutang loaded");
+console.log("Bulanan loaded");// nama komentar mengikuti nama file blade views
 
 // formBaru
 function formatNPWP(input) {

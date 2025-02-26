@@ -52,6 +52,7 @@
                         @error('name')
                             <span class="text-red-600 text-sm">{{ $message }}</span>
                         @enderror
+ 
                     </div>
 
                     <div>
@@ -64,8 +65,32 @@
                         <p class="mt-2"><strong>% Sharing :</strong> <span class="text-red-600 font-bold text-lg">*</span></p>
                         <input type="text" class="border border-gray-300 p-2 rounded-md w-full" name="sharing" required>
                         @error('sharing')
+                            <span c lass="text-red-600 text-sm">{{ $message }}</span>
+                        @enderror
+
+                        <p><strong>ktp:</strong> <span class="text-red-600 font-bold text-lg">*</span></p>
+                        <input type="text" id="ktp_input" class="border border-gray-300 p-2 rounded-md w-full" placeholder="Masukkan KTP (Wajib Di isi)" name="ktp" maxlength="15" required>
+                        @error('ktp')
                             <span class="text-red-600 text-sm">{{ $message }}</span>
                         @enderror
+
+                        <p class="mt-2"><strong>NPWP :</strong>
+                            <div class="flex">
+                                <select class="border border-gray-300 p-2 rounded-md w-32" name="npwp_option" id="npwp_option"
+                                    required onchange="toggleInput('npwp_option', 'npwp_input')">
+                                    <option value="tidak_ada">Tidak Ada</option>
+                                    <option value="ada">Ada</option>
+                                </select>
+                                <div id="npwp_input" style="display: none;" class="mt-2">
+                                    <input type="text" id="npwp" class="border border-gray-300 p-2 rounded-md w-64 ml-4"
+                                        placeholder="Masukkan NPWP" name="npwp" oninput="formatNPWP(this)">
+    
+                                    @error('npwp')
+                                        <span class="text-red-600 text-sm">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>  
+                            </p>   
                     </div>
                 </div>
             </div>
