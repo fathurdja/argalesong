@@ -4,12 +4,26 @@
   font-family: poppins !important;
 }
 
+
 .sidebar {
     width: 4rem;
     transition: width 0.3s;
-    position: fixed; /* Pastikan sidebar tidak mengganggu layout lainnya */
-    z-index: 1000;
+    position: fixed;
+    z-index: 100;
 }
+/* #menu-humburger {
+    position: relative;
+    z-index: 1001;
+} */
+#mobile-nav {
+    z-index: 1001;
+}
+/* .sidebar {
+    width: 4rem;
+    transition: width 0.3s;
+    position: fixed; 
+    z-index: 1000;
+} */
 
 .sidebar:hover {
     width: 16rem;
