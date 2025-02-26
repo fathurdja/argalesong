@@ -30,13 +30,13 @@
                     <thead>
                         <tr>
                             <th
-                                class="border border-gray-200 px-1 py-0 md:px-4 md:py-2 text-[#2E2659] text-center md:text-left">
+                                class="border border-gray-200 px-1 py-0 md:px-4 md:py-2 text-[#2E2659] text-right md:text-right">
                                 No</th>
                             <th
-                                class="border border-gray-200 px-1 py-1 md:px-4 md:py-2 text-[#2E2659] text-center md:text-left">
+                                class="border border-gray-200 px-1 py-1 md:px-4 md:py-2 text-[#2E2659] text-right md:text-right">
                                 Aging</th>
                             <th
-                                class="border border-gray-200 px-1 py-1 md:px-4 md:py-2 text-[#2E2659] text-center md:text-left">
+                                class="border border-gray-200 px-1 py-1 md:px-4 md:py-2 text-[#2E2659] text-right md:text-right">
                                 Total</th>
                         </tr>
                     </thead>
@@ -44,13 +44,13 @@
                         @foreach ($summaryData as $row)
                             <tr class="font-medium ">
                                 <td
-                                    class="border border-gray-200 px-1 py-1 md:px-4 md:py-2 text-black font-normal text-center md:text-left">
+                                    class="border border-gray-200 px-1 py-1 md:px-4 md:py-2 text-black font-normal text-right md:text-right">
                                     {{ $row['no'] }}</td>
                                 <td
-                                    class="border border-gray-200 px-1 py-1 md:px-4 md:py-2 text-black font-normal text-center md:text-left">
+                                    class="border border-gray-200 px-1 py-1 md:px-4 md:py-2 text-black font-normal text-right md:text-right">
                                     {{ $row['aging'] }}</td>
                                 <td
-                                    class="border border-gray-200 px-1 py-1 md:px-4 md:py-2 text-black font-normal text-center md:text-left">
+                                    class="border border-gray-200 px-1 py-1 md:px-4 md:py-2 text-black font-normal text-right md:text-right">
                                     {{ 'Rp' . number_format($row['total'], 0, ',', '.') }}</td>
                             </tr>
                         @endforeach
