@@ -15,7 +15,8 @@
                             @if ($item)
                                 <li class="flex items-center">
                                     <span class="mr-2">
-                                        <form action="{{ route('master_data_destroy') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus {{ $item->name }}?');">
+                                        <form action="{{ route('master_data_destroy') }}" method="POST"  data-delete="{{ $item->name }}">
+                                        {{-- <form action="{{ route('master_data_destroy') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus {{ $item->name }}?');"> --}}
                                             @csrf
                                             @method('DELETE')
                                             <input type="hidden" name="headerName" value="{{ $title }}">
@@ -108,3 +109,40 @@
         </div>
     @endif
 @endsection
+@push('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("form[data-delete]").forEach((form) => {
+        form.addEventListener("submit", (event) => {
+            const name = form.getAttribute("data-delete");
+            deleteConfirm(event, name);
+        });
+    });
+});
+
+
+function deleteConfirm(event, name) {
+    event.preventDefault();
+    
+    Swal.fire({
+        title: `Apakah Anda yakin ingin menghapus data ${name}?`,
+        text: 'Data ini akan dihapus secara permanen!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            event.target.submit();
+        }
+    });
+
+    return false; 
+}
+
+
+</script>
+    
+@endpush

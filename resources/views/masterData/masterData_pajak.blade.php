@@ -34,8 +34,8 @@
                         <input type="text" class="border bg-gray-200 text-center w-20 p-2 rounded-md" value="{{ intval($item->nilai) }}%" readonly>
 
                         <!-- Tombol Hapus -->
-                        <form action="{{ route('masterDataPajak.destroy', $item->id) }}" method="POST" class="inline"
-                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus data {{ $item->name }}?');" class="">
+                        <form action="{{ route('masterDataPajak.destroy', $item->id) }}" method="POST" class="inline"  data-delete="{{ $item->name }}">
+                            {{-- onsubmit="return confirm('Apakah Anda yakin ingin menghapus data {{ $item->name }}?');" class=""> --}}
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="p-2 bg-red-600 hover:bg-red-700 text-white rounded-md active:scale-95">
@@ -70,3 +70,39 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("form[data-delete]").forEach((form) => {
+        form.addEventListener("submit", (event) => {
+            const name = form.getAttribute("data-delete");
+            deleteConfirm(event, name);
+        });
+    });
+});
+function deleteConfirm(event, name) {
+    event.preventDefault(); 
+    
+    Swal.fire({
+        title: `Apakah Anda yakin ingin menghapus data ${name}?`,
+        text: 'Data ini akan dihapus secara permanen!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            event.target.submit(); 
+        }
+    });
+
+    return false; 
+}
+
+
+</script>
+    
+@endpush

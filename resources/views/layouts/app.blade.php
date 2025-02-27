@@ -7,7 +7,8 @@
     <title>@yield('title', 'My Application')</title>
     @vite(['resources/css/app.css', 'resources/css/custom.css', 'resources/js/app.js'])
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+{{-- sweet alert --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-gray-1\00 min-h-screen flex flex-col">
