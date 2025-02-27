@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="bg-gray-100 pt-16 sm:py-6 sm:px-2 lg:mt-10 lg:mb-10 lg:min-w-full   ">
+    <div class="bg-gray-100 pt-16 sm:py-6 sm:px-2 lg:mt-10 lg:mb-10 lg:min-w-full">
         @if ($errors->any())
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                 <ul>
@@ -15,8 +15,7 @@
 
         <h1 class="text-2xl font-bold mb-4 text-center">PELANGGAN BARU</h1>
 
-        {{-- <form action="{{ route('customer.store') }}" method="POST" class="overflow-auto max-h-screen"> --}}
-        <form action="{{ route('customer.store') }}" method="POST" class="">
+        <form action="{{ route('customer.store') }}" method="POST">
             @csrf
             <div class="bg-white border border-gray-400 p-4 rounded-md mb-6">
                 <h2 class="text-center text-lg font-bold mb-4 border-b border-gray-400">DATA PELANGGAN</h2>
@@ -52,7 +51,6 @@
                         @error('name')
                             <span class="text-red-600 text-sm">{{ $message }}</span>
                         @enderror
- 
                     </div>
 
                     <div>
@@ -65,32 +63,29 @@
                         <p class="mt-2"><strong>% Sharing :</strong> <span class="text-red-600 font-bold text-lg">*</span></p>
                         <input type="text" class="border border-gray-300 p-2 rounded-md w-full" name="sharing" required>
                         @error('sharing')
-                            <span c lass="text-red-600 text-sm">{{ $message }}</span>
+                            <span class="text-red-600 text-sm">{{ $message }}</span>
                         @enderror
 
-                        <p><strong>ktp:</strong> <span class="text-red-600 font-bold text-lg">*</span></p>
-                        <input type="text" id="ktp_input" class="border border-gray-300 p-2 rounded-md w-full" placeholder="Masukkan KTP (Wajib Di isi)" name="ktp" maxlength="15" required>
+                        <p><strong>KTP:</strong> <span class="text-red-600 font-bold text-lg">*</span></p>
+                        <input type="text" id="ktp_input" class="border border-gray-300 p-2 rounded-md w-full" placeholder="Masukkan KTP (Wajib Di isi)" name="ktp" maxlength="16" required>
                         @error('ktp')
                             <span class="text-red-600 text-sm">{{ $message }}</span>
                         @enderror
 
                         <p class="mt-2"><strong>NPWP :</strong>
                             <div class="flex">
-                                <select class="border border-gray-300 p-2 rounded-md w-32" name="npwp_option" id="npwp_option"
-                                    required onchange="toggleInput('npwp_option', 'npwp_input')">
+                                <select class="border border-gray-300 p-2 rounded-md w-32" name="npwp_option" id="npwp_option" required onchange="toggleInput('npwp_option', 'npwp_input')">
                                     <option value="tidak_ada">Tidak Ada</option>
                                     <option value="ada">Ada</option>
                                 </select>
                                 <div id="npwp_input" style="display: none;" class="mt-2">
-                                    <input type="text" id="npwp" class="border border-gray-300 p-2 rounded-md w-64 ml-4"
-                                        placeholder="Masukkan NPWP" name="npwp" oninput="formatNPWP(this)">
-    
+                                    <input type="text" id="npwp" class="border border-gray-300 p-2 rounded-md w-64 ml-4" placeholder="Masukkan NPWP" name="npwp" oninput="formatNPWP(this)">
                                     @error('npwp')
                                         <span class="text-red-600 text-sm">{{ $message }}</span>
                                     @enderror
                                 </div>
-                            </div>  
-                            </p>   
+                            </div>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -187,17 +182,15 @@
         }
 
         document.getElementById('tipePelanggan').addEventListener('change', updateKodePelanggan);
-        document.getElementById('tipePiutang').addEventListener('change', updateKodePelanggan);
 
         function updateKodePelanggan() {
             var tipePelanggan = document.getElementById('tipePelanggan').value;
-            var tipePiutang = document.getElementById('tipePiutang').value;
             var kodePelangganInput = document.getElementById('kode_pelanggan');
 
-            if (tipePelanggan && tipePiutang) {
-                if (tipePelanggan === "perusahaan" && tipePiutang === "sewa-menyewa") {
+            if (tipePelanggan) {
+                if (tipePelanggan === "perusahaan") {
                     kodePelangganInput.value = "PRSH-" + Math.floor(Math.random() * 1000000);
-                } else if (tipePelanggan === "individu" && tipePiutang === "sewa-menyewa") {
+                } else if (tipePelanggan === "individu") {
                     kodePelangganInput.value = "INDV-" + Math.floor(Math.random() * 1000000);
                 } else {
                     kodePelangganInput.value = "";
@@ -206,7 +199,6 @@
                 kodePelangganInput.value = "";
             }
         }
-
 
         function toggleInput(dropdownId, inputDivId) {
             var dropdown = document.getElementById(dropdownId);
@@ -221,39 +213,7 @@
 
         // On page load, check initial value of dropdowns
         document.addEventListener('DOMContentLoaded', function() {
-
             toggleInput('npwp_option', 'npwp_input');
         });
-
-        // function validateForm() {
-        //     let messages = [];
-        //     const fields = {
-        //         'Tipe Pelanggan': document.getElementById('tipePelanggan'),
-        //         'Nama Pelanggan': document.getElementById('namaPelanggan'),
-        //         'KTP': document.getElementById('ktp'),
-        //         'NPWP': document.getElementById('npwp'),
-        //         'Alamat': document.getElementById('alamat'),
-        //         'E-mail': document.getElementById('email'),
-        //         'Whatsapp': document.getElementById('whatsapp'),
-        //         'Kota': document.getElementById('kota'),
-        //         'Kode Pos': document.getElementById('kodePos')
-        //     };
-
-        //     for (const [key, field] of Object.entries(fields)) {
-        //         if (field.value.trim() === '') {
-        //             messages.push(key + ' wajib diisi.');
-        //             field.classList.add('border-red-500');
-        //         } else {
-        //             field.classList.remove('border-red-500');
-        //         }
-        //     }
-
-        //     if (messages.length > 0) {
-        //         alert(messages.join('\n'));
-        //     } else {
-        //         // alert('Form sudah lengkap, data siap disimpan!');
-        //         // Tambahkan logika untuk submit form di sini
-        //     }
-        // }
     </script>
 @endpush
