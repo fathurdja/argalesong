@@ -7,34 +7,36 @@
         <!-- Bagian Pencarian dan Tombol Baru -->
         <div class="flex justify-between items-center mb-4 flex-wrap">
             
-            <form id="filterForm" action="{{ route('customer.index') }}" method="GET" class="w-full max-w-sm flex space-x-4">
-                <div class="">
-                    <label for="idcompany" class="mr-2 text-xl text-gray-700 font-bold">Pilih Group:</label>
-                    <input list="groupList" name="idcompany" id="idcompany"
-                        class="border border-gray-300 py-2 px-4 rounded-md w-full sm:w-96" placeholder="Search group..."
-                        value="{{ request('idcompany') }}">
-                    <datalist id="groupList">
-                        <option value="">-- Semua Group --</option>
-                        @foreach ($perusahaan as $group)
-                            <option value="{{ $group->company_id }}">
-                                {{ $group->name }}
-                            </option>
-                        @endforeach
-                    </datalist>
-                </div>
-                
-            </form>
-            <form id="searchForm" action="{{ route('customer.index') }}" method="GET" class="w-full flex gap-2 mb-6">
-                <input type="text" name="search" id="search" placeholder="Cari berdasarkan kode atau nama pelanggan"
-                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm px-4 py-2"
-                    value="{{ request('search') }}">
-                <button type="submit"
-                    class="active:scale-[.95] hover:bg-white hover:text-[#3D5AD0] transition-all font-medium text-white border-2 border-[#3D5AD0] rounded-md shadow-sm px-4 py-1 bg-[#3D5AD0]">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path fill="currentColor" d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"/>
-                    </svg>
-                </button>
-            </form>
+            <div class="flex flex-wrap md:flex-row w-full">
+                <form id="filterForm" action="{{ route('customer.index') }}" method="GET" class="w-full max-w-sm flex space-x-4">
+                    <div class="w-full">
+                        <label for="idcompany" class="mr-2 text-xl text-gray-700 font-bold">Pilih Group:</label>
+                        <input list="groupList" name="idcompany" id="idcompany"
+                            class="border border-gray-300 py-2 px-4 rounded-md w-full sm:w-96" placeholder="Search group..."
+                            value="{{ request('idcompany') }}">
+                        <datalist id="groupList">
+                            <option value="">-- Semua Group --</option>
+                            @foreach ($perusahaan as $group)
+                                <option value="{{ $group->company_id }}">
+                                    {{ $group->name }}
+                                </option>
+                            @endforeach
+                        </datalist>
+                    </div>
+                    
+                </form>
+                <form id="searchForm" action="{{ route('customer.index') }}" method="GET" class="w-full flex  gap-2 mb-6">
+                    <input type="text" name="search" id="search" placeholder="Cari berdasarkan kode atau nama pelanggan"
+                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm px-4 py-2"
+                        value="{{ request('search') }}">
+                    <button type="submit"
+                        class="active:scale-[.95] hover:bg-white hover:text-[#3D5AD0] transition-all font-medium text-white border-2 border-[#3D5AD0] rounded-md shadow-sm px-4 py-1 bg-[#3D5AD0]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
             {{-- <div class="w-full flex gap-2 mb-5">
                 <input type="text" placeholder="Cari kode / nama"
                     class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm px-4 py-2">
@@ -105,7 +107,7 @@
                                             d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
                                         <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
                                     </g>
-                                </svg>
+                                </svg>  
                             </a>
                             
                             {{-- <button class="p-2 bg-red-600 text-white rounded-md">
@@ -130,8 +132,7 @@
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                         <div>
-                            <p><strong>Perusahaan :</strong> {{ $pelanggan->company->name }}</p>
-                            <p><strong>Tipe Pelanggan :</strong> {{ $pelanggan->tipePelanggan->name }}</p>
+                            <p><strong>Perusahaan :</strong> {{ $pelanggan->company ? $pelanggan->company->name : 'Data not available' }}</p>                          <p><strong>Tipe Pelanggan :</strong> {{ $pelanggan->tipePelanggan ? $pelanggan->tipePelanggan->name : 'Data not available' }}</p>
                             <p><strong>NPWP :</strong> {{ $pelanggan->npwp }}</p>
                             <p><strong>Alamat :</strong> {{ $pelanggan->alamat }}</p>
                             <p><strong>E-mail :</strong> {{ $pelanggan->email }}</p>

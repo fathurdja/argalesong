@@ -35,17 +35,25 @@ class masterdatacontroller extends Controller
             'headerName' => 'required|string|max:255',
             'typeName' => 'required|string|max:255',
         ]);
-
+    
         $table = $this->getTableName($request->input('headerName'));
-        $nextId = $this->generateNextId($table);
-
-        DB::table($table)->insert([
-            'kodeType' => $nextId,
+    
+        // Cek apakah tabel memerlukan kodeType
+        $needsKodeType = !in_array($table, ['jatuh_tempos', 'lewat_plafons']);
+    
+        // Jika tabel butuh kodeType, generate ID baru
+        $data = [
             'name' => $request->input('typeName'),
             'created_at' => now(),
             'updated_at' => now(),
-        ]);
-
+        ];
+    
+        if ($needsKodeType) {
+            $data['kodeType'] = $this->generateNextId($table);
+        }
+    
+        DB::table($table)->insert($data);
+    
         return redirect()->route('master_data_piutang')->with('success', 'Item berhasil ditambahkan.');
     }
 
