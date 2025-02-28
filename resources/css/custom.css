@@ -67,12 +67,12 @@
     margin-left: auto;
     cursor: pointer;
 } 
-
+/* 
 #menu-humburger {
-    /* border: 1px solid #171717; */
+    border: 1px solid #171717;
     padding: 4px;
     border-radius: 100%;
-}
+} */
 
 /* humburger menu sidebar */
 .humburger span {
@@ -80,7 +80,7 @@
 }
 
 .humburger span:first-child {
-    transform: rotate(-45deg) translateY(6px) translateX(-5px);
+    transform: rotate(-45deg) translateY(5px) translateX(-7px);
     width: 100%;
 }
 
@@ -93,7 +93,7 @@
 }
 
 .humburger span:last-child {
-    transform: rotate(45deg) translateY(-6px) translateX(-5px);
+    transform: rotate(45deg) translateY(-5px) translateX(-7px);
     width: 100%;
 }
 

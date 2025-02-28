@@ -87,8 +87,8 @@ class CustomerController extends Controller
         $customer->alamat = $validated['alamat'];
         $customer->email = $validated['email'];
         $customer->whatsapp = $validated['whatsapp'];
-        $customer->telepon = $validated['telepon'];
-        $customer->fax = $validated['fax'];
+        // $customer->telepon = $validated['telepon'];
+        // $customer->fax = $validated['fax'];
         $customer->kota = $validated['kota'];
         $customer->kode_pos = $validated['kode_pos'];
         $customer->notes = $validated['catatan'];

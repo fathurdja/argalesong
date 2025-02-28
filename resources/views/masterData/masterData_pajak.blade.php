@@ -63,7 +63,7 @@
                         Simpan
                     </button>
                     <a href="{{ route('masterDataPajak.index') }}" class="flex-1 md:flex-none min-w-[120px] text-center active:scale-[.95] hover:bg-white hover:text-red-700 transition-all text-white border-2 bg-red-700 border-red-700 py-2 px-4 rounded-md shadow-sm font-medium">
-                        Batal
+                        Reset
                     </a>
                 </div>                
             </form>

@@ -53,7 +53,7 @@ class riwayatpiutang extends Controller
         }
 
         // Paginate hasil query (10 data per halaman)
-        $piutang = $query->paginate(10);
+        $piutang = $query->paginate(20);
 
         // Mengirim data ke view
         return view('piutangBaru.riwayatpiutang', compact('piutang', 'perusahaan', 'filterCompany'));

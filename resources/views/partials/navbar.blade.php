@@ -57,7 +57,8 @@
 	<ul class="flex flex-row justify-between items-center space-x-6 w-full  ">
 		<li class="">
 			<!-- Hamburger Menu -->
-			<button id="menu-humburger" class="md:hidden  w-8  flex flex-col justify-center items-center gap-[3px] group border-[2px] border-gray-700">
+			{{-- border-[2px] border-gray-700 --}}
+			<button id="menu-humburger" class="md:hidden  w-8  flex flex-col justify-center items-center gap-[4px] group ">
 				<span
 					class="block w-[70%] h-[2px] bg-gray-700 rounded transition-all duration-300 group-hover:bg-blue-600"></span>
 				<span

@@ -76,7 +76,7 @@
 
 
             <div class="flex justify-end space-x-2">
-                <button type="button" onclick="window.location.href='{{ route('sp-bulanan') }}'"
+                <button type="button" onclick="window.location.href='{{ route('riwayatPiutang') }}'"
                     class="active:scale-[.95] flex flex-row items-center group justify-center gap-1 py-1 hover:bg-white hover:text-[#161616] transition-all text-white font-medium border-2 border-[#161616] rounded-md shadow-sm px-4 bg-[#161616]">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">

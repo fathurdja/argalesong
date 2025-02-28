@@ -5,38 +5,40 @@
     <div class="bg-gray-100 w-full p-5 mt-10">
 
         <!-- Bagian Pencarian dan Tombol Baru -->
-        <div class="flex justify-between items-center mb-4 flex-wrap">
+        <div class="flex justify-between items-center mb-4 flex-wrap gap-4">
             
-            <div class="flex flex-wrap md:flex-row w-full">
-                <form id="filterForm" action="{{ route('customer.index') }}" method="GET" class="w-full max-w-sm flex space-x-4">
-                    <div class="w-full">
-                        <label for="idcompany" class="mr-2 text-xl text-gray-700 font-bold">Pilih Group:</label>
-                        <input list="groupList" name="idcompany" id="idcompany"
-                            class="border border-gray-300 py-2 px-4 rounded-md w-full sm:w-96" placeholder="Search group..."
-                            value="{{ request('idcompany') }}">
-                        <datalist id="groupList">
-                            <option value="">-- Semua Group --</option>
-                            @foreach ($perusahaan as $group)
-                                <option value="{{ $group->company_id }}">
-                                    {{ $group->name }}
-                                </option>
-                            @endforeach
-                        </datalist>
-                    </div>
-                    
+            <div class="flex flex-col sm:flex-row w-full gap-4  items-end">
+                <form id="filterForm" action="{{ route('customer.index') }}" method="GET" 
+                    class="w-full sm:w-1/2 flex flex-col space-y-2">
+                    <label for="idcompany" class="text-xl text-gray-700 font-bold">Pilih Group:</label>
+                    <input list="groupList" name="idcompany" id="idcompany"
+                        class="border border-gray-300 py-2 px-4 rounded-md w-full" 
+                        placeholder="Search group..." value="{{ request('idcompany') }}">
+                    <datalist id="groupList">
+                        <option value="">-- Semua Group --</option>
+                        @foreach ($perusahaan as $group)
+                            <option value="{{ $group->company_id }}">{{ $group->name }}</option>
+                        @endforeach
+                    </datalist>
                 </form>
-                <form id="searchForm" action="{{ route('customer.index') }}" method="GET" class="w-full flex  gap-2 mb-6">
-                    <input type="text" name="search" id="search" placeholder="Cari berdasarkan kode atau nama pelanggan"
-                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm px-4 py-2"
-                        value="{{ request('search') }}">
+            
+                <form id="searchForm" action="{{ route('customer.index') }}" method="GET" 
+                    class="w-full sm:w-1/2 flex gap-2 h-[42px]">
+                    <input type="text" name="search" id="search" 
+                        placeholder="Cari berdasarkan kode atau nama pelanggan"
+                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 
+                        focus:border-indigo-500 sm:text-sm px-4 py-2" value="{{ request('search') }}">
                     <button type="submit"
-                        class="active:scale-[.95] hover:bg-white hover:text-[#3D5AD0] transition-all font-medium text-white border-2 border-[#3D5AD0] rounded-md shadow-sm px-4 py-1 bg-[#3D5AD0]">
+                        class="active:scale-[.95] hover:bg-white hover:text-[#3D5AD0] transition-all 
+                        font-medium text-white border-2 border-[#3D5AD0] rounded-md shadow-sm 
+                        px-4 py-1 bg-[#3D5AD0]">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path fill="currentColor" d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"/>
                         </svg>
                     </button>
                 </form>
             </div>
+            
             {{-- <div class="w-full flex gap-2 mb-5">
                 <input type="text" placeholder="Cari kode / nama"
                     class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm px-4 py-2">
@@ -117,8 +119,8 @@
                                         d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button> --}}
-                            {{-- <form action="{{ route('customer.destroy', $pelanggan->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pelanggan {{ $pelanggan->company->name }} ini?');"> --}}
-                            <form action="{{ route('customer.destroy', $pelanggan->id) }}" method="POST" class="inline-block" onsubmit="return confirm('apakah anda ingin menghapus pelanggan {{ $pelanggan->name }}');">
+                            {{-- <form action="{{ route('customer.destroy', $pelanggan->id) }}" method="POST" class="inline-block" onsubmit="return confirm('apakah anda ingin menghapus pelanggan {{ $pelanggan->name }}');"> --}}
+                            <form action="{{ route('customer.destroy', $pelanggan->id) }}" method="POST" class="inline-block" data-delete="{{ $pelanggan->name }}" >
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="p-2 bg-red-600 text-white rounded-md">
@@ -158,7 +160,17 @@
 @push('scripts')
     @vite('resources/js/test.js')
     @vite('resources/js/form-edit.js')
-    
+    <script>
+       
+    document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("form[data-delete]").forEach((form) => {
+        form.addEventListener("submit", (event) => {
+            const name = form.getAttribute("data-delete");
+            deleteConfirm(event, name);
+        });
+    });
+});
+    </script>
 @endpush
 
 
@@ -172,5 +184,27 @@
             icons
         });
     </script>
+    <script>
+        function deleteConfirm(event, name) {
+    event.preventDefault(); 
+    
+    Swal.fire({
+        title: `Apakah Anda yakin ingin menghapus data ${name}?`,
+        text: 'Data ini akan dihapus secara permanen!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            event.target.submit(); 
+        }
+    });
+
+    return false; 
+}
+    </script>
 @endpush
-<script src="https://unpkg.com/lucide@latest"></script>
+{{-- <script src="https://unpkg.com/lucide@latest"></script> --}}
